@@ -405,15 +405,17 @@ namespace app_for_CD
 
         private void button6_Click(object sender, EventArgs e)
         {
-            int f_n, f_s, f_d;
+            int f_n, f_s, f_d, f_p, f_i;
             filter f = new filter();
             f.ShowDialog();
 
             f_n = Data.f_n;
             f_s = Data.f_s;
             f_d = Data.f_d;
+            f_p = Data.f_p;
+            f_i = Data.f_i;
 
-            if (f_n == 1 || f_s == 1 || f_d == 1) {
+            if (f_n == 1 || f_s == 1 || f_d == 1 || f_p == 1 || f_i == 1) {
                 string request = "";
 
                 OracleCommand cmd = con.CreateCommand();
@@ -425,14 +427,21 @@ namespace app_for_CD
                 {
                     request = request + $" AND C.CRP_CD = {Data.number_ser} ";
                 }
-                if (f_n == 1)
+                if (f_n == 1) 
                 {
-                    request = request + $" AND C.CRP_NM = '{Data.name_cl}' ";
+                    request = request + $" AND C.CRP_NM LIKE '%{Data.name_cl}%' ";
+                }
+                if (f_p == 1)
+                {
+                    request = request + $" AND y.DOCU_PRICE = '{Data.price}' AND y.CURRENCY = '{Data.val}'";
+                }
+                if (f_i == 1)
+                {
+                    request = request + $" AND y.ESTM_NM = '{Data.isch}'";
                 }
 
-
                 cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by CASE When '" + f_d + "' = 1 THEN C.DOCU_ISSU_DD END ASC ";
-
+                MessageBox.Show(cmd.CommandText);
                 bool find_val = false;
 
                 cmd.CommandType = CommandType.Text;
@@ -458,7 +467,9 @@ namespace app_for_CD
             Data.f_n = 0;
             Data.f_s = 0;
             Data.f_d = 0;
-            
+            Data.f_p = 0;
+            Data.f_i = 0;
+
         }
 
         private void button10_Click(object sender, EventArgs e)

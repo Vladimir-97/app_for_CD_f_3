@@ -106,6 +106,19 @@ namespace app_for_CD
             }
         }
 
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                Data.f_p = 1;
+            }
+            else
+            {
+                Data.f_p = 0;
+            }
+        }
+
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
@@ -144,23 +157,54 @@ namespace app_for_CD
             {
                 Data.name_cl = textBox1.Text;
             }
-
+            if (Data.f_p == 1)
+            {
+                Data.price = textBox3.Text;
+                Data.val = comboBox6.Text.ToString();
+            }
+            if (Data.f_i == 1)
+            {
+                Data.isch = comboBox2.Text.ToString();
+            }
             this.Close();
         }
 
+        private void CloseConnection()
+        {
+            con.Close();
+        }
 
         private void filter_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if ((Data.it_ok == true)  && ( (Data.name_cl == "" && Data.f_n == 1) || (Data.number_ser == "" && Data.f_s == 1)))
-            {
-                e.Cancel = true;
-                MessageBox.Show("Заполните все строки!");
-            }
             if (Data.it_ok != true)
             {
                 Data.f_d = 0;
                 Data.f_s = 0;
                 Data.f_n = 0;
+                Data.f_p = 0;
+                Data.f_i = 0;
+                CloseConnection();
+            }
+            if ((Data.it_ok == true)  && ( (Data.name_cl == "" && Data.f_n == 1) || (Data.number_ser == "" && Data.f_s == 1) || (Data.price == "" && Data.name_cl == "" && Data.f_p == 1) || (Data.isch == "" && Data.f_i == 1)))
+            {
+                e.Cancel = true;
+                Data.it_ok = false;
+                MessageBox.Show("Заполните все строки!");
+            }
+            
+            
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                Data.f_i = 1;
+            }
+            else
+            {
+                Data.f_i = 0;
             }
         }
     }

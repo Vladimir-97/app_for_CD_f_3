@@ -11,11 +11,17 @@ namespace app_for_CD
         public static bool it_ok = false;
         public static string st_date_orig { get; set; }
         public static string end_date_orig { get; set; }
-        public static string number_ser = "-1000";
+        public static string number_ser = "";
         public static string name_cl = "";
+        public static string price = "";
+        public static string val = "";
+        public static string isch = "";
+
         public static int f_n { get; set; }
         public static int f_s { get; set; }
         public static int f_d { get; set; }
+        public static int f_p { get; set; }
+        public static int f_i { get; set; }
         public static int login = 0;
         public static int role = 0;
         public static bool exit = false;
