@@ -197,7 +197,6 @@
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(132, 21);
             this.comboBox2.TabIndex = 45;
-            
             // 
             // textBox3
             // 
@@ -257,6 +256,9 @@
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.Серия);
             this.Controls.Add(this.CRM);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1092, 294);
+            this.MinimumSize = new System.Drawing.Size(1092, 294);
             this.Name = "filter";
             this.Text = "Фильтр";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.filter_FormClosing);

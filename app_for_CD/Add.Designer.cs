@@ -612,6 +612,9 @@
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(1204, 618);
+            this.MinimumSize = new System.Drawing.Size(1204, 618);
             this.Name = "Add";
             this.Text = "8002-2-2";
             this.Load += new System.EventHandler(this.Add_Load);

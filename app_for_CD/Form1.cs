@@ -441,7 +441,7 @@ namespace app_for_CD
                 }
 
                 cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by CASE When '" + f_d + "' = 1 THEN C.DOCU_ISSU_DD END ASC ";
-                MessageBox.Show(cmd.CommandText);
+                //MessageBox.Show(cmd.CommandText);
                 bool find_val = false;
 
                 cmd.CommandType = CommandType.Text;
@@ -537,18 +537,15 @@ namespace app_for_CD
                 oSheet.Cells.ColumnWidth = 14;
                 oSheet.Cells[10].ColumnWidth = 15;
                 oSheet.Cells[8].ColumnWidth = 22;
-
+                int i;
                 // Create an array to multiple values at once.
                 string[,] saNames = new string[51, 15];
                 saNames[0, 0] = "John";
                 saNames[0, 1] = "Smith";
-                for (int i = 0; i< 50;i++)
+                for (i = 0; i< dataGridView1.Rows.Count-1; i++)
                 {
                     for (int j = 0; j < 13;j++)
                     {
-                        if (dataGridView1.Rows[i].Cells[0].Value.ToString() == null)
-                            break;
-
                         saNames[i,j] = check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
                         oSheet.Cells[i + 2, j + 1] = saNames[i,j];
                     }
