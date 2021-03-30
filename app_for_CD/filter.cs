@@ -12,10 +12,7 @@ using Oracle.DataAccess.Client;
 
 namespace app_for_CD
 {
-    /// <summary>
-    /// закрой connect
-    /// </summary>
-
+    
     public partial class filter : Form
     {
         OracleConnection con = null;
@@ -23,7 +20,7 @@ namespace app_for_CD
         {
             InitializeComponent();
             this.SetConnection();
-            comboBox4.MaxLength = 12;
+            ComboBox_CRP.MaxLength = 12;
         }
         private void SetConnection()
         {
@@ -42,31 +39,36 @@ namespace app_for_CD
                 MessageBox.Show(errorMessage, "Error");
             }
         }
-        bool is_empty_str(string str)
-        {
-            if (str == "")
-                return true;
-            else return false;
-        }
 
-        private void comboBox4_TextChanged(object sender, EventArgs e)
+        #region CheckedChanged
+        // Период заключения
+        private void PeriodOfImprisonment_CheckedChanged(object sender, EventArgs e)
         {
-            string crp = comboBox4.Text.ToString();
-            
-            OracleCommand cmd = con.CreateCommand();
-            cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 12).Value = crp;
-            cmd.CommandText = "SELECT CRP_NM FROM TBCB_CRP_INFO where CRP_CD = :KZL";
-            //kzl_ = crp;
-            cmd.CommandType = CommandType.Text;
-            OracleDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
             {
-                textBox6.Text = dr[0].ToString();
+                Data.f_d = 1;
             }
-            //comboBox5.Items.Clear();
+            else
+            {
+                Data.f_d = 0;
+            }
         }
-           
-        private void CRM_CheckedChanged(object sender, EventArgs e)
+        // КЗЛ
+        private void CRP_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                Data.f_s = 1;
+            }
+            else
+            {
+                Data.f_s = 0;
+            }
+        }
+        // Наименование клиента
+        private void CustomerName_CheckedChanged(object sender, EventArgs e)
         {
 
             CheckBox checkBox = (CheckBox)sender;
@@ -79,34 +81,8 @@ namespace app_for_CD
                 Data.f_n = 0;
             }
         }
-
-        private void Серия_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBox = (CheckBox)sender;
-            if (checkBox.Checked == true)
-            {
-                Data.f_s = 1;
-            }
-            else
-            {
-                Data.f_s = 0;
-            }
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBox = (CheckBox)sender;
-            if (checkBox.Checked == true)
-            {
-                Data.f_d = 1;
-            }
-            else
-            {
-                Data.f_d = 0;
-            }
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        // Цена договора 
+        private void ContractPrice_CheckedChanged(object sender, EventArgs e)
         {
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
@@ -118,13 +94,53 @@ namespace app_for_CD
                 Data.f_p = 0;
             }
         }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        // Исчисление
+        private void Сalculus_CheckedChanged(object sender, EventArgs e)
         {
-
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                Data.f_i = 1;
+            }
+            else
+            {
+                Data.f_i = 0;
+            }
+        }
+        // ИНН
+        private void INN_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                Data.f_inn = 1;
+            }
+            else
+            {
+                Data.f_inn = 0;
+            }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        #endregion
+        #region ComboBox
+        private void CRP_TextChanged(object sender, EventArgs e)
+        {
+            string crp = ComboBox_CRP.Text.ToString();
+
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 12).Value = crp;
+            cmd.CommandText = "SELECT CRP_NM FROM TBCB_CRP_INFO where CRP_CD = :KZL";
+            //kzl_ = crp;
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                textBox_CRP.Text = dr[0].ToString();
+            }
+        }
+
+        #endregion
+        private void CRP_search_Click(object sender, EventArgs e)
         {
             this.SetConnection();
             OracleCommand cmd = con.CreateCommand();
@@ -136,7 +152,7 @@ namespace app_for_CD
             // List<string[]> data = new List<string[]>();
             while (dr.Read())
             {
-                comboBox4.Items.Add(dr[0].ToString());
+                ComboBox_CRP.Items.Add(dr[0].ToString());
             }
         }
         private void Ok_Click(object sender, EventArgs e)
@@ -144,27 +160,31 @@ namespace app_for_CD
             Data.it_ok = true;
             if (Data.f_d == 1)
             {
-                DateTime thisDate_st = dateTimePicker1.Value;
-                DateTime thisDate_end = dateTimePicker2.Value;
+                DateTime thisDate_st = dateTimePicker_st.Value;
+                DateTime thisDate_end = dateTimePicker_end.Value;
                 Data.st_date_orig = thisDate_st.ToString("yyyyMMdd").ToString();
                 Data.end_date_orig = thisDate_end.ToString("yyyyMMdd").ToString();
             }
             if (Data.f_s == 1)
             {
-                Data.number_ser = comboBox4.Text.ToString();
+                Data.number_ser = ComboBox_CRP.Text.ToString();
             }
             if (Data.f_n == 1)
             {
-                Data.name_cl = textBox1.Text;
+                Data.name_cl = textBox_name_cl.Text;
             }
             if (Data.f_p == 1)
             {
-                Data.price = textBox3.Text;
-                Data.val = comboBox6.Text.ToString();
+                Data.price = textBox_price.Text;
+                Data.val = comboBox_currency.Text.ToString();
             }
             if (Data.f_i == 1)
             {
-                Data.isch = comboBox2.Text.ToString();
+                Data.isch = comboBox_calculus.Text.ToString();
+            }
+            if (Data.f_inn == 1)
+            {
+                Data.INN = textBox_INN.Text;
             }
             this.Close();
         }
@@ -195,17 +215,6 @@ namespace app_for_CD
             
         }
 
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBox = (CheckBox)sender;
-            if (checkBox.Checked == true)
-            {
-                Data.f_i = 1;
-            }
-            else
-            {
-                Data.f_i = 0;
-            }
-        }
+        
     }
 }

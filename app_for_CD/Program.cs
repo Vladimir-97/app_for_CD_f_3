@@ -16,12 +16,14 @@ namespace app_for_CD
         public static string price = "";
         public static string val = "";
         public static string isch = "";
+        public static string INN = "";
 
         public static int f_n { get; set; }
         public static int f_s { get; set; }
         public static int f_d { get; set; }
         public static int f_p { get; set; }
         public static int f_i { get; set; }
+        public static int f_inn { get; set; }
         public static int login = 0;
         public static int role = 0;
         public static bool exit = false;
