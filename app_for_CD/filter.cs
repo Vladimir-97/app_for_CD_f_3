@@ -12,7 +12,7 @@ using Oracle.DataAccess.Client;
 
 namespace app_for_CD
 {
-    
+
     public partial class filter : Form
     {
         OracleConnection con = null;
@@ -47,11 +47,11 @@ namespace app_for_CD
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
-                Data.f_d = 1;
+                Data.f_d = true;
             }
             else
             {
-                Data.f_d = 0;
+                Data.f_d = false;
             }
         }
         // КЗЛ
@@ -60,11 +60,11 @@ namespace app_for_CD
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
-                Data.f_s = 1;
+                Data.f_CRP = true;
             }
             else
             {
-                Data.f_s = 0;
+                Data.f_CRP = false;
             }
         }
         // Наименование клиента
@@ -74,11 +74,11 @@ namespace app_for_CD
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
-                Data.f_n = 1;
+                Data.f_n = true;
             }
             else
             {
-                Data.f_n = 0;
+                Data.f_n = false;
             }
         }
         // Цена договора 
@@ -87,11 +87,11 @@ namespace app_for_CD
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
-                Data.f_p = 1;
+                Data.f_p = true;
             }
             else
             {
-                Data.f_p = 0;
+                Data.f_p = false;
             }
         }
         // Исчисление
@@ -100,11 +100,11 @@ namespace app_for_CD
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
-                Data.f_i = 1;
+                Data.f_i = true;
             }
             else
             {
-                Data.f_i = 0;
+                Data.f_i = false;
             }
         }
         // ИНН
@@ -113,14 +113,39 @@ namespace app_for_CD
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
-                Data.f_inn = 1;
+                Data.f_inn = true;
             }
             else
             {
-                Data.f_inn = 0;
+                Data.f_inn = false;
             }
         }
-
+        //Серия договора
+        private void ContractSeries_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                Data.f_ser = true;
+            }
+            else
+            {
+                Data.f_ser = false;
+            }
+        }
+        //Статус договора
+        private void СontractStatus_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            if (checkBox.Checked == true)
+            {
+                Data.f_status = true;
+            }
+            else
+            {
+                Data.f_status = false;
+            }
+        }
         #endregion
         #region ComboBox
         private void CRP_TextChanged(object sender, EventArgs e)
@@ -155,36 +180,48 @@ namespace app_for_CD
                 ComboBox_CRP.Items.Add(dr[0].ToString());
             }
         }
+
+
+
         private void Ok_Click(object sender, EventArgs e)
         {
             Data.it_ok = true;
-            if (Data.f_d == 1)
+            // for create new
+            if (Data.f_d == true)
             {
                 DateTime thisDate_st = dateTimePicker_st.Value;
                 DateTime thisDate_end = dateTimePicker_end.Value;
                 Data.st_date_orig = thisDate_st.ToString("yyyyMMdd").ToString();
                 Data.end_date_orig = thisDate_end.ToString("yyyyMMdd").ToString();
             }
-            if (Data.f_s == 1)
+            if (Data.f_CRP == true)
             {
                 Data.number_ser = ComboBox_CRP.Text.ToString();
             }
-            if (Data.f_n == 1)
+            if (Data.f_n == true)
             {
                 Data.name_cl = textBox_name_cl.Text;
             }
-            if (Data.f_p == 1)
+            if (Data.f_p == true)
             {
                 Data.price = textBox_price.Text;
                 Data.val = comboBox_currency.Text.ToString();
             }
-            if (Data.f_i == 1)
+            if (Data.f_i == true)
             {
                 Data.isch = comboBox_calculus.Text.ToString();
             }
-            if (Data.f_inn == 1)
+            if (Data.f_inn == true)
             {
                 Data.INN = textBox_INN.Text;
+            }
+            if (Data.f_ser == true)
+            {
+                Data.ser = comboBox_ser.Text;
+            }
+            if (Data.f_status == true)
+            {
+                Data.status = comboBox_status.Text;
             }
             this.Close();
         }
@@ -198,15 +235,20 @@ namespace app_for_CD
         {
             if (Data.it_ok != true)
             {
-                Data.f_d = 0;
-                Data.f_s = 0;
-                Data.f_n = 0;
-                Data.f_p = 0;
-                Data.f_i = 0;
+
+                Data.f_d = false;
+                Data.f_CRP = false;
+                Data.f_n = false;
+                Data.f_p = false;
+                Data.f_i = false;
+                Data.f_inn = false;
+                Data.f_ser = false;
+                Data.f_status = false;
                 CloseConnection();
             }
-            if ((Data.it_ok == true)  && ( (Data.name_cl == "" && Data.f_n == 1) || (Data.number_ser == "" && Data.f_s == 1) || (Data.price == "" && Data.name_cl == "" && Data.f_p == 1) || (Data.isch == "" && Data.f_i == 1)))
+            if ((Data.it_ok == true) && ((Data.name_cl == "" && Data.f_n == true) || (Data.number_ser == "" && Data.f_CRP == true) || (Data.price == "" && Data.name_cl == "" && Data.f_p == true) || (Data.isch == "" && Data.f_i == true) || (Data.INN == "" && Data.f_inn == true) || (Data.ser == "" && Data.f_ser == true) || (Data.status == "" && Data.f_status == true)))
             {
+                // добавить всеееееееееееееееееееееееееееееееееееееееееееееееееееее
                 e.Cancel = true;
                 Data.it_ok = false;
                 MessageBox.Show("Заполните все строки!");
