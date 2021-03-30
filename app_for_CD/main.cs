@@ -17,6 +17,7 @@ namespace app_for_CD
 {
     public partial class Form_agreement : Form
     {
+        
         public Form_agreement()
         {
             this.SetConnection();
@@ -405,42 +406,50 @@ namespace app_for_CD
 
         private void button6_Click(object sender, EventArgs e)
         {
-            int f_n, f_s, f_d, f_p, f_i;
+            
             filter f = new filter();
             f.ShowDialog();
-
-            f_n = Data.f_n;
-            f_s = Data.f_s;
-            f_d = Data.f_d;
-            f_p = Data.f_p;
-            f_i = Data.f_i;
-
-            if (f_n == 1 || f_s == 1 || f_d == 1 || f_p == 1 || f_i == 1) {
+            
+            if (Data.f_n == 1 || Data.f_s == 1 || Data.f_d == 1 || Data.f_p == 1 || Data.f_i == 1 || Data.f_inn ==1) {
                 string request = "";
+                string name_cl = "";
 
                 OracleCommand cmd = con.CreateCommand();
-                if (f_d == 1)
+                if (Data.f_d == 1)
                 {
                     request = $" AND DOCU_ISSU_DD  >= {Data.st_date_orig}  AND DOCU_ISSU_DD <= {Data.end_date_orig} ";
                 }
-                if (f_s == 1)
+                if (Data.f_s == 1)
                 {
                     request = request + $" AND C.CRP_CD = {Data.number_ser} ";
                 }
-                if (f_n == 1) 
+                if (Data.f_n == 1) 
                 {
-                    request = request + $" AND C.CRP_NM LIKE '%{Data.name_cl}%' ";
+                    for (int i = 0; i < Data.name_cl.Length; i++) {
+                        if (Data.name_cl[i] == '%')
+                        {
+                            name_cl += '_';
+                        }
+                        else{
+                            name_cl += Data.name_cl[i];
+                        }
+                    }
+                    request = request + $" AND C.CRP_NM LIKE '%{name_cl}%' ";
                 }
-                if (f_p == 1)
+                if (Data.f_p == 1)
                 {
                     request = request + $" AND y.DOCU_PRICE = '{Data.price}' AND y.CURRENCY = '{Data.val}'";
                 }
-                if (f_i == 1)
+                if (Data.f_i == 1)
                 {
                     request = request + $" AND y.ESTM_NM = '{Data.isch}'";
                 }
+                if (Data.f_inn == 1)
+                {
+                    request = request + $" AND AND c.DIST_ID_2 = '{Data.INN}'";
+                }
 
-                cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by CASE When '" + f_d + "' = 1 THEN C.DOCU_ISSU_DD END ASC ";
+                cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
                 //MessageBox.Show(cmd.CommandText);
                 bool find_val = false;
 
@@ -464,11 +473,12 @@ namespace app_for_CD
 
             }
 
-            Data.f_n = 0;
-            Data.f_s = 0;
-            Data.f_d = 0;
-            Data.f_p = 0;
-            Data.f_i = 0;
+               Data.f_n = 0;
+               Data.f_s = 0;
+               Data.f_d = 0;
+               Data.f_p = 0;
+               Data.f_i = 0;
+               Data.f_inn = 0;
 
         }
 
