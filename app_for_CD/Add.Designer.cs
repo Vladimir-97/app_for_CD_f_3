@@ -185,7 +185,8 @@
             "ЕВРО",
             "ЙЕНА",
             "ФУНТ",
-            "АВ.ДОЛЛАР"});
+            "АВ.ДОЛЛАР",
+            ""});
             this.comboBox6.Location = new System.Drawing.Point(904, 128);
             this.comboBox6.Name = "comboBox6";
             this.comboBox6.Size = new System.Drawing.Size(121, 21);

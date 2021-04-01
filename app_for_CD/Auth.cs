@@ -44,9 +44,10 @@ namespace app_for_CD
         {
             Data.login = 1;
             string tmp_str;
-            tmp_str = dr[3].ToString();    
-
+            tmp_str = dr[3].ToString();
             Data.role = Int32.Parse(tmp_str);
+            Data.status = Int16.Parse(dr[4].ToString());
+
         }
 
 
