@@ -267,7 +267,12 @@ namespace app_for_CD
                     MessageBox.Show("Пользователь заблокирован");
                     incorrect_pass();
                 }
-                else if (Data.login == 0 && Data.exit == false)
+                else if (Data.status == 0)
+                {
+                    MessageBox.Show("Неправильный пароль");
+                    incorrect_pass();
+                }
+                else if (Data.exit == false)
                 {
                     this.Close();
                 }
