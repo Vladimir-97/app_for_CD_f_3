@@ -54,6 +54,7 @@
             this.cHANG_CNTR_MGRBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cHANG_BND_ISUBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel4 = new System.Windows.Forms.Panel();
+            this.button9 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
@@ -177,9 +178,9 @@
             this.Поступил,
             this.Column10,
             this.Зарегистрирован});
-            this.dataGridView1.Location = new System.Drawing.Point(3, 6);
+            this.dataGridView1.Location = new System.Drawing.Point(0, 3);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1269, 361);
+            this.dataGridView1.Size = new System.Drawing.Size(1286, 364);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
@@ -267,6 +268,7 @@
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel4.Controls.Add(this.button9);
             this.panel4.Controls.Add(this.button7);
             this.panel4.Controls.Add(this.button10);
             this.panel4.Controls.Add(this.button8);
@@ -280,6 +282,18 @@
             this.panel4.Size = new System.Drawing.Size(2071, 213);
             this.panel4.TabIndex = 5;
             // 
+
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(44, 45);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(75, 23);
+            this.button9.TabIndex = 7;
+            this.button9.Text = "button9";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+
             // button7
             // 
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -459,6 +473,8 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button9;
+
     }
 }
 

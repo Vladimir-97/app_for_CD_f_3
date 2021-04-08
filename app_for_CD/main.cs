@@ -17,6 +17,7 @@ namespace app_for_CD
 {
     public partial class Form_agreement : Form
     {
+
         public Form_agreement()
         {
             this.SetConnection();
@@ -251,12 +252,14 @@ namespace app_for_CD
                 {
                     MessageBox.Show("Пользователь заблокирован");
                     incorrect_pass();
+
                 }
                 updatePanel2();
                 button_disabled();
             }
             else
             {
+
 
                 if (Data.login == 0 && Data.exit == true && Data.status == 1)
                 {
@@ -293,6 +296,7 @@ namespace app_for_CD
                 {
                     MessageBox.Show("Пользователь заблокирован");
                     incorrect_pass();
+
                 }
                 updatePanel2();
                 button_disabled();
@@ -306,6 +310,7 @@ namespace app_for_CD
                 else if (Data.status == 2)
                 {
                     MessageBox.Show("Пользователь заблокирован");
+
                     incorrect_pass();
                 }
                 else if (Data.login == 0 && Data.exit == false)
@@ -420,50 +425,61 @@ namespace app_for_CD
             return cmd.ExecuteNonQuery();
         }
 
-        private void panel3_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void button6_Click(object sender, EventArgs e)
         {
-            int f_n, f_s, f_d, f_p, f_i;
+            
             filter f = new filter();
             f.ShowDialog();
-
-            f_n = Data.f_n;
-            f_s = Data.f_s;
-            f_d = Data.f_d;
-            f_p = Data.f_p;
-            f_i = Data.f_i;
-
-            if (f_n == 1 || f_s == 1 || f_d == 1 || f_p == 1 || f_i == 1) {
+            
+            if (Data.f_n == true || Data.f_CRP == true || Data.f_d == true || Data.f_p == true || Data.f_i == true || Data.f_inn == true || Data.f_ser == true || Data.f_status == true) {
                 string request = "";
+                string name_cl = "";
 
                 OracleCommand cmd = con.CreateCommand();
-                if (f_d == 1)
+                if (Data.f_d == true)
                 {
                     request = $" AND DOCU_ISSU_DD  >= {Data.st_date_orig}  AND DOCU_ISSU_DD <= {Data.end_date_orig} ";
                 }
-                if (f_s == 1)
+                if (Data.f_CRP == true)
                 {
                     request = request + $" AND C.CRP_CD = {Data.number_ser} ";
                 }
-                if (f_n == 1) 
+                if (Data.f_n == true) 
                 {
-                    request = request + $" AND C.CRP_NM LIKE '%{Data.name_cl}%' ";
+                    for (int i = 0; i < Data.name_cl.Length; i++) {
+                        if (Data.name_cl[i] == '%')
+                        {
+                            name_cl += '_';
+                        }
+                        else{
+                            name_cl += Data.name_cl[i];
+                        }
+                    }
+                    request = request + $" AND C.CRP_NM LIKE '%{name_cl}%' ";
                 }
-                if (f_p == 1)
+                if (Data.f_p == true)
                 {
                     request = request + $" AND y.DOCU_PRICE = '{Data.price}' AND y.CURRENCY = '{Data.val}'";
                 }
-                if (f_i == 1)
+                if (Data.f_i == true)
                 {
                     request = request + $" AND y.ESTM_NM = '{Data.isch}'";
                 }
+                if (Data.f_inn == true)
+                {
+                    request = request + $" AND AND c.DIST_ID_2 = '{Data.INN}'";
+                }
+                if (Data.f_ser == true)
+                {
+                    request = request + $" AND c.DOCU_SRES = '{Data.ser}'";
+                }
+                if (Data.f_status == true)
+                {
+                    request = request + $" AND c.DOCU_STAT_CD = '{Data.status}'";
+                }
+                cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
+                MessageBox.Show(cmd.CommandText);
 
-                cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by CASE When '" + f_d + "' = 1 THEN C.DOCU_ISSU_DD END ASC ";
-                //MessageBox.Show(cmd.CommandText);
                 bool find_val = false;
 
                 cmd.CommandType = CommandType.Text;
@@ -486,11 +502,15 @@ namespace app_for_CD
 
             }
 
-            Data.f_n = 0;
-            Data.f_s = 0;
-            Data.f_d = 0;
-            Data.f_p = 0;
-            Data.f_i = 0;
+
+               Data.f_n = false;
+               Data.f_CRP = false;
+               Data.f_d = false;
+               Data.f_p = false;
+               Data.f_i = false;
+               Data.f_inn = false;
+               Data.f_ser = false;
+               Data.f_status = false;
 
         }
 
@@ -499,6 +519,13 @@ namespace app_for_CD
             Add_user new_us = new Add_user();
             new_us.Show();
         }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            registration_of_an_invoice f = new registration_of_an_invoice();
+            f.ShowDialog();
+        }
+
 
         int query_delete_from_NEW_TBCB()
         {
@@ -562,8 +589,7 @@ namespace app_for_CD
                 int i;
                 // Create an array to multiple values at once.
                 string[,] saNames = new string[51, 15];
-                saNames[0, 0] = "John";
-                saNames[0, 1] = "Smith";
+
                 for (i = 0; i< dataGridView1.Rows.Count-1; i++)
                 {
                     for (int j = 0; j < 13;j++)
