@@ -47,7 +47,6 @@
             this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.Name_company = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
@@ -75,6 +74,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label20 = new System.Windows.Forms.Label();
+            this.Name_company = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -146,6 +146,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel2.Controls.Add(this.Name_company);
             this.panel2.Controls.Add(this.comboBox6);
             this.panel2.Controls.Add(this.comboBox5);
             this.panel2.Controls.Add(this.dateTimePicker4);
@@ -157,7 +158,6 @@
             this.panel2.Controls.Add(this.dateTimePicker3);
             this.panel2.Controls.Add(this.dateTimePicker2);
             this.panel2.Controls.Add(this.dateTimePicker1);
-            this.panel2.Controls.Add(this.Name_company);
             this.panel2.Controls.Add(this.label17);
             this.panel2.Controls.Add(this.label18);
             this.panel2.Controls.Add(this.label19);
@@ -304,13 +304,6 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 26;
-            // 
-            // Name_company
-            // 
-            this.Name_company.Location = new System.Drawing.Point(706, 58);
-            this.Name_company.Name = "Name_company";
-            this.Name_company.Size = new System.Drawing.Size(454, 20);
-            this.Name_company.TabIndex = 25;
             // 
             // label17
             // 
@@ -600,6 +593,28 @@
             this.label20.TabIndex = 6;
             this.label20.Text = "Операция выполнена";
             // 
+            // Name_company
+            // 
+            this.Name_company.FormattingEnabled = true;
+            this.Name_company.Items.AddRange(new object[] {
+            "Э",
+            "Ц",
+            "ЭГ",
+            "ИП",
+            "Х",
+            "ОЦ",
+            "ИК",
+            "К",
+            "ИУ",
+            "WS",
+            "ИФ",
+            "КО",
+            ""});
+            this.Name_company.Location = new System.Drawing.Point(781, 60);
+            this.Name_company.Name = "Name_company";
+            this.Name_company.Size = new System.Drawing.Size(394, 21);
+            this.Name_company.TabIndex = 39;
+            // 
             // Add
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -653,7 +668,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker3;
         private System.Windows.Forms.DateTimePicker dateTimePicker2;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox Name_company;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
@@ -678,5 +692,6 @@
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.ComboBox comboBox5;
         private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.ComboBox Name_company;
     }
 }
