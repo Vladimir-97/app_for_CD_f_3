@@ -37,7 +37,8 @@ namespace app_for_CD
             dateTimePicker3.Visible = false;
             label19.Visible = false;
             textBox6.Enabled = false;
-            Name_company.Enabled = false;
+            load_sres();
+       //     Name_company.Enabled = false;
             if (but == 1)
             {
                // SetConnection();
@@ -104,61 +105,61 @@ namespace app_for_CD
 
         }
 
-        private void check_value()
-        {
-            if (comboBox1.SelectedItem.ToString() == "Э")
-            {
-                Name_company.Text = "Эмиссионный договор";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "Ц")
-            {
-                Name_company.Text = "Договор об оказании услуг депоненту";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "ЭГ")
-            {
-                Name_company.Text = "Договор на оказание услуг на использования сервиса `Электронное голосование`";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "ИП")
-            {
-                Name_company.Text = "Договор о корреспондентских отношениях с Инвестиционным Посредником";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "Х")
-            {
-                Name_company.Text = "Договор об обслуживании хокимията";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "ОЦ")
-            {
-                Name_company.Text = "Договор на оказание услуг по проведению оценки с АО";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "ИК")
-            {
-                Name_company.Text = "Корпоративное сопровождение АО";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "К")
-            {
-                Name_company.Text = "Договор на оказание консультативных услуг с АО";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "ИУ")
-            {
-                Name_company.Text = "Информационные услуги согласно договору";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "WS")
-            {
-                Name_company.Text = "Договор на обслуживание веб-сайта с АО";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "ИФ")
-            {
-                Name_company.Text = "Трехсторонний Контракт на оказание услуг по ведению счета депо ИФ";
-            }
-            else if (comboBox1.SelectedItem.ToString() == "КО")
-            {
-                Name_company.Text = "Дополнительное соглашение к договору";
-            }
-            else
-            {
-                Name_company.Text = "";
-            }
-        }
+        //private void check_value()
+        //{
+        //    if (comboBox1.SelectedItem.ToString() == "Э")
+        //    {
+        //        Name_company.Text = "Эмиссионный договор";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "Ц")
+        //    {
+        //        Name_company.Text = "Договор об оказании услуг депоненту";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "ЭГ")
+        //    {
+        //        Name_company.Text = "Договор на оказание услуг на использования сервиса `Электронное голосование`";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "ИП")
+        //    {
+        //        Name_company.Text = "Договор о корреспондентских отношениях с Инвестиционным Посредником";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "Х")
+        //    {
+        //        Name_company.Text = "Договор об обслуживании хокимията";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "ОЦ")
+        //    {
+        //        Name_company.Text = "Договор на оказание услуг по проведению оценки с АО";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "ИК")
+        //    {
+        //        Name_company.Text = "Корпоративное сопровождение АО";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "К")
+        //    {
+        //        Name_company.Text = "Договор на оказание консультативных услуг с АО";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "ИУ")
+        //    {
+        //        Name_company.Text = "Информационные услуги согласно договору";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "WS")
+        //    {
+        //        Name_company.Text = "Договор на обслуживание веб-сайта с АО";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "ИФ")
+        //    {
+        //        Name_company.Text = "Трехсторонний Контракт на оказание услуг по ведению счета депо ИФ";
+        //    }
+        //    else if (comboBox1.SelectedItem.ToString() == "КО")
+        //    {
+        //        Name_company.Text = "Дополнительное соглашение к договору";
+        //    }
+        //    else
+        //    {
+        //        Name_company.Text = "";
+        //    }
+        //}
 
         private void comboBox4_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -224,7 +225,7 @@ namespace app_for_CD
             comboBox2.Text = "";
             comboBox3.Text = "";
             comboBox1.SelectedItem = "";
-            check_value();
+            //check_value();
             dateTimePicker1.Value = DateTime.Now;
             dateTimePicker2.Value = DateTime.Now;
             dateTimePicker3.Value = DateTime.Now;
@@ -240,7 +241,7 @@ namespace app_for_CD
             if (check_empty_str())
             {
                 SetConnection();
-                query_insert_crp_info();
+                //insert into tbcb_crp_docu_info(crp_cd, SEQ, dist_id_type_cd, dist_id, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, '1', '08', '7001', :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT)   query_insert_crp_info();
                 query_insert_docu_info();
                 query_insert_tbcb_new();
             }
@@ -261,37 +262,37 @@ namespace app_for_CD
             return true;
         }
 
-        void query_insert_crp_info()
+        //void query_insert_crp_info()
 
-        {
-            OracleCommand cmd = con.CreateCommand();
-            //cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
-            //cmd.CommandText = " Select * from tbcb_crp_info where crp_cd = :KZL ";
-            //cmd.CommandType = CommandType.Text;
-            //OracleDataReader dr = cmd.ExecuteReader();
-            //if (dr .HasRows)
-            //{
-            //    return;
-            //}
-            //else
-            //{
-                insert_value();
-           // }
+        //{
+        //    OracleCommand cmd = con.CreateCommand();
+        //    //cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
+        //    //cmd.CommandText = " Select * from tbcb_crp_info where crp_cd = :KZL ";
+        //    //cmd.CommandType = CommandType.Text;
+        //    //OracleDataReader dr = cmd.ExecuteReader();
+        //    //if (dr .HasRows)
+        //    //{
+        //    //    return;
+        //    //}
+        //    //else
+        //    //{
+        //  //      insert_value();
+        //   // }
 
-        }
+        //}
 
-        void insert_value()
-        {
-            OracleCommand cmd = con.CreateCommand();
-            cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
-            cmd.Parameters.Add(new OracleParameter("KZL_NM", textBox6.Text));
-            string issu_dd = dateTimePicker5.Value.ToString("yyyyMMdd");
-            cmd.Parameters.Add(new OracleParameter("ISSU_DD", issu_dd));
-            cmd.Parameters.Add(new OracleParameter("DOC_NUM", comboBox5.Text));
-            cmd.CommandText = "insert into tbcb_crp_info(CRP_CD, CRP_TYPE_CD, SHRT_CRP_NM, CRP_NM, crp_cat_cd, crp_stat_cd, crp_issu_dd,DOCU_NO)values(:KZL, 7001, 'hello', :KZL_NM, '3', '1', :ISSU_DD,:DOC_NUM)";
-            cmd.CommandType = CommandType.Text;
-            cmd.ExecuteNonQuery();
-        }
+        //void insert_value()
+        //{
+        //    OracleCommand cmd = con.CreateCommand();
+        //    cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
+        //    cmd.Parameters.Add(new OracleParameter("KZL_NM", textBox6.Text));
+        //    string issu_dd = dateTimePicker5.Value.ToString("yyyyMMdd");
+        //    cmd.Parameters.Add(new OracleParameter("ISSU_DD", issu_dd));
+        //    cmd.Parameters.Add(new OracleParameter("DOC_NUM", comboBox5.Text));
+        //    cmd.CommandText = "insert into tbcb_crp_info(CRP_CD, CRP_TYPE_CD, SHRT_CRP_NM, CRP_NM, crp_cat_cd, crp_stat_cd, crp_issu_dd,DOCU_NO)values(:KZL, 7001, 'hello', :KZL_NM, '3', '1', :ISSU_DD,:DOC_NUM)";
+        //    cmd.CommandType = CommandType.Text;
+        //    cmd.ExecuteNonQuery();
+        //}
         void query_insert_docu_info()
         {
             OracleCommand cmd = con.CreateCommand();
@@ -457,7 +458,7 @@ namespace app_for_CD
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add(new OracleParameter("KZL", kzl_));
 
-            cmd.CommandText = "Select crp_stat_cd,crp_issu_dd from tbcb_crp_info where crp_cd = :KZL";
+            cmd.CommandText = "Select crp_stat_cd from tbcb_crp_info where crp_cd = :KZL";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             if (dr.HasRows)
@@ -476,7 +477,7 @@ namespace app_for_CD
                         dateTimePicker3.Visible = false;
                         label19.Visible = false;
                     }
-                    inverse_parse_date(dr[1].ToString(), dateTimePicker5);
+                  //  inverse_parse_date(dr[1].ToString(), dateTimePicker5);
                 }
             }
         }
@@ -658,7 +659,7 @@ namespace app_for_CD
 
         private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            check_value();
+        //    check_value();
             find_contract();
         }
 
@@ -684,6 +685,33 @@ namespace app_for_CD
                 {
                     tmp = Int64.Parse(dr[0].ToString());
                    
+                }
+                else
+                {
+                    tmp = 0;
+                }
+                tmp += 1;
+                comboBox5.Text = tmp.ToString();
+            }
+
+        }
+
+        void load_sres()
+        {
+            SetConnection();
+            OracleCommand cmd = con.CreateCommand();
+            // cmd.Parameters.Add(new OracleParameter("NUM_DOCU", comboBox5.Text));
+            //cmd.Parameters.Add(new OracleParameter("SER_DOCU", comboBox1.Text));
+            cmd.CommandText = "select * from series_of_docu ";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                long tmp;
+                if (!is_empty_str(dr[0].ToString()))
+                {
+                    tmp = Int64.Parse(dr[0].ToString());
+
                 }
                 else
                 {

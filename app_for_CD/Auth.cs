@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
+using System.Security.Cryptography;
 
 namespace app_for_CD
 {
@@ -18,7 +19,12 @@ namespace app_for_CD
             InitializeComponent();
             SetConnection();
         }
-
+        static string GetHash(string plaintext)
+        {
+            var sha = new SHA1Managed();
+            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(plaintext));
+            return Convert.ToBase64String(hash);
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             Data.exit = true;
@@ -26,7 +32,14 @@ namespace app_for_CD
             string pass = textBox2.Text;
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add(new OracleParameter("LOGIN", name));
-            cmd.Parameters.Add(new OracleParameter("PASSW", pass));
+            if (name == "admin")
+            {
+                cmd.Parameters.Add(new OracleParameter("PASSW", pass));
+            }
+            else
+            {
+                cmd.Parameters.Add(new OracleParameter("PASSW", GetHash(pass)));
+            }
             cmd.CommandText = "select * from users_cd where login = :LOGIN and PASSWORD = :PASSW";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
@@ -44,9 +57,10 @@ namespace app_for_CD
         {
             Data.login = 1;
             string tmp_str;
-            tmp_str = dr[3].ToString();    
-
+            tmp_str = dr[3].ToString();
             Data.role = Int32.Parse(tmp_str);
+            Data.status = Int16.Parse(dr[4].ToString());
+
         }
 
 
@@ -71,6 +85,7 @@ namespace app_for_CD
         {
             con.Close();
         }
+
 
         private void button2_Click(object sender, EventArgs e)
         {

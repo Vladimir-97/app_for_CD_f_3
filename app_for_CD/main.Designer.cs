@@ -282,6 +282,7 @@
             this.panel4.Size = new System.Drawing.Size(2071, 213);
             this.panel4.TabIndex = 5;
             // 
+
             // button9
             // 
             this.button9.Location = new System.Drawing.Point(44, 45);
@@ -292,6 +293,7 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
+
             // button7
             // 
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -472,6 +474,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button9;
+
     }
 }
 

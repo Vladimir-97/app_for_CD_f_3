@@ -13,6 +13,7 @@ using Oracle.DataAccess.Client;
 namespace app_for_CD
 {
 
+
     public partial class filter : Form
     {
         OracleConnection con = null;
@@ -39,6 +40,7 @@ namespace app_for_CD
                 MessageBox.Show(errorMessage, "Error");
             }
         }
+
 
         #region CheckedChanged
         // Период заключения
@@ -69,11 +71,13 @@ namespace app_for_CD
         }
         // Наименование клиента
         private void CustomerName_CheckedChanged(object sender, EventArgs e)
+
         {
 
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
+
                 Data.f_n = true;
             }
             else
@@ -83,10 +87,12 @@ namespace app_for_CD
         }
         // Цена договора 
         private void ContractPrice_CheckedChanged(object sender, EventArgs e)
+
         {
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
+
                 Data.f_p = true;
             }
             else
@@ -96,10 +102,12 @@ namespace app_for_CD
         }
         // Исчисление
         private void Сalculus_CheckedChanged(object sender, EventArgs e)
+
         {
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
+
                 Data.f_i = true;
             }
             else
@@ -109,10 +117,12 @@ namespace app_for_CD
         }
         // ИНН
         private void INN_CheckedChanged(object sender, EventArgs e)
+
         {
             CheckBox checkBox = (CheckBox)sender;
             if (checkBox.Checked == true)
             {
+
                 Data.f_inn = true;
             }
             else
@@ -166,6 +176,7 @@ namespace app_for_CD
 
         #endregion
         private void CRP_search_Click(object sender, EventArgs e)
+
         {
             this.SetConnection();
             OracleCommand cmd = con.CreateCommand();
@@ -245,6 +256,7 @@ namespace app_for_CD
             if (Data.f_status == true)
             {
                 Data.status = check_stat(comboBox_status.Text);
+
             }
             this.Close();
         }
@@ -259,6 +271,7 @@ namespace app_for_CD
             if (Data.it_ok != true)
             {
 
+
                 Data.f_d = false;
                 Data.f_CRP = false;
                 Data.f_n = false;
@@ -270,6 +283,7 @@ namespace app_for_CD
                 CloseConnection();
             }
             if ((Data.it_ok == true) && ((Data.name_cl == "" && Data.f_n == true) || (Data.number_ser == "" && Data.f_CRP == true) || (Data.price == "" && Data.name_cl == "" && Data.f_p == true) || (Data.isch == "" && Data.f_i == true) || (Data.INN == "" && Data.f_inn == true) || (Data.ser == "" && Data.f_ser == true) || (Data.status == 0 && Data.f_status == true)))
+
             {
                 e.Cancel = true;
                 Data.it_ok = false;
@@ -279,6 +293,5 @@ namespace app_for_CD
             
         }
 
-        
     }
 }

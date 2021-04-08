@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(filter));
+
             this.CustomerName = new System.Windows.Forms.CheckBox();
             this.CRP = new System.Windows.Forms.CheckBox();
             this.PeriodOfImprisonment = new System.Windows.Forms.CheckBox();
@@ -96,6 +97,7 @@
             // Ok
             // 
             this.Ok.Location = new System.Drawing.Point(968, 314);
+
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(75, 23);
             this.Ok.TabIndex = 5;
@@ -103,6 +105,7 @@
             this.Ok.UseVisualStyleBackColor = true;
             this.Ok.Click += new System.EventHandler(this.Ok_Click);
             // 
+
             // dateTimePicker_st
             // 
             this.dateTimePicker_st.CustomFormat = "dd.MM.yyyy";
@@ -111,18 +114,22 @@
             this.dateTimePicker_st.Name = "dateTimePicker_st";
             this.dateTimePicker_st.Size = new System.Drawing.Size(138, 20);
             this.dateTimePicker_st.TabIndex = 6;
+
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+
             this.label1.Location = new System.Drawing.Point(524, 14);
+
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 25);
             this.label1.TabIndex = 7;
             this.label1.Text = "по";
             // 
+
             // dateTimePicker_end
             // 
             this.dateTimePicker_end.CustomFormat = "dd.MM.yyyy";
@@ -210,28 +217,34 @@
             this.textBox_price.Size = new System.Drawing.Size(157, 20);
             this.textBox_price.TabIndex = 46;
             this.textBox_price.TextChanged += new System.EventHandler(this.CRP_search_Click);
+
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+
             this.label18.Location = new System.Drawing.Point(373, 193);
+
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(85, 25);
             this.label18.TabIndex = 47;
             this.label18.Text = "валюта";
             // 
+
             // comboBox_currency
             // 
             this.comboBox_currency.FormattingEnabled = true;
             this.comboBox_currency.Items.AddRange(new object[] {
+
             "СУМ",
             "АМ.ДОЛЛАР",
             "ЕВРО",
             "ЙЕНА",
             "ФУНТ",
             "АВ.ДОЛЛАР"});
+
             this.comboBox_currency.Location = new System.Drawing.Point(478, 196);
             this.comboBox_currency.Name = "comboBox_currency";
             this.comboBox_currency.Size = new System.Drawing.Size(121, 21);
@@ -318,11 +331,13 @@
             this.comboBox_status.Name = "comboBox_status";
             this.comboBox_status.Size = new System.Drawing.Size(244, 21);
             this.comboBox_status.TabIndex = 54;
+
             // 
             // filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+
             this.AutoScroll = true;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
@@ -354,6 +369,7 @@
             this.MinimizeBox = false;
             this.Name = "filter";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+
             this.Text = "Фильтр";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.filter_FormClosing);
             this.ResumeLayout(false);
@@ -362,6 +378,7 @@
         }
 
         #endregion
+
         private System.Windows.Forms.CheckBox CustomerName;
         private System.Windows.Forms.CheckBox CRP;
         private System.Windows.Forms.CheckBox PeriodOfImprisonment;
@@ -385,5 +402,6 @@
         private System.Windows.Forms.TextBox textBox_INN;
         private System.Windows.Forms.CheckBox СontractStatus;
         private System.Windows.Forms.ComboBox comboBox_status;
+
     }
 }

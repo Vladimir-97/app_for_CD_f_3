@@ -17,7 +17,7 @@ namespace app_for_CD
 {
     public partial class Form_agreement : Form
     {
-        
+
         public Form_agreement()
         {
             this.SetConnection();
@@ -243,10 +243,15 @@ namespace app_for_CD
             auth.ShowDialog();
             if (Data.login == 1)
             {
-                if (Data.role == 0)
+                if (Data.role == 0 && Data.status == 1)
                 {
                     button10.Visible = false;
                     button3.Visible = false;
+                }
+                else if (Data.status == 2)
+                {
+                    MessageBox.Show("Пользователь заблокирован");
+                    incorrect_pass();
 
                 }
                 updatePanel2();
@@ -255,11 +260,22 @@ namespace app_for_CD
             else
             {
 
-                if (Data.login == 0 && Data.exit == true)
+
+                if (Data.login == 0 && Data.exit == true && Data.status == 1)
                 {
                     incorrect_pass();
                 }
-                else if (Data.login == 0 && Data.exit == false)
+                else if (Data.status == 2)
+                {
+                    MessageBox.Show("Пользователь заблокирован");
+                    incorrect_pass();
+                }
+                else if (Data.status == 0)
+                {
+                    MessageBox.Show("Неправильный пароль");
+                    incorrect_pass();
+                }
+                else if (Data.exit == false)
                 {
                     this.Close();
                 }
@@ -267,14 +283,19 @@ namespace app_for_CD
         }
         void incorrect_pass()
         {
-            Auth auth = new Auth();
+            Auth auth = new Auth();   ////раскоментировать при сдаче
             auth.ShowDialog();
             if (Data.login == 1)
             {
-                if (Data.role == 0)
+                if (Data.role == 0 && Data.status == 1)
                 {
                     button10.Visible = false;
                     button3.Visible = false;
+                }
+                else if (Data.status == 2)
+                {
+                    MessageBox.Show("Пользователь заблокирован");
+                    incorrect_pass();
 
                 }
                 updatePanel2();
@@ -282,9 +303,14 @@ namespace app_for_CD
             }
             else
             {
-
-                if (Data.login == 0 && Data.exit == true)
+                if (Data.login == 0 && Data.exit == true && Data.status == 1)
                 {
+                    incorrect_pass();
+                }
+                else if (Data.status == 2)
+                {
+                    MessageBox.Show("Пользователь заблокирован");
+
                     incorrect_pass();
                 }
                 else if (Data.login == 0 && Data.exit == false)
@@ -398,6 +424,7 @@ namespace app_for_CD
             cmd.CommandType = CommandType.Text;
             return cmd.ExecuteNonQuery();
         }
+
         private void button6_Click(object sender, EventArgs e)
         {
             
@@ -452,6 +479,7 @@ namespace app_for_CD
                 }
                 cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
                 MessageBox.Show(cmd.CommandText);
+
                 bool find_val = false;
 
                 cmd.CommandType = CommandType.Text;
@@ -474,6 +502,7 @@ namespace app_for_CD
 
             }
 
+
                Data.f_n = false;
                Data.f_CRP = false;
                Data.f_d = false;
@@ -482,6 +511,7 @@ namespace app_for_CD
                Data.f_inn = false;
                Data.f_ser = false;
                Data.f_status = false;
+
         }
 
         private void button10_Click(object sender, EventArgs e)
@@ -495,6 +525,7 @@ namespace app_for_CD
             registration_of_an_invoice f = new registration_of_an_invoice();
             f.ShowDialog();
         }
+
 
         int query_delete_from_NEW_TBCB()
         {
@@ -558,6 +589,7 @@ namespace app_for_CD
                 int i;
                 // Create an array to multiple values at once.
                 string[,] saNames = new string[51, 15];
+
                 for (i = 0; i< dataGridView1.Rows.Count-1; i++)
                 {
                     for (int j = 0; j < 13;j++)
