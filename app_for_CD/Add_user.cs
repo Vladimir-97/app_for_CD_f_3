@@ -69,7 +69,7 @@ namespace app_for_CD
             {
                 Set_Connection();
                 OracleCommand cmd = con.CreateCommand();
-                cmd.Parameters.Add(new OracleParameter("LOGIN", comboBox1.SelectedItem));
+                cmd.Parameters.Add(new OracleParameter("LOGIN", comboBox1.Text));
 
                 cmd.CommandText = "SELECT * FROM Users_cd where login = :LOGIN";
                 cmd.CommandType = CommandType.Text;

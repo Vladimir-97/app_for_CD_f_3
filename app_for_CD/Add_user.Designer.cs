@@ -129,7 +129,7 @@
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.textBox2);
             this.Name = "Add_user";
-            this.Text = "Add_user";
+            this.Text = "Пользователи";
             this.ResumeLayout(false);
             this.PerformLayout();
 
