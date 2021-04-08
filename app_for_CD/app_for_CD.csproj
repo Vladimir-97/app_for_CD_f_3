@@ -115,6 +115,12 @@
     <Compile Include="Add.Designer.cs">
       <DependentUpon>Add.cs</DependentUpon>
     </Compile>
+    <Compile Include="Add_docu_series.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Add_docu_series.Designer.cs">
+      <DependentUpon>Add_docu_series.cs</DependentUpon>
+    </Compile>
     <Compile Include="Add_user.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,7 +134,6 @@
       <DependentUpon>Auth.cs</DependentUpon>
     </Compile>
     <Compile Include="DB.cs" />
-
     <Compile Include="registration_of_an_invoice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,7 +155,6 @@
     <Compile Include="filter.cs">
       <SubType>Form</SubType>
     </Compile>
-
     <Compile Include="filter.Designer.cs">
       <DependentUpon>filter.cs</DependentUpon>
     </Compile>
@@ -164,20 +168,21 @@
     <EmbeddedResource Include="Add.resx">
       <DependentUpon>Add.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Add_docu_series.resx">
+      <DependentUpon>Add_docu_series.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Add_user.resx">
       <DependentUpon>Add_user.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="invoice.resx">
       <DependentUpon>invoice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>
     </EmbeddedResource>
-
     <EmbeddedResource Include="filter.resx">
       <DependentUpon>filter.cs</DependentUpon>
     </EmbeddedResource>
