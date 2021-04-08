@@ -79,9 +79,9 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="oracle.dataaccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
+    <Reference Include="oracle.dataaccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\oracle.dataaccess.dll</HintPath>
+      <HintPath>..\..\..\excell_to_DB\excell_to_DB\oracle.dataaccess.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -128,6 +128,19 @@
       <DependentUpon>Auth.cs</DependentUpon>
     </Compile>
     <Compile Include="DB.cs" />
+
+    <Compile Include="registration_of_an_invoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="registration_of_an_invoice.Designer.cs">
+      <DependentUpon>registration_of_an_invoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="invoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="invoice.Designer.cs">
+      <DependentUpon>invoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +150,7 @@
     <Compile Include="filter.cs">
       <SubType>Form</SubType>
     </Compile>
+
     <Compile Include="filter.Designer.cs">
       <DependentUpon>filter.cs</DependentUpon>
     </Compile>
@@ -156,9 +170,14 @@
     <EmbeddedResource Include="Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="invoice.resx">
+      <DependentUpon>invoice.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="main.resx">
       <DependentUpon>main.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="filter.resx">
       <DependentUpon>filter.cs</DependentUpon>
     </EmbeddedResource>
@@ -172,6 +191,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="registration_of_an_invoice.resx">
+      <DependentUpon>registration_of_an_invoice.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="NeedDataset.xsc">
       <DependentUpon>NeedDataset.xsd</DependentUpon>
     </None>

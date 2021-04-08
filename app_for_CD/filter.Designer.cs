@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(filter));
+
             this.CustomerName = new System.Windows.Forms.CheckBox();
             this.CRP = new System.Windows.Forms.CheckBox();
             this.PeriodOfImprisonment = new System.Windows.Forms.CheckBox();
@@ -47,11 +48,11 @@
             this.label18 = new System.Windows.Forms.Label();
             this.comboBox_currency = new System.Windows.Forms.ComboBox();
             this.ContractSeries = new System.Windows.Forms.CheckBox();
-            this.comboBox_status = new System.Windows.Forms.ComboBox();
+            this.comboBox_ser = new System.Windows.Forms.ComboBox();
             this.INN = new System.Windows.Forms.CheckBox();
             this.textBox_INN = new System.Windows.Forms.TextBox();
             this.СontractStatus = new System.Windows.Forms.CheckBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBox_status = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // CustomerName
@@ -85,7 +86,7 @@
             this.PeriodOfImprisonment.AutoSize = true;
             this.PeriodOfImprisonment.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PeriodOfImprisonment.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.PeriodOfImprisonment.Location = new System.Drawing.Point(9, 83);
+            this.PeriodOfImprisonment.Location = new System.Drawing.Point(9, 14);
             this.PeriodOfImprisonment.Name = "PeriodOfImprisonment";
             this.PeriodOfImprisonment.Size = new System.Drawing.Size(366, 29);
             this.PeriodOfImprisonment.TabIndex = 4;
@@ -96,6 +97,7 @@
             // Ok
             // 
             this.Ok.Location = new System.Drawing.Point(968, 314);
+
             this.Ok.Name = "Ok";
             this.Ok.Size = new System.Drawing.Size(75, 23);
             this.Ok.TabIndex = 5;
@@ -103,31 +105,36 @@
             this.Ok.UseVisualStyleBackColor = true;
             this.Ok.Click += new System.EventHandler(this.Ok_Click);
             // 
+
             // dateTimePicker_st
             // 
             this.dateTimePicker_st.CustomFormat = "dd.MM.yyyy";
             this.dateTimePicker_st.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_st.Location = new System.Drawing.Point(378, 87);
+            this.dateTimePicker_st.Location = new System.Drawing.Point(378, 18);
             this.dateTimePicker_st.Name = "dateTimePicker_st";
             this.dateTimePicker_st.Size = new System.Drawing.Size(138, 20);
             this.dateTimePicker_st.TabIndex = 6;
+
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label1.Location = new System.Drawing.Point(524, 83);
+
+            this.label1.Location = new System.Drawing.Point(524, 14);
+
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(36, 25);
             this.label1.TabIndex = 7;
             this.label1.Text = "по";
             // 
+
             // dateTimePicker_end
             // 
             this.dateTimePicker_end.CustomFormat = "dd.MM.yyyy";
             this.dateTimePicker_end.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_end.Location = new System.Drawing.Point(566, 87);
+            this.dateTimePicker_end.Location = new System.Drawing.Point(566, 18);
             this.dateTimePicker_end.Name = "dateTimePicker_end";
             this.dateTimePicker_end.Size = new System.Drawing.Size(138, 20);
             this.dateTimePicker_end.TabIndex = 8;
@@ -210,28 +217,34 @@
             this.textBox_price.Size = new System.Drawing.Size(157, 20);
             this.textBox_price.TabIndex = 46;
             this.textBox_price.TextChanged += new System.EventHandler(this.CRP_search_Click);
+
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F);
             this.label18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+
             this.label18.Location = new System.Drawing.Point(373, 193);
+
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(85, 25);
             this.label18.TabIndex = 47;
             this.label18.Text = "валюта";
             // 
+
             // comboBox_currency
             // 
             this.comboBox_currency.FormattingEnabled = true;
             this.comboBox_currency.Items.AddRange(new object[] {
+
             "СУМ",
             "АМ.ДОЛЛАР",
             "ЕВРО",
             "ЙЕНА",
             "ФУНТ",
             "АВ.ДОЛЛАР"});
+
             this.comboBox_currency.Location = new System.Drawing.Point(478, 196);
             this.comboBox_currency.Name = "comboBox_currency";
             this.comboBox_currency.Size = new System.Drawing.Size(121, 21);
@@ -242,17 +255,18 @@
             this.ContractSeries.AutoSize = true;
             this.ContractSeries.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ContractSeries.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.ContractSeries.Location = new System.Drawing.Point(9, 9);
+            this.ContractSeries.Location = new System.Drawing.Point(9, 49);
             this.ContractSeries.Name = "ContractSeries";
             this.ContractSeries.Size = new System.Drawing.Size(196, 29);
             this.ContractSeries.TabIndex = 49;
             this.ContractSeries.Text = "Серия договора:";
             this.ContractSeries.UseVisualStyleBackColor = true;
+            this.ContractSeries.CheckedChanged += new System.EventHandler(this.ContractSeries_CheckedChanged);
             // 
-            // comboBox_status
+            // comboBox_ser
             // 
-            this.comboBox_status.FormattingEnabled = true;
-            this.comboBox_status.Items.AddRange(new object[] {
+            this.comboBox_ser.FormattingEnabled = true;
+            this.comboBox_ser.Items.AddRange(new object[] {
             "Э",
             "Ц",
             "ЭГ",
@@ -266,10 +280,10 @@
             "ИФ",
             "КО",
             ""});
-            this.comboBox_status.Location = new System.Drawing.Point(218, 12);
-            this.comboBox_status.Name = "comboBox_status";
-            this.comboBox_status.Size = new System.Drawing.Size(121, 21);
-            this.comboBox_status.TabIndex = 50;
+            this.comboBox_ser.Location = new System.Drawing.Point(218, 52);
+            this.comboBox_ser.Name = "comboBox_ser";
+            this.comboBox_ser.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_ser.TabIndex = 50;
             // 
             // INN
             // 
@@ -296,40 +310,43 @@
             this.СontractStatus.AutoSize = true;
             this.СontractStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.СontractStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.СontractStatus.Location = new System.Drawing.Point(9, 44);
+            this.СontractStatus.Location = new System.Drawing.Point(9, 84);
             this.СontractStatus.Name = "СontractStatus";
             this.СontractStatus.Size = new System.Drawing.Size(203, 29);
             this.СontractStatus.TabIndex = 53;
             this.СontractStatus.Text = "Статус договора:";
             this.СontractStatus.UseVisualStyleBackColor = true;
+            this.СontractStatus.CheckedChanged += new System.EventHandler(this.СontractStatus_CheckedChanged);
             // 
-            // comboBox3
+            // comboBox_status
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
+            this.comboBox_status.FormattingEnabled = true;
+            this.comboBox_status.Items.AddRange(new object[] {
             "действующий документ",
             "недействительный документ",
             "формируется",
             "блокированный документ",
             "нераспознанный документ"});
-            this.comboBox3.Location = new System.Drawing.Point(218, 51);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(244, 21);
-            this.comboBox3.TabIndex = 54;
+            this.comboBox_status.Location = new System.Drawing.Point(218, 91);
+            this.comboBox_status.Name = "comboBox_status";
+            this.comboBox_status.Size = new System.Drawing.Size(244, 21);
+            this.comboBox_status.TabIndex = 54;
+
             // 
             // filter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+
             this.AutoScroll = true;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
             this.ClientSize = new System.Drawing.Size(1106, 361);
-            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.comboBox_status);
             this.Controls.Add(this.СontractStatus);
             this.Controls.Add(this.textBox_INN);
             this.Controls.Add(this.INN);
-            this.Controls.Add(this.comboBox_status);
+            this.Controls.Add(this.comboBox_ser);
             this.Controls.Add(this.ContractSeries);
             this.Controls.Add(this.comboBox_currency);
             this.Controls.Add(this.label18);
@@ -352,6 +369,7 @@
             this.MinimizeBox = false;
             this.Name = "filter";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+
             this.Text = "Фильтр";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.filter_FormClosing);
             this.ResumeLayout(false);
@@ -360,6 +378,7 @@
         }
 
         #endregion
+
         private System.Windows.Forms.CheckBox CustomerName;
         private System.Windows.Forms.CheckBox CRP;
         private System.Windows.Forms.CheckBox PeriodOfImprisonment;
@@ -378,10 +397,11 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox comboBox_currency;
         private System.Windows.Forms.CheckBox ContractSeries;
-        private System.Windows.Forms.ComboBox comboBox_status;
+        private System.Windows.Forms.ComboBox comboBox_ser;
         private System.Windows.Forms.CheckBox INN;
         private System.Windows.Forms.TextBox textBox_INN;
         private System.Windows.Forms.CheckBox СontractStatus;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboBox_status;
+
     }
 }

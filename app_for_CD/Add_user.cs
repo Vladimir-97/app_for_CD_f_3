@@ -11,6 +11,7 @@ using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
+using System.Security.Cryptography;
 
 
 namespace app_for_CD
@@ -21,6 +22,8 @@ namespace app_for_CD
         public Add_user()
         {
             InitializeComponent();
+            comboBox2.Text = "Активен";
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -58,7 +61,12 @@ namespace app_for_CD
         {
             con.Close();
         }
-
+        static string GetHash(string plaintext)
+        {
+            var sha = new SHA1Managed();
+            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(plaintext));
+            return Convert.ToBase64String(hash);
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             if (textBox2.Text != textBox3.Text)
@@ -76,10 +84,22 @@ namespace app_for_CD
                 OracleDataReader dr = cmd.ExecuteReader();
                 if (dr.HasRows)
                 {
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.Add(new OracleParameter("PASS", textBox2.Text));
+                    if (textBox2.Text != "")
+                    {
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.Add(new OracleParameter("PASS", GetHash(textBox2.Text)));
+                    }
+                    if (comboBox2.Text == "Активен" )
+                    {
+                        cmd.Parameters.Add(new OracleParameter("STATUS", 1));
+                    }
+                    else
+                    {
+                        cmd.Parameters.Add(new OracleParameter("STATUS", 2));
+                    }
+
                     cmd.Parameters.Add(new OracleParameter("LOGIN", comboBox1.SelectedItem));
-                    cmd.CommandText = "update users_cd set password = :PASS where login = :LOGIN " ;
+                    cmd.CommandText = "update users_cd set password = :PASS, status = :STATUS where login = :LOGIN " ;
                     cmd.CommandType = CommandType.Text;
                     if (cmd.ExecuteNonQuery() != 0)
                     {
@@ -91,9 +111,10 @@ namespace app_for_CD
                     int id = find_id();
                     id++;
                     cmd.Parameters.Clear();
-                    cmd.Parameters.Add(new OracleParameter("PASS", textBox2.Text));
+                    cmd.Parameters.Add(new OracleParameter("PASS", GetHash(textBox2.Text)));
                     cmd.Parameters.Add(new OracleParameter("LOGIN", comboBox1.Text));
                     cmd.Parameters.Add(new OracleParameter("ID", id));
+
                     cmd.CommandText = "insert into users_cd (password, login, id) values (:PASS, :LOGIN, :ID)";
                     cmd.CommandType = CommandType.Text;
                     if (cmd.ExecuteNonQuery() != 0)
