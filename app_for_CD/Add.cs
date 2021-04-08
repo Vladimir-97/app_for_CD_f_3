@@ -33,21 +33,20 @@ namespace app_for_CD
             this.date_agg_ = date_agg;
             this.state_ = state; 
             this.kzl_ = kzl;
+            Name_company.Enabled = false;
             comboBox4.MaxLength = 12;
             dateTimePicker3.Visible = false;
             label19.Visible = false;
             textBox6.Enabled = false;
             load_sres();
+            load_currency();
        //     Name_company.Enabled = false;
             if (but == 1)
             {
-               // SetConnection();
-                //button4.Visible = false;
-                //button5.Visible = false;
-                //button6.Visible = false;
                 button1.Visible = false;
                 comboBox3.Text = "формируется";
                 comboBox3.Enabled = false;
+                comboBox6.Text = "UZS";
             }
             if (but == 2)
             {
@@ -655,7 +654,9 @@ namespace app_for_CD
 
         private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-        //    check_value();
+            //    check_value();
+            int tmp = comboBox1.SelectedIndex;
+            Name_company.SelectedItem =  Name_company.Items[tmp];
             find_contract();
         }
 
@@ -696,28 +697,36 @@ namespace app_for_CD
         {
             SetConnection();
             OracleCommand cmd = con.CreateCommand();
-            // cmd.Parameters.Add(new OracleParameter("NUM_DOCU", comboBox5.Text));
-            //cmd.Parameters.Add(new OracleParameter("SER_DOCU", comboBox1.Text));
             cmd.CommandText = "select * from series_of_docu ";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
+            comboBox1.Items.Clear();
             while (dr.Read())
             {
-                long tmp;
-                if (!is_empty_str(dr[0].ToString()))
-                {
-                    tmp = Int64.Parse(dr[0].ToString());
+                comboBox1.Items.Add(dr[0].ToString());
+                Name_company.Items.Add(dr[1].ToString());
 
-                }
-                else
-                {
-                    tmp = 0;
-                }
-                tmp += 1;
-                comboBox5.Text = tmp.ToString();
             }
-
+            comboBox1.Items.Add("");
+            Name_company.Items.Add("");
         }
+        void load_currency()
+        {
+        //    SetConnection();
+        //    OracleCommand cmd = con.CreateCommand();
+        //    cmd.CommandText = "select cd from tbcb_cd where cd_grp_no = '000069' ";
+        //    cmd.CommandType = CommandType.Text;
+        //    OracleDataReader dr = cmd.ExecuteReader();
+        //    int tmp = 0;
+        //    comboBox1.Items.Clear();
+        //    while (dr.Read())
+        //    {
+        //        if ((tmp++)%2 == 1)
+        //        comboBox6.Items.Add(dr[0].ToString());
+        //    }
+            comboBox6.Items.Add("");
+        }
+
         private void SetConnection()
         {
             string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";
