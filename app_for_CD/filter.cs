@@ -181,7 +181,30 @@ namespace app_for_CD
             }
         }
 
-
+        int check_stat(string tmp_str)
+        {
+            if (tmp_str == "действующий документ")
+            {
+                return 1;
+            }
+            if (tmp_str == "недействительный документ")
+            {
+                return 2;
+            }
+            if (tmp_str == "формируется")
+            {
+                return 3;
+            }
+            if (tmp_str == "блокированный документ")
+            {
+                return 4;
+            }
+            if (tmp_str == "нераспознанный документ")
+            {
+                return 5;
+            }
+            return 0;
+        }
 
         private void Ok_Click(object sender, EventArgs e)
         {
@@ -221,7 +244,7 @@ namespace app_for_CD
             }
             if (Data.f_status == true)
             {
-                Data.status = comboBox_status.Text;
+                Data.status = check_stat(comboBox_status.Text);
             }
             this.Close();
         }
@@ -246,9 +269,8 @@ namespace app_for_CD
                 Data.f_status = false;
                 CloseConnection();
             }
-            if ((Data.it_ok == true) && ((Data.name_cl == "" && Data.f_n == true) || (Data.number_ser == "" && Data.f_CRP == true) || (Data.price == "" && Data.name_cl == "" && Data.f_p == true) || (Data.isch == "" && Data.f_i == true) || (Data.INN == "" && Data.f_inn == true) || (Data.ser == "" && Data.f_ser == true) || (Data.status == "" && Data.f_status == true)))
+            if ((Data.it_ok == true) && ((Data.name_cl == "" && Data.f_n == true) || (Data.number_ser == "" && Data.f_CRP == true) || (Data.price == "" && Data.name_cl == "" && Data.f_p == true) || (Data.isch == "" && Data.f_i == true) || (Data.INN == "" && Data.f_inn == true) || (Data.ser == "" && Data.f_ser == true) || (Data.status == 0 && Data.f_status == true)))
             {
-                // добавить всеееееееееееееееееееееееееееееееееееееееееееееееееееее
                 e.Cancel = true;
                 Data.it_ok = false;
                 MessageBox.Show("Заполните все строки!");

@@ -490,6 +490,12 @@ namespace app_for_CD
             new_us.Show();
         }
 
+        private void button9_Click(object sender, EventArgs e)
+        {
+            registration_of_an_invoice f = new registration_of_an_invoice();
+            f.ShowDialog();
+        }
+
         int query_delete_from_NEW_TBCB()
         {
             OracleCommand cmd = con.CreateCommand();
@@ -552,8 +558,6 @@ namespace app_for_CD
                 int i;
                 // Create an array to multiple values at once.
                 string[,] saNames = new string[51, 15];
-                saNames[0, 0] = "John";
-                saNames[0, 1] = "Smith";
                 for (i = 0; i< dataGridView1.Rows.Count-1; i++)
                 {
                     for (int j = 0; j < 13;j++)

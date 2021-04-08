@@ -19,7 +19,7 @@ namespace app_for_CD
             public static string isch = "";
             public static string INN = "";
             public static string ser = "";
-            public static string status = "";
+            public static int status = 0;
         #endregion
         #region flag for checkBox
         public static bool f_n { get; set; }
