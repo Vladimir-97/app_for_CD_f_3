@@ -59,7 +59,7 @@ namespace app_for_CD
             string tmp_str;
             tmp_str = dr[3].ToString();
             Data.role = Int32.Parse(tmp_str);
-            Data.status = Int16.Parse(dr[4].ToString());
+            Data.status_t = Int16.Parse(dr[4].ToString());
 
         }
 

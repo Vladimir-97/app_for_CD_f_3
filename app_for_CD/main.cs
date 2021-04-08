@@ -243,12 +243,12 @@ namespace app_for_CD
             auth.ShowDialog();
             if (Data.login == 1)
             {
-                if (Data.role == 0 && Data.status == 1)
+                if (Data.role == 0 && Data.status_t == 1)
                 {
                     button10.Visible = false;
                     button3.Visible = false;
                 }
-                else if (Data.status == 2)
+                else if (Data.status_t == 2)
                 {
                     MessageBox.Show("Пользователь заблокирован");
                     incorrect_pass();
@@ -261,16 +261,16 @@ namespace app_for_CD
             {
 
 
-                if (Data.login == 0 && Data.exit == true && Data.status == 1)
+                if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
                 {
                     incorrect_pass();
                 }
-                else if (Data.status == 2)
+                else if (Data.status_t == 2)
                 {
                     MessageBox.Show("Пользователь заблокирован");
                     incorrect_pass();
                 }
-                else if (Data.status == 0)
+                else if (Data.status_t == 0)
                 {
                     MessageBox.Show("Неправильный пароль");
                     incorrect_pass();
@@ -287,12 +287,12 @@ namespace app_for_CD
             auth.ShowDialog();
             if (Data.login == 1)
             {
-                if (Data.role == 0 && Data.status == 1)
+                if (Data.role == 0 && Data.status_t == 1)
                 {
                     button10.Visible = false;
                     button3.Visible = false;
                 }
-                else if (Data.status == 2)
+                else if (Data.status_t == 2)
                 {
                     MessageBox.Show("Пользователь заблокирован");
                     incorrect_pass();
@@ -303,11 +303,11 @@ namespace app_for_CD
             }
             else
             {
-                if (Data.login == 0 && Data.exit == true && Data.status == 1)
+                if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
                 {
                     incorrect_pass();
                 }
-                else if (Data.status == 2)
+                else if (Data.status_t == 2)
                 {
                     MessageBox.Show("Пользователь заблокирован");
 

@@ -35,7 +35,7 @@ namespace app_for_CD
         public static int login = 0;
         public static int role = 0;
         public static bool exit = false;
-        public static int status = 0;
+        public static int status_t = 0;
 
     }
     static class Program
