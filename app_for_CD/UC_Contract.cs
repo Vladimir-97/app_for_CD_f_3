@@ -15,21 +15,32 @@ using System.Reflection;
 
 namespace app_for_CD
 {
-    public partial class Form_agreement : Form
+    public partial class UC_Contract : UserControl
     {
-
-        public Form_agreement()
+        public UC_Contract()
         {
             this.SetConnection();
             InitializeComponent();
             panel2.Width = 3000;
             //button3.Visible = false;
         }
+        public UC_Contract(int tmp)
+        {
+            this.SetConnection();
+            InitializeComponent();
+            panel2.Width = 3000;
+            if (tmp == 0)
+            {
+                button10.Visible = false;
+                button3.Visible = false;
+            }
+            //button3.Visible = false;
+        }
         void button_enabled()
         {
             button4.Enabled = true;
             button5.Enabled = true;
-           // button3.Enabled = true;
+            // button3.Enabled = true;
         }
         void button_disabled()
         {
@@ -63,13 +74,13 @@ namespace app_for_CD
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Add add = new Add(doc_num, ser_num, date_agg, state, kzl,3);
+            Add add = new Add(doc_num, ser_num, date_agg, state, kzl, 3);
             add.Show();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Add add = new Add(doc_num, ser_num, date_agg, state, kzl,2);
+            Add add = new Add(doc_num, ser_num, date_agg, state, kzl, 2);
             add.Show();
         }
         string check_stat(string tmp_str)
@@ -98,10 +109,10 @@ namespace app_for_CD
         }
         private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            
-        
+
+
         }
-            string check_ser_num(string tmp_str)
+        string check_ser_num(string tmp_str)
         {
             if (tmp_str == "Э")
             {
@@ -157,10 +168,6 @@ namespace app_for_CD
             }
         }
 
-        /// <summary>
-        /// ///////////////////////////////////////////////
-        ///Удаление записи
-        ///
         private void button3_Click(object sender, EventArgs e)
         {
             int is_delete = query_delete_from_docu_info();
@@ -173,9 +180,6 @@ namespace app_for_CD
             }
             else
                 MessageBox.Show("Запись не удалена, проверьте соединение с БД");
-
-            //      cmd.CommandText = "SELECT * from NEW_TBCB where  CRP_CD = :KZL AND DOCU_NO = :NUM_DOCU";
-
         }
         string parse_date(string tmp)
         {
@@ -190,12 +194,12 @@ namespace app_for_CD
         /// ///////////////////////////////////////////////////////// Конец удаления записи ///////////////////////////////
         void fill_data(List<string[]> data, OracleDataReader dr)
         {
-            
+
             data.Add(new string[13]);
             data[data.Count - 1][0] = data.Count.ToString(); ///////////Номер поряжковый
             data[data.Count - 1][1] = check_null(dr[0].ToString());      ///////////Номер договора
             data[data.Count - 1][2] = check_null(dr[1].ToString());   /////////// Серия договора
-            
+
             if (dr[2].ToString() != "")
             {
                 data[data.Count - 1][3] = parse_date(dr[2].ToString()); ;         /////////////// Дата договора
@@ -205,11 +209,11 @@ namespace app_for_CD
             data[data.Count - 1][7] = check_null(dr[5].ToString());     /////Наименование клиента
             data[data.Count - 1][6] = check_null(dr[6].ToString());     /////ИНН
 
-            data[data.Count-1][8] = check_null(check_ser_num(dr[1].ToString()) );
-            data[data.Count-1][9] = check_null(dr[8].ToString() );
+            data[data.Count - 1][8] = check_null(check_ser_num(dr[1].ToString()));
+            data[data.Count - 1][9] = check_null(dr[8].ToString());
             data[data.Count - 1][10] = parse_date(check_null(dr[9].ToString()));
-            data[data.Count-1][11] = parse_date(check_null( dr[7].ToString()));
-            data[data.Count-1][12] = "";
+            data[data.Count - 1][11] = parse_date(check_null(dr[7].ToString()));
+            data[data.Count - 1][12] = "";
 
 
 
@@ -239,85 +243,8 @@ namespace app_for_CD
 
         private void Form_agreement_Load(object sender, EventArgs e)
         {
-            Auth auth = new Auth();   ////раскоментировать при сдаче
-            auth.ShowDialog();
-            if (Data.login == 1)
-            {
-                if (Data.role == 0 && Data.status_t == 1)
-                {
-                    button10.Visible = false;
-                    button3.Visible = false;
-                }
-                else if (Data.status_t == 2)
-                {
-                    MessageBox.Show("Пользователь заблокирован");
-                    incorrect_pass();
-
-                }
-                updatePanel2();
-                button_disabled();
-            }
-            else
-            {
-
-
-                if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
-                {
-                    incorrect_pass();
-                }
-                else if (Data.status_t == 2)
-                {
-                    MessageBox.Show("Пользователь заблокирован");
-                    incorrect_pass();
-                }
-                else if (Data.status_t == 0)
-                {
-                    MessageBox.Show("Неправильный пароль");
-                    incorrect_pass();
-                }
-                else if (Data.exit == false)
-                {
-                    this.Close();
-                }
-            }
-        }
-        void incorrect_pass()
-        {
-            Auth auth = new Auth();   ////раскоментировать при сдаче
-            auth.ShowDialog();
-            if (Data.login == 1)
-            {
-                if (Data.role == 0 && Data.status_t == 1)
-                {
-                    button10.Visible = false;
-                    button3.Visible = false;
-                }
-                else if (Data.status_t == 2)
-                {
-                    MessageBox.Show("Пользователь заблокирован");
-                    incorrect_pass();
-
-                }
-                updatePanel2();
-                button_disabled();
-            }
-            else
-            {
-                if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
-                {
-                    incorrect_pass();
-                }
-                else if (Data.status_t == 2)
-                {
-                    MessageBox.Show("Пользователь заблокирован");
-
-                    incorrect_pass();
-                }
-                else if (Data.login == 0 && Data.exit == false)
-                {
-                    this.Close();
-                }
-            }
+            updatePanel2();
+            button_disabled();
         }
         private void updatePanel2()
         {
@@ -329,17 +256,17 @@ namespace app_for_CD
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             List<string[]> data = new List<string[]>();
-            
+
             while (dr.Read() == true)
             {
                 fill_data(data, dr);
             }
-          
+
             print_data(data);
 
         }
 
-        
+
         private void SetConnection()
         {
             string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";
@@ -369,7 +296,7 @@ namespace app_for_CD
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
             string st_date, end_date;
             st_date = dateTimePicker1.Value.ToString("yyyyMMdd");
             end_date = dateTimePicker2.Value.ToString("yyyyMMdd");
@@ -427,11 +354,12 @@ namespace app_for_CD
 
         private void button6_Click(object sender, EventArgs e)
         {
-            
+
             filter f = new filter();
             f.ShowDialog();
-            
-            if (Data.f_n == true || Data.f_CRP == true || Data.f_d == true || Data.f_p == true || Data.f_i == true || Data.f_inn == true || Data.f_ser == true || Data.f_status == true) {
+
+            if (Data.f_n == true || Data.f_CRP == true || Data.f_d == true || Data.f_p == true || Data.f_i == true || Data.f_inn == true || Data.f_ser == true || Data.f_status == true)
+            {
                 string request = "";
                 string name_cl = "";
 
@@ -444,14 +372,16 @@ namespace app_for_CD
                 {
                     request = request + $" AND C.CRP_CD = {Data.number_ser} ";
                 }
-                if (Data.f_n == true) 
+                if (Data.f_n == true)
                 {
-                    for (int i = 0; i < Data.name_cl.Length; i++) {
+                    for (int i = 0; i < Data.name_cl.Length; i++)
+                    {
                         if (Data.name_cl[i] == '%')
                         {
                             name_cl += '_';
                         }
-                        else{
+                        else
+                        {
                             name_cl += Data.name_cl[i];
                         }
                     }
@@ -503,14 +433,14 @@ namespace app_for_CD
             }
 
 
-               Data.f_n = false;
-               Data.f_CRP = false;
-               Data.f_d = false;
-               Data.f_p = false;
-               Data.f_i = false;
-               Data.f_inn = false;
-               Data.f_ser = false;
-               Data.f_status = false;
+            Data.f_n = false;
+            Data.f_CRP = false;
+            Data.f_d = false;
+            Data.f_p = false;
+            Data.f_i = false;
+            Data.f_inn = false;
+            Data.f_ser = false;
+            Data.f_status = false;
 
         }
 
@@ -590,17 +520,17 @@ namespace app_for_CD
                 // Create an array to multiple values at once.
                 string[,] saNames = new string[51, 15];
 
-                for (i = 0; i< dataGridView1.Rows.Count-1; i++)
+                for (i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
-                    for (int j = 0; j < 13;j++)
+                    for (int j = 0; j < 13; j++)
                     {
-                        saNames[i,j] = check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
-                        oSheet.Cells[i + 2, j + 1] = saNames[i,j];
+                        saNames[i, j] = check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
+                        oSheet.Cells[i + 2, j + 1] = saNames[i, j];
                     }
                 }
 
             }
-            
+
             catch (Exception theException)
             {
                 String errorMessage;
@@ -613,5 +543,4 @@ namespace app_for_CD
             }
         }
     }
-    
 }

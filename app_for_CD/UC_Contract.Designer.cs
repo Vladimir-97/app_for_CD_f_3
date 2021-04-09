@@ -1,16 +1,16 @@
 ﻿namespace app_for_CD
 {
-    partial class Form_agreement
+    partial class UC_Contract
     {
-        /// <summary>
-        /// Обязательная переменная конструктора.
+        /// <summary> 
+        /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Освободить все используемые ресурсы.
+        /// <summary> 
+        /// Clean up any resources being used.
         /// </summary>
-        /// <param name="disposing">истинно, если управляемый ресурс должен быть удален; иначе ложно.</param>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -50,9 +50,6 @@
             this.Поступил = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Зарегистрирован = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cHANG_CRP_BKBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cHANG_CNTR_MGRBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.cHANG_BND_ISUBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel4 = new System.Windows.Forms.Panel();
             this.button9 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
@@ -63,13 +60,16 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.cHANG_CRP_BKBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.cHANG_CNTR_MGRBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.cHANG_BND_ISUBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cHANG_CRP_BKBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cHANG_CNTR_MGRBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cHANG_BND_ISUBindingSource)).BeginInit();
-            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -82,9 +82,9 @@
             this.panel1.Controls.Add(this.dateTimePicker1);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(0, 12);
+            this.panel1.Location = new System.Drawing.Point(0, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2071, 84);
+            this.panel1.Size = new System.Drawing.Size(2071, 93);
             this.panel1.TabIndex = 2;
             // 
             // label2
@@ -277,12 +277,11 @@
             this.panel4.Controls.Add(this.button4);
             this.panel4.Controls.Add(this.button2);
             this.panel4.Controls.Add(this.button5);
-            this.panel4.Location = new System.Drawing.Point(12, 478);
+            this.panel4.Location = new System.Drawing.Point(3, 478);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(2071, 213);
+            this.panel4.Size = new System.Drawing.Size(2080, 213);
             this.panel4.TabIndex = 5;
             // 
-
             // button9
             // 
             this.button9.Location = new System.Drawing.Point(44, 45);
@@ -293,7 +292,6 @@
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
-
             // button7
             // 
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -302,7 +300,7 @@
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button7.Image = global::app_for_CD.Properties.Resources.excel_pic_32;
-            this.button7.Location = new System.Drawing.Point(1218, 131);
+            this.button7.Location = new System.Drawing.Point(1227, 131);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(47, 43);
             this.button7.TabIndex = 4;
@@ -316,9 +314,9 @@
             this.button10.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button10.Location = new System.Drawing.Point(491, 141);
+            this.button10.Location = new System.Drawing.Point(500, 141);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(166, 23);
+            this.button10.Size = new System.Drawing.Size(168, 23);
             this.button10.TabIndex = 6;
             this.button10.Text = "Добавить пользователя";
             this.button10.UseVisualStyleBackColor = false;
@@ -331,7 +329,7 @@
             this.button8.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button8.Location = new System.Drawing.Point(1089, 141);
+            this.button8.Location = new System.Drawing.Point(1098, 141);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(80, 23);
             this.button8.TabIndex = 4;
@@ -346,7 +344,7 @@
             this.button6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(1008, 141);
+            this.button6.Location = new System.Drawing.Point(1017, 141);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 3;
@@ -361,7 +359,7 @@
             this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(663, 141);
+            this.button3.Location = new System.Drawing.Point(672, 141);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 0;
@@ -376,7 +374,7 @@
             this.button4.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(825, 141);
+            this.button4.Location = new System.Drawing.Point(834, 141);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(76, 23);
             this.button4.TabIndex = 1;
@@ -391,7 +389,7 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(744, 141);
+            this.button2.Location = new System.Drawing.Point(753, 141);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 0;
@@ -406,7 +404,7 @@
             this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(907, 141);
+            this.button5.Location = new System.Drawing.Point(916, 141);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(95, 23);
             this.button5.TabIndex = 2;
@@ -414,27 +412,26 @@
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // Form_agreement
+            // UC_Contract
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(1289, 689);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.MinimumSize = new System.Drawing.Size(1305, 728);
-            this.Name = "Form_agreement";
-            this.Text = "Журнал заключения договоров";
+            this.Name = "UC_Contract";
+            this.Size = new System.Drawing.Size(1305, 728);
             this.Load += new System.EventHandler(this.Form_agreement_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.panel4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cHANG_CRP_BKBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cHANG_CNTR_MGRBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cHANG_BND_ISUBindingSource)).EndInit();
-            this.panel4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -474,7 +471,5 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button9;
-
     }
 }
-
