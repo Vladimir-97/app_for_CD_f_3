@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.Name_company = new System.Windows.Forms.ComboBox();
             this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.comboBox5 = new System.Windows.Forms.ComboBox();
             this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
@@ -74,7 +75,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.label20 = new System.Windows.Forms.Label();
-            this.Name_company = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -176,17 +176,197 @@
             this.panel2.Size = new System.Drawing.Size(1192, 235);
             this.panel2.TabIndex = 1;
             // 
+            // Name_company
+            // 
+            this.Name_company.FormattingEnabled = true;
+            this.Name_company.Location = new System.Drawing.Point(781, 60);
+            this.Name_company.Name = "Name_company";
+            this.Name_company.Size = new System.Drawing.Size(394, 21);
+            this.Name_company.TabIndex = 39;
+            // 
             // comboBox6
             // 
             this.comboBox6.FormattingEnabled = true;
             this.comboBox6.Items.AddRange(new object[] {
-            "СУМ",
-            "АМ.ДОЛЛАР",
-            "ЕВРО",
-            "ЙЕНА",
-            "ФУНТ",
-            "АВ.ДОЛЛАР",
-            ""});
+            "AFN",
+            "EUR",
+            "ALL",
+            "DZD",
+            "USD",
+            "AOA",
+            "XCD",
+            "ARS",
+            "AMD",
+            "AWG",
+            "AUD",
+            "AZN",
+            "BSD",
+            "BHD",
+            "BDT",
+            "BBD",
+            "BYN",
+            "BZD",
+            "XOF",
+            "BMD",
+            "INR",
+            "BTN",
+            "BOB",
+            "BOV",
+            "BAM",
+            "BWP",
+            "NOK",
+            "BRL",
+            "BND",
+            "BGN",
+            "BIF",
+            "CVE",
+            "KHR",
+            "XAF",
+            "CAD",
+            "KYD",
+            "CLP",
+            "CLF",
+            "CNY",
+            "COP",
+            "COU",
+            "KMF",
+            "CDF",
+            "NZD",
+            "CRC",
+            "HRK",
+            "CUP",
+            "CUC",
+            "ANG",
+            "CZK",
+            "DKK",
+            "DJF",
+            "DOP",
+            "EGP",
+            "SVC",
+            "ERN",
+            "SZL",
+            "ETB",
+            "FKP",
+            "FJD",
+            "XPF",
+            "GMD",
+            "GEL",
+            "GHS",
+            "GIP",
+            "GTQ",
+            "GBP",
+            "GNF",
+            "GYD",
+            "HTG",
+            "HNL",
+            "HKD",
+            "HUF",
+            "ISK",
+            "IDR",
+            "XDR",
+            "IRR",
+            "IQD",
+            "ILS",
+            "JMD",
+            "JPY",
+            "JOD",
+            "KZT",
+            "KES",
+            "KPW",
+            "KRW",
+            "KWD",
+            "KGS",
+            "LAK",
+            "LBP",
+            "LSL",
+            "ZAR",
+            "LRD",
+            "LYD",
+            "CHF",
+            "MOP",
+            "MKD",
+            "MGA",
+            "MWK",
+            "MYR",
+            "MVR",
+            "MRU",
+            "MUR",
+            "XUA",
+            "MXN",
+            "MXV",
+            "MDL",
+            "MNT",
+            "MAD",
+            "MZN",
+            "MMK",
+            "NAD",
+            "NPR",
+            "NIO",
+            "NGN",
+            "OMR",
+            "PKR",
+            "PAB",
+            "PGK",
+            "PYG",
+            "PEN",
+            "PHP",
+            "PLN",
+            "QAR",
+            "RON",
+            "RUB",
+            "RWF",
+            "SHP",
+            "WST",
+            "STN",
+            "SAR",
+            "RSD",
+            "SCR",
+            "SLL",
+            "SGD",
+            "XSU",
+            "SBD",
+            "SOS",
+            "SSP",
+            "LKR",
+            "SDG",
+            "SRD",
+            "SEK",
+            "CHE",
+            "CHW",
+            "SYP",
+            "TWD",
+            "TJS",
+            "TZS",
+            "THB",
+            "TOP",
+            "TTD",
+            "TND",
+            "TRY",
+            "TMT",
+            "UGX",
+            "UAH",
+            "AED",
+            "USN",
+            "UYU",
+            "UYI",
+            "UYW",
+            "UZS",
+            "VUV",
+            "VES",
+            "VND",
+            "YER",
+            "ZMW",
+            "ZWL",
+            "XBA",
+            "XBB",
+            "XBC",
+            "XBD",
+            "XTS",
+            "XXX",
+            "XAU",
+            "XPD",
+            "XPT",
+            "XAG"});
             this.comboBox6.Location = new System.Drawing.Point(904, 128);
             this.comboBox6.Name = "comboBox6";
             this.comboBox6.Size = new System.Drawing.Size(121, 21);
@@ -250,18 +430,6 @@
             // 
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "Э",
-            "Ц",
-            "ЭГ",
-            "ИП",
-            "Х",
-            "ОЦ",
-            "ИК",
-            "К",
-            "ИУ",
-            "WS",
-            "ИФ",
-            "КО",
             ""});
             this.comboBox1.Location = new System.Drawing.Point(551, 58);
             this.comboBox1.Name = "comboBox1";
@@ -592,28 +760,6 @@
             this.label20.Size = new System.Drawing.Size(167, 16);
             this.label20.TabIndex = 6;
             this.label20.Text = "Операция выполнена";
-            // 
-            // Name_company
-            // 
-            this.Name_company.FormattingEnabled = true;
-            this.Name_company.Items.AddRange(new object[] {
-            "Э",
-            "Ц",
-            "ЭГ",
-            "ИП",
-            "Х",
-            "ОЦ",
-            "ИК",
-            "К",
-            "ИУ",
-            "WS",
-            "ИФ",
-            "КО",
-            ""});
-            this.Name_company.Location = new System.Drawing.Point(781, 60);
-            this.Name_company.Name = "Name_company";
-            this.Name_company.Size = new System.Drawing.Size(394, 21);
-            this.Name_company.TabIndex = 39;
             // 
             // Add
             // 

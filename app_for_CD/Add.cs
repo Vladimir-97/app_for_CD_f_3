@@ -33,21 +33,21 @@ namespace app_for_CD
             this.date_agg_ = date_agg;
             this.state_ = state; 
             this.kzl_ = kzl;
+            Name_company.Enabled = false;
             comboBox4.MaxLength = 12;
             dateTimePicker3.Visible = false;
             label19.Visible = false;
-            textBox6.Enabled = false;
+         //   textBox6.Enabled = false;
             load_sres();
+            load_currency();
        //     Name_company.Enabled = false;
             if (but == 1)
             {
-               // SetConnection();
-                //button4.Visible = false;
-                //button5.Visible = false;
-                //button6.Visible = false;
                 button1.Visible = false;
                 comboBox3.Text = "формируется";
                 comboBox3.Enabled = false;
+                comboBox6.Text = "UZS";
+                dateTimePicker4.Enabled = false;
             }
             if (but == 2)
             {
@@ -227,8 +227,9 @@ namespace app_for_CD
             dateTimePicker3.Value = DateTime.Now;
             dateTimePicker4.Value = DateTime.Now;
             dateTimePicker5.Value = DateTime.Now;
-            label20.Visible = false;
-
+            //label20.Visible = false;
+            //Add_docu_series tmp = new Add_docu_series();
+            //tmp.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -238,6 +239,7 @@ namespace app_for_CD
             {
                 SetConnection();
                 //insert into tbcb_crp_docu_info(crp_cd, SEQ, dist_id_type_cd, dist_id, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, '1', '08', '7001', :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT)   query_insert_crp_info();
+                //insert_value();
                 query_insert_docu_info();
                 query_insert_tbcb_new();
             }
@@ -282,10 +284,10 @@ namespace app_for_CD
         //    OracleCommand cmd = con.CreateCommand();
         //    cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
         //    cmd.Parameters.Add(new OracleParameter("KZL_NM", textBox6.Text));
-        //    string issu_dd = dateTimePicker5.Value.ToString("yyyyMMdd");
-        //    cmd.Parameters.Add(new OracleParameter("ISSU_DD", issu_dd));
+        //    //string issu_dd = dateTimePicker5.Value.ToString("yyyyMMdd");
+        //    //cmd.Parameters.Add(new OracleParameter("ISSU_DD", issu_dd));
         //    cmd.Parameters.Add(new OracleParameter("DOC_NUM", comboBox5.Text));
-        //    cmd.CommandText = "insert into tbcb_crp_info(CRP_CD, CRP_TYPE_CD, SHRT_CRP_NM, CRP_NM, crp_cat_cd, crp_stat_cd, crp_issu_dd,DOCU_NO)values(:KZL, 7001, 'hello', :KZL_NM, '3', '1', :ISSU_DD,:DOC_NUM)";
+        //    cmd.CommandText = "insert into tbcb_crp_info(CRP_CD, CRP_TYPE_CD, SHRT_CRP_NM, CRP_NM, crp_cat_cd, crp_stat_cd, DOCU_NO, crp_issu_dd)values(:KZL, 7001, 'hello', :KZL_NM, '3', '1', :DOC_NUM, '20160824')";
         //    cmd.CommandType = CommandType.Text;
         //    cmd.ExecuteNonQuery();
         //}
@@ -331,9 +333,10 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("PAR_ISCHIS", comboBox2.Text));
             cmd.Parameters.Add(new OracleParameter("CURRENCY", comboBox6.Text));
             cmd.Parameters.Add(new OracleParameter("BLOCK", "20801231"));
+            cmd.Parameters.Add(new OracleParameter("REG", dateTimePicker5.Value.ToString("yyyyMMdd")));
 
 
-            cmd.CommandText = "insert into new_tbcb (crp_cd,docu_price,get_dd,docu_no, archv, descrpt, estm_cd, estm_nm, currency, block_date)  values(:KZL,:DOCU_PR, :REC, :DOCU_NO, :ARCHEE, :DESCR, :ISCHIS, :PAR_ISCHIS, :CURRENCY, :BLOCK)";
+            cmd.CommandText = "insert into new_tbcb (crp_cd,docu_price,get_dd,docu_no, archv, descrpt, estm_cd, estm_nm, currency, block_date,registered)  values(:KZL,:DOCU_PR, :REC, :DOCU_NO, :ARCHEE, :DESCR, :ISCHIS, :PAR_ISCHIS, :CURRENCY, :BLOCK, :REG)";
             cmd.CommandType = CommandType.Text;
             cmd.ExecuteNonQuery();
             if (cmd.ExecuteNonQuery() == 1)
@@ -421,6 +424,7 @@ namespace app_for_CD
                     comboBox6.Text = check_null(dr[8].ToString());
                     if (dr[9].ToString() != "")
                     inverse_parse_date(dr[9].ToString(), dateTimePicker3);
+                    inverse_parse_date(dr[10].ToString(), dateTimePicker5);
 
                 }
             }
@@ -507,10 +511,10 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("CRP_STAT", str));
             cmd.Parameters.Add(new OracleParameter("DOC_NUM", comboBox5.Text));
 
-            string issu_dd = dateTimePicker5.Value.ToString("yyyyMMdd");
-            cmd.Parameters.Add(new OracleParameter("ISSU_DD", issu_dd));
+         //   string issu_dd = dateTimePicker5.Value.ToString("yyyyMMdd");
+          //  cmd.Parameters.Add(new OracleParameter("ISSU_DD", issu_dd));
             cmd.Parameters.Add(new OracleParameter("KZL", kzl_));
-            cmd.CommandText = "update tbcb_crp_info set crp_cat_cd = :CRP_CAT, crp_stat_cd= :CRP_STAT, DOCU_NO = :DOC_NUM, crp_issu_dd = :ISSU_DD where CRP_CD = :KZL";
+            cmd.CommandText = "update tbcb_crp_info set crp_cat_cd = :CRP_CAT, crp_stat_cd= :CRP_STAT, DOCU_NO = :DOC_NUM where CRP_CD = :KZL";
             cmd.CommandType = CommandType.Text;
             cmd.ExecuteNonQuery();
         }
@@ -552,6 +556,7 @@ namespace app_for_CD
                 cmd.Parameters.Add(new OracleParameter("PAR_ISCHIS", comboBox2.Text));
                 cmd.Parameters.Add(new OracleParameter("CURRENCY", comboBox6.Text));
                 cmd.Parameters.Add(new OracleParameter("BLOCK", dateTimePicker3.Value.ToString("yyyyMMdd")));
+                cmd.Parameters.Add(new OracleParameter("REG", dateTimePicker3.Value.ToString("yyyyMMdd")));
 
                 cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
                 string docu_num = comboBox5.Text.ToString();
@@ -559,7 +564,7 @@ namespace app_for_CD
 
 
 
-            cmd.CommandText = "update new_tbcb set docu_price = :DOCU_PR , get_dd = :REC, archv = :ARCHEE, descrpt = :DESCR, estm_cd =:ISCHIS, estm_nm = :PAR_ISCHIS, currency = :CURRENCY, block_date = :BLOCK where crp_cd = :KZL and docu_no = :DOCU_NO";
+            cmd.CommandText = "update new_tbcb set docu_price = :DOCU_PR , get_dd = :REC, archv = :ARCHEE, descrpt = :DESCR, estm_cd =:ISCHIS, estm_nm = :PAR_ISCHIS, currency = :CURRENCY, block_date = :BLOCK, registered = :REG where crp_cd = :KZL and docu_no = :DOCU_NO";
                 cmd.CommandType = CommandType.Text;
                 cmd.ExecuteNonQuery();
                 if (cmd.ExecuteNonQuery() > 0)
@@ -653,6 +658,7 @@ namespace app_for_CD
 
 
 
+
         private void comboBox1_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             //    check_value();
@@ -711,6 +717,23 @@ namespace app_for_CD
             comboBox1.Items.Add("");
             Name_company.Items.Add("");
         }
+        void load_currency()
+        {
+        //    SetConnection();
+        //    OracleCommand cmd = con.CreateCommand();
+        //    cmd.CommandText = "select cd from tbcb_cd where cd_grp_no = '000069' ";
+        //    cmd.CommandType = CommandType.Text;
+        //    OracleDataReader dr = cmd.ExecuteReader();
+        //    int tmp = 0;
+        //    comboBox1.Items.Clear();
+        //    while (dr.Read())
+        //    {
+        //        if ((tmp++)%2 == 1)
+        //        comboBox6.Items.Add(dr[0].ToString());
+        //    }
+            comboBox6.Items.Add("");
+        }
+
         private void SetConnection()
         {
             string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";

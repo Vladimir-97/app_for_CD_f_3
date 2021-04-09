@@ -259,9 +259,11 @@ namespace app_for_CD
             }
             else
             {
-
-
-                if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
+                if (Data.exit == false)
+                {
+                    this.Close();
+                }
+                else if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
                 {
                     incorrect_pass();
                 }
@@ -275,19 +277,23 @@ namespace app_for_CD
                     MessageBox.Show("Неправильный пароль");
                     incorrect_pass();
                 }
-                else if (Data.exit == false)
-                {
-                    this.Close();
-                }
+
             }
         }
         void incorrect_pass()
         {
+            Data.status_t = 0;
+            Data.login = 0;
+            Data.exit = true;
             Auth auth = new Auth();   ////раскоментировать при сдаче
             auth.ShowDialog();
             if (Data.login == 1)
             {
-                if (Data.role == 0 && Data.status_t == 1)
+                if (Data.exit == false)
+                {
+                    this.Close();
+                }
+                else if (Data.role == 0 && Data.status_t == 1)
                 {
                     button10.Visible = false;
                     button3.Visible = false;
@@ -303,19 +309,23 @@ namespace app_for_CD
             }
             else
             {
-                if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
+                if (Data.exit == false)
+                {
+                    this.Close();
+                }
+                else if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
                 {
                     incorrect_pass();
                 }
                 else if (Data.status_t == 2)
                 {
                     MessageBox.Show("Пользователь заблокирован");
-
                     incorrect_pass();
                 }
-                else if (Data.login == 0 && Data.exit == false)
+                else if (Data.status_t == 0)
                 {
-                    this.Close();
+                    MessageBox.Show("Неправильный пароль");
+                    incorrect_pass();
                 }
             }
         }
