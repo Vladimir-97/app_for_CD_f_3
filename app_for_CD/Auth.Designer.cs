@@ -80,7 +80,7 @@
             this.textBox2.Size = new System.Drawing.Size(292, 38);
             this.textBox2.TabIndex = 6;
             this.textBox2.Text = "           Пароль";
-            this.textBox2.Click += new System.EventHandler(this.textBox2_Click);
+            this.textBox2.Enter += new System.EventHandler(this.textBox2_Enter);
             // 
             // label2
             // 

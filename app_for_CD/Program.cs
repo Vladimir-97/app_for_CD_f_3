@@ -48,7 +48,7 @@ namespace app_for_CD
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new TC_Contract());
+            Application.Run(new Auth());
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿namespace app_for_CD
 {
-    partial class TC_Contract
+    partial class TC_Menu
     {
         /// <summary>
         /// Required designer variable.

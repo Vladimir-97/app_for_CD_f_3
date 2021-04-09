@@ -24,6 +24,18 @@ namespace app_for_CD
             panel2.Width = 3000;
             //button3.Visible = false;
         }
+        public UC_Contract(int tmp)
+        {
+            this.SetConnection();
+            InitializeComponent();
+            panel2.Width = 3000;
+            if (tmp == 0)
+            {
+                button10.Visible = false;
+                button3.Visible = false;
+            }
+            //button3.Visible = false;
+        }
         void button_enabled()
         {
             button4.Enabled = true;
@@ -156,10 +168,6 @@ namespace app_for_CD
             }
         }
 
-        /// <summary>
-        /// ///////////////////////////////////////////////
-        ///Удаление записи
-        ///
         private void button3_Click(object sender, EventArgs e)
         {
             int is_delete = query_delete_from_docu_info();
@@ -172,9 +180,6 @@ namespace app_for_CD
             }
             else
                 MessageBox.Show("Запись не удалена, проверьте соединение с БД");
-
-            //      cmd.CommandText = "SELECT * from NEW_TBCB where  CRP_CD = :KZL AND DOCU_NO = :NUM_DOCU";
-
         }
         string parse_date(string tmp)
         {
@@ -238,85 +243,8 @@ namespace app_for_CD
 
         private void Form_agreement_Load(object sender, EventArgs e)
         {
-            Auth auth = new Auth();   ////раскоментировать при сдаче
-            auth.ShowDialog();
-            if (Data.login == 1)
-            {
-                if (Data.role == 0 && Data.status_t == 1)
-                {
-                    button10.Visible = false;
-                    button3.Visible = false;
-                }
-                else if (Data.status_t == 2)
-                {
-                    MessageBox.Show("Пользователь заблокирован");
-                    incorrect_pass();
-
-                }
-                updatePanel2();
-                button_disabled();
-            }
-            else
-            {
-
-
-                if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
-                {
-                    incorrect_pass();
-                }
-                else if (Data.status_t == 2)
-                {
-                    MessageBox.Show("Пользователь заблокирован");
-                    incorrect_pass();
-                }
-                else if (Data.status_t == 0)
-                {
-                    MessageBox.Show("Неправильный пароль");
-                    incorrect_pass();
-                }
-                else if (Data.exit == false)
-                {
-                    //this.Close(); думай
-                }
-            }
-        }
-        void incorrect_pass()
-        {
-            Auth auth = new Auth();   ////раскоментировать при сдаче
-            auth.ShowDialog();
-            if (Data.login == 1)
-            {
-                if (Data.role == 0 && Data.status_t == 1)
-                {
-                    button10.Visible = false;
-                    button3.Visible = false;
-                }
-                else if (Data.status_t == 2)
-                {
-                    MessageBox.Show("Пользователь заблокирован");
-                    incorrect_pass();
-
-                }
-                updatePanel2();
-                button_disabled();
-            }
-            else
-            {
-                if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
-                {
-                    incorrect_pass();
-                }
-                else if (Data.status_t == 2)
-                {
-                    MessageBox.Show("Пользователь заблокирован");
-
-                    incorrect_pass();
-                }
-                else if (Data.login == 0 && Data.exit == false)
-                {
-                    //this.Close(); думай
-                }
-            }
+            updatePanel2();
+            button_disabled();
         }
         private void updatePanel2()
         {

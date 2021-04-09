@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace app_for_CD
 {
-    public partial class TC_Contract : Form
+    public partial class TC_Menu : Form
     {
-        public TC_Contract()
+        public TC_Menu()
         {
             InitializeComponent();
         }

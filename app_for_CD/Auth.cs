@@ -27,37 +27,6 @@ namespace app_for_CD
             byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(plaintext));
             return Convert.ToBase64String(hash);
         }
-        //private void button1_Click(object sender, EventArgs e)
-        //{
-        //    Data.exit = true;
-        //    string name = textBox1.Text;
-        //    string pass = textBox2.Text;
-        //    OracleCommand cmd = con.CreateCommand();
-        //    cmd.Parameters.Add(new OracleParameter("LOGIN", name));
-        //    if (name == "admin")
-        //    {
-        //        cmd.Parameters.Add(new OracleParameter("PASSW", pass));
-        //    }
-        //    else
-        //    {
-        //        cmd.Parameters.Add(new OracleParameter("PASSW", GetHash(pass)));
-        //    }
-        //    cmd.CommandText = "select * from users_cd where login = :LOGIN and PASSWORD = :PASSW";
-        //    cmd.CommandType = CommandType.Text;
-        //    OracleDataReader dr = cmd.ExecuteReader();
-        //    if (dr.HasRows)
-        //    {
-        //        while (dr.Read() == true)
-        //        {
-        //            fill_data(dr);
-        //        }
-        //        Settings.Default["LogName"] = textBox1.Text;
-        //        Settings.Default.Save();
-        //    }
-
-        //    CloseConnection();
-        //    this.Close();
-        //}
         private void fill_data(OracleDataReader dr)
         {
             Data.login = 1;
@@ -106,11 +75,11 @@ namespace app_for_CD
         //    }
         //}
 
-        private void textBox2_Click(object sender, EventArgs e)
-        {
-            textBox2.Text = "";
-            textBox2.PasswordChar = '*';
-        }
+        //private void textBox2_Click(object sender, EventArgs e)
+        //{
+        //    textBox2.Text = "";
+        //    textBox2.PasswordChar = '*';
+        //}
 
         private void button1_Click_1(object sender, EventArgs e)
         {
@@ -138,10 +107,118 @@ namespace app_for_CD
                 }
                 Settings.Default["LogName"] = textBox1.Text;
                 Settings.Default.Save();
-            }
 
-            CloseConnection();
-            this.Close();
+
+                if (Data.login == 1)
+                {
+                    if (Data.role == 0 && Data.status_t == 1)
+                    {
+                        UC_Contract uc_menu = new UC_Contract(0);
+                        TC_Menu tc_menu = new TC_Menu();
+                        tc_menu.ShowDialog();
+                        CloseConnection();
+                        this.Close();
+                    }
+                    else if (Data.status_t == 2)
+                    {
+                        MessageBox.Show("Пользователь заблокирован");
+                        incorrect_pass();
+
+                    }
+                    else if (Data.role == 1 && Data.status != 2)
+                    {
+                        UC_Contract uc_menu = new UC_Contract(0);
+                        TC_Menu tc_menu = new TC_Menu();
+                        tc_menu.ShowDialog();
+                        CloseConnection();
+                        this.Close();
+                    }
+                }
+                else
+                {
+
+
+                    if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
+                    {
+                        incorrect_pass();
+                    }
+                    else if (Data.status_t == 2)
+                    {
+                        MessageBox.Show("Пользователь заблокирован");
+                        incorrect_pass();
+                    }
+                    else if (Data.status_t == 0)
+                    {
+                        MessageBox.Show("Неправильный пароль");
+                        incorrect_pass();
+                    }
+                    else if (Data.exit == false)
+                    {
+                        //this.Close(); думай
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Неправильный логин/пароль или пользователь заблокирован");
+            }
+        }
+        void incorrect_pass()
+        {
+            if (Data.login == 1)
+            {
+                if (Data.role == 0 && Data.status_t == 1)
+                {
+                    UC_Contract uc_menu = new UC_Contract(0);
+                    TC_Menu tc_menu = new TC_Menu();
+                    tc_menu.ShowDialog();
+                    CloseConnection();
+                    this.Close();
+                }
+                else if (Data.status_t == 2)
+                {
+                    MessageBox.Show("Пользователь заблокирован");
+                    incorrect_pass();
+
+                }
+                else if (Data.role == 1 && Data.status != 2)
+                {
+                    UC_Contract uc_menu = new UC_Contract(0);
+                    TC_Menu tc_menu = new TC_Menu();
+                    tc_menu.ShowDialog();
+                    CloseConnection();
+                    this.Close();
+                }
+            }
+            else
+            {
+
+
+                if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
+                {
+                    incorrect_pass();
+                }
+                else if (Data.status_t == 2)
+                {
+                    MessageBox.Show("Пользователь заблокирован");
+                    incorrect_pass();
+                }
+                else if (Data.status_t == 0)
+                {
+                    MessageBox.Show("Неправильный пароль");
+                    incorrect_pass();
+                }
+                else if (Data.exit == false)
+                {
+                    //this.Close(); думай
+                }
+            }
+        }
+
+        private void textBox2_Enter(object sender, EventArgs e)
+        {
+            textBox2.Text = "";
+            textBox2.PasswordChar = '*';
         }
     }
 }
