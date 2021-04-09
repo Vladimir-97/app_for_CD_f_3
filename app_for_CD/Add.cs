@@ -47,6 +47,7 @@ namespace app_for_CD
                 comboBox3.Text = "формируется";
                 comboBox3.Enabled = false;
                 comboBox6.Text = "UZS";
+                dateTimePicker4.Enabled = false;
             }
             if (but == 2)
             {

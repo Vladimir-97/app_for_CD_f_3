@@ -82,12 +82,15 @@ namespace app_for_CD
                 cmd.CommandText = "SELECT * FROM Users_cd where login = :LOGIN";
                 cmd.CommandType = CommandType.Text;
                 OracleDataReader dr = cmd.ExecuteReader();
+                cmd.Parameters.Clear();
                 if (dr.HasRows)
                 {
+                    cmd.Parameters.Clear();
+                    cmd.CommandText = "update users_cd set ";
                     if (textBox2.Text != "")
                     {
-                        cmd.Parameters.Clear();
                         cmd.Parameters.Add(new OracleParameter("PASS", GetHash(textBox2.Text)));
+                        cmd.CommandText += " password = :PASS, ";
                     }
                     if (comboBox2.Text == "Активен" )
                     {
@@ -97,9 +100,17 @@ namespace app_for_CD
                     {
                         cmd.Parameters.Add(new OracleParameter("STATUS", 2));
                     }
+                    cmd.CommandText += " status = :STATUS";
+                    if (textBox1.Text != "")
+                    {
+                        cmd.Parameters.Add(new OracleParameter("FIO", textBox1.Text));
+
+                        cmd.CommandText += " ,fio = :FIO";
+
+                    }
 
                     cmd.Parameters.Add(new OracleParameter("LOGIN", comboBox1.SelectedItem));
-                    cmd.CommandText = "update users_cd set password = :PASS, status = :STATUS where login = :LOGIN " ;
+                    cmd.CommandText += " where login = :LOGIN " ;
                     cmd.CommandType = CommandType.Text;
                     if (cmd.ExecuteNonQuery() != 0)
                     {
@@ -114,8 +125,9 @@ namespace app_for_CD
                     cmd.Parameters.Add(new OracleParameter("PASS", GetHash(textBox2.Text)));
                     cmd.Parameters.Add(new OracleParameter("LOGIN", comboBox1.Text));
                     cmd.Parameters.Add(new OracleParameter("ID", id));
+                    cmd.Parameters.Add(new OracleParameter("FIO", textBox1.Text));
 
-                    cmd.CommandText = "insert into users_cd (password, login, id) values (:PASS, :LOGIN, :ID)";
+                    cmd.CommandText = "insert into users_cd (password, login, id, fio) values (:PASS, :LOGIN, :ID, :FIO)";
                     cmd.CommandType = CommandType.Text;
                     if (cmd.ExecuteNonQuery() != 0)
                     {

@@ -10,5 +10,8 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">TNS_ADMIN=C:\Users\User\Oracle\network\admin;USER ID=GGUZDR_APP;PASSWORD=GGUZDR_APP;DATA SOURCE=10.1.50.12:1521/GDBDRCT1;PERSIST SECURITY INFO=True</Value>
     </Setting>
+    <Setting Name="LogName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
