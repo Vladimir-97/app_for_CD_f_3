@@ -48,7 +48,7 @@ namespace app_for_CD
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form_agreement());
+            Application.Run(new TC_Contract());
         }
     }
 

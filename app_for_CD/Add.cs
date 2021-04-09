@@ -663,7 +663,7 @@ namespace app_for_CD
         {
             //    check_value();
             int tmp = comboBox1.SelectedIndex;
-            Name_company.SelectedItem =  Name_company.Items[tmp];
+            Name_company.SelectedItem = Name_company.Items[tmp];
             find_contract();
         }
 
