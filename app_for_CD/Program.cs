@@ -53,6 +53,8 @@ namespace app_for_CD
             Application.Exit();
             if (Data.exit == true)
             Application.Run(new TC_Menu());
+            //Application.Run(new List_of_contract());
+
 
         }
     }

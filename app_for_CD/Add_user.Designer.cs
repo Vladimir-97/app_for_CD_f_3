@@ -45,7 +45,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(254, 95);
+            this.textBox2.Location = new System.Drawing.Point(254, 85);
             this.textBox2.Name = "textBox2";
             this.textBox2.PasswordChar = '*';
             this.textBox2.Size = new System.Drawing.Size(198, 20);
@@ -53,7 +53,7 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(254, 148);
+            this.textBox3.Location = new System.Drawing.Point(254, 128);
             this.textBox3.Name = "textBox3";
             this.textBox3.PasswordChar = '*';
             this.textBox3.Size = new System.Drawing.Size(198, 20);
@@ -75,7 +75,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label2.Location = new System.Drawing.Point(58, 95);
+            this.label2.Location = new System.Drawing.Point(58, 85);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(130, 22);
             this.label2.TabIndex = 5;
@@ -86,7 +86,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label3.Location = new System.Drawing.Point(58, 148);
+            this.label3.Location = new System.Drawing.Point(58, 128);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(185, 22);
             this.label3.TabIndex = 6;
@@ -126,7 +126,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label4.Location = new System.Drawing.Point(58, 223);
+            this.label4.Location = new System.Drawing.Point(58, 212);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(188, 22);
             this.label4.TabIndex = 10;
@@ -138,7 +138,7 @@
             this.comboBox2.Items.AddRange(new object[] {
             "Активен",
             "Заблокирован"});
-            this.comboBox2.Location = new System.Drawing.Point(254, 227);
+            this.comboBox2.Location = new System.Drawing.Point(254, 216);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(198, 21);
             this.comboBox2.TabIndex = 11;
@@ -148,7 +148,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label5.Location = new System.Drawing.Point(58, 186);
+            this.label5.Location = new System.Drawing.Point(58, 171);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(173, 22);
             this.label5.TabIndex = 13;
@@ -156,7 +156,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(254, 186);
+            this.textBox1.Location = new System.Drawing.Point(254, 171);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(198, 20);
             this.textBox1.TabIndex = 12;
