@@ -22,29 +22,19 @@ namespace app_for_CD
             this.SetConnection();
             InitializeComponent();
             panel2.Width = 3000;
-            //button3.Visible = false;
-        }
-        public UC_Contract(int tmp)
-        {
-            this.SetConnection();
-            InitializeComponent();
-            panel2.Width = 3000;
-            if (tmp == 0)
+            if (Data.role == 0)
             {
                 button10.Visible = false;
                 button3.Visible = false;
             }
-            //button3.Visible = false;
         }
         void button_enabled()
         {
-            button4.Enabled = true;
             button5.Enabled = true;
             // button3.Enabled = true;
         }
         void button_disabled()
         {
-            button4.Enabled = false;
             button5.Enabled = false;
             //button3.Enabled = false;
         }
@@ -70,12 +60,6 @@ namespace app_for_CD
             {
                 button_disabled();
             }
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            Add add = new Add(doc_num, ser_num, date_agg, state, kzl, 3);
-            add.Show();
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -294,46 +278,6 @@ namespace app_for_CD
             updatePanel2();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-            string st_date, end_date;
-            st_date = dateTimePicker1.Value.ToString("yyyyMMdd");
-            end_date = dateTimePicker2.Value.ToString("yyyyMMdd");
-            OracleCommand cmd = con.CreateCommand();
-            cmd.Parameters.Add("ST_DATE", OracleDbType.Varchar2, 8).Value = st_date;
-            cmd.Parameters.Add("END_DATE", OracleDbType.Varchar2, 8).Value = end_date;
-
-            //////////////////////         cmd.CommandText = "SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD where rownum <= 50 AND DOCU_ISSU_DD  > :ST_DATE  AND DOCU_ISSU_DD < :END_DATE"; ;
-            //cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, B.CRTE_DT FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no and rownum <=100 AND DOCU_ISSU_DD  >= :ST_DATE  AND DOCU_ISSU_DD <= :END_DATE order by C.DOCU_ISSU_DD";
-            cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD and rownum<=100  AND DOCU_ISSU_DD  >= :ST_DATE  AND DOCU_ISSU_DD <= :END_DATE order by C.DOCU_ISSU_DD ";
-
-            //ыва
-            bool find_val = false;
-
-            cmd.CommandType = CommandType.Text;
-            OracleDataReader dr = cmd.ExecuteReader();
-            List<string[]> data = new List<string[]>();
-            while (dr.Read())
-            {
-                find_val = true;
-                fill_data(data, dr);
-            }
-            if (find_val)
-            {
-                MessageBox.Show("Найдено!");
-            }
-            else
-            {
-                MessageBox.Show("Не найдено по данному запросу!");
-            }
-            print_data(data);
-
-        }
-
-
-
-
         private void button8_Click(object sender, EventArgs e)
         {
             updatePanel2();
@@ -408,7 +352,6 @@ namespace app_for_CD
                     request = request + $" AND c.DOCU_STAT_CD = '{Data.status}'";
                 }
                 cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
-                MessageBox.Show(cmd.CommandText);
 
                 bool find_val = false;
 

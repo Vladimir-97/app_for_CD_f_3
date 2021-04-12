@@ -92,7 +92,6 @@ namespace app_for_CD
 
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
-           // List<string[]> data = new List<string[]>();
             while (dr.Read())
             {
                 comboBox4.Items.Add(dr[0].ToString() );
@@ -382,26 +381,9 @@ namespace app_for_CD
             show_from_crp_docu_info();
             show_from_crp_info();
 
-            textBox3.Enabled = false;
-            textBox2.Enabled = false;
-            textBox4.Enabled = false;
-            comboBox2.Enabled = false;
-            textBox7.Enabled = false;
-            textBox8.Enabled = false;
-
-            comboBox4.Enabled = false;
-            comboBox1.Enabled = false;
-            comboBox6.Enabled = false;
             textBox6.Enabled = false;
-            Name_company.Enabled = false;
-            dateTimePicker1.Enabled = false;
-            dateTimePicker2.Enabled = false;
-            dateTimePicker3.Enabled = false;
-            dateTimePicker4.Enabled = false;
-            dateTimePicker5.Enabled = false;
-         //   textBox12.Enabled = false;
-            comboBox3.Enabled = false;
-            comboBox5.Enabled = false;
+            comboBox4.Enabled = false;
+
         }
         void show_from_new_tbcb()
         {

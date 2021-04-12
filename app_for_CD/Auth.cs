@@ -113,26 +113,27 @@ namespace app_for_CD
                 {
                     if (Data.role == 0 && Data.status_t == 1)
                     {
-                        UC_Contract uc_menu = new UC_Contract(0);
-                        TC_Menu tc_menu = new TC_Menu();
-                        tc_menu.ShowDialog();
+                        //UC_Contract uc_menu = new UC_Contract();
+                        //TC_Menu tc_menu = new TC_Menu();
+                        //tc_menu.Show();
                         CloseConnection();
                         this.Close();
                     }
                     else if (Data.status_t == 2)
                     {
                         MessageBox.Show("Пользователь заблокирован");
-                        incorrect_pass();
+                        //incorrect_pass();
 
                     }
                     else if (Data.role == 1 && Data.status != 2)
                     {
-                        UC_Contract uc_menu = new UC_Contract(0);
-                        TC_Menu tc_menu = new TC_Menu();
-                        tc_menu.ShowDialog();
+                        //UC_Contract uc_menu = new UC_Contract();
+                        //TC_Menu tc_menu = new TC_Menu();
+                        //tc_menu.Show();
                         CloseConnection();
                         this.Close();
                     }
+
                 }
                 else
                 {
@@ -140,21 +141,17 @@ namespace app_for_CD
 
                     if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
                     {
-                        incorrect_pass();
+                        //incorrect_pass();
                     }
                     else if (Data.status_t == 2)
                     {
                         MessageBox.Show("Пользователь заблокирован");
-                        incorrect_pass();
+                        //incorrect_pass();
                     }
                     else if (Data.status_t == 0)
                     {
                         MessageBox.Show("Неправильный пароль");
-                        incorrect_pass();
-                    }
-                    else if (Data.exit == false)
-                    {
-                        //this.Close(); думай
+                        //incorrect_pass();
                     }
                 }
             }
@@ -163,57 +160,7 @@ namespace app_for_CD
                 MessageBox.Show("Неправильный логин/пароль или пользователь заблокирован");
             }
         }
-        void incorrect_pass()
-        {
-            if (Data.login == 1)
-            {
-                if (Data.role == 0 && Data.status_t == 1)
-                {
-                    UC_Contract uc_menu = new UC_Contract(0);
-                    TC_Menu tc_menu = new TC_Menu();
-                    tc_menu.ShowDialog();
-                    CloseConnection();
-                    this.Close();
-                }
-                else if (Data.status_t == 2)
-                {
-                    MessageBox.Show("Пользователь заблокирован");
-                    incorrect_pass();
-
-                }
-                else if (Data.role == 1 && Data.status != 2)
-                {
-                    UC_Contract uc_menu = new UC_Contract(0);
-                    TC_Menu tc_menu = new TC_Menu();
-                    tc_menu.ShowDialog();
-                    CloseConnection();
-                    this.Close();
-                }
-            }
-            else
-            {
-
-
-                if (Data.login == 0 && Data.exit == true && Data.status_t == 1)
-                {
-                    incorrect_pass();
-                }
-                else if (Data.status_t == 2)
-                {
-                    MessageBox.Show("Пользователь заблокирован");
-                    incorrect_pass();
-                }
-                else if (Data.status_t == 0)
-                {
-                    MessageBox.Show("Неправильный пароль");
-                    incorrect_pass();
-                }
-                else if (Data.exit == false)
-                {
-                    //this.Close(); думай
-                }
-            }
-        }
+  
 
         private void textBox2_Enter(object sender, EventArgs e)
         {
