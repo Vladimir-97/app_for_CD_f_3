@@ -37,6 +37,7 @@ namespace app_for_CD
         public static bool exit = false;
         public static int status_t = 0;
 
+
     }
     static class Program
     {
@@ -49,6 +50,10 @@ namespace app_for_CD
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Auth());
+            Application.Exit();
+            if (Data.exit == true)
+            Application.Run(new TC_Menu());
+
         }
     }
 
