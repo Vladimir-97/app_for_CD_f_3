@@ -23,9 +23,12 @@ namespace app_for_CD
             button3.FlatAppearance.BorderColor = Color.White;
             button3.FlatAppearance.BorderSize = 1;
             dataGridView1.Font = new Font("Times New Roman", 10);
+            button2.Enabled = false;
+
         }
         OracleConnection con = null;
         string ser="", val="";
+        bool changed = false;
         private void button1_Click(object sender, EventArgs e)
         {
             this.CloseConnection();
@@ -37,6 +40,7 @@ namespace app_for_CD
         }
         private void load_contract()
         {
+            button2.Enabled = false;
             OracleCommand cmd = con.CreateCommand();
             cmd.CommandText = "select * from series_of_docu";
 
@@ -125,6 +129,8 @@ namespace app_for_CD
             {
                 ser = dataGridView1.Rows[row].Cells[1].Value.ToString();
                 val = dataGridView1.Rows[row].Cells[2].Value.ToString();
+                //changed = true;
+                button2.Enabled = true;
             }
         }
     }

@@ -41,6 +41,8 @@
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox2
@@ -113,7 +115,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(254, 283);
+            this.button2.Location = new System.Drawing.Point(254, 293);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(180, 23);
             this.button2.TabIndex = 8;
@@ -148,18 +150,37 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label5.Location = new System.Drawing.Point(58, 171);
+            this.label5.Location = new System.Drawing.Point(58, 9);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(173, 22);
-            this.label5.TabIndex = 13;
+            this.label5.TabIndex = 17;
             this.label5.Text = "ФИО пользователя";
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(254, 171);
+            this.textBox1.Location = new System.Drawing.Point(254, 9);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(198, 20);
-            this.textBox1.TabIndex = 12;
+            this.textBox1.TabIndex = 16;
+            // 
+            // comboBox3
+            // 
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Location = new System.Drawing.Point(254, 168);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(198, 21);
+            this.comboBox3.TabIndex = 19;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.label6.Location = new System.Drawing.Point(58, 171);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(63, 22);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Отдел";
             // 
             // Add_user
             // 
@@ -167,6 +188,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
             this.ClientSize = new System.Drawing.Size(570, 328);
+            this.Controls.Add(this.comboBox3);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.comboBox2);
@@ -199,5 +222,7 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.Label label6;
     }
 }
