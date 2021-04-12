@@ -7,19 +7,37 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Oracle.DataAccess.Client;
 
 namespace app_for_CD
 {
     public partial class registration_of_an_invoice : Form
     {
         ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(registration_of_an_invoice));
-        
-        int vertical = 184, horizontal = 14;
+        OracleConnection con = null;
         int count_of_label = 1, count_of_comboBox = 1, count_of_Button = 1, count_of_TextBox = 1;
-        int count_of_label_u = 0, count_of_label_s = 0;
+        int count_of_label_u = 0;
         int row = 0;
         //List<Label> cur_label = new List<Label>();
-        List<Button> cur_button_search_first = new List<Button>();
+        List<ComboBox> comboBoxes = new List<ComboBox>();
+        
+        private void SetConnection()
+        {
+            string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";
+            con = new OracleConnection(ConnectionString);
+            try
+            {
+                con.Open();
+            }
+            catch (Exception e)
+            {
+                String errorMessage;
+                errorMessage = "Error: ";
+                errorMessage = String.Concat(errorMessage, e.Message);
+
+                MessageBox.Show(errorMessage, "Error");
+            }
+        }
         public registration_of_an_invoice()
         {
             InitializeComponent();
@@ -41,9 +59,7 @@ namespace app_for_CD
             cur_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             cur_label.Name = "Label_"+count_of_label.ToString();
             cur_label.Size = new System.Drawing.Size(93, 24);
-            cur_label.TabIndex = 48;
             cur_label.Text = name;
-            //tableLayoutPanel_main.Controls.Add(cur_label, x, y);
             count_of_label++;
             return cur_label;
         }
@@ -54,10 +70,25 @@ namespace app_for_CD
             combo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             combo.Name = "ComboBox_" + count_of_comboBox.ToString();
             combo.Size = new System.Drawing.Size(x,y);
-            combo.TabIndex = 40;
             count_of_comboBox++;
             return combo;
         }
+
+        private void search_for_CRP_Click(object sender, EventArgs e)
+        {
+            this.SetConnection();
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "SELECT CRP_CD FROM TBCB_CRP_DOCU_INFO where rownum <=1000";
+
+
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                comboBox_CRP.Items.Add(dr[0].ToString());
+            }
+        }
+
         private Button searchButton() {
             Button but = new Button();
             but.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
@@ -65,19 +96,35 @@ namespace app_for_CD
             but.Name = "button_"+count_of_Button.ToString();
             //MessageBox.Show(but.Name);
             but.Size = new System.Drawing.Size(23, 21);
-            but.TabIndex = 55;
             but.UseVisualStyleBackColor = true;
             count_of_Button++;
             return but;
         }
-        private TextBox Create_TextBox(int x, int y)
+
+        private void comboBox_CRP_SelectedValueChanged(object sender, EventArgs e)
+        {
+            string crp = comboBox_CRP.SelectedItem.ToString();
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 13).Value = crp;
+            cmd.CommandText = "SELECT CRP_NM FROM TBCB_CRP_INFO where CRP_CD = :KZL";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                textBox_CRP.Text = dr[0].ToString();
+            }
+        }
+
+
+        private TextBox Create_TextBox(int x, int y, bool grey)
         {
             TextBox textBox = new TextBox();
+            if( grey == true )
+                textBox.BackColor = System.Drawing.SystemColors.ActiveBorder;
             textBox.Location = new System.Drawing.Point(4, 3);
             textBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             textBox.Name = "textBox_"+count_of_TextBox;
             textBox.Size = new System.Drawing.Size(x, y);
-            textBox.TabIndex = 55;
             count_of_TextBox++;
             return textBox;
         }
@@ -99,8 +146,8 @@ namespace app_for_CD
             }
             else if (choice == 3)
             {
-                flws.Controls.Add(Create_TextBox(710, 20));
-                flws.Size = new System.Drawing.Size(718, 26);
+                flws.Controls.Add(Create_TextBox(696, 20, true));
+                flws.Size = new System.Drawing.Size(700, 26);
                 tableLayoutPanel_main.Controls.Add(flws, 2, row);
             }
             else if (choice == 4) {
@@ -110,7 +157,7 @@ namespace app_for_CD
             }
             else if (choice == 5)
             {
-                flws.Controls.Add(Create_TextBox(158, 20));
+                flws.Controls.Add(Create_TextBox(158, 20, false));
                 flws.Size = new System.Drawing.Size(205, 41);
                 tableLayoutPanel_main.Controls.Add(flws, 1, row + 1);
             }
@@ -124,7 +171,6 @@ namespace app_for_CD
             }
 
         }
-
         private void MyCreateButton_Click(object sender, EventArgs e)
         {
             row += 2;

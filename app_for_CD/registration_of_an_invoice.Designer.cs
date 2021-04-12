@@ -36,12 +36,19 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBox_CRP = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
             this.tableAdapterManager1 = new app_for_CD.NeedDatasetTableAdapters.TableAdapterManager();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.search_for_CRP = new System.Windows.Forms.Button();
+            this.comboBox_CRP = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
+            this.label10 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel_main = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
@@ -55,10 +62,14 @@
             this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.CRP_search = new System.Windows.Forms.Button();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.ComboBox_CRP = new System.Windows.Forms.ComboBox();
+            this.ComboBox = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.mainpanel_reg = new System.Windows.Forms.Panel();
+            this.Save = new System.Windows.Forms.Button();
+            this.Change = new System.Windows.Forms.Button();
+            this.New = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel_main.SuspendLayout();
@@ -68,6 +79,7 @@
             this.flowLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
+            this.mainpanel_reg.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -98,7 +110,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label3.Location = new System.Drawing.Point(9, 27);
+            this.label3.Location = new System.Drawing.Point(9, 30);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(153, 25);
@@ -107,13 +119,13 @@
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
+            this.label4.CausesValidation = false;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(10, 35);
+            this.label4.Location = new System.Drawing.Point(10, 32);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 24);
+            this.label4.Size = new System.Drawing.Size(110, 24);
             this.label4.TabIndex = 45;
             this.label4.Text = "Номер:";
             // 
@@ -122,7 +134,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(833, 36);
+            this.label5.Location = new System.Drawing.Point(815, 32);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(165, 24);
@@ -131,33 +143,23 @@
             // 
             // textBox_CRP
             // 
-            this.textBox_CRP.Location = new System.Drawing.Point(329, 32);
+            this.textBox_CRP.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.textBox_CRP.Location = new System.Drawing.Point(383, 37);
             this.textBox_CRP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.textBox_CRP.Name = "textBox_CRP";
-            this.textBox_CRP.Size = new System.Drawing.Size(747, 20);
+            this.textBox_CRP.ReadOnly = true;
+            this.textBox_CRP.Size = new System.Drawing.Size(696, 20);
             this.textBox_CRP.TabIndex = 44;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1018, 40);
+            this.button1.Location = new System.Drawing.Point(1004, 32);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 47;
             this.button1.Text = "Add";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.MyCreateButton_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label6.Location = new System.Drawing.Point(10, 66);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(93, 24);
-            this.label6.TabIndex = 48;
-            this.label6.Text = "Договор:";
             // 
             // tableAdapterManager1
             // 
@@ -171,23 +173,45 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(109, 40);
+            this.textBox2.Location = new System.Drawing.Point(164, 32);
             this.textBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(190, 20);
+            this.textBox2.Size = new System.Drawing.Size(188, 20);
             this.textBox2.TabIndex = 55;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
+            this.panel1.Controls.Add(this.search_for_CRP);
+            this.panel1.Controls.Add(this.comboBox_CRP);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.textBox_CRP);
-            this.panel1.Location = new System.Drawing.Point(10, 11);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1116, 66);
             this.panel1.TabIndex = 58;
+            // 
+            // search_for_CRP
+            // 
+            this.search_for_CRP.Image = ((System.Drawing.Image)(resources.GetObject("search_for_CRP.Image")));
+            this.search_for_CRP.Location = new System.Drawing.Point(329, 36);
+            this.search_for_CRP.Name = "search_for_CRP";
+            this.search_for_CRP.Size = new System.Drawing.Size(23, 21);
+            this.search_for_CRP.TabIndex = 64;
+            this.search_for_CRP.UseVisualStyleBackColor = true;
+            this.search_for_CRP.Click += new System.EventHandler(this.search_for_CRP_Click);
+            // 
+            // comboBox_CRP
+            // 
+            this.comboBox_CRP.FormattingEnabled = true;
+            this.comboBox_CRP.Location = new System.Drawing.Point(164, 36);
+            this.comboBox_CRP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.comboBox_CRP.Name = "comboBox_CRP";
+            this.comboBox_CRP.Size = new System.Drawing.Size(158, 21);
+            this.comboBox_CRP.TabIndex = 63;
+            this.comboBox_CRP.SelectedValueChanged += new System.EventHandler(this.comboBox_CRP_SelectedValueChanged);
             // 
             // panel3
             // 
@@ -200,18 +224,83 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
+            this.panel2.Controls.Add(this.label6);
+            this.panel2.Controls.Add(this.textBox4);
+            this.panel2.Controls.Add(this.button3);
+            this.panel2.Controls.Add(this.comboBox1);
+            this.panel2.Controls.Add(this.dateTimePicker3);
+            this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.panel4);
             this.panel2.Controls.Add(this.tableLayoutPanel_main);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.textBox2);
-            this.panel2.Location = new System.Drawing.Point(10, 83);
+            this.panel2.Location = new System.Drawing.Point(0, 72);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1116, 433);
             this.panel2.TabIndex = 59;
+            // 
+            // label6
+            // 
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.label6.Location = new System.Drawing.Point(10, 64);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(110, 24);
+            this.label6.TabIndex = 48;
+            this.label6.Text = "Договор:";
+            // 
+            // textBox4
+            // 
+            this.textBox4.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.textBox4.Location = new System.Drawing.Point(383, 69);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(696, 20);
+            this.textBox4.TabIndex = 46;
+            // 
+            // button3
+            // 
+            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+            this.button3.Location = new System.Drawing.Point(329, 67);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(23, 21);
+            this.button3.TabIndex = 62;
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(164, 67);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(158, 21);
+            this.comboBox1.TabIndex = 61;
+            // 
+            // dateTimePicker3
+            // 
+            this.dateTimePicker3.CustomFormat = "dd.MM.yyyy";
+            this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker3.Location = new System.Drawing.Point(471, 32);
+            this.dateTimePicker3.Name = "dateTimePicker3";
+            this.dateTimePicker3.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker3.TabIndex = 60;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.White;
+            this.label10.Location = new System.Drawing.Point(383, 32);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(59, 24);
+            this.label10.TabIndex = 59;
+            this.label10.Text = "Дата:";
             // 
             // panel4
             // 
@@ -234,18 +323,18 @@
             this.tableLayoutPanel_main.Controls.Add(this.flowLayoutPanel2, 2, 1);
             this.tableLayoutPanel_main.Controls.Add(this.flowLayoutPanel1, 1, 0);
             this.tableLayoutPanel_main.Controls.Add(this.flowLayoutPanel4, 2, 0);
-            this.tableLayoutPanel_main.Location = new System.Drawing.Point(3, 93);
+            this.tableLayoutPanel_main.Location = new System.Drawing.Point(3, 103);
             this.tableLayoutPanel_main.Name = "tableLayoutPanel_main";
             this.tableLayoutPanel_main.RowCount = 2;
             this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.815951F));
             this.tableLayoutPanel_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.18405F));
-            this.tableLayoutPanel_main.Size = new System.Drawing.Size(1099, 337);
+            this.tableLayoutPanel_main.Size = new System.Drawing.Size(1099, 327);
             this.tableLayoutPanel_main.TabIndex = 58;
             // 
             // flowLayoutPanel6
             // 
             this.flowLayoutPanel6.Controls.Add(this.label8);
-            this.flowLayoutPanel6.Location = new System.Drawing.Point(3, 36);
+            this.flowLayoutPanel6.Location = new System.Drawing.Point(3, 35);
             this.flowLayoutPanel6.Name = "flowLayoutPanel6";
             this.flowLayoutPanel6.Size = new System.Drawing.Size(85, 41);
             this.flowLayoutPanel6.TabIndex = 58;
@@ -285,7 +374,7 @@
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Controls.Add(this.textBox3);
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(157, 36);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(157, 35);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(205, 41);
             this.flowLayoutPanel3.TabIndex = 59;
@@ -303,7 +392,7 @@
             this.flowLayoutPanel2.Controls.Add(this.label9);
             this.flowLayoutPanel2.Controls.Add(this.comboBox6);
             this.flowLayoutPanel2.Controls.Add(this.CRP_search);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(376, 36);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(376, 35);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(264, 41);
             this.flowLayoutPanel2.TabIndex = 58;
@@ -346,21 +435,21 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.ComboBox_CRP);
+            this.flowLayoutPanel1.Controls.Add(this.ComboBox);
             this.flowLayoutPanel1.Controls.Add(this.button2);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(157, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(205, 26);
             this.flowLayoutPanel1.TabIndex = 58;
             // 
-            // ComboBox_CRP
+            // ComboBox
             // 
-            this.ComboBox_CRP.FormattingEnabled = true;
-            this.ComboBox_CRP.Location = new System.Drawing.Point(4, 3);
-            this.ComboBox_CRP.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ComboBox_CRP.Name = "ComboBox_CRP";
-            this.ComboBox_CRP.Size = new System.Drawing.Size(158, 21);
-            this.ComboBox_CRP.TabIndex = 40;
+            this.ComboBox.FormattingEnabled = true;
+            this.ComboBox.Location = new System.Drawing.Point(4, 3);
+            this.ComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.ComboBox.Name = "ComboBox";
+            this.ComboBox.Size = new System.Drawing.Size(158, 21);
+            this.ComboBox.TabIndex = 40;
             // 
             // button2
             // 
@@ -376,25 +465,64 @@
             this.flowLayoutPanel4.Controls.Add(this.textBox1);
             this.flowLayoutPanel4.Location = new System.Drawing.Point(376, 3);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(718, 26);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(700, 26);
             this.flowLayoutPanel4.TabIndex = 59;
             // 
             // textBox1
             // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.textBox1.Location = new System.Drawing.Point(4, 3);
             this.textBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(710, 20);
+            this.textBox1.Size = new System.Drawing.Size(696, 20);
             this.textBox1.TabIndex = 55;
+            // 
+            // mainpanel_reg
+            // 
+            this.mainpanel_reg.Controls.Add(this.New);
+            this.mainpanel_reg.Controls.Add(this.Change);
+            this.mainpanel_reg.Controls.Add(this.Save);
+            this.mainpanel_reg.Controls.Add(this.panel1);
+            this.mainpanel_reg.Controls.Add(this.panel2);
+            this.mainpanel_reg.Location = new System.Drawing.Point(10, 11);
+            this.mainpanel_reg.Name = "mainpanel_reg";
+            this.mainpanel_reg.Size = new System.Drawing.Size(1118, 547);
+            this.mainpanel_reg.TabIndex = 65;
+            // 
+            // Save
+            // 
+            this.Save.Location = new System.Drawing.Point(980, 513);
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(100, 30);
+            this.Save.TabIndex = 60;
+            this.Save.Text = "Сохранить";
+            this.Save.UseVisualStyleBackColor = true;
+            // 
+            // Change
+            // 
+            this.Change.Location = new System.Drawing.Point(870, 513);
+            this.Change.Name = "Change";
+            this.Change.Size = new System.Drawing.Size(100, 30);
+            this.Change.TabIndex = 61;
+            this.Change.Text = "Изменить";
+            this.Change.UseVisualStyleBackColor = true;
+            // 
+            // New
+            // 
+            this.New.Location = new System.Drawing.Point(760, 513);
+            this.New.Name = "New";
+            this.New.Size = new System.Drawing.Size(100, 30);
+            this.New.TabIndex = 62;
+            this.New.Text = "Новый";
+            this.New.UseVisualStyleBackColor = true;
             // 
             // registration_of_an_invoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
-            this.ClientSize = new System.Drawing.Size(1130, 528);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(1130, 557);
+            this.Controls.Add(this.mainpanel_reg);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "registration_of_an_invoice";
@@ -415,6 +543,7 @@
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel4.PerformLayout();
+            this.mainpanel_reg.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -428,7 +557,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox_CRP;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label6;
         private NeedDatasetTableAdapters.TableAdapterManager tableAdapterManager1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Panel panel1;
@@ -445,11 +573,23 @@
         private System.Windows.Forms.ComboBox comboBox6;
         private System.Windows.Forms.Button CRP_search;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.ComboBox ComboBox_CRP;
+        private System.Windows.Forms.ComboBox ComboBox;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel4;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.DateTimePicker dateTimePicker3;
+        private System.Windows.Forms.Button search_for_CRP;
+        private System.Windows.Forms.ComboBox comboBox_CRP;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel mainpanel_reg;
+        private System.Windows.Forms.Button New;
+        private System.Windows.Forms.Button Change;
+        private System.Windows.Forms.Button Save;
     }
 }
