@@ -399,6 +399,11 @@ namespace app_for_CD
             f.ShowDialog();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            List_of_contract lof = new List_of_contract();
+            lof.Show();
+        }
 
         int query_delete_from_NEW_TBCB()
         {
@@ -419,7 +424,7 @@ namespace app_for_CD
 
 
 
-        string check_null(string str)
+        string check_null(string str) 
         {
             if (str.Length == 0)
                 return "";
