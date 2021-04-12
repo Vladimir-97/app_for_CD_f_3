@@ -425,7 +425,7 @@ namespace app_for_CD
 
 
 
-        string check_null(string str)
+        string check_null(string str) 
         {
             if (str.Length == 0)
                 return "";
