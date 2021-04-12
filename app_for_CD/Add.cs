@@ -92,7 +92,6 @@ namespace app_for_CD
 
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
-           // List<string[]> data = new List<string[]>();
             while (dr.Read())
             {
                 comboBox4.Items.Add(dr[0].ToString() );

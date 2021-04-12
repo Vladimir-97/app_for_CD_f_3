@@ -157,24 +157,7 @@ namespace app_for_CD
             }
         }
         #endregion
-        #region ComboBox
-        private void CRP_TextChanged(object sender, EventArgs e)
-        {
-            string crp = ComboBox_CRP.Text.ToString();
 
-            OracleCommand cmd = con.CreateCommand();
-            cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 12).Value = crp;
-            cmd.CommandText = "SELECT CRP_NM FROM TBCB_CRP_INFO where CRP_CD = :KZL";
-            //kzl_ = crp;
-            cmd.CommandType = CommandType.Text;
-            OracleDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                textBox_CRP.Text = dr[0].ToString();
-            }
-        }
-
-        #endregion
         private void CRP_search_Click(object sender, EventArgs e)
 
         {
@@ -292,6 +275,5 @@ namespace app_for_CD
             
             
         }
-
     }
 }
