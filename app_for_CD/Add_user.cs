@@ -148,5 +148,9 @@ namespace app_for_CD
 
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
