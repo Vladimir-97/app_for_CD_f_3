@@ -176,6 +176,12 @@
     <Compile Include="UC_Contract.Designer.cs">
       <DependentUpon>UC_Contract.cs</DependentUpon>
     </Compile>
+    <Compile Include="UC_Add_user.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UC_Add_user.Designer.cs">
+      <DependentUpon>UC_Add_user.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Add.resx">
       <DependentUpon>Add.cs</DependentUpon>
     </EmbeddedResource>
@@ -215,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UC_Contract.resx">
       <DependentUpon>UC_Contract.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UC_Add_user.resx">
+      <DependentUpon>UC_Add_user.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="NeedDataset.xsc">
       <DependentUpon>NeedDataset.xsd</DependentUpon>
