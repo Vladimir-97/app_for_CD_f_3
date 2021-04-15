@@ -38,7 +38,6 @@
             this.dateTimePicker_end = new System.Windows.Forms.DateTimePicker();
             this.ComboBox_CRP = new System.Windows.Forms.ComboBox();
             this.textBox_name_cl = new System.Windows.Forms.TextBox();
-            this.CRP_search = new System.Windows.Forms.Button();
             this.ContractPrice = new System.Windows.Forms.CheckBox();
             this.Сalculus = new System.Windows.Forms.CheckBox();
             this.comboBox_calculus = new System.Windows.Forms.ComboBox();
@@ -53,6 +52,7 @@
             this.comboBox_status = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.CRP_search = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -149,16 +149,6 @@
             this.textBox_name_cl.Name = "textBox_name_cl";
             this.textBox_name_cl.Size = new System.Drawing.Size(747, 20);
             this.textBox_name_cl.TabIndex = 41;
-            // 
-            // CRP_search
-            // 
-            this.CRP_search.Image = ((System.Drawing.Image)(resources.GetObject("CRP_search.Image")));
-            this.CRP_search.Location = new System.Drawing.Point(1021, 100);
-            this.CRP_search.Name = "CRP_search";
-            this.CRP_search.Size = new System.Drawing.Size(23, 23);
-            this.CRP_search.TabIndex = 42;
-            this.CRP_search.UseVisualStyleBackColor = true;
-            this.CRP_search.Click += new System.EventHandler(this.CRP_search_Click);
             // 
             // ContractPrice
             // 
@@ -527,6 +517,16 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1093, 365);
             this.panel2.TabIndex = 55;
+            // 
+            // CRP_search
+            // 
+            this.CRP_search.Image = ((System.Drawing.Image)(resources.GetObject("CRP_search.Image")));
+            this.CRP_search.Location = new System.Drawing.Point(1021, 100);
+            this.CRP_search.Name = "CRP_search";
+            this.CRP_search.Size = new System.Drawing.Size(23, 23);
+            this.CRP_search.TabIndex = 42;
+            this.CRP_search.UseVisualStyleBackColor = true;
+            this.CRP_search.Click += new System.EventHandler(this.CRP_search_Click);
             // 
             // filter
             // 

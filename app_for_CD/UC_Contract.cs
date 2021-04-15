@@ -356,10 +356,10 @@ namespace app_for_CD
                 {
                     request = request + $" AND c.DOCU_STAT_CD = '{Data.status}'";
                 }
+
                 cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.ESTM_NM, Y.FIO FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND y.docu_sres = c.docu_sres AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
 
                 bool find_val = false;
-
                 cmd.CommandType = CommandType.Text;
                 OracleDataReader dr = cmd.ExecuteReader();
                 List<string[]> data = new List<string[]>();
@@ -377,7 +377,7 @@ namespace app_for_CD
                     MessageBox.Show("Не найдено по данному запросу!");
                 }
                 print_data(data);
-
+                
             }
 
 

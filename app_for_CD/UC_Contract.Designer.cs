@@ -45,6 +45,7 @@
             this.cHANG_CRP_BKBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cHANG_CNTR_MGRBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cHANG_BND_ISUBindingSource = new System.Windows.Forms.BindingSource(this.components);
+
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,6 +58,7 @@
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Поступил = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Зарегистрирован = new System.Windows.Forms.DataGridViewTextBoxColumn();
+
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel4.SuspendLayout();
@@ -134,16 +136,20 @@
             // 
             // button1
             // 
+
             this.button1.BackColor = System.Drawing.SystemColors.Info;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
+
             this.button1.Location = new System.Drawing.Point(323, 51);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(204, 23);
             this.button1.TabIndex = 8;
+
             this.button1.Text = "Список договоров";
             this.button1.UseVisualStyleBackColor = false;
+
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button9
@@ -261,6 +267,7 @@
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+
             // Column1
             // 
             this.Column1.HeaderText = "№";
