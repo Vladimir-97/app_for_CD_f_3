@@ -192,7 +192,7 @@ namespace app_for_CD
             int id;
             OracleCommand cmd;
             
-            
+            //1
             if (check() == false)
             {
                 this.information.Visible = true;
