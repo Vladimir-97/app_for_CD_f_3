@@ -27,6 +27,9 @@ namespace app_for_CD
                 button10.Visible = false;
                 button3.Visible = false;
             }
+            dataGridView1.Font = new Font("Times New Roman", 10, FontStyle.Bold);
+
+
         }
         void button_enabled()
         {
@@ -194,9 +197,9 @@ namespace app_for_CD
             data[data.Count - 1][6] = check_null(dr[6].ToString());     /////ИНН
 
             data[data.Count - 1][8] = check_null(check_ser_num(dr[1].ToString()));
-            data[data.Count - 1][9] = check_null(dr[8].ToString());
-            data[data.Count - 1][10] = parse_date(check_null(dr[9].ToString()));
-            data[data.Count - 1][11] = parse_date(check_null(dr[7].ToString()));
+            data[data.Count - 1][9] = check_null(dr[7].ToString());
+            data[data.Count - 1][10] = check_null(dr[8].ToString());
+            data[data.Count - 1][11] = check_null(dr[9].ToString());
             data[data.Count - 1][12] = "";
 
 
@@ -208,16 +211,18 @@ namespace app_for_CD
 
         void print_data(List<string[]> data)
         {
+            int i = 0;
             dataGridView1.Rows.Clear();
+
             foreach (string[] s in data)
             {
                 dataGridView1.Rows.Add(s);
-                //if (i %2 == 0)
-                //{
-                //    dataGridView1.DefaultCellStyle.BackColor = Color.Red;
-                //    i++;
-                //}
-
+                for (int j = 0; j < 12; j++)
+                    if (i % 2 == 0)
+                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.DarkGray;
+                    else
+                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.Gray;
+                i++;
             }
         }
 
@@ -235,7 +240,7 @@ namespace app_for_CD
             OracleCommand cmd = con.CreateCommand();
             //cmd.CommandText = "SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD where rownum <= 50";
             //cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, B.CRTE_DT FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
-            cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
+            cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.ESTM_NM, Y.FIO FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND y.docu_sres = c.docu_sres AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
 
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
@@ -351,7 +356,9 @@ namespace app_for_CD
                 {
                     request = request + $" AND c.DOCU_STAT_CD = '{Data.status}'";
                 }
-                cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
+
+                cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.ESTM_NM, Y.FIO FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND y.docu_sres = c.docu_sres AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
+
                 bool find_val = false;
                 cmd.CommandType = CommandType.Text;
                 OracleDataReader dr = cmd.ExecuteReader();

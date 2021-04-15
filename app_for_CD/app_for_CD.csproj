@@ -121,6 +121,12 @@
     <Compile Include="Add_docu_series.Designer.cs">
       <DependentUpon>Add_docu_series.cs</DependentUpon>
     </Compile>
+    <Compile Include="Add_service.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Add_service.Designer.cs">
+      <DependentUpon>Add_service.cs</DependentUpon>
+    </Compile>
     <Compile Include="Add_user.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +144,12 @@
     </Compile>
     <Compile Include="List_of_contract.Designer.cs">
       <DependentUpon>List_of_contract.cs</DependentUpon>
+    </Compile>
+    <Compile Include="List_of_services.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="List_of_services.Designer.cs">
+      <DependentUpon>List_of_services.cs</DependentUpon>
     </Compile>
     <Compile Include="registration_of_an_invoice.cs">
       <SubType>Form</SubType>
@@ -188,6 +200,9 @@
     <EmbeddedResource Include="Add_docu_series.resx">
       <DependentUpon>Add_docu_series.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Add_service.resx">
+      <DependentUpon>Add_service.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Add_user.resx">
       <DependentUpon>Add_user.cs</DependentUpon>
     </EmbeddedResource>
@@ -202,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="List_of_contract.resx">
       <DependentUpon>List_of_contract.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="List_of_services.resx">
+      <DependentUpon>List_of_services.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

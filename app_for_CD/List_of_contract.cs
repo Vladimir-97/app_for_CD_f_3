@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 
@@ -22,8 +18,9 @@ namespace app_for_CD
             button2.FlatAppearance.BorderSize = 1;
             button3.FlatAppearance.BorderColor = Color.White;
             button3.FlatAppearance.BorderSize = 1;
-            dataGridView1.Font = new Font("Times New Roman", 10);
+            dataGridView1.Font = new Font("Times New Roman", 10, FontStyle.Bold);
             button2.Enabled = false;
+            button4.Enabled = false;
 
         }
         OracleConnection con = null;
@@ -41,6 +38,7 @@ namespace app_for_CD
         private void load_contract()
         {
             button2.Enabled = false;
+            button4.Enabled = false;
             OracleCommand cmd = con.CreateCommand();
             cmd.CommandText = "select * from series_of_docu";
 
@@ -122,6 +120,12 @@ namespace app_for_CD
             load_contract();
         }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+            List_of_services los = new List_of_services(ser,val);
+            los.Show();
+        }
+
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             int row = dataGridView1.CurrentRow.Index;
@@ -131,6 +135,7 @@ namespace app_for_CD
                 val = dataGridView1.Rows[row].Cells[2].Value.ToString();
                 //changed = true;
                 button2.Enabled = true;
+                button4.Enabled = true;
             }
         }
     }

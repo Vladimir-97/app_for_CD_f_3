@@ -37,6 +37,19 @@ namespace app_for_CD
 
         }
 
+        private void get_fio()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("LOGIN", textBox1.Text);
+            cmd.CommandText = "Select fio from users_cd where login = :LOGIN";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                Data.get_fio = dr[0].ToString();
+            }
+
+        }
 
 
         OracleConnection con = null;
@@ -116,6 +129,7 @@ namespace app_for_CD
                         //UC_Contract uc_menu = new UC_Contract();
                         //TC_Menu tc_menu = new TC_Menu();
                         //tc_menu.Show();
+                        get_fio();
                         CloseConnection();
                         this.Close();
                     }
@@ -130,6 +144,7 @@ namespace app_for_CD
                         //UC_Contract uc_menu = new UC_Contract();
                         //TC_Menu tc_menu = new TC_Menu();
                         //tc_menu.Show();
+                        get_fio();
                         CloseConnection();
                         this.Close();
                     }
