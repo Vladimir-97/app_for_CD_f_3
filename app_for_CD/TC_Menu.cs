@@ -25,7 +25,9 @@ namespace app_for_CD
             else {
                 this.tabControl1.ItemSize = new Size((this.tabControl1.Width / 7 - 1), 0);
             }
-            
+
+            this.Width = Screen.PrimaryScreen.WorkingArea.Width;
+            this.Height = Screen.PrimaryScreen.WorkingArea.Height;
 
         }
         private void TC_Menu_Resize(object sender, EventArgs e)

@@ -41,22 +41,23 @@ namespace app_for_CD
             load_sres();
             load_currency();
        //     Name_company.Enabled = false;
-            if (but == 1)
+            if (but == 1)   //добавить
             {
                 button1.Visible = false;
                 comboBox3.Text = "формируется";
                 comboBox3.Enabled = false;
                 comboBox6.Text = "UZS";
                 dateTimePicker4.Enabled = false;
+                textBox6.Enabled = false;
             }
-            if (but == 2)
+            if (but == 2) ////просмотр/изменение
             {
                 //  SetConnection();
                 button4.Visible = false;
                 button5.Visible = false;
                 //button6.Visible = false;
-                button1.Visible = false;
-                button2.Visible = false;
+             //   button1.Visible = false;
+             //   button2.Visible = false;
                 button3.Visible = false;
                 inverse_parse_date("20801231", dateTimePicker3);
                 show_values();
@@ -87,7 +88,7 @@ namespace app_for_CD
         {
             this.SetConnection();
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "SELECT CRP_CD FROM TBCB_CRP_DOCU_INFO where rownum <=1000" ;
+            cmd.CommandText = "SELECT CRP_CD FROM TBCB_CRP_INFO where rownum <=1000" ;
 
 
             cmd.CommandType = CommandType.Text;
@@ -96,8 +97,6 @@ namespace app_for_CD
             {
                 comboBox4.Items.Add(dr[0].ToString() );
             }
-
-
         }
 
         //private void check_value()
@@ -290,10 +289,36 @@ namespace app_for_CD
         //    cmd.CommandType = CommandType.Text;
         //    cmd.ExecuteNonQuery();
         //}
+        private int find_max_seq()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
+            cmd.CommandText = "select max(seq) from tbcb_crp_docu_info where crp_cd = :KZL";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr =  cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {
+                    if (dr.HasRows)
+                    {
+                        return Int32.Parse(dr[0].ToString());
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            return 0;
+        }
         void query_insert_docu_info()
         {
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
+            int seq = find_max_seq() + 1;
+            cmd.Parameters.Add(new OracleParameter("SEQ", seq) );
+
             cmd.Parameters.Add(new OracleParameter("NUM_DOCU", comboBox5.Text));
             cmd.Parameters.Add(new OracleParameter("SER_DOCU", comboBox1.Text));
             string st_date = dateTimePicker1.Value.ToString("yyyyMMdd");
@@ -306,7 +331,7 @@ namespace app_for_CD
             //string reg_date = parse_date(dateTimePicker5.Value.ToString(), 1);
             //cmd.Parameters.Add(new OracleParameter("REG_DOCU", reg_date));
 
-            cmd.CommandText = "insert into tbcb_crp_docu_info(crp_cd, SEQ, dist_id_type_cd, dist_id, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, '1', '08', '7001', :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT) ";
+            cmd.CommandText = "insert into tbcb_crp_docu_info(crp_cd, SEQ, dist_id_type_cd, dist_id, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, :SEQ, '08', '7001', :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT) ";
             cmd.CommandType = CommandType.Text;   ///issu_dd yyyymmdd        reg_docu dd.mm.yyyy
             cmd.ExecuteNonQuery();
 
@@ -333,11 +358,12 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("CURRENCY", comboBox6.Text));
             cmd.Parameters.Add(new OracleParameter("BLOCK", "20801231"));
             cmd.Parameters.Add(new OracleParameter("REG", dateTimePicker5.Value.ToString("yyyyMMdd")));
+            cmd.Parameters.Add(new OracleParameter("FIO", Data.get_fio));
+            cmd.Parameters.Add(new OracleParameter("SRES", comboBox1.Text));
 
 
-            cmd.CommandText = "insert into new_tbcb (crp_cd,docu_price,get_dd,docu_no, archv, descrpt, estm_cd, estm_nm, currency, block_date,registered)  values(:KZL,:DOCU_PR, :REC, :DOCU_NO, :ARCHEE, :DESCR, :ISCHIS, :PAR_ISCHIS, :CURRENCY, :BLOCK, :REG)";
+            cmd.CommandText = "insert into new_tbcb (crp_cd,docu_price,get_dd,docu_no, archv, descrpt, estm_cd, estm_nm, currency, block_date,registered, fio, docu_sres)  values(:KZL,:DOCU_PR, :REC, :DOCU_NO, :ARCHEE, :DESCR, :ISCHIS, :PAR_ISCHIS, :CURRENCY, :BLOCK, :REG, :FIO,:SRES)";
             cmd.CommandType = CommandType.Text;
-            cmd.ExecuteNonQuery();
             if (cmd.ExecuteNonQuery() == 1)
                 label20.Visible = true;
             else
@@ -411,6 +437,7 @@ namespace app_for_CD
                 }
             }
 
+
         }
         void show_from_crp_docu_info()
         {
@@ -479,27 +506,27 @@ namespace app_for_CD
         private void button1_Click(object sender, EventArgs e)
         {
             this.SetConnection();
-            update_crp_info();
+           // update_crp_info();
             update_crp_docu_info();
             update_new_tbcb();
         }
-        void update_crp_info()
-        {
-            OracleCommand cmd = con.CreateCommand();
+        //void update_crp_info()
+        //{
+        //    OracleCommand cmd = con.CreateCommand();
 
-            cmd.Parameters.Add(new OracleParameter("CRP_CAT", "1"));
+        //    cmd.Parameters.Add(new OracleParameter("CRP_CAT", "1"));
 
-            string str = reverse_check_stat(comboBox3.Text);
-            cmd.Parameters.Add(new OracleParameter("CRP_STAT", str));
-            cmd.Parameters.Add(new OracleParameter("DOC_NUM", comboBox5.Text));
+        //    string str = reverse_check_stat(comboBox3.Text);
+        //    cmd.Parameters.Add(new OracleParameter("CRP_STAT", str));
+        //    cmd.Parameters.Add(new OracleParameter("DOC_NUM", comboBox5.Text));
 
-         //   string issu_dd = dateTimePicker5.Value.ToString("yyyyMMdd");
-          //  cmd.Parameters.Add(new OracleParameter("ISSU_DD", issu_dd));
-            cmd.Parameters.Add(new OracleParameter("KZL", kzl_));
-            cmd.CommandText = "update tbcb_crp_info set crp_cat_cd = :CRP_CAT, crp_stat_cd= :CRP_STAT, DOCU_NO = :DOC_NUM where CRP_CD = :KZL";
-            cmd.CommandType = CommandType.Text;
-            cmd.ExecuteNonQuery();
-        }
+        // //   string issu_dd = dateTimePicker5.Value.ToString("yyyyMMdd");
+        //  //  cmd.Parameters.Add(new OracleParameter("ISSU_DD", issu_dd));
+        //    cmd.Parameters.Add(new OracleParameter("KZL", kzl_));
+        //    cmd.CommandText = "update tbcb_crp_info set crp_cat_cd = :CRP_CAT, crp_stat_cd= :CRP_STAT, DOCU_NO = :DOC_NUM where CRP_CD = :KZL";
+        //    cmd.CommandType = CommandType.Text;
+        //    cmd.ExecuteNonQuery();
+        //}
         void update_crp_docu_info()
         {
             OracleCommand cmd = con.CreateCommand();
@@ -538,15 +565,16 @@ namespace app_for_CD
                 cmd.Parameters.Add(new OracleParameter("PAR_ISCHIS", comboBox2.Text));
                 cmd.Parameters.Add(new OracleParameter("CURRENCY", comboBox6.Text));
                 cmd.Parameters.Add(new OracleParameter("BLOCK", dateTimePicker3.Value.ToString("yyyyMMdd")));
-                cmd.Parameters.Add(new OracleParameter("REG", dateTimePicker3.Value.ToString("yyyyMMdd")));
+                cmd.Parameters.Add(new OracleParameter("REG", dateTimePicker5.Value.ToString("yyyyMMdd")));
 
                 cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
                 string docu_num = comboBox5.Text.ToString();
                 cmd.Parameters.Add(new OracleParameter("DOCU_NO", docu_num));
+                cmd.Parameters.Add(new OracleParameter("SRES", comboBox1.Text));
 
 
 
-            cmd.CommandText = "update new_tbcb set docu_price = :DOCU_PR , get_dd = :REC, archv = :ARCHEE, descrpt = :DESCR, estm_cd =:ISCHIS, estm_nm = :PAR_ISCHIS, currency = :CURRENCY, block_date = :BLOCK, registered = :REG where crp_cd = :KZL and docu_no = :DOCU_NO";
+            cmd.CommandText = "update new_tbcb set docu_price = :DOCU_PR , get_dd = :REC, archv = :ARCHEE, descrpt = :DESCR, estm_cd =:ISCHIS, estm_nm = :PAR_ISCHIS, currency = :CURRENCY, block_date = :BLOCK, registered = :REG where crp_cd = :KZL and docu_no = :DOCU_NO and docu_sres = :SRES";
                 cmd.CommandType = CommandType.Text;
                 cmd.ExecuteNonQuery();
                 if (cmd.ExecuteNonQuery() > 0)
