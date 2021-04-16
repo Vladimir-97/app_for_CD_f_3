@@ -49,6 +49,7 @@
             this.password_textBox_0 = new System.Windows.Forms.TextBox();
             this.Save = new System.Windows.Forms.Button();
             this.Add = new System.Windows.Forms.Button();
+            this.Clear = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -61,6 +62,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panel1.Controls.Add(this.Clear);
             this.panel1.Controls.Add(this.change);
             this.panel1.Controls.Add(this.information);
             this.panel1.Controls.Add(this.tableLayoutPanel2);
@@ -85,13 +87,15 @@
             // 
             // information
             // 
+            this.information.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.information.AutoSize = true;
             this.information.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.information.ForeColor = System.Drawing.Color.DarkRed;
             this.information.Location = new System.Drawing.Point(26, 696);
             this.information.Name = "information";
             this.information.Size = new System.Drawing.Size(252, 20);
             this.information.TabIndex = 1;
-            this.information.Text = "Отчет об выполнении опреации";
+            this.information.Text = "Отчет об выполнении операции";
             this.information.Visible = false;
             // 
             // tableLayoutPanel2
@@ -195,11 +199,13 @@
             // 
             // FIO_textBox_0
             // 
+            this.FIO_textBox_0.BackColor = System.Drawing.SystemColors.Window;
             this.FIO_textBox_0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FIO_textBox_0.Location = new System.Drawing.Point(164, 3);
             this.FIO_textBox_0.Name = "FIO_textBox_0";
             this.FIO_textBox_0.Size = new System.Drawing.Size(227, 20);
             this.FIO_textBox_0.TabIndex = 4;
+            this.FIO_textBox_0.Click += new System.EventHandler(this.Click_on_tc);
             // 
             // Position_label_0
             // 
@@ -222,6 +228,7 @@
             this.Position_comboBox_0.Name = "Position_comboBox_0";
             this.Position_comboBox_0.Size = new System.Drawing.Size(169, 21);
             this.Position_comboBox_0.TabIndex = 1;
+            this.Position_comboBox_0.Click += new System.EventHandler(this.Click_on_tc);
             // 
             // status_label_0
             // 
@@ -246,6 +253,7 @@
             this.status_comboBox_0.Name = "status_comboBox_0";
             this.status_comboBox_0.Size = new System.Drawing.Size(138, 21);
             this.status_comboBox_0.TabIndex = 12;
+            this.status_comboBox_0.Click += new System.EventHandler(this.Click_on_tc);
             // 
             // Login_textBox_0
             // 
@@ -256,6 +264,8 @@
             this.Login_textBox_0.TabIndex = 14;
             this.Login_textBox_0.Text = "Логин";
             this.Login_textBox_0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Login_textBox_0.Enter += new System.EventHandler(this.textBox_Enter);
+            this.Login_textBox_0.Click += new System.EventHandler(this.Click_on_tc);
             // 
             // password_textBox_0
             // 
@@ -266,6 +276,8 @@
             this.password_textBox_0.TabIndex = 5;
             this.password_textBox_0.Text = "Пароль";
             this.password_textBox_0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.password_textBox_0.Enter += new System.EventHandler(this.textBox_Enter);
+            this.password_textBox_0.Click += new System.EventHandler(this.Click_on_tc);
             // 
             // Save
             // 
@@ -288,6 +300,17 @@
             this.Add.Text = "Добавить";
             this.Add.UseVisualStyleBackColor = true;
             this.Add.Click += new System.EventHandler(this.Add_Click);
+            // 
+            // Clear
+            // 
+            this.Clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Clear.Location = new System.Drawing.Point(930, 696);
+            this.Clear.Name = "Clear";
+            this.Clear.Size = new System.Drawing.Size(75, 23);
+            this.Clear.TabIndex = 16;
+            this.Clear.Text = "Очистить";
+            this.Clear.UseVisualStyleBackColor = true;
+            this.Clear.Click += new System.EventHandler(this.clear_Click);
             // 
             // UC_Add_user
             // 
@@ -328,5 +351,6 @@
         private System.Windows.Forms.TextBox FIO_textBox_0;
         private System.Windows.Forms.Label information;
         private System.Windows.Forms.Button change;
+        private System.Windows.Forms.Button Clear;
     }
 }

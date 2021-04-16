@@ -15,6 +15,7 @@ namespace app_for_CD
     public partial class UC_Add_user : UserControl
     {
         int count_row = 0;
+        int count_of_table_row = 8;
         string FIO, Position, Status, Login;
         public UC_Add_user()
         {
@@ -84,6 +85,7 @@ namespace app_for_CD
             cur_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             cur_label.Size = new System.Drawing.Size(200, 25);
             cur_label.Text = name;
+            
             return cur_label;
             
         }
@@ -104,6 +106,8 @@ namespace app_for_CD
                 textBox.Text = "Пароль";
                 textBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             }
+            textBox.Enter += new System.EventHandler(this.textBox_Enter);
+            textBox.Click += new System.EventHandler(this.Click_on_tc);
             return textBox;
         }
         private ComboBox CreateComboBox(int cur_combo, int x, int y)
@@ -119,6 +123,7 @@ namespace app_for_CD
             comboBox.Location = new System.Drawing.Point(512, 3);
             comboBox.Name = $"{count_row}";
             comboBox.Size = new System.Drawing.Size(x, y);
+            comboBox.Click += new System.EventHandler(this.Click_on_tc);
             return comboBox;
         }
         private void insert() {
@@ -162,14 +167,15 @@ namespace app_for_CD
 
         }
         private bool check() {
-
+            bool f = false;
             for (int i = 0; i < tableLayoutPanel1.Controls.Count; i++)
             {
                 if (tableLayoutPanel1.Controls[i] is TextBox || tableLayoutPanel1.Controls[i] is ComboBox)
                 {
-                    if (tableLayoutPanel1.Controls[i].Text == null || tableLayoutPanel1.Controls[i].Text == "")
+                    if (tableLayoutPanel1.Controls[i].Text == null || tableLayoutPanel1.Controls[i].Text == "" || tableLayoutPanel1.Controls[i].Text == "Пароль" || tableLayoutPanel1.Controls[i].Text == "Логин")
                     {
-                        return false;
+                        tableLayoutPanel1.Controls[i].BackColor = System.Drawing.Color.Red;
+                        f = true;
                     }
                 }
             }
@@ -177,7 +183,9 @@ namespace app_for_CD
                 this.information.Visible = true;
                 this.information.Text = "Нажмите кнопку добавить, чтобы ввести данные!";
             }
-
+            if (f == true) {
+                return false;
+            }
             return true;
         }
         private void Remove()
@@ -187,69 +195,57 @@ namespace app_for_CD
                 tableLayoutPanel1.Controls[i].Dispose();
             }
         }
+
+        private void textBox_Enter(object sender, EventArgs e)
+        {
+            if ( (sender as TextBox).Text == "Пароль" || (sender as TextBox).Text == "Логин") {
+                (sender as TextBox).Text = "";
+            }
+        }
+
+        private void clear_Click(object sender, EventArgs e)
+        {
+            Remove();
+        }
+
+        private void Click_on_tc(object sender, EventArgs e)
+        {
+            if (sender is TextBox && (sender as TextBox).BackColor == System.Drawing.Color.Red) { 
+                (sender as TextBox).BackColor = System.Drawing.Color.White;
+            }
+            if (sender is ComboBox && (sender as ComboBox).BackColor == System.Drawing.Color.Red)
+            {
+                (sender as ComboBox).BackColor = System.Drawing.Color.White;
+            }
+        }
+        //1
         private void Save_Click(object sender, EventArgs e)
         {
             int id;
             OracleCommand cmd;
-            
-            //1
             if (check() == false)
             {
                 this.information.Visible = true;
                 this.information.Text = "Заполните все поля!";
             }
-            for (int i = 0; i < tableLayoutPanel1.Controls.Count / 8; i++)
+            else
             {
-                cmd = con.CreateCommand();
-                cmd.Parameters.Add(new OracleParameter("LOGIN", tableLayoutPanel1.Controls[6 * (i + 1)].Text));
-                cmd.CommandText = "SELECT * FROM Users_cd where login = :LOGIN";
-                cmd.CommandType = CommandType.Text;
-                OracleDataReader dr = cmd.ExecuteReader();
-                cmd.Parameters.Clear();
-                if (dr.HasRows)
+                for (int i = 0; i < tableLayoutPanel1.Controls.Count / count_of_table_row; i++)
                 {
-                    cmd.Parameters.Clear();
-
-                    cmd.CommandText = "update users_cd set ";
-                    cmd.Parameters.Add(new OracleParameter("PASS", GetHash(tableLayoutPanel1.Controls[7 * (i + 1)].Text)));
-                    cmd.CommandText += " password = :PASS, ";
-                    
-                    if (tableLayoutPanel1.Controls[5].Text == "Активен")
-                    {
-                        cmd.Parameters.Add(new OracleParameter("STATUS", 1));
-                    }
-                    else
-                    {
-                        cmd.Parameters.Add(new OracleParameter("STATUS", 2));
-                    }
-                    cmd.CommandText += " status = :STATUS";
-
-                    cmd.Parameters.Add(new OracleParameter("FIO", tableLayoutPanel1.Controls[1 * (i + 1)].Text));
-
-                    cmd.CommandText += " ,fio = :FIO";
-
-                    cmd.Parameters.Add(new OracleParameter("POSITION", tableLayoutPanel1.Controls[3 * (i + 1)].Text));
-                    cmd.CommandText += " ,POSITION = :POSITION";
-
-                    cmd.Parameters.Add(new OracleParameter("LOGIN", tableLayoutPanel1.Controls[6 * (i + 1)].Text));
-                    cmd.CommandText += " where login = :LOGIN ";
-                    
+                    cmd = con.CreateCommand();
+                    cmd.Parameters.Add(new OracleParameter("LOGIN", tableLayoutPanel1.Controls[count_of_table_row * i+6].Text));
+                    cmd.CommandText = "SELECT * FROM Users_cd where login = :LOGIN";
                     cmd.CommandType = CommandType.Text;
-                    if (cmd.ExecuteNonQuery() != 0)
+                    OracleDataReader dr = cmd.ExecuteReader();
+                    cmd.Parameters.Clear();
+                    if (dr.HasRows)
                     {
-                        MessageBox.Show("Успешно");
-                    }
-                }
-                else
-                {
-                
-                        id = find_id();
-                        id++;
-                        cmd = con.CreateCommand();
+                        cmd.Parameters.Clear();
+                        cmd.CommandText = "update users_cd set ";
+                        cmd.Parameters.Add(new OracleParameter("PASS", GetHash(tableLayoutPanel1.Controls[count_of_table_row * i + 7].Text)));
+                        cmd.CommandText += " password = :PASS, ";
 
-                        cmd.Parameters.Add(new OracleParameter("LOGIN", tableLayoutPanel1.Controls[6*(i+1)].Text));
-                        cmd.Parameters.Add(new OracleParameter("PASS", GetHash(tableLayoutPanel1.Controls[7 * (i + 1)].Text)));
-                        if (tableLayoutPanel1.Controls[5].Text == "Активен")
+                        if (tableLayoutPanel1.Controls[count_of_table_row * i + 5].Text == "Активен")
                         {
                             cmd.Parameters.Add(new OracleParameter("STATUS", 1));
                         }
@@ -257,24 +253,61 @@ namespace app_for_CD
                         {
                             cmd.Parameters.Add(new OracleParameter("STATUS", 2));
                         }
-                        cmd.Parameters.Add(new OracleParameter("FIO", tableLayoutPanel1.Controls[1 * (i + 1)].Text));
-                        cmd.Parameters.Add(new OracleParameter("POSITION", tableLayoutPanel1.Controls[3 * (i + 1)].Text));
+                        cmd.CommandText += " status = :STATUS";
+
+                        cmd.Parameters.Add(new OracleParameter("FIO", tableLayoutPanel1.Controls[count_of_table_row * i + 1].Text));
+
+                        cmd.CommandText += " ,fio = :FIO";
+
+                        cmd.Parameters.Add(new OracleParameter("POSITION", tableLayoutPanel1.Controls[count_of_table_row * i + 3].Text));
+                        cmd.CommandText += " ,POSITION = :POSITION";
+
+                        cmd.Parameters.Add(new OracleParameter("LOGIN", tableLayoutPanel1.Controls[count_of_table_row * i + 6].Text));
+                        cmd.CommandText += " where login = :LOGIN ";
+
+                        cmd.CommandType = CommandType.Text;
+                        if (cmd.ExecuteNonQuery() != 0)
+                        {
+                            information.Visible = true;
+                            information.ForeColor = System.Drawing.Color.Green;
+                            information.Text = "Успешно!";
+                        }
+                    }
+                    
+                    else
+                    {
+
+                        id = find_id();
+                        id++;
+                        cmd = con.CreateCommand();
+
+                        cmd.Parameters.Add(new OracleParameter("LOGIN", tableLayoutPanel1.Controls[count_of_table_row * i + 6].Text));
+                        cmd.Parameters.Add(new OracleParameter("PASS", GetHash(tableLayoutPanel1.Controls[count_of_table_row * i + 7].Text)));
+                        if (tableLayoutPanel1.Controls[count_of_table_row * i + 5].Text == "Активен")
+                        {
+                            cmd.Parameters.Add(new OracleParameter("STATUS", 1));
+                        }
+                        else
+                        {
+                            cmd.Parameters.Add(new OracleParameter("STATUS", 2));
+                        }
+                        cmd.Parameters.Add(new OracleParameter("FIO", tableLayoutPanel1.Controls[count_of_table_row * i + 1].Text));
+                        cmd.Parameters.Add(new OracleParameter("POSITION", tableLayoutPanel1.Controls[count_of_table_row * i+3].Text));
 
                         cmd.CommandText = $"insert into users_cd (id , login, password, role, status, fio, position) values ({id}, :LOGIN, :PASS, {0}, :STATUS, :FIO, :POSITION)";
                         cmd.CommandType = CommandType.Text;
 
                         if (cmd.ExecuteNonQuery() != 0)
                         {
-                            this.information.Visible = true;
-                            this.information.Text = "Успешно!";
+                            information.Visible = true;
+                            information.ForeColor = System.Drawing.Color.Green;
+                            information.Text = "Успешно!";
                         }
-
-                
+                    }
                 }
+                LoadData();
+                Remove();
             }
-            LoadData();
-            Remove();
-
         }
         
         private void change_Click(object sender, EventArgs e)
