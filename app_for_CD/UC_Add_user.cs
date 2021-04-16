@@ -218,7 +218,7 @@ namespace app_for_CD
                 (sender as ComboBox).BackColor = System.Drawing.Color.White;
             }
         }
-
+        //1
         private void Save_Click(object sender, EventArgs e)
         {
             int id;
