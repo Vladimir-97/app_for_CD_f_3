@@ -32,6 +32,18 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Поступил = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Зарегистрирован = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel4 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
@@ -45,20 +57,6 @@
             this.cHANG_CRP_BKBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cHANG_CNTR_MGRBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cHANG_BND_ISUBindingSource = new System.Windows.Forms.BindingSource(this.components);
-
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Поступил = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Зарегистрирован = new System.Windows.Forms.DataGridViewTextBoxColumn();
-
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel4.SuspendLayout();
@@ -115,6 +113,78 @@
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "№";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 62;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Номер договора";
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 72;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Серия договора";
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 72;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "Дата Договора";
+            this.Column9.Name = "Column9";
+            this.Column9.Width = 103;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Статус";
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 132;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "КЗЛ";
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 102;
+            // 
+            // Column11
+            // 
+            this.Column11.HeaderText = "ИНН";
+            this.Column11.Name = "Column11";
+            this.Column11.Width = 102;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Наименование клиента";
+            this.Column6.Name = "Column6";
+            this.Column6.Width = 242;
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Наименование договора";
+            this.Column7.Name = "Column7";
+            this.Column7.Width = 512;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "Цена договора";
+            this.Column8.Name = "Column8";
+            this.Column8.Width = 93;
+            // 
+            // Поступил
+            // 
+            this.Поступил.HeaderText = "Исчисление";
+            this.Поступил.Name = "Поступил";
+            this.Поступил.Width = 90;
+            // 
+            // Зарегистрирован
+            // 
+            this.Зарегистрирован.HeaderText = "ФИО исполнителя";
+            this.Зарегистрирован.Name = "Зарегистрирован";
+            this.Зарегистрирован.Width = 256;
+            // 
             // panel4
             // 
             this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -136,20 +206,16 @@
             // 
             // button1
             // 
-
             this.button1.BackColor = System.Drawing.SystemColors.Info;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-
             this.button1.Location = new System.Drawing.Point(323, 51);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(204, 23);
             this.button1.TabIndex = 8;
-
             this.button1.Text = "Список договоров";
             this.button1.UseVisualStyleBackColor = false;
-
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button9
@@ -267,83 +333,11 @@
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-
-            // Column1
-            // 
-            this.Column1.HeaderText = "№";
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 62;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Номер договора";
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 72;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Серия договора";
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 72;
-            // 
-            // Column9
-            // 
-            this.Column9.HeaderText = "Дата Договора";
-            this.Column9.Name = "Column9";
-            this.Column9.Width = 103;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Статус";
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 132;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "КЗЛ";
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 102;
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "ИНН";
-            this.Column11.Name = "Column11";
-            this.Column11.Width = 102;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Наименование клиента";
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 242;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "Наименование договора";
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 512;
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "Цена договора";
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 93;
-            // 
-            // Поступил
-            // 
-            this.Поступил.HeaderText = "Исчисление";
-            this.Поступил.Name = "Поступил";
-            this.Поступил.Width = 90;
-            // 
-            // Зарегистрирован
-            // 
-            this.Зарегистрирован.HeaderText = "ФИО исполнителя";
-            this.Зарегистрирован.Name = "Зарегистрирован";
-            this.Зарегистрирован.Width = 256;
-            // 
             // UC_Contract
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);

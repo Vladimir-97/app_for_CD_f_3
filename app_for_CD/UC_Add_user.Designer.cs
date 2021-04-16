@@ -73,6 +73,7 @@
             // 
             // change
             // 
+            this.change.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.change.Enabled = false;
             this.change.Location = new System.Drawing.Point(1011, 696);
             this.change.Name = "change";
