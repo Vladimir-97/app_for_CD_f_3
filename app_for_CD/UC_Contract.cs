@@ -27,6 +27,9 @@ namespace app_for_CD
                 button10.Visible = false;
                 button3.Visible = false;
             }
+            dataGridView1.Font = new Font("Times New Roman", 10, FontStyle.Bold);
+
+
         }
         void button_enabled()
         {
@@ -98,58 +101,18 @@ namespace app_for_CD
         }
         string check_ser_num(string tmp_str)
         {
-            if (tmp_str == "Э")
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("SER", tmp_str);
+
+            cmd.CommandText = "Select value_of_sres from series_of_docu where docu_sres = :SER";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while(dr.Read())
             {
-                return "Эмиссионный договор";
+                return dr[0].ToString();
             }
-            else if (tmp_str == "Ц")
-            {
-                return "Договор об оказании услуг депоненту";
-            }
-            else if (tmp_str == "ЭГ")
-            {
-                return "Договор на оказание услуг на использования сервиса `Электронное голосование`";
-            }
-            else if (tmp_str == "ИП")
-            {
-                return "Договор о корреспондентских отношениях с Инвестиционным Посредником";
-            }
-            else if (tmp_str == "Х")
-            {
-                return "Договор об обслуживании хокимията";
-            }
-            else if (tmp_str == "ОЦ")
-            {
-                return "Договор на оказание услуг по проведению оценки с АО";
-            }
-            else if (tmp_str == "ИК")
-            {
-                return "Корпоративное сопровождение АО";
-            }
-            else if (tmp_str == "К")
-            {
-                return "Договор на оказание консультативных услуг с АО";
-            }
-            else if (tmp_str == "ИУ")
-            {
-                return "Информационные услуги согласно договору";
-            }
-            else if (tmp_str == "WS")
-            {
-                return "Договор на обслуживание веб-сайта с АО";
-            }
-            else if (tmp_str == "ИФ")
-            {
-                return "Трехсторонний Контракт на оказание услуг по ведению счета депо ИФ";
-            }
-            else if (tmp_str == "КО")
-            {
-                return "Дополнительное соглашение к договору";
-            }
-            else
-            {
-                return "";
-            }
+            return "";
+
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -164,6 +127,7 @@ namespace app_for_CD
             }
             else
                 MessageBox.Show("Запись не удалена, проверьте соединение с БД");
+
         }
         string parse_date(string tmp)
         {
@@ -194,9 +158,9 @@ namespace app_for_CD
             data[data.Count - 1][6] = check_null(dr[6].ToString());     /////ИНН
 
             data[data.Count - 1][8] = check_null(check_ser_num(dr[1].ToString()));
-            data[data.Count - 1][9] = check_null(dr[8].ToString());
-            data[data.Count - 1][10] = parse_date(check_null(dr[9].ToString()));
-            data[data.Count - 1][11] = parse_date(check_null(dr[7].ToString()));
+            data[data.Count - 1][9] = check_null(dr[7].ToString());
+            data[data.Count - 1][10] = check_null(dr[8].ToString());
+            data[data.Count - 1][11] = check_null(dr[9].ToString());
             data[data.Count - 1][12] = "";
 
 
@@ -208,16 +172,18 @@ namespace app_for_CD
 
         void print_data(List<string[]> data)
         {
+            int i = 0;
             dataGridView1.Rows.Clear();
+
             foreach (string[] s in data)
             {
                 dataGridView1.Rows.Add(s);
-                //if (i %2 == 0)
-                //{
-                //    dataGridView1.DefaultCellStyle.BackColor = Color.Red;
-                //    i++;
-                //}
-
+                for (int j = 0; j < 12; j++)
+                    if (i % 2 == 0)
+                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.DarkGray;
+                    else
+                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.Gray;
+                i++;
             }
         }
 
@@ -235,7 +201,7 @@ namespace app_for_CD
             OracleCommand cmd = con.CreateCommand();
             //cmd.CommandText = "SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD where rownum <= 50";
             //cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, B.CRTE_DT FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
-            cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
+            cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.ESTM_NM, Y.FIO FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND y.docu_sres = c.docu_sres AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
 
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
@@ -310,7 +276,7 @@ namespace app_for_CD
                 OracleCommand cmd = con.CreateCommand();
                 if (Data.f_d == true)
                 {
-                    request = $" AND DOCU_ISSU_DD  >= {Data.st_date_orig}  AND DOCU_ISSU_DD <= {Data.end_date_orig} ";
+                    request = $" AND DOCU_ISSU_DD  >= '{Data.st_date_orig}'  AND DOCU_ISSU_DD <= '{Data.end_date_orig}' ";
                 }
                 if (Data.f_CRP == true)
                 {
@@ -351,10 +317,10 @@ namespace app_for_CD
                 {
                     request = request + $" AND c.DOCU_STAT_CD = '{Data.status}'";
                 }
-                cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM (SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, A.crp_issu_dd FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
+
+                cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.ESTM_NM, Y.FIO FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND y.docu_sres = c.docu_sres AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
 
                 bool find_val = false;
-
                 cmd.CommandType = CommandType.Text;
                 OracleDataReader dr = cmd.ExecuteReader();
                 List<string[]> data = new List<string[]>();
@@ -372,7 +338,7 @@ namespace app_for_CD
                     MessageBox.Show("Не найдено по данному запросу!");
                 }
                 print_data(data);
-
+                
             }
 
 
@@ -458,19 +424,29 @@ namespace app_for_CD
                 oSheet.Cells[1, 8] = "Наименование клиента";
                 oSheet.Cells[1, 9] = "Вид услуги";
                 oSheet.Cells[1, 10] = "Цена договора";
-                oSheet.Cells[1, 11] = "Поступил";
-                oSheet.Cells[1, 12] = "Зарегистрирован";
-                oSheet.Cells[1, 13] = "ФИО исполнителя";
-                oSheet.Cells.ColumnWidth = 14;
-                oSheet.Cells[10].ColumnWidth = 15;
-                oSheet.Cells[8].ColumnWidth = 22;
+                oSheet.Cells[1, 11] = "Исчисление";
+                oSheet.Cells[1, 12] = "Ф.И.О. исполнителя";
+
+                oSheet.Cells[1].ColumnWidth = 5;  //номер
+                oSheet.Cells[2].ColumnWidth = 15;   //номер дог
+                oSheet.Cells[3].ColumnWidth = 15;   //сер дог
+                oSheet.Cells[4].ColumnWidth = 14;   //дата договора
+                oSheet.Cells[5].ColumnWidth = 28;   //статус договора
+                oSheet.Cells[6].ColumnWidth = 14;   //кзл
+                oSheet.Cells[7].ColumnWidth = 10;   //инн
+                oSheet.Cells[8].ColumnWidth = 40;   //наименование клиента
+                oSheet.Cells[9].ColumnWidth = 67;   //наименование договора
+                oSheet.Cells[10].ColumnWidth = 15;  //цена договора
+                
+                oSheet.Cells[11].ColumnWidth = 15;  //исчисление
+                oSheet.Cells[12].ColumnWidth = 40;  //фио
                 int i;
                 // Create an array to multiple values at once.
-                string[,] saNames = new string[51, 15];
+                string[,] saNames = new string[101, 15];
 
                 for (i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
-                    for (int j = 0; j < 13; j++)
+                    for (int j = 0; j < 12; j++)
                     {
                         saNames[i, j] = check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
                         oSheet.Cells[i + 2, j + 1] = saNames[i, j];

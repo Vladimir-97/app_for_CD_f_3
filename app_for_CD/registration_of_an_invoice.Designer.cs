@@ -67,9 +67,9 @@
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.mainpanel_reg = new System.Windows.Forms.Panel();
-            this.Save = new System.Windows.Forms.Button();
-            this.Change = new System.Windows.Forms.Button();
             this.New = new System.Windows.Forms.Button();
+            this.Change = new System.Windows.Forms.Button();
+            this.Save = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel_main.SuspendLayout();
@@ -176,7 +176,7 @@
             this.textBox2.Location = new System.Drawing.Point(164, 32);
             this.textBox2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(188, 20);
+            this.textBox2.Size = new System.Drawing.Size(187, 20);
             this.textBox2.TabIndex = 55;
             // 
             // panel1
@@ -316,7 +316,7 @@
             this.tableLayoutPanel_main.ColumnCount = 3;
             this.tableLayoutPanel_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.23077F));
             this.tableLayoutPanel_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.76923F));
-            this.tableLayoutPanel_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 725F));
+            this.tableLayoutPanel_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 726F));
             this.tableLayoutPanel_main.Controls.Add(this.flowLayoutPanel6, 0, 1);
             this.tableLayoutPanel_main.Controls.Add(this.flowLayoutPanel5, 0, 0);
             this.tableLayoutPanel_main.Controls.Add(this.flowLayoutPanel3, 1, 1);
@@ -374,7 +374,7 @@
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Controls.Add(this.textBox3);
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(157, 35);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(156, 35);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(205, 41);
             this.flowLayoutPanel3.TabIndex = 59;
@@ -392,7 +392,7 @@
             this.flowLayoutPanel2.Controls.Add(this.label9);
             this.flowLayoutPanel2.Controls.Add(this.comboBox6);
             this.flowLayoutPanel2.Controls.Add(this.CRP_search);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(376, 35);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(375, 35);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(264, 41);
             this.flowLayoutPanel2.TabIndex = 58;
@@ -437,7 +437,7 @@
             // 
             this.flowLayoutPanel1.Controls.Add(this.ComboBox);
             this.flowLayoutPanel1.Controls.Add(this.button2);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(157, 3);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(156, 3);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(205, 26);
             this.flowLayoutPanel1.TabIndex = 58;
@@ -463,7 +463,7 @@
             // flowLayoutPanel4
             // 
             this.flowLayoutPanel4.Controls.Add(this.textBox1);
-            this.flowLayoutPanel4.Location = new System.Drawing.Point(376, 3);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(375, 3);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
             this.flowLayoutPanel4.Size = new System.Drawing.Size(700, 26);
             this.flowLayoutPanel4.TabIndex = 59;
@@ -489,14 +489,14 @@
             this.mainpanel_reg.Size = new System.Drawing.Size(1118, 547);
             this.mainpanel_reg.TabIndex = 65;
             // 
-            // Save
+            // New
             // 
-            this.Save.Location = new System.Drawing.Point(980, 513);
-            this.Save.Name = "Save";
-            this.Save.Size = new System.Drawing.Size(100, 30);
-            this.Save.TabIndex = 60;
-            this.Save.Text = "Сохранить";
-            this.Save.UseVisualStyleBackColor = true;
+            this.New.Location = new System.Drawing.Point(760, 513);
+            this.New.Name = "New";
+            this.New.Size = new System.Drawing.Size(100, 30);
+            this.New.TabIndex = 62;
+            this.New.Text = "Новый";
+            this.New.UseVisualStyleBackColor = true;
             // 
             // Change
             // 
@@ -507,14 +507,14 @@
             this.Change.Text = "Изменить";
             this.Change.UseVisualStyleBackColor = true;
             // 
-            // New
+            // Save
             // 
-            this.New.Location = new System.Drawing.Point(760, 513);
-            this.New.Name = "New";
-            this.New.Size = new System.Drawing.Size(100, 30);
-            this.New.TabIndex = 62;
-            this.New.Text = "Новый";
-            this.New.UseVisualStyleBackColor = true;
+            this.Save.Location = new System.Drawing.Point(980, 513);
+            this.Save.Name = "Save";
+            this.Save.Size = new System.Drawing.Size(100, 30);
+            this.Save.TabIndex = 60;
+            this.Save.Text = "Сохранить";
+            this.Save.UseVisualStyleBackColor = true;
             // 
             // registration_of_an_invoice
             // 

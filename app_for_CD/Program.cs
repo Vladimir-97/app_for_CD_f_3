@@ -36,6 +36,7 @@ namespace app_for_CD
         public static int role = 0;
         public static bool exit = false;
         public static int status_t = 0;
+        public static string get_fio = "";
 
 
     }
