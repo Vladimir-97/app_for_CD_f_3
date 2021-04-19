@@ -24,7 +24,6 @@ namespace app_for_CD
             panel2.Width = 3000;
             if (Data.role == 0)
             {
-                button10.Visible = false;
                 button3.Visible = false;
             }
             dataGridView1.Font = new Font("Times New Roman", 10, FontStyle.Bold);
@@ -351,12 +350,6 @@ namespace app_for_CD
             Data.f_ser = false;
             Data.f_status = false;
 
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            Add_user new_us = new Add_user();
-            new_us.Show();
         }
 
         private void button9_Click(object sender, EventArgs e)

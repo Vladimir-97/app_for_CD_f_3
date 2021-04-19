@@ -37,7 +37,7 @@ namespace app_for_CD
         public static bool exit = false;
         public static int status_t = 0;
         public static string get_fio = "";
-
+        public static int was_count = 0;
 
     }
     static class Program

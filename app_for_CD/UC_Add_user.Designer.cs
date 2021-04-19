@@ -30,6 +30,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Clear = new System.Windows.Forms.Button();
             this.change = new System.Windows.Forms.Button();
             this.information = new System.Windows.Forms.Label();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -49,7 +50,6 @@
             this.password_textBox_0 = new System.Windows.Forms.TextBox();
             this.Save = new System.Windows.Forms.Button();
             this.Add = new System.Windows.Forms.Button();
-            this.Clear = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -72,6 +72,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1292, 728);
             this.panel1.TabIndex = 0;
+            // 
+            // Clear
+            // 
+            this.Clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Clear.Location = new System.Drawing.Point(930, 696);
+            this.Clear.Name = "Clear";
+            this.Clear.Size = new System.Drawing.Size(75, 23);
+            this.Clear.TabIndex = 16;
+            this.Clear.Text = "Очистить";
+            this.Clear.UseVisualStyleBackColor = true;
+            this.Clear.Click += new System.EventHandler(this.clear_Click);
             // 
             // change
             // 
@@ -264,8 +275,8 @@
             this.Login_textBox_0.TabIndex = 14;
             this.Login_textBox_0.Text = "Логин";
             this.Login_textBox_0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Login_textBox_0.Enter += new System.EventHandler(this.textBox_Enter);
             this.Login_textBox_0.Click += new System.EventHandler(this.Click_on_tc);
+            this.Login_textBox_0.Enter += new System.EventHandler(this.textBox_Enter);
             // 
             // password_textBox_0
             // 
@@ -276,8 +287,8 @@
             this.password_textBox_0.TabIndex = 5;
             this.password_textBox_0.Text = "Пароль";
             this.password_textBox_0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.password_textBox_0.Enter += new System.EventHandler(this.textBox_Enter);
             this.password_textBox_0.Click += new System.EventHandler(this.Click_on_tc);
+            this.password_textBox_0.Enter += new System.EventHandler(this.textBox_Enter);
             // 
             // Save
             // 
@@ -300,17 +311,6 @@
             this.Add.Text = "Добавить";
             this.Add.UseVisualStyleBackColor = true;
             this.Add.Click += new System.EventHandler(this.Add_Click);
-            // 
-            // Clear
-            // 
-            this.Clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Clear.Location = new System.Drawing.Point(930, 696);
-            this.Clear.Name = "Clear";
-            this.Clear.Size = new System.Drawing.Size(75, 23);
-            this.Clear.TabIndex = 16;
-            this.Clear.Text = "Очистить";
-            this.Clear.UseVisualStyleBackColor = true;
-            this.Clear.Click += new System.EventHandler(this.clear_Click);
             // 
             // UC_Add_user
             // 
