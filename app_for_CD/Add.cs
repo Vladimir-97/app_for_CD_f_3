@@ -309,7 +309,7 @@ namespace app_for_CD
             var cultureInfo = new System.Globalization.CultureInfo("ru-Ru");
             string dateString = tableLayoutPanel1.Controls[row * 5 + 3].Text;
             var dateTime = DateTime.Parse(dateString, cultureInfo);
-            MessageBox.Show(dateTime.ToString("yyyyMMdd"));
+            ////MessageBox.Show(dateTime.ToString("yyyyMMdd"));
             cmd.Parameters.Add("ISSU", dateTime.ToString("yyyyMMdd"));
 
             cmd.Parameters.Add("KZL", comboBox4.Text);
@@ -335,7 +335,7 @@ namespace app_for_CD
             var cultureInfo = new System.Globalization.CultureInfo("ru-Ru");
             string dateString = tableLayoutPanel1.Controls[row * 5 + 3].Text;
             var dateTime = DateTime.Parse(dateString, cultureInfo);
-            MessageBox.Show(dateTime.ToString("yyyyMMdd"));
+            ////MessageBox.Show(dateTime.ToString("yyyyMMdd"));
             cmd.Parameters.Add("ISSU", dateTime.ToString("yyyyMMdd"));
             cmd.CommandText = "insert into agrmnt_table (crp_cd, docu_sres, docu_no, agrmnt_no, agrmnt_issu_dd) values (:KZL, :DOCU_SRES,:DOCU_NO, :ADD_C, :ISSU)";
             cmd.CommandType = CommandType.Text;
