@@ -78,7 +78,7 @@ namespace app_for_CD
         {
             this.SetConnection();
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "SELECT CRP_CD FROM TBCB_CRP_DOCU_INFO where rownum <=1000";
+            cmd.CommandText = "SELECT CRP_CD FROM TBCB_CRP_INFO where rownum <=1000";
 
 
             cmd.CommandType = CommandType.Text;
