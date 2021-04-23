@@ -127,12 +127,6 @@
     <Compile Include="Add_service.Designer.cs">
       <DependentUpon>Add_service.cs</DependentUpon>
     </Compile>
-    <Compile Include="Add_user.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Add_user.Designer.cs">
-      <DependentUpon>Add_user.cs</DependentUpon>
-    </Compile>
     <Compile Include="Auth.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,9 +196,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Add_service.resx">
       <DependentUpon>Add_service.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Add_user.resx">
-      <DependentUpon>Add_user.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>

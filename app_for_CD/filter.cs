@@ -163,7 +163,7 @@ namespace app_for_CD
         {
             this.SetConnection();
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "SELECT CRP_CD FROM TBCB_CRP_DOCU_INFO where rownum <=1000";
+            cmd.CommandText = "SELECT CRP_CD FROM TBCB_CRP_INFO where rownum <=1000";
 
 
             cmd.CommandType = CommandType.Text;
@@ -208,8 +208,8 @@ namespace app_for_CD
             {
                 DateTime thisDate_st = dateTimePicker_st.Value;
                 DateTime thisDate_end = dateTimePicker_end.Value;
-                Data.st_date_orig = thisDate_st.ToString("yyyyMMdd").ToString();
-                Data.end_date_orig = thisDate_end.ToString("yyyyMMdd").ToString();
+                Data.st_date_orig = thisDate_st.ToString("yyyyMMdd");
+                Data.end_date_orig = thisDate_end.ToString("yyyyMMdd");
             }
             if (Data.f_CRP == true)
             {

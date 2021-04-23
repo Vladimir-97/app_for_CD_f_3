@@ -179,7 +179,7 @@ namespace app_for_CD
             if (comboBox4.Text != "")
             {
                 cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 13).Value = comboBox4.Text;
-                cmd.CommandText = "SELECT DOCU_NO, DOCU_SRES FROM TBCB_CRP_DOCU_INFO where CRP_CD = :KZL AND rownum <=1000  ";
+                cmd.CommandText = "SELECT DOCU_NO, DOCU_SRES FROM table_for_docu where CRP_CD = :KZL AND rownum <=1000  ";
 
 
                 cmd.CommandType = CommandType.Text;
@@ -236,7 +236,7 @@ namespace app_for_CD
             if (check_empty_str())
             {
                 SetConnection();
-                //insert into tbcb_crp_docu_info(crp_cd, SEQ, dist_id_type_cd, dist_id, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, '1', '08', '7001', :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT)   query_insert_crp_info();
+                //insert into table_for_docu(crp_cd, SEQ, dist_id_type_cd, dist_id, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, '1', '08', '7001', :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT)   query_insert_crp_info();
                 //insert_value();
                 query_insert_docu_info();
                 query_insert_tbcb_new();
@@ -293,7 +293,7 @@ namespace app_for_CD
         {
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
-            cmd.CommandText = "select max(seq) from tbcb_crp_docu_info where crp_cd = :KZL";
+            cmd.CommandText = "select max(seq) from table_for_docu where crp_cd = :KZL";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr =  cmd.ExecuteReader();
             while (dr.Read())
@@ -331,7 +331,7 @@ namespace app_for_CD
             //string reg_date = parse_date(dateTimePicker5.Value.ToString(), 1);
             //cmd.Parameters.Add(new OracleParameter("REG_DOCU", reg_date));
 
-            cmd.CommandText = "insert into tbcb_crp_docu_info(crp_cd, SEQ, dist_id_type_cd, dist_id, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, :SEQ, '08', '7001', :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT) ";
+            cmd.CommandText = "insert into table_for_docu(crp_cd, SEQ, dist_id_type_cd, dist_id, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, :SEQ, '08', '7001', :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT) ";
             cmd.CommandType = CommandType.Text;   ///issu_dd yyyymmdd        reg_docu dd.mm.yyyy
             cmd.ExecuteNonQuery();
 
@@ -446,7 +446,7 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("DOCU_NO", doc_num_));
             cmd.Parameters.Add(new OracleParameter("DOC_SER", ser_num_ ));
 
-            cmd.CommandText = "Select remark, remark_2, docu_issu_dd, docu_exp_dd, docu_stat_cd from tbcb_crp_docu_info where crp_cd = :KZL AND docu_no = :DOCU_NO and DOCU_SRES = :DOC_SER";
+            cmd.CommandText = "Select remark, remark_2, docu_issu_dd, docu_exp_dd, docu_stat_cd from table_for_docu where crp_cd = :KZL AND docu_no = :DOCU_NO and DOCU_SRES = :DOC_SER";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             if (dr.HasRows)
@@ -546,7 +546,7 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
             cmd.Parameters.Add(new OracleParameter("NUM_DOCU", comboBox5.Text));
 
-            cmd.CommandText = "update tbcb_crp_docu_info set docu_sres = :SER_DOCU, docu_issu_dd=:DOCU_ISSU, docu_exp_dd = :EXP_DOCU, remark = :REM1, remark_2= :REM2, DOCU_STAT_CD = :STAT where crp_cd = :KZL and DOCU_NO = :NUM_DOCU";
+            cmd.CommandText = "update table_for_docu set docu_sres = :SER_DOCU, docu_issu_dd=:DOCU_ISSU, docu_exp_dd = :EXP_DOCU, remark = :REM1, remark_2= :REM2, DOCU_STAT_CD = :STAT where crp_cd = :KZL and DOCU_NO = :NUM_DOCU";
             cmd.CommandType = CommandType.Text;
             cmd.ExecuteNonQuery();
         }
@@ -689,7 +689,7 @@ namespace app_for_CD
             OracleCommand cmd = con.CreateCommand();
            // cmd.Parameters.Add(new OracleParameter("NUM_DOCU", comboBox5.Text));
             cmd.Parameters.Add(new OracleParameter("SER_DOCU", comboBox1.Text));
-            cmd.CommandText = "select max(DOCU_NO) from tbcb_crp_docu_info where docu_sres = :SER_DOCU ";
+            cmd.CommandText = "select max(DOCU_NO) from table_for_docu where docu_sres = :SER_DOCU ";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
