@@ -145,6 +145,12 @@
     <Compile Include="List_of_services.Designer.cs">
       <DependentUpon>List_of_services.cs</DependentUpon>
     </Compile>
+    <Compile Include="Move_stock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Move_stock.Designer.cs">
+      <DependentUpon>Move_stock.cs</DependentUpon>
+    </Compile>
     <Compile Include="registration_of_an_invoice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="List_of_services.resx">
       <DependentUpon>List_of_services.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Move_stock.resx">
+      <DependentUpon>Move_stock.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

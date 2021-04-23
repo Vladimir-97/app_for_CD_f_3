@@ -50,12 +50,13 @@ namespace app_for_CD
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Auth());
-            Application.Exit();
-            if (Data.exit == true)
-            Application.Run(new TC_Menu());
+            //Application.Run(new Auth());
+            //Application.Exit();
+            //if (Data.exit == true)
+            //Application.Run(new TC_Menu());
             //Application.Run(new List_of_contract());
 
+            Application.Run(new Move_stock());
 
         }
     }
