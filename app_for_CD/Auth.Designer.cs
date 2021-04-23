@@ -64,7 +64,7 @@
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(360, 38);
-            this.textBox2.TabIndex = 6;
+            this.textBox2.TabIndex = 2;
             this.textBox2.Text = "Пароль";
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBox2.Enter += new System.EventHandler(this.textBox2_Enter);
@@ -102,7 +102,7 @@
             this.button1.Location = new System.Drawing.Point(181, 288);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(274, 33);
-            this.button1.TabIndex = 10;
+            this.button1.TabIndex = 3;
             this.button1.Text = "Войти";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);

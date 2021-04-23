@@ -37,7 +37,7 @@ namespace app_for_CD
         public static bool exit = false;
         public static int status_t = 0;
         public static string get_fio = "";
-
+        public static int was_count = 0;
 
     }
     static class Program
@@ -50,12 +50,13 @@ namespace app_for_CD
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Auth());
-            Application.Exit();
-            if (Data.exit == true)
-            Application.Run(new TC_Menu());
+            //Application.Run(new Auth());
+            //Application.Exit();
+            //if (Data.exit == true)
+            //Application.Run(new TC_Menu());
             //Application.Run(new List_of_contract());
 
+            Application.Run(new Move_stock());
 
         }
     }
