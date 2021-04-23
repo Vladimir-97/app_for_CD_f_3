@@ -202,6 +202,7 @@ namespace app_for_CD
                     for (int i = Data.was_count+1; i <= count_row; i++)
                         query_insert_agrmnt_table(i);
                 }
+
                 query_insert_docu_info();
                 query_insert_tbcb_new();
 
@@ -264,7 +265,9 @@ namespace app_for_CD
             //string reg_date = parse_date(dateTimePicker5.Value.ToString(), 1);
             //cmd.Parameters.Add(new OracleParameter("REG_DOCU", reg_date));
 
+
             cmd.CommandText = "insert into table_for_docu(crp_cd, SEQ, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, :SEQ, :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT) ";
+
             cmd.CommandType = CommandType.Text;   ///issu_dd yyyymmdd        reg_docu dd.mm.yyyy
             cmd.ExecuteNonQuery();
 
@@ -537,9 +540,11 @@ namespace app_for_CD
 
             cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
             cmd.Parameters.Add(new OracleParameter("NUM_DOCU", comboBox5.Text));
+
             cmd.Parameters.Add(new OracleParameter("SER_DOCU", comboBox1.Text));
             
             cmd.CommandText = "update table_for_docu set docu_issu_dd=:DOCU_ISSU, docu_exp_dd = :EXP_DOCU, remark = :REM1, remark_2= :REM2, DOCU_STAT_CD = :STAT where crp_cd = :KZL and DOCU_NO = :NUM_DOCU and docu_sres = :SER_DOCU";
+
             cmd.CommandType = CommandType.Text;
             cmd.ExecuteNonQuery();
         }

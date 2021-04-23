@@ -208,8 +208,8 @@ namespace app_for_CD
             {
                 DateTime thisDate_st = dateTimePicker_st.Value;
                 DateTime thisDate_end = dateTimePicker_end.Value;
-                Data.st_date_orig = thisDate_st.ToString("yyyyMMdd").ToString();
-                Data.end_date_orig = thisDate_end.ToString("yyyyMMdd").ToString();
+                Data.st_date_orig = thisDate_st.ToString("yyyyMMdd");
+                Data.end_date_orig = thisDate_end.ToString("yyyyMMdd");
             }
             if (Data.f_CRP == true)
             {

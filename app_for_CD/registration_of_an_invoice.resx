@@ -121,7 +121,7 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="search_for_CRP.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="search_for_CRP_INN.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAVCAYAAACzK0UYAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         xAAADsQBlSsOGwAAAptJREFUSEutVMtOU1EU7QcQv6C09P2gtJUCrSbECSgRFHQABEc4JDU4IQ4xGExo
@@ -138,7 +138,7 @@
         2tedicigVHebjcig2ue/dDKYFfoDz6giNnOSCYcAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="button3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="search_nom_ser.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAVCAYAAACzK0UYAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         xAAADsQBlSsOGwAAAptJREFUSEutVMtOU1EU7QcQv6C09P2gtJUCrSbECSgRFHQABEc4JDU4IQ4xGExo
@@ -172,7 +172,7 @@
         2tedicigVHebjcig2ue/dDKYFfoDz6giNnOSCYcAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="button2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="search_ser.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAVCAYAAACzK0UYAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
         xAAADsQBlSsOGwAAAptJREFUSEutVMtOU1EU7QcQv6C09P2gtJUCrSbECSgRFHQABEc4JDU4IQ4xGExo
