@@ -15,7 +15,7 @@ namespace app_for_CD
     {
         string doc_num_, ser_num_, date_agg_, state_, kzl_;
         OracleConnection con = null;
-
+        int count_row=0, interval = 30;
 
         public Add()
         {
@@ -34,9 +34,11 @@ namespace app_for_CD
             this.state_ = state; 
             this.kzl_ = kzl;
             Name_company.Enabled = false;
+            //textBox1.Enabled = false;
             comboBox4.MaxLength = 12;
             dateTimePicker3.Visible = false;
             label19.Visible = false;
+            button6.Enabled = false;
          //   textBox6.Enabled = false;
             load_sres();
             load_currency();
@@ -98,66 +100,15 @@ namespace app_for_CD
                 comboBox4.Items.Add(dr[0].ToString() );
             }
         }
-
-        //private void check_value()
-        //{
-        //    if (comboBox1.SelectedItem.ToString() == "Э")
-        //    {
-        //        Name_company.Text = "Эмиссионный договор";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "Ц")
-        //    {
-        //        Name_company.Text = "Договор об оказании услуг депоненту";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "ЭГ")
-        //    {
-        //        Name_company.Text = "Договор на оказание услуг на использования сервиса `Электронное голосование`";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "ИП")
-        //    {
-        //        Name_company.Text = "Договор о корреспондентских отношениях с Инвестиционным Посредником";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "Х")
-        //    {
-        //        Name_company.Text = "Договор об обслуживании хокимията";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "ОЦ")
-        //    {
-        //        Name_company.Text = "Договор на оказание услуг по проведению оценки с АО";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "ИК")
-        //    {
-        //        Name_company.Text = "Корпоративное сопровождение АО";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "К")
-        //    {
-        //        Name_company.Text = "Договор на оказание консультативных услуг с АО";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "ИУ")
-        //    {
-        //        Name_company.Text = "Информационные услуги согласно договору";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "WS")
-        //    {
-        //        Name_company.Text = "Договор на обслуживание веб-сайта с АО";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "ИФ")
-        //    {
-        //        Name_company.Text = "Трехсторонний Контракт на оказание услуг по ведению счета депо ИФ";
-        //    }
-        //    else if (comboBox1.SelectedItem.ToString() == "КО")
-        //    {
-        //        Name_company.Text = "Дополнительное соглашение к договору";
-        //    }
-        //    else
-        //    {
-        //        Name_company.Text = "";
-        //    }
-        //}
-
         private void comboBox4_SelectedValueChanged(object sender, EventArgs e)
         {
+
+           // button6.Enabled = false;
             string crp = comboBox4.SelectedItem.ToString();
+            if (crp.Length <12)
+            {
+                button6.Enabled = false;
+            }
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 13).Value = crp;
             cmd.CommandText = "SELECT CRP_NM FROM TBCB_CRP_INFO where CRP_CD = :KZL";
@@ -167,6 +118,7 @@ namespace app_for_CD
             while (dr.Read())
             {
                 textBox6.Text = dr[0].ToString() ;
+                button6.Enabled = true;
             }
             comboBox5.Items.Clear();
             ///////////////////////////////
@@ -179,7 +131,7 @@ namespace app_for_CD
             if (comboBox4.Text != "")
             {
                 cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 13).Value = comboBox4.Text;
-                cmd.CommandText = "SELECT DOCU_NO, DOCU_SRES FROM TBCB_CRP_DOCU_INFO where CRP_CD = :KZL AND rownum <=1000  ";
+                cmd.CommandText = "SELECT DOCU_NO, DOCU_SRES FROM table_for_docu where CRP_CD = :KZL AND rownum <=1000  ";
 
 
                 cmd.CommandType = CommandType.Text;
@@ -192,8 +144,12 @@ namespace app_for_CD
             }
         }
         private void comboBox4_TextChanged(object sender, EventArgs e)
-      {
+        {
             string crp = comboBox4.Text.ToString();
+            if (crp.Length < 12)
+            {
+                button6.Enabled = false;
+            }
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 12).Value = crp;
             cmd.CommandText = "SELECT CRP_NM FROM TBCB_CRP_INFO where CRP_CD = :KZL";
@@ -203,6 +159,7 @@ namespace app_for_CD
             while (dr.Read())
             {
                 textBox6.Text = dr[0].ToString();
+                button6.Enabled = true;
             }
             comboBox5.Items.Clear();
         }
@@ -233,14 +190,23 @@ namespace app_for_CD
         private void button3_Click(object sender, EventArgs e)
         {
 
-            if (check_empty_str())
-            {
+            //if (check_empty_str())
+            //{
                 SetConnection();
-                //insert into tbcb_crp_docu_info(crp_cd, SEQ, dist_id_type_cd, dist_id, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, '1', '08', '7001', :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT)   query_insert_crp_info();
-                //insert_value();
+                if (button6.Enabled && count_row >0)
+                {
+                    for (int i = 1; i <= Data.was_count; i++)
+                {
+                        query_update_agrmnt_table(i);
+                }
+                    for (int i = Data.was_count+1; i <= count_row; i++)
+                        query_insert_agrmnt_table(i);
+                }
+
                 query_insert_docu_info();
                 query_insert_tbcb_new();
-            }
+
+           // }
 
         }
 
@@ -257,43 +223,11 @@ namespace app_for_CD
             }
             return true;
         }
-
-        //void query_insert_crp_info()
-
-        //{
-        //    OracleCommand cmd = con.CreateCommand();
-        //    //cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
-        //    //cmd.CommandText = " Select * from tbcb_crp_info where crp_cd = :KZL ";
-        //    //cmd.CommandType = CommandType.Text;
-        //    //OracleDataReader dr = cmd.ExecuteReader();
-        //    //if (dr .HasRows)
-        //    //{
-        //    //    return;
-        //    //}
-        //    //else
-        //    //{
-        //  //      insert_value();
-        //   // }
-
-        //}
-
-        //void insert_value()
-        //{
-        //    OracleCommand cmd = con.CreateCommand();
-        //    cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
-        //    cmd.Parameters.Add(new OracleParameter("KZL_NM", textBox6.Text));
-        //    //string issu_dd = dateTimePicker5.Value.ToString("yyyyMMdd");
-        //    //cmd.Parameters.Add(new OracleParameter("ISSU_DD", issu_dd));
-        //    cmd.Parameters.Add(new OracleParameter("DOC_NUM", comboBox5.Text));
-        //    cmd.CommandText = "insert into tbcb_crp_info(CRP_CD, CRP_TYPE_CD, SHRT_CRP_NM, CRP_NM, crp_cat_cd, crp_stat_cd, DOCU_NO, crp_issu_dd)values(:KZL, 7001, 'hello', :KZL_NM, '3', '1', :DOC_NUM, '20160824')";
-        //    cmd.CommandType = CommandType.Text;
-        //    cmd.ExecuteNonQuery();
-        //}
         private int find_max_seq()
         {
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
-            cmd.CommandText = "select max(seq) from tbcb_crp_docu_info where crp_cd = :KZL";
+            cmd.CommandText = "select max(seq) from table_for_docu where crp_cd = :KZL";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr =  cmd.ExecuteReader();
             while (dr.Read())
@@ -331,7 +265,9 @@ namespace app_for_CD
             //string reg_date = parse_date(dateTimePicker5.Value.ToString(), 1);
             //cmd.Parameters.Add(new OracleParameter("REG_DOCU", reg_date));
 
-            cmd.CommandText = "insert into tbcb_crp_docu_info(crp_cd, SEQ, dist_id_type_cd, dist_id, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, :SEQ, '08', '7001', :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT) ";
+
+            cmd.CommandText = "insert into table_for_docu(crp_cd, SEQ, docu_no, docu_sres, docu_issu_dd, docu_exp_dd, remark, remark_2, docu_stat_cd)values(:KZL, :SEQ, :NUM_DOCU, :SER_DOCU, :DOCU_ISSU, :EXP_DOCU , :REM1, :REM2, :STAT) ";
+
             cmd.CommandType = CommandType.Text;   ///issu_dd yyyymmdd        reg_docu dd.mm.yyyy
             cmd.ExecuteNonQuery();
 
@@ -369,14 +305,59 @@ namespace app_for_CD
             else
                 MessageBox.Show("Не получилось добавить");
         }
+        private void query_update_agrmnt_table(int row)
+        {
+            OracleCommand cmd = con.CreateCommand();
+
+            var cultureInfo = new System.Globalization.CultureInfo("ru-Ru");
+            string dateString = tableLayoutPanel1.Controls[row * 5 + 3].Text;
+            var dateTime = DateTime.Parse(dateString, cultureInfo);
+            ////MessageBox.Show(dateTime.ToString("yyyyMMdd"));
+            cmd.Parameters.Add("ISSU", dateTime.ToString("yyyyMMdd"));
+
+            cmd.Parameters.Add("KZL", comboBox4.Text);
+            cmd.Parameters.Add("DOCU_SRES", comboBox1.Text);
+            cmd.Parameters.Add("DOCU_NO", comboBox5.Text);
+            cmd.Parameters.Add("ADD_C", tableLayoutPanel1.Controls[row * 5 + 1].Text);
+            cmd.CommandText = "update agrmnt_table set agrmnt_issu_dd = :ISSU where crp_cd = :KZL and docu_sres = :DOCU_SRES and docu_no = :DOCU_NO and agrmnt_no = :ADD_C";
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteNonQuery();
+
+        }
+        private void query_insert_agrmnt_table(int row)
+        {
+            OracleCommand cmd = con.CreateCommand();
+
+            cmd.Parameters.Add("KZL", comboBox4.Text);
+            cmd.Parameters.Add("DOCU_SRES", comboBox1.Text);
+            cmd.Parameters.Add("DOCU_NO", comboBox5.Text);
+            cmd.Parameters.Add("ADD_C", tableLayoutPanel1.Controls[row * 5 + 1].Text);
+            //  dtp = tableLayoutPanel1.Controls[row * 5 + 3].AccessibilityObject;
 
 
+            var cultureInfo = new System.Globalization.CultureInfo("ru-Ru");
+            string dateString = tableLayoutPanel1.Controls[row * 5 + 3].Text;
+            var dateTime = DateTime.Parse(dateString, cultureInfo);
+            ////MessageBox.Show(dateTime.ToString("yyyyMMdd"));
+            cmd.Parameters.Add("ISSU", dateTime.ToString("yyyyMMdd"));
+            cmd.CommandText = "insert into agrmnt_table (crp_cd, docu_sres, docu_no, agrmnt_no, agrmnt_issu_dd) values (:KZL, :DOCU_SRES,:DOCU_NO, :ADD_C, :ISSU)";
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteNonQuery();
 
+        }
         int fun_ischis(string str)
         {
             if (str == "Сумма")
                 return 1;
             return 2;
+        }
+        string parse(string tmp)
+        {
+            string date = "";
+            date = tmp.Substring(6, 9);
+            date += tmp.Substring(3, 4);
+            date += tmp.Substring(0, 1);
+            return date;
         }
         void inverse_parse_date(string str, DateTimePicker dateTimePicker_tmp)
         {
@@ -406,10 +387,32 @@ namespace app_for_CD
             show_from_new_tbcb();
             show_from_crp_docu_info();
             show_from_crp_info();
-
+            show_from_agrmnt_table();
             textBox6.Enabled = false;
             comboBox4.Enabled = false;
 
+        }
+        void show_from_agrmnt_table()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
+            cmd.Parameters.Add(new OracleParameter("DOCU_NO", comboBox5.Text));
+            cmd.Parameters.Add(new OracleParameter("DOCU_SRES", comboBox1.Text));
+            cmd.CommandText = "select * from agrmnt_table where crp_cd = :KZL and docu_no = :DOCU_NO and docu_sres = :DOCU_SRES order by agrmnt_no";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while(dr.Read())
+            {
+                Data.was_count++;
+                button6_Click(Data.was_count,dr[3].ToString(), dr[4].ToString());
+                //tableLayoutPanel1.Controls[Data.was_count + 1].Text = dr[3].ToString();
+                //tableLayoutPanel1.Controls[Data.was_count + 3].Text = ;
+                ///////////////////////////////////////////////////////Дописать ///////////////////////////////////////////////////////////
+
+            }
+            count_row = Data.was_count;
+            
+           // Data.was_count++;
         }
         void show_from_new_tbcb()
         {
@@ -446,7 +449,7 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("DOCU_NO", doc_num_));
             cmd.Parameters.Add(new OracleParameter("DOC_SER", ser_num_ ));
 
-            cmd.CommandText = "Select remark, remark_2, docu_issu_dd, docu_exp_dd, docu_stat_cd from tbcb_crp_docu_info where crp_cd = :KZL AND docu_no = :DOCU_NO and DOCU_SRES = :DOC_SER";
+            cmd.CommandText = "Select remark, remark_2, docu_issu_dd, docu_exp_dd, docu_stat_cd from table_for_docu where crp_cd = :KZL AND docu_no = :DOCU_NO and DOCU_SRES = :DOC_SER";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             if (dr.HasRows)
@@ -506,32 +509,24 @@ namespace app_for_CD
         private void button1_Click(object sender, EventArgs e)
         {
             this.SetConnection();
-           // update_crp_info();
+            // update_crp_info();
+            if (button6.Enabled && count_row > 0)
+            {
+                for (int i = 1; i <= Data.was_count; i++)
+                {
+                     query_update_agrmnt_table(i);
+                }
+                for (int i = Data.was_count + 1; i <= count_row; i++)
+                    query_insert_agrmnt_table(i);
+            }
             update_crp_docu_info();
             update_new_tbcb();
         }
-        //void update_crp_info()
-        //{
-        //    OracleCommand cmd = con.CreateCommand();
 
-        //    cmd.Parameters.Add(new OracleParameter("CRP_CAT", "1"));
-
-        //    string str = reverse_check_stat(comboBox3.Text);
-        //    cmd.Parameters.Add(new OracleParameter("CRP_STAT", str));
-        //    cmd.Parameters.Add(new OracleParameter("DOC_NUM", comboBox5.Text));
-
-        // //   string issu_dd = dateTimePicker5.Value.ToString("yyyyMMdd");
-        //  //  cmd.Parameters.Add(new OracleParameter("ISSU_DD", issu_dd));
-        //    cmd.Parameters.Add(new OracleParameter("KZL", kzl_));
-        //    cmd.CommandText = "update tbcb_crp_info set crp_cat_cd = :CRP_CAT, crp_stat_cd= :CRP_STAT, DOCU_NO = :DOC_NUM where CRP_CD = :KZL";
-        //    cmd.CommandType = CommandType.Text;
-        //    cmd.ExecuteNonQuery();
-        //}
         void update_crp_docu_info()
         {
             OracleCommand cmd = con.CreateCommand();
 
-            cmd.Parameters.Add(new OracleParameter("SER_DOCU", comboBox1.Text));
             string st_date = dateTimePicker1.Value.ToString("yyyyMMdd");
             cmd.Parameters.Add(new OracleParameter("DOCU_ISSU", st_date));
             string end_date = dateTimePicker2.Value.ToString("yyyyMMdd");
@@ -546,7 +541,10 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("KZL", comboBox4.Text));
             cmd.Parameters.Add(new OracleParameter("NUM_DOCU", comboBox5.Text));
 
-            cmd.CommandText = "update tbcb_crp_docu_info set docu_sres = :SER_DOCU, docu_issu_dd=:DOCU_ISSU, docu_exp_dd = :EXP_DOCU, remark = :REM1, remark_2= :REM2, DOCU_STAT_CD = :STAT where crp_cd = :KZL and DOCU_NO = :NUM_DOCU";
+            cmd.Parameters.Add(new OracleParameter("SER_DOCU", comboBox1.Text));
+            
+            cmd.CommandText = "update table_for_docu set docu_issu_dd=:DOCU_ISSU, docu_exp_dd = :EXP_DOCU, remark = :REM1, remark_2= :REM2, DOCU_STAT_CD = :STAT where crp_cd = :KZL and DOCU_NO = :NUM_DOCU and docu_sres = :SER_DOCU";
+
             cmd.CommandType = CommandType.Text;
             cmd.ExecuteNonQuery();
         }
@@ -689,7 +687,7 @@ namespace app_for_CD
             OracleCommand cmd = con.CreateCommand();
            // cmd.Parameters.Add(new OracleParameter("NUM_DOCU", comboBox5.Text));
             cmd.Parameters.Add(new OracleParameter("SER_DOCU", comboBox1.Text));
-            cmd.CommandText = "select max(DOCU_NO) from tbcb_crp_docu_info where docu_sres = :SER_DOCU ";
+            cmd.CommandText = "select max(DOCU_NO) from table_for_docu where docu_sres = :SER_DOCU ";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
@@ -709,7 +707,127 @@ namespace app_for_CD
             }
 
         }
+        DateTimePicker dtp;
+        TextBox textBox;
+        private void button6_Click(object sender, EventArgs e)
+        {
+            //this.Size = new Size(1204, 618 + count_row * interval);
+            //panel2.Size = new Size( 1192, 268 + count_row * interval);
+            //panel3.Location = new Point(1, 355 + count_row * interval);
+            //panel2.Controls.Add(CreateLabel("label_num", "№ соглашения", 15,114, 16));  ////номер соглашения
+            //panel2.Controls.Add(CreateLabel("st_from", "Действует с", 416, 99, 16));    //действует с
+            //panel2.Controls.Add(CreateTextBox("KO",1,391,784));   //Доп соглашение
+            //panel2.Controls.Add(CreateTextBox("value_contract",2, 160,154));
+            //panel2.Controls.Add(CreateDateTime());
+            tableLayoutPanel1.Controls.Add(CreateLabel("№ соглашения",3));
+            tableLayoutPanel1.Controls.Add(CreateTextBox("value_contract", 2, 160, 154));
+            tableLayoutPanel1.Controls.Add(CreateLabel("Действует с",3));
+            tableLayoutPanel1.Controls.Add(CreateDateTime());
+            tableLayoutPanel1.Controls.Add(CreateTextBox("KO", 1, 391, 784));
+            this.Size = new Size(1204, count_row * 26+ 618);
+            //panel2.Size = new Size(1192, 268 + count_row * 26);
+            // tableLayoutPanel1.Size = new Size(1192 ,count_row*30 + 268);
+            //  tableLayoutPanel1.Location = new Point(15,212);
+            panel3.Location = new Point(1, 355 + count_row * 26);
+            count_row++;
 
+        }
+        private void button6_Click(int tmp, string num, string date)
+        {
+            tableLayoutPanel1.Controls.Add(CreateLabel("№ соглашения", 3));
+            tableLayoutPanel1.Controls.Add(CreateTextBox("value_contract", 2, 160, 154,num));
+            tableLayoutPanel1.Controls.Add(CreateLabel("Действует с", 3));
+            tableLayoutPanel1.Controls.Add(CreateDateTime(date));
+            tableLayoutPanel1.Controls.Add(CreateTextBox("KO", 1, 391, 784));
+            this.Size = new Size(1204, tmp * 26 + 618);
+            //panel2.Size = new Size(1192, 268 + count_row * 26);
+            // tableLayoutPanel1.Size = new Size(1192 ,count_row*30 + 268);
+            //  tableLayoutPanel1.Location = new Point(15,212);
+            panel3.Location = new Point(1, 355 + tmp * 26);
+
+
+
+        }
+        private DateTimePicker CreateDateTime()
+        {
+            string tmp_DTP = "dtp" + count_row.ToString();
+            dtp = new DateTimePicker();
+            dtp.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            dtp.Size = new Size(200, 20);
+            dtp.Location = new Point(554, 211 + count_row * interval);
+            dtp.Name = tmp_DTP;
+            dtp.CustomFormat = "dd.MM.yyyy";
+            return dtp;
+        }
+        private DateTimePicker CreateDateTime(string date)
+        {
+            string tmp_DTP = "dtp" + count_row.ToString();
+            dtp = new DateTimePicker();
+            dtp.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            dtp.Size = new Size(200, 20);
+            dtp.Location = new Point(554, 211 + count_row * interval);
+            dtp.Name = tmp_DTP;
+            inverse_parse_date(date, dtp);
+            dtp.CustomFormat = "dd.MM.yyyy";
+            return dtp;
+        }
+        private Label CreateLabel(string name, int loc_y)
+        {
+
+            Label cur_label = new Label();
+            cur_label.AutoSize = true;
+            //if (name == "№ соглашения")
+            //label.Location = new Point(3, loc_y);
+            //else 
+            //label.Location = new Point(403, loc_y);
+            cur_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            cur_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            cur_label.Size = new System.Drawing.Size(200, 25);
+            cur_label.Text = name;
+
+            return cur_label;
+
+        }
+
+        private void Add_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Data.was_count = 0;
+        }
+
+        private TextBox CreateTextBox(string name, int tmp, int s_x, int loc_x, string num)
+        {
+            string tmp_textbox = name + count_row.ToString();
+            textBox = new TextBox();
+            textBox.Name = tmp_textbox;
+            textBox.Size = new Size(s_x, 20);
+            textBox.Location = new System.Drawing.Point(loc_x, 211 + count_row * interval);
+            if (tmp == 1)
+                textBox.Text = "КО - Дополнительное соглашение к договору";
+            else if (tmp == 2)
+            {
+                textBox.Text = num;
+            }
+            textBox.Enabled = false;
+
+            return textBox;
+        }
+        private TextBox CreateTextBox(string name, int tmp, int s_x, int loc_x )
+        {
+            string tmp_textbox = name + count_row.ToString();
+            textBox = new TextBox();
+            textBox.Name = tmp_textbox;
+            textBox.Size = new Size(s_x, 20);
+            textBox.Location = new System.Drawing.Point(loc_x, 211 + count_row * interval);
+            if (tmp == 1)
+            textBox.Text = "КО - Дополнительное соглашение к договору";
+            else if (tmp == 2)
+            {
+                textBox.Text = (count_row+1).ToString();
+            }
+            textBox.Enabled = false;
+
+            return textBox;
+        }
         void load_sres()
         {
             SetConnection();

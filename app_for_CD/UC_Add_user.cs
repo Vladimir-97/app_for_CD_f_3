@@ -276,9 +276,6 @@ namespace app_for_CD
                     
                     else
                     {
-
-                        id = find_id();
-                        id++;
                         cmd = con.CreateCommand();
 
                         cmd.Parameters.Add(new OracleParameter("LOGIN", tableLayoutPanel1.Controls[count_of_table_row * i + 6].Text));
@@ -289,12 +286,13 @@ namespace app_for_CD
                         }
                         else
                         {
+
                             cmd.Parameters.Add(new OracleParameter("STATUS", 2));
                         }
                         cmd.Parameters.Add(new OracleParameter("FIO", tableLayoutPanel1.Controls[count_of_table_row * i + 1].Text));
                         cmd.Parameters.Add(new OracleParameter("POSITION", tableLayoutPanel1.Controls[count_of_table_row * i+3].Text));
 
-                        cmd.CommandText = $"insert into users_cd (id , login, password, role, status, fio, position) values ({id}, :LOGIN, :PASS, {0}, :STATUS, :FIO, :POSITION)";
+                        cmd.CommandText = $"insert into users_cd (id , login, password, role, status, fio, position) values ({find_id()+1}, :LOGIN, :PASS, {0}, :STATUS, :FIO, :POSITION)";
                         cmd.CommandType = CommandType.Text;
 
                         if (cmd.ExecuteNonQuery() != 0)

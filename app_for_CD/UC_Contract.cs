@@ -24,7 +24,6 @@ namespace app_for_CD
             panel2.Width = 3000;
             if (Data.role == 0)
             {
-                button10.Visible = false;
                 button3.Visible = false;
             }
             dataGridView1.Font = new Font("Times New Roman", 10, FontStyle.Bold);
@@ -199,9 +198,9 @@ namespace app_for_CD
         private void updatePanel2()
         {
             OracleCommand cmd = con.CreateCommand();
-            //cmd.CommandText = "SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD where rownum <= 50";
-            //cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, B.CRTE_DT FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
-            cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.ESTM_NM, Y.FIO FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND y.docu_sres = c.docu_sres AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
+            //cmd.CommandText = "SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN table_for_docu B ON A.CRP_CD = B.CRP_CD where rownum <= 50";
+            //cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, B.CRTE_DT FROM TBCB_CRP_INFO A INNER JOIN table_for_docu B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
+            cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.ESTM_NM, Y.FIO FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN table_for_docu B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND y.docu_sres = c.docu_sres AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
 
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
@@ -257,7 +256,7 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("NUM_DOCU", doc_num));
             cmd.Parameters.Add(new OracleParameter("SER_DOCU", ser_num));
 
-            cmd.CommandText = "DELETE from TBCB_CRP_DOCU_INFO WHERE crp_cd = :KZL AND DOCU_NO = :NUM_DOCU AND DOCU_SRES = :SER_DOCU";
+            cmd.CommandText = "DELETE from table_for_docu WHERE crp_cd = :KZL AND DOCU_NO = :NUM_DOCU AND DOCU_SRES = :SER_DOCU";
             cmd.CommandType = CommandType.Text;
             return cmd.ExecuteNonQuery();
         }
@@ -318,7 +317,7 @@ namespace app_for_CD
                     request = request + $" AND c.DOCU_STAT_CD = '{Data.status}'";
                 }
 
-                cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.ESTM_NM, Y.FIO FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN TBCB_CRP_DOCU_INFO B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND y.docu_sres = c.docu_sres AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
+                cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.ESTM_NM, Y.FIO FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN table_for_docu B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND y.docu_sres = c.docu_sres AND C.CRP_CD = Y.CRP_CD  and rownum <=100" + request + "order by C.DOCU_ISSU_DD ";
 
                 bool find_val = false;
                 cmd.CommandType = CommandType.Text;
@@ -351,12 +350,6 @@ namespace app_for_CD
             Data.f_ser = false;
             Data.f_status = false;
 
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            Add_user new_us = new Add_user();
-            new_us.Show();
         }
 
         private void button9_Click(object sender, EventArgs e)
@@ -448,6 +441,12 @@ namespace app_for_CD
                 {
                     for (int j = 0; j < 12; j++)
                     {
+                        if (j == 5)
+                        {
+                            saNames[i, j] = "\t" + check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
+
+                        }
+                        else
                         saNames[i, j] = check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
                         oSheet.Cells[i + 2, j + 1] = saNames[i, j];
                     }

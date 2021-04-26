@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +18,6 @@ namespace app_for_CD
         OracleConnection con = null;
         int count_of_label = 1, count_of_comboBox = 1, count_of_Button = 1, count_of_TextBox = 1;
         int count_of_label_u = 0;
-        int row = 0;
-        //List<Label> cur_label = new List<Label>();
-        List<ComboBox> comboBoxes = new List<ComboBox>();
         
         private void SetConnection()
         {
@@ -42,6 +40,7 @@ namespace app_for_CD
         {
             InitializeComponent();
             // create
+            textBox_number_of_invoice.Text = "Hi, I'm working!";
             tableLayoutPanel_main.AutoScroll = false;
             tableLayoutPanel_main.HorizontalScroll.Enabled = false;
             tableLayoutPanel_main.HorizontalScroll.Visible = false;
@@ -49,6 +48,8 @@ namespace app_for_CD
             tableLayoutPanel_main.RowCount = 2;
             tableLayoutPanel_main.RowStyles.Clear();
             tableLayoutPanel_main.AutoScroll = true;
+
+            SetConnection();
         }
 
         private Label CreateLabel(string name) {
@@ -76,16 +77,15 @@ namespace app_for_CD
 
         private void search_for_CRP_Click(object sender, EventArgs e)
         {
-            this.SetConnection();
+            
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "SELECT CRP_CD FROM TBCB_CRP_DOCU_INFO where rownum <=1000";
-
+            cmd.CommandText = "SELECT CRP_CD FROM TBCB_CRP_INFO where rownum <=1000";
 
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
             {
-                comboBox_CRP.Items.Add(dr[0].ToString());
+                comboBox_CRP_INN.Items.Add(dr[0].ToString());
             }
         }
 
@@ -94,7 +94,6 @@ namespace app_for_CD
             but.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
             but.Location = new System.Drawing.Point(169, 3);
             but.Name = "button_"+count_of_Button.ToString();
-            //MessageBox.Show(but.Name);
             but.Size = new System.Drawing.Size(23, 21);
             but.UseVisualStyleBackColor = true;
             count_of_Button++;
@@ -103,18 +102,126 @@ namespace app_for_CD
 
         private void comboBox_CRP_SelectedValueChanged(object sender, EventArgs e)
         {
-            string crp = comboBox_CRP.SelectedItem.ToString();
+            string crp = comboBox_CRP_INN.SelectedItem.ToString();
+            string INN = "";
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 13).Value = crp;
-            cmd.CommandText = "SELECT CRP_NM FROM TBCB_CRP_INFO where CRP_CD = :KZL";
+            cmd.CommandText = "SELECT CRP_NM, DIST_ID_2 FROM TBCB_CRP_INFO where CRP_CD = :KZL";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
+            
             while (dr.Read())
             {
-                textBox_CRP.Text = dr[0].ToString();
+                INN = dr[1].ToString();
+                if (INN == " " || INN == "" || INN == null) 
+                    textBox_CRP.Text = dr[0].ToString();
+                else
+                    textBox_CRP.Text = dr[0].ToString() + $" (ИНН:{INN})";
             }
         }
 
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox_CRP_INN_TextChanged(object sender, EventArgs e)
+        {
+            string crp = comboBox_CRP_INN.Text.ToString();
+            string INN = "";
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 13).Value = crp;
+            cmd.CommandText = "SELECT CRP_NM, DIST_ID_2 FROM TBCB_CRP_INFO where CRP_CD = :KZL";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                INN = dr[1].ToString();
+                if (INN == " " || INN == "" || INN == null)
+                    textBox_CRP.Text = dr[0].ToString();
+                else
+                    textBox_CRP.Text = dr[0].ToString() + $"(ИНН:{INN})";
+            }
+        }
+
+        private void search_nom_ser_Click(object sender, EventArgs e)
+        {
+            Docu_num_ser.Items.Clear();
+            string crp = comboBox_CRP_INN.Text;
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 13).Value = crp;
+            cmd.CommandText = "SELECT DOCU_NO, DOCU_SRES FROM table_for_docu where CRP_CD = :KZL";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                Docu_num_ser.Items.Add($"{dr[0]}/{dr[1]}");
+            }
+        }
+
+        private void Docu_num_ser_TextChanged(object sender, EventArgs e)
+        {
+            string num_ser = Docu_num_ser.Text.ToString();
+            string ser = "";
+            bool flag = false;
+            for (int i = 0; i < num_ser.Count(); i++) {
+                if (num_ser[i] == '/')
+                {
+                    flag = true;
+                }
+                else if(flag == true){
+                    ser = ser + num_ser[i];
+                }
+            } 
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("ser", OracleDbType.Varchar2, 13).Value = ser;
+            cmd.CommandText = $"SELECT VALUE_OF_SRES FROM series_of_docu where DOCU_SRES = '{ser}'";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while(dr.Read())
+                textBox_ser_name.Text = dr[0].ToString();
+        }
+
+        private void search_ser_Click(object sender, EventArgs e)
+        {
+            ComboBox_ser.Items.Clear();
+            string num_ser = Docu_num_ser.Text.ToString();
+            string num = "", ser = "";
+            string ser_num;
+            bool flag = false;
+            for (int i = 0; i < num_ser.Count(); i++) {
+                if ((num_ser[i] != '/') && (flag==false))
+                {
+                    num = num + num_ser[i];
+                }
+                else {
+                    flag = true;
+                }
+                if ((num_ser[i] != '/') && flag == true)
+                {
+                    ser = ser + num_ser[i];
+                }
+            }
+            ser_num = ser;
+            ser_num = ser_num + num;
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("cd", OracleDbType.Varchar2, 13).Value = ser;
+            cmd.CommandText = $"SELECT CD_NM FROM tbcb_cd where cd_grp_no = '000037' AND CD like '{ser}%'";
+            textBox_ser.Text = $"SELECT CD_NM FROM tbcb_cd where cd_grp_no = '000037' AND CD like '{ser}%'";
+            
+            cmd.CommandType = CommandType.Text;
+            
+            OracleDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                ComboBox_ser.Items.Add(dr[0].ToString());
+            }
+            
+        }
 
         private TextBox Create_TextBox(int x, int y, bool grey)
         {
@@ -133,33 +240,33 @@ namespace app_for_CD
             if (choice == 1)
             {
                 flws.Controls.Add(CreateLabel($"Услуга - {count_of_label_u + 2}:"));
-                flws.Size = new System.Drawing.Size(205, 26);
+                flws.Size = new System.Drawing.Size(205, 24);
                 count_of_label_u++;
-                tableLayoutPanel_main.Controls.Add(flws, 0, row);
+                tableLayoutPanel_main.Controls.Add(flws);
             }
             else if (choice == 2)
             {
                 flws.Controls.Add(CreateComboBox(158, 21));
                 flws.Controls.Add(searchButton());
                 flws.Size = new System.Drawing.Size(205, 30);
-                tableLayoutPanel_main.Controls.Add(flws, 1, row);
+                tableLayoutPanel_main.Controls.Add(flws);
             }
             else if (choice == 3)
             {
                 flws.Controls.Add(Create_TextBox(696, 20, true));
                 flws.Size = new System.Drawing.Size(700, 26);
-                tableLayoutPanel_main.Controls.Add(flws, 2, row);
+                tableLayoutPanel_main.Controls.Add(flws);
             }
             else if (choice == 4) {
                 flws.Controls.Add(CreateLabel("Сумма:"));
                 flws.Size = new System.Drawing.Size(85, 41);
-                tableLayoutPanel_main.Controls.Add(flws, 0, row + 1);
+                tableLayoutPanel_main.Controls.Add(flws);
             }
             else if (choice == 5)
             {
                 flws.Controls.Add(Create_TextBox(158, 20, false));
                 flws.Size = new System.Drawing.Size(205, 41);
-                tableLayoutPanel_main.Controls.Add(flws, 1, row + 1);
+                tableLayoutPanel_main.Controls.Add(flws);
             }
             else if (choice == 6)
             {
@@ -167,13 +274,12 @@ namespace app_for_CD
                 flws.Controls.Add(CreateComboBox(121, 21));
                 flws.Controls.Add(searchButton());
                 flws.Size = new System.Drawing.Size(264, 41);
-                tableLayoutPanel_main.Controls.Add(flws, 2, row + 1);
+                tableLayoutPanel_main.Controls.Add(flws);
             }
 
         }
         private void MyCreateButton_Click(object sender, EventArgs e)
         {
-            row += 2;
             for (byte i = 1; i <= 6; i++)
             {
                 FlowLayoutPanel_Create_double(i);

@@ -26,8 +26,7 @@ namespace app_for_CD
                 this.tabControl1.ItemSize = new Size((this.tabControl1.Width / 7 - 1), 0);
             }
 
-            this.Width = Screen.PrimaryScreen.WorkingArea.Width;
-            this.Height = Screen.PrimaryScreen.WorkingArea.Height;
+            this.WindowState = FormWindowState.Maximized;
 
         }
         private void TC_Menu_Resize(object sender, EventArgs e)
@@ -41,5 +40,7 @@ namespace app_for_CD
                 this.tabControl1.ItemSize = new Size((this.tabControl1.Width / 7 - 1), 0);
             }
         }
+
+
     }
 }
