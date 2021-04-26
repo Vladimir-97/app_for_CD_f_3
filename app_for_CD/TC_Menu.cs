@@ -40,5 +40,7 @@ namespace app_for_CD
                 this.tabControl1.ItemSize = new Size((this.tabControl1.Width / 7 - 1), 0);
             }
         }
+
+
     }
 }

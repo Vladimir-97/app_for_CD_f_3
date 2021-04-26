@@ -441,6 +441,12 @@ namespace app_for_CD
                 {
                     for (int j = 0; j < 12; j++)
                     {
+                        if (j == 5)
+                        {
+                            saNames[i, j] = "\t" + check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
+
+                        }
+                        else
                         saNames[i, j] = check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
                         oSheet.Cells[i + 2, j + 1] = saNames[i, j];
                     }
