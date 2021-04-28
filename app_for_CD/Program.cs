@@ -19,7 +19,15 @@ namespace app_for_CD
             public static string isch = "";
             public static string INN = "";
             public static string ser = "";
-            public static int status = 0;
+            public static string crp_str1 = "";
+            public static string crp_str2 = "";
+            public static string client_str1 = "";
+            public static string client_str2 = "";
+            public static string emitent_str = "";
+            public static string code_stock_str = "";
+            public static string name_stock_str = "";
+        public static int status = 0;
+            
         #endregion
         #region flag for checkBox
         public static bool f_n { get; set; }
@@ -39,6 +47,18 @@ namespace app_for_CD
         public static string get_fio = "";
         public static int was_count = 0;
 
+        #region flag_for_filter_of_stocks
+        public static bool fil_date { get; set; }
+        public static bool fil_crp1 { get; set; }
+        public static bool fil_crp2 { get; set; }
+        public static bool fil_client1 { get; set; }
+        public static bool fil_client2 { get; set; }
+        public static bool fil_emitent { get; set; }
+        public static bool fil_code_stocks { get; set; }
+        public static bool fil_name_stocks { get; set; }
+        #endregion
+
+
     }
     static class Program
     {
@@ -54,9 +74,6 @@ namespace app_for_CD
             Application.Exit();
             if (Data.exit == true)
                 Application.Run(new TC_Menu());
-            //Application.Run(new List_of_contract());
-
-          //  Application.Run(new Move_stock());
 
         }
     }
