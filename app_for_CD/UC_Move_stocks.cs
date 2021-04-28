@@ -41,8 +41,10 @@ namespace app_for_CD
             }
             data[data.Count - 1][4] = dr[3].ToString();  ////////////////////Наименование отчуждателя
             data[data.Count - 1][5] = check_null(dr[4].ToString());     /////КОД ЦБ
-            data[data.Count - 1][6] = check_null(dr[5].ToString());     /////Наименование ЦБ
-            data[data.Count - 1][7] = find_stk(check_null(dr[6].ToString()));     /////Наименование  эмитента и ценной бумаги
+            
+            data[data.Count - 1][6] = find_stk(check_null(dr[4].ToString()));     /////Наименование ЦБ
+
+            data[data.Count - 1][7] = check_null(dr[6].ToString());     /////Наименование  эмитента и ценной бумаги
 
             data[data.Count - 1][8] = check_null(dr[7].ToString());  ////количство ЦБ
             data[data.Count - 1][9] = check_null(dr[8].ToString());   ////цена одной ЦБ
@@ -78,13 +80,14 @@ namespace app_for_CD
         private void update_panel()
         {
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "select distinct dl_reg_no, dl_reg_dd, pldgr_crp_cd, pldgr_nm, isu_cd, issr_nm,plg_prov_qty, cors,sec_val, tr_type_cd,  pldge_crp_cd, pldge_nm from tbsr_stk_plg_reg where rownum <100 order by dl_reg_dd desc";
+            cmd.CommandText = "select distinct dl_reg_no, dl_reg_dd, pldgr_crp_cd, pldgr_nm, isu_cd, issr_nm,plg_prov_qty, cors,sec_val, tr_type_cd,  pldge_crp_cd, pldge_nm from tbsr_stk_plg_reg order by dl_reg_dd desc ";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             List<string[]> data = new List<string[]>();
-
-            while (dr.Read() == true)
+            int i = 0;
+            while (dr.Read() == true && i < 100)
             {
+                i++;
                 fill_data(data, dr);
             }
 
@@ -103,19 +106,19 @@ namespace app_for_CD
             }
             return "";
         }
-        //private string parse_type(string tmp)
-        //{
-        //    OracleCommand cmd = con.CreateCommand();
-        //    cmd.Parameters.Add("CD", tmp);
-        //    cmd.CommandText = "select cd_nm from tbcb_cd where cd_grp_no = '100051' and Lang_cd = 'UZ' and cd = :CD";
-        //    cmd.CommandType = CommandType.Text;
-        //    OracleDataReader dr = cmd.ExecuteReader();
-        //    while (dr.Read())
-        //    {
-        //        return dr[0].ToString();
-        //    }
-        //    return "";
-        //}
+        private string find_stk(string tmp)
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("ISU_CD", tmp);
+            cmd.CommandText = "select ISU_NM from tbcb_stk where isu_cd = :ISU_CD and rownum <500";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                return dr[0].ToString();
+            }
+            return "";
+        }
         string parse_date(string tmp)
         {
             string norm_vid_date = "";
@@ -200,7 +203,7 @@ namespace app_for_CD
                     {
                         //if (j == 3 || j == 11)
                         //{
-                            saNames[i, j] = "\t" + check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
+                        saNames[i, j] = "\t" + check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
 
                         //}
                         //else
@@ -220,6 +223,75 @@ namespace app_for_CD
                 errorMessage = String.Concat(errorMessage, theException.Source);
 
                 MessageBox.Show(errorMessage, "Error");
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            filter_stocks f = new filter_stocks();
+            f.ShowDialog();
+
+            if (Data.fil_date == true || Data.fil_crp1 == true || Data.fil_client1 || Data.fil_crp2 == true || Data.fil_client2 || Data.fil_name_stocks == true)
+            {
+                string request = "where 1 = 1";
+               // string name_cl = "";
+
+                OracleCommand cmd = con.CreateCommand();
+                if (Data.fil_date == true)
+                {
+                    request += $" AND dl_reg_dd  >= '{Data.st_date_orig}'  AND dl_reg_dd <= '{Data.end_date_orig}' ";
+                }
+                if (Data.fil_crp1 == true )
+                {
+                    request += $" AND pldgr_crp_cd like '%{Data.crp_str1}%' ";
+                }
+                if (Data.fil_client1 == true)
+                {
+                    request += $" AND pldgr_nm like '%{Data.client_str1}%' ";
+                }
+                if (Data.fil_crp2 == true)
+                {
+                    request += $" AND pldge_crp_cd like '%{Data.crp_str2}%' ";
+                }
+                if (Data.fil_client2 == true)
+                {
+                    request += $" AND pldge_nm like '%{Data.client_str2}%' ";
+                }
+                //if (Data.fil_code_stocks == true)
+                //{
+                //    request += $" AND pldge_nm = {Data.client_str1} ";
+                //}
+                if (Data.fil_name_stocks == true)
+                {
+                    request += $" AND issr_nm = '%{Data.client_str1}%' ";
+                }
+                cmd.CommandText = "select distinct dl_reg_no, dl_reg_dd, pldgr_crp_cd, pldgr_nm, isu_cd, issr_nm,plg_prov_qty, cors,sec_val, tr_type_cd,  pldge_crp_cd, pldge_nm from tbsr_stk_plg_reg " + request + " and rownum < 500 order by dl_reg_dd desc";
+
+                bool find_val = false;
+                cmd.CommandType = CommandType.Text;
+                OracleDataReader dr = cmd.ExecuteReader();
+                List<string[]> data = new List<string[]>();
+                while (dr.Read())
+                {
+                    find_val = true;
+                    fill_data(data, dr);
+                }
+                if (find_val)
+                {
+                    MessageBox.Show("Найдено!");
+                }
+                else
+                {
+                    MessageBox.Show("Не найдено по данному запросу!");
+                }
+                print_data(data);
+                Data.fil_date = false;
+                Data.fil_crp1 = false;
+                Data.fil_client1 = false;
+                Data.fil_crp2 = false;
+                Data.fil_client2 = false; 
+                Data.fil_name_stocks = false;
+                Data.fil_code_stocks = false;
             }
         }
     }
