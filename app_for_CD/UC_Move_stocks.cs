@@ -41,7 +41,9 @@ namespace app_for_CD
             }
             data[data.Count - 1][4] = dr[3].ToString();  ////////////////////Наименование отчуждателя
             data[data.Count - 1][5] = check_null(dr[4].ToString());     /////КОД ЦБ
+            
             data[data.Count - 1][6] = find_stk(check_null(dr[4].ToString()));     /////Наименование ЦБ
+
             data[data.Count - 1][7] = check_null(dr[6].ToString());     /////Наименование  эмитента и ценной бумаги
 
             data[data.Count - 1][8] = check_null(dr[7].ToString());  ////количство ЦБ
