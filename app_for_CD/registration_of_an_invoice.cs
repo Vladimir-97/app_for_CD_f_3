@@ -12,6 +12,7 @@ using Oracle.DataAccess.Client;
 
 namespace app_for_CD
 {
+
     public partial class registration_of_an_invoice : Form
     {
         ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(registration_of_an_invoice));
@@ -19,7 +20,7 @@ namespace app_for_CD
         int count_of_label = 1, count_of_comboBox = 2, count_of_Button = 2, count_of_TextBox = 1;
         int count_of_label_u = 0;
         int row = 2;
-
+        bool f = false;
         private void SetConnection()
         {
             string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";
@@ -49,7 +50,6 @@ namespace app_for_CD
             tableLayoutPanel_main.RowCount = 2;
             tableLayoutPanel_main.RowStyles.Clear();
             tableLayoutPanel_main.AutoScroll = true;
-
             SetConnection();
         }
 
@@ -85,6 +85,7 @@ namespace app_for_CD
             combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             if (x != -1 && y != -1)
                 combo.Location = new System.Drawing.Point(x, y);
+            combo.Click += new System.EventHandler(ComboBoxClick);
             count_of_comboBox ++;
             return combo;
         }
@@ -136,42 +137,130 @@ namespace app_for_CD
                     textBox_CRP.Text = dr[0].ToString() + $" (ИНН:{INN})";
             }
         }
-
-        private void Save_Click(object sender, EventArgs e)
+        int find_id()
         {
-            #region Получение всей информации
-            List<string> values = new List<string>();
-            string crp = comboBox_CRP_INN.Text;
-            string Date = dateTimePicker_invoice_data.Value.ToString("yyyyMMdd");
-            string num_series = Docu_num_ser.Text;
-            string ground = ground_textBox.Text;
-            string comment = comment_textBox.Text;
-            
-            int cur_row = 0;
-            bool flag = false;
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "SELECT NVL(MAX(ID), 0) FROM REGISTRATION_OF_INVOICE ";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            MessageBox.Show(dr.Read().ToString());
+            return Int32.Parse(dr[0].ToString());
+        }
+        bool check()
+        {
+            bool flag = true;
+            if(comboBox_CRP_INN.Text == "" || comboBox_CRP_INN.Text == null) { 
+                comboBox_CRP_INN.BackColor = System.Drawing.Color.Red;
+                flag = false;
+            }
+            if (NDS_PINFL_textBox.Text == "" || NDS_PINFL_textBox.Text == null) { 
+                NDS_PINFL_textBox.BackColor = System.Drawing.Color.Red;
+                flag = false;
+            }
+            if (Docu_num_ser.Text == "" || Docu_num_ser.Text == null)
+            {
+                Docu_num_ser.BackColor = System.Drawing.Color.Red;
+                Docu_num_ser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+                flag = false;
+            }
             FlowLayoutPanel flp;
             Panel panel;
-            for (int i = 0; i < tableLayoutPanel_main.Controls.Count - 4; i++)
+            for (int j=0; j < tableLayoutPanel_main.Controls.Count; j++)
             {
-
-                if ((i % 2 == 1) && flag == false)
-                {
-                    flp = ((FlowLayoutPanel)tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
-                    values.Add( ((ComboBox)flp.Controls[0]).Text );
-                    flag = true;
-                    cur_row++;
+                if (tableLayoutPanel_main.Controls[j] is FlowLayoutPanel) {
+                    flp = (FlowLayoutPanel)tableLayoutPanel_main.Controls[j];
+                    if (flp.Controls[0] is ComboBox) {
+                        if (((ComboBox)(flp.Controls[0])).Text == "" || ((ComboBox)(flp.Controls[0])).Text == null) {
+                            ((ComboBox)(flp.Controls[0])).BackColor = System.Drawing.Color.Red;
+                            ((ComboBox)(flp.Controls[0])).DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+                            flag = false;
+                        }
+                    }
                 }
-                else if ((i % 2 == 1) && flag == true)
+
+                else if (tableLayoutPanel_main.Controls[j] is Panel)
                 {
-                    panel = (Panel)(tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
-                    values.Add(((Panel)panel.Controls[0]).Text);
-                    values.Add(((ComboBox)panel.Controls[2]).Text);
-                    flag = false;
-                    cur_row++;
+                    panel = (Panel)tableLayoutPanel_main.Controls[j];
+                    if (((TextBox)(panel.Controls[0])).Text == "" || ((TextBox)(panel.Controls[0])).Text == null)
+                    {
+                        ((TextBox)(panel.Controls[0])).BackColor = System.Drawing.Color.Red;
+                        flag = false;
+                    }
+                    if (((ComboBox)(panel.Controls[2])).Text == "" || ((ComboBox)(panel.Controls[2])).Text == null)
+                    {
+                        ((ComboBox)(panel.Controls[2])).BackColor = System.Drawing.Color.Red;
+                        ((ComboBox)(panel.Controls[2])).DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+                        flag = false;
+                    }
+                }
+
+
+            }
+
+            if (ground_textBox.Text == "" || ground_textBox.Text == null)
+            {
+                ground_textBox.BackColor = System.Drawing.Color.Red;
+                flag = false;
+            }
+            if (comment_textBox.Text == "" || comment_textBox.Text == null)
+            {
+                comment_textBox.BackColor = System.Drawing.Color.Red;
+                flag = false;
+            }
+
+            if (flag == false) {
+                Report.Text = "Заполните все поля!";
+                Report.ForeColor = System.Drawing.Color.Red;
+                Report.Visible = true;
+            }
+            return flag;
+        }
+        private void Save_Click(object sender, EventArgs e)
+        {
+            if (check()) {
+                #region Получение всей информации
+                List<string> values = new List<string>();
+                string crp = comboBox_CRP_INN.Text;
+                string Date = dateTimePicker_invoice_data.Value.ToString("yyyyMMdd");
+                string num_series = Docu_num_ser.Text;
+                string ground = ground_textBox.Text;
+                string comment = comment_textBox.Text;
+                string nds_pinfl = NDS_PINFL_textBox.Text;
+                int cur_row = 0;
+                bool flag = false;
+                FlowLayoutPanel flp;
+                Panel panel;
+                for (int i = 0; i < tableLayoutPanel_main.Controls.Count - 4; i++)
+                {
+
+                    if ((i % 2 == 1) && flag == false)
+                    {
+                        flp = ((FlowLayoutPanel)tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
+                        values.Add(((ComboBox)flp.Controls[0]).Text);
+                        flag = true;
+                        cur_row++;
+                    }
+                    else if ((i % 2 == 1) && flag == true)
+                    {
+                        panel = (Panel)(tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
+                        values.Add(((TextBox)panel.Controls[0]).Text);
+                        values.Add(((ComboBox)panel.Controls[2]).Text);
+                        flag = false;
+                        cur_row++;
+                    }
+                }
+                #endregion
+                OracleCommand cmd;
+                cmd = con.CreateCommand();
+                int id;
+                id = find_id() + 1;
+                for (int i = 0; i < values.Count; i = i + 3) {
+
+                    cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (id , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}') ";
+                    cmd.ExecuteNonQuery();
                 }
             }
-            #endregion
-
+            //
         }
 
         private void comboBox_CRP_INN_TextChanged(object sender, EventArgs e)
@@ -188,13 +277,15 @@ namespace app_for_CD
             {
                 if (dr[2].ToString() == "8000") {
                     NDS_PINFL.Text = "ПИНФЛ";
+                    NDS_PINFL_textBox.MaxLength = 14;
                     NDS_PINFL.Visible = true;
-                    NDS_PINFL_comboBox.Visible = true;
+                    NDS_PINFL_textBox.Visible = true;
                 }
                 else {
                     NDS_PINFL.Text = "Код НДС";
+                    NDS_PINFL_textBox.MaxLength = 12;
                     NDS_PINFL.Visible = true;
-                    NDS_PINFL_comboBox.Visible = true;
+                    NDS_PINFL_textBox.Visible = true;
                 }
                 INN = dr[1].ToString();
                 if (INN == " " || INN == "" || INN == null)
@@ -222,6 +313,7 @@ namespace app_for_CD
 
         private void Docu_num_ser_TextChanged(object sender, EventArgs e)
         {
+            
             string num_ser = Docu_num_ser.Text.ToString();
             string ser = "";
             bool flag = false;
@@ -308,6 +400,8 @@ namespace app_for_CD
             textBox.Size = new System.Drawing.Size(w, h);
             if(x!=-1 && y!=-1)
                 textBox.Location = new System.Drawing.Point(x, y);
+            textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_Sum_KeyPress);
+            textBox.Click += new System.EventHandler(this.textBoxClick);
             count_of_TextBox++;
             return textBox;
         }
@@ -321,6 +415,92 @@ namespace app_for_CD
             panel.TabIndex = 66;
             return panel;
         }
+        public int DS_Count(string s)
+        {
+            string substr = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0].ToString();
+            int count = (s.Length - s.Replace(substr, "").Length) / substr.Length;
+            return count;
+        }
+        private void textBox_Sum_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var DS = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            if (e.KeyChar == DS && ((TextBox)sender).Text.Length == 0)
+                e.Handled = true;
+            else
+                e.Handled = !(Char.IsDigit(e.KeyChar) || ((e.KeyChar == DS) && (DS_Count(((TextBox)sender).Text) < 1) ) || e.KeyChar == 8 );
+        }
+
+        private void ComboBoxClick(object sender, EventArgs e)
+        {
+            ComboBox combo = sender as ComboBox;
+            if (combo.BackColor == System.Drawing.Color.Red) {
+                combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+                combo.BackColor = System.Drawing.SystemColors.Window;
+            }
+        }
+
+        private void comboBox_CRP_INN_Click(object sender, EventArgs e)
+        {
+            if (comboBox_CRP_INN.BackColor == System.Drawing.Color.Red)
+            {
+                comboBox_CRP_INN.BackColor = System.Drawing.SystemColors.Window;
+            }
+        }
+
+        private void textBoxClick(object sender, EventArgs e)
+        {
+            TextBox textBox = sender as TextBox;
+            if (textBox.BackColor == System.Drawing.Color.Red)
+            {
+                textBox.BackColor = System.Drawing.SystemColors.Window;
+            }
+        }
+
+        private void Remove()
+        {
+            for (int i = tableLayoutPanel_main.Controls.Count - 1; i >= 8; i--)
+            {
+                tableLayoutPanel_main.Controls[i].Dispose();
+            }
+        }
+
+
+        private void New_Click(object sender, EventArgs e)
+        {
+            Save s = new Save();
+            s.StartPosition = FormStartPosition.CenterParent;
+            s.ShowDialog();
+            if (Data.yes == true)
+            {
+                Save.PerformClick();
+            }
+            else
+            {
+                Remove();
+                comboBox_CRP_INN.Text = "";
+                comboBox_CRP_INN.BackColor = System.Drawing.SystemColors.Window;
+                textBox_CRP.Text = "";
+                textBox_CRP.BackColor = System.Drawing.SystemColors.Window;
+                NDS_PINFL_textBox.Text = "";
+                NDS_PINFL_textBox.BackColor = System.Drawing.SystemColors.Window;
+                Docu_num_ser.SelectedIndex = -1;
+                Docu_num_ser.BackColor = System.Drawing.SystemColors.Window;
+                textBox_ser_name.Text = "";
+                textBox_ser_name.BackColor = System.Drawing.SystemColors.Window;
+                ComboBox_0.SelectedIndex = -1;
+                ComboBox_0.BackColor = System.Drawing.SystemColors.Window;
+                textBox_Sum.Text = "";
+                textBox_Sum.BackColor = System.Drawing.SystemColors.Window;
+                comboBox6.SelectedIndex = -1;
+                comboBox6.BackColor = System.Drawing.SystemColors.Window;
+                ground_textBox.Text = "";
+                ground_textBox.BackColor = System.Drawing.SystemColors.Window;
+                comment_textBox.Text = "";
+                comment_textBox.BackColor = System.Drawing.SystemColors.Window;
+            }
+            Data.yes = false;
+        }
+
 
         private void Docu_num_ser_SelectedValueChanged(object sender, EventArgs e)
         {
@@ -346,7 +526,6 @@ namespace app_for_CD
                 }
             }
         }
-
 
         private void CreateElementOnTable(byte choice)
         {
@@ -380,25 +559,13 @@ namespace app_for_CD
             }
 
         }
-        private void move(int final) {
-            tableLayoutPanel_main.Controls.Add(flowLayoutPanel_basis_for_label, 0, 4);
-            tableLayoutPanel_main.SetRow(flowLayoutPanel_basis_for_label, final / 2);
-            tableLayoutPanel_main.SetColumn(flowLayoutPanel_basis_for_label, 0);
-            tableLayoutPanel_main.SetRow(flowLayoutPanel_basis_for_textBox, final / 2);
-            tableLayoutPanel_main.SetColumn(flowLayoutPanel_basis_for_textBox, 1);
-            tableLayoutPanel_main.SetRow(flowLayoutPanel_comment_for_label, (final / 2) + 1);
-            tableLayoutPanel_main.SetColumn(flowLayoutPanel_comment_for_label, 0);
-            tableLayoutPanel_main.SetRow(flowLayoutPanel_comment_for_TextBox, (final / 2) + 1);
-            tableLayoutPanel_main.SetColumn(flowLayoutPanel_comment_for_TextBox, 1);
-        }
+
         private void MyCreateButton_Click(object sender, EventArgs e)
         { 
-            
             for (byte i = 1; i <= 4; i++)
             {
                 CreateElementOnTable(i);
             }
-
         }
     }
 }

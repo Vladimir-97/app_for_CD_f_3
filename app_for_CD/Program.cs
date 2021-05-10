@@ -9,8 +9,11 @@ namespace app_for_CD
     static class Data
     {
         public static bool it_ok = false;
+        #region Save
+        public static bool yes = false;
+        #endregion
         #region value for return filter
-            public static string st_date_orig { get; set; }
+        public static string st_date_orig { get; set; }
             public static string end_date_orig { get; set; }
             public static string number_ser = "";
             public static string name_cl = "";

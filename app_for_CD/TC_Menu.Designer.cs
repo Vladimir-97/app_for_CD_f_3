@@ -33,6 +33,7 @@
             this.uC_Contract2 = new app_for_CD.UC_Contract();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.uC_Invoice1 = new app_for_CD.UC_Invoice();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.uC_Move_stocks1 = new app_for_CD.UC_Move_stocks();
             this.tabPage5 = new System.Windows.Forms.TabPage();
@@ -41,6 +42,7 @@
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.SuspendLayout();
@@ -102,6 +104,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.uC_Invoice1);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -109,6 +112,17 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Счет-фактура";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // uC_Invoice1
+            // 
+            this.uC_Invoice1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uC_Invoice1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.uC_Invoice1.Location = new System.Drawing.Point(7, 0);
+            this.uC_Invoice1.Name = "uC_Invoice1";
+            this.uC_Invoice1.Size = new System.Drawing.Size(1903, 1023);
+            this.uC_Invoice1.TabIndex = 0;
             // 
             // tabPage4
             // 
@@ -186,6 +200,7 @@
             this.Resize += new System.EventHandler(this.TC_Menu_Resize);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             this.tabPage6.ResumeLayout(false);
@@ -206,5 +221,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private UC_Contract uC_Contract2;
         private UC_Move_stocks uC_Move_stocks1;
+        private UC_Invoice uC_Invoice1;
     }
 }
