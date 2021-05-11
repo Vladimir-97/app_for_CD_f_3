@@ -139,6 +139,12 @@
     <Compile Include="filter_stocks.Designer.cs">
       <DependentUpon>filter_stocks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Save.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Save.Designer.cs">
+      <DependentUpon>Save.cs</DependentUpon>
+    </Compile>
     <Compile Include="List_of_contract.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,6 +212,12 @@
     <Compile Include="UC_Add_user.Designer.cs">
       <DependentUpon>UC_Add_user.cs</DependentUpon>
     </Compile>
+    <Compile Include="UC_Invoice.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UC_Invoice.Designer.cs">
+      <DependentUpon>UC_Invoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="UC_Move_stocks.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -232,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="filter_stocks.resx">
       <DependentUpon>filter_stocks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Save.resx">
+      <DependentUpon>Save.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="invoice.resx">
       <DependentUpon>invoice.cs</DependentUpon>
@@ -272,6 +287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UC_Add_user.resx">
       <DependentUpon>UC_Add_user.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UC_Invoice.resx">
+      <DependentUpon>UC_Invoice.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UC_Move_stocks.resx">
       <DependentUpon>UC_Move_stocks.cs</DependentUpon>
