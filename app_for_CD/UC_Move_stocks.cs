@@ -25,7 +25,7 @@ namespace app_for_CD
         private void UC_Move_stocks_Load(object sender, EventArgs e)
         {
             update_panel();
-
+            button5.Enabled = false;
 
         }
         void fill_data(List<string[]> data, OracleDataReader dr)
@@ -265,7 +265,7 @@ namespace app_for_CD
                 {
                     request += $" AND issr_nm = '%{Data.client_str1}%' ";
                 }
-                cmd.CommandText = "select distinct dl_reg_no, dl_reg_dd, pldgr_crp_cd, pldgr_nm, isu_cd, issr_nm,plg_prov_qty, cors,sec_val, tr_type_cd,  pldge_crp_cd, pldge_nm from tbsr_stk_plg_reg " + request + " and rownum < 500 order by dl_reg_dd desc";
+                cmd.CommandText = "select distinct dl_reg_no, dl_reg_dd, pldgr_crp_cd, pldgr_nm, isu_cd, issr_nm,plg_prov_qty, cors,sec_val, tr_type_cd,  pldge_crp_cd, pldge_nm from tbsr_stk_plg_reg " + request + " and rownum < 100 order by dl_reg_dd desc";
 
                 bool find_val = false;
                 cmd.CommandType = CommandType.Text;
@@ -292,6 +292,39 @@ namespace app_for_CD
                 Data.fil_client2 = false; 
                 Data.fil_name_stocks = false;
                 Data.fil_code_stocks = false;
+            }
+        }
+        string kzl_pol, name_pol, kzl_otch, name_otch, code_cb, count_cb, type_agr;
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            int row = dataGridView1.CurrentRow.Index;
+            if (dataGridView1.SelectedCells.Count > 1)
+            {
+                kzl_otch = dataGridView1.Rows[row].Cells[3].Value.ToString();
+                name_otch = dataGridView1.Rows[row].Cells[4].Value.ToString();
+                kzl_pol = dataGridView1.Rows[row].Cells[11].Value.ToString();
+                name_pol = dataGridView1.Rows[row].Cells[12].Value.ToString();
+                code_cb = dataGridView1.Rows[row].Cells[5].Value.ToString();
+                count_cb = dataGridView1.Rows[row].Cells[7].Value.ToString();
+                type_agr = dataGridView1.Rows[row].Cells[10].Value.ToString();   /////тип сделки
+                MessageBox.Show("kzl_otch = " + kzl_otch);
+                MessageBox.Show("kzl_pol = " + kzl_pol);
+                MessageBox.Show("code_cd = " + code_cb);
+                MessageBox.Show("count_cb = " + count_cb);
+                MessageBox.Show("type_agr = " + type_agr);
+                button5.Enabled = true;
+                // crp_cd = dataGridView1.Rows[row].Cells[6].Value.ToString();
+                // dataGridView1.ForeColor = Color.Red;
+                // dataGridView1.GridColor = Color.Green;
+            }
+            else
+            {
             }
         }
     }

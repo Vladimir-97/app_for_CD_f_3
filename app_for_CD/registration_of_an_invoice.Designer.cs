@@ -52,7 +52,7 @@
             this.flowLayoutPanel6 = new System.Windows.Forms.FlowLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox_Sum = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.flowLayoutPanel_basis_for_label = new System.Windows.Forms.FlowLayoutPanel();
@@ -65,7 +65,7 @@
             this.comment_textBox = new System.Windows.Forms.TextBox();
             this.mainpanel_reg = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.NDS_PINFL_comboBox = new System.Windows.Forms.ComboBox();
+            this.NDS_PINFL_textBox = new System.Windows.Forms.TextBox();
             this.NDS_PINFL = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBox_CRP_INN = new System.Windows.Forms.ComboBox();
@@ -74,7 +74,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.textBox_CRP = new System.Windows.Forms.TextBox();
             this.label_CRP_INN = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.Report = new System.Windows.Forms.Label();
             this.New = new System.Windows.Forms.Button();
             this.Change = new System.Windows.Forms.Button();
             this.Save = new System.Windows.Forms.Button();
@@ -245,6 +245,7 @@
             this.Docu_num_ser.TabIndex = 61;
             this.Docu_num_ser.SelectedValueChanged += new System.EventHandler(this.Docu_num_ser_SelectedValueChanged);
             this.Docu_num_ser.TextChanged += new System.EventHandler(this.Docu_num_ser_TextChanged);
+            this.Docu_num_ser.Click += new System.EventHandler(this.ComboBoxClick);
             // 
             // label_invoice_data
             // 
@@ -332,6 +333,7 @@
             this.ComboBox_0.Name = "ComboBox_0";
             this.ComboBox_0.Size = new System.Drawing.Size(873, 21);
             this.ComboBox_0.TabIndex = 40;
+            this.ComboBox_0.Click += new System.EventHandler(this.ComboBoxClick);
             // 
             // SearchSer_0
             // 
@@ -365,7 +367,7 @@
             // 
             // panel6
             // 
-            this.panel6.Controls.Add(this.textBox3);
+            this.panel6.Controls.Add(this.textBox_Sum);
             this.panel6.Controls.Add(this.label9);
             this.panel6.Controls.Add(this.comboBox6);
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -374,14 +376,16 @@
             this.panel6.Size = new System.Drawing.Size(926, 26);
             this.panel6.TabIndex = 66;
             // 
-            // textBox3
+            // textBox_Sum
             // 
-            this.textBox3.Location = new System.Drawing.Point(4, 5);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(189, 20);
-            this.textBox3.TabIndex = 59;
-            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_Sum.Location = new System.Drawing.Point(4, 5);
+            this.textBox_Sum.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.textBox_Sum.Name = "textBox_Sum";
+            this.textBox_Sum.Size = new System.Drawing.Size(189, 20);
+            this.textBox_Sum.TabIndex = 59;
+            this.textBox_Sum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox_Sum.Click += new System.EventHandler(this.textBoxClick);
+            this.textBox_Sum.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_Sum_KeyPress);
             // 
             // label9
             // 
@@ -406,6 +410,7 @@
             this.comboBox6.Name = "comboBox6";
             this.comboBox6.Size = new System.Drawing.Size(189, 21);
             this.comboBox6.TabIndex = 55;
+            this.comboBox6.Click += new System.EventHandler(this.ComboBoxClick);
             // 
             // flowLayoutPanel_basis_for_label
             // 
@@ -441,6 +446,7 @@
             this.ground_textBox.Name = "ground_textBox";
             this.ground_textBox.Size = new System.Drawing.Size(906, 20);
             this.ground_textBox.TabIndex = 63;
+            this.ground_textBox.Click += new System.EventHandler(this.textBoxClick);
             // 
             // flowLayoutPanel_comment_for_label
             // 
@@ -476,6 +482,7 @@
             this.comment_textBox.Name = "comment_textBox";
             this.comment_textBox.Size = new System.Drawing.Size(906, 20);
             this.comment_textBox.TabIndex = 63;
+            this.comment_textBox.Click += new System.EventHandler(this.textBoxClick);
             // 
             // mainpanel_reg
             // 
@@ -483,7 +490,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mainpanel_reg.Controls.Add(this.panel5);
-            this.mainpanel_reg.Controls.Add(this.label11);
+            this.mainpanel_reg.Controls.Add(this.Report);
             this.mainpanel_reg.Controls.Add(this.New);
             this.mainpanel_reg.Controls.Add(this.Change);
             this.mainpanel_reg.Controls.Add(this.Save);
@@ -498,7 +505,7 @@
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
-            this.panel5.Controls.Add(this.NDS_PINFL_comboBox);
+            this.panel5.Controls.Add(this.NDS_PINFL_textBox);
             this.panel5.Controls.Add(this.NDS_PINFL);
             this.panel5.Controls.Add(this.tableLayoutPanel1);
             this.panel5.Location = new System.Drawing.Point(0, 0);
@@ -506,18 +513,14 @@
             this.panel5.Size = new System.Drawing.Size(1116, 66);
             this.panel5.TabIndex = 64;
             // 
-            // NDS_PINFL_comboBox
+            // NDS_PINFL_textBox
             // 
-            this.NDS_PINFL_comboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.NDS_PINFL_comboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NDS_PINFL_comboBox.FormattingEnabled = true;
-            this.NDS_PINFL_comboBox.Location = new System.Drawing.Point(181, 42);
-            this.NDS_PINFL_comboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.NDS_PINFL_comboBox.MaxLength = 12;
-            this.NDS_PINFL_comboBox.Name = "NDS_PINFL_comboBox";
-            this.NDS_PINFL_comboBox.Size = new System.Drawing.Size(188, 21);
-            this.NDS_PINFL_comboBox.TabIndex = 66;
-            this.NDS_PINFL_comboBox.Visible = false;
+            this.NDS_PINFL_textBox.Location = new System.Drawing.Point(181, 41);
+            this.NDS_PINFL_textBox.Name = "NDS_PINFL_textBox";
+            this.NDS_PINFL_textBox.Size = new System.Drawing.Size(188, 20);
+            this.NDS_PINFL_textBox.TabIndex = 66;
+            this.NDS_PINFL_textBox.Visible = false;
+            this.NDS_PINFL_textBox.Click += new System.EventHandler(this.textBoxClick);
             // 
             // NDS_PINFL
             // 
@@ -567,6 +570,7 @@
             this.comboBox_CRP_INN.Size = new System.Drawing.Size(157, 21);
             this.comboBox_CRP_INN.TabIndex = 66;
             this.comboBox_CRP_INN.TextChanged += new System.EventHandler(this.comboBox_CRP_INN_TextChanged);
+            this.comboBox_CRP_INN.Click += new System.EventHandler(this.comboBox_CRP_INN_Click);
             // 
             // panel7
             // 
@@ -619,17 +623,17 @@
             this.label_CRP_INN.TabIndex = 2;
             this.label_CRP_INN.Text = "КЗЛ-ИНН код:";
             // 
-            // label11
+            // Report
             // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label11.Location = new System.Drawing.Point(11, 522);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(252, 20);
-            this.label11.TabIndex = 63;
-            this.label11.Text = "Отчет об выполнении операции";
-            this.label11.Visible = false;
+            this.Report.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.Report.AutoSize = true;
+            this.Report.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.Report.Location = new System.Drawing.Point(11, 522);
+            this.Report.Name = "Report";
+            this.Report.Size = new System.Drawing.Size(252, 20);
+            this.Report.TabIndex = 63;
+            this.Report.Text = "Отчет об выполнении операции";
+            this.Report.Visible = false;
             // 
             // New
             // 
@@ -640,6 +644,7 @@
             this.New.TabIndex = 62;
             this.New.Text = "Новый";
             this.New.UseVisualStyleBackColor = true;
+            this.New.Click += new System.EventHandler(this.New_Click);
             // 
             // Change
             // 
@@ -725,7 +730,7 @@
         private System.Windows.Forms.Button New;
         private System.Windows.Forms.Button Change;
         private System.Windows.Forms.Button Save;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label Report;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button search_for_CRP_INN;
         private System.Windows.Forms.Label label_CRP_INN;
@@ -744,7 +749,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox textBox_Sum;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox comboBox6;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel_basis_for_label;
@@ -755,8 +760,8 @@
         private System.Windows.Forms.Label comment;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel_comment_for_TextBox;
         private System.Windows.Forms.TextBox comment_textBox;
-        private System.Windows.Forms.ComboBox NDS_PINFL_comboBox;
         private System.Windows.Forms.Label NDS_PINFL;
         private System.Windows.Forms.ComboBox comboBox_CRP_INN;
+        private System.Windows.Forms.TextBox NDS_PINFL_textBox;
     }
 }
