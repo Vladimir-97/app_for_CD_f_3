@@ -198,8 +198,6 @@ namespace app_for_CD
         private void updatePanel2()
         {
             OracleCommand cmd = con.CreateCommand();
-            //cmd.CommandText = "SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN table_for_docu B ON A.CRP_CD = B.CRP_CD where rownum <= 50";
-            //cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.GET_DD FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2, B.CRTE_DT FROM TBCB_CRP_INFO A INNER JOIN table_for_docu B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
             cmd.CommandText = "SELECT DISTINCT c.*, Y.DOCU_PRICE, Y.ESTM_NM, Y.FIO FROM(SELECT B.DOCU_NO, B.DOCU_SRES, B.DOCU_ISSU_DD, B.DOCU_STAT_CD, A.CRP_CD, A.CRP_NM, A.DIST_ID_2 FROM TBCB_CRP_INFO A INNER JOIN table_for_docu B ON A.CRP_CD = B.CRP_CD) c , NEW_TBCB y where c.docu_no = y.docu_no AND y.docu_sres = c.docu_sres AND C.CRP_CD = Y.CRP_CD and rownum<=100 order by C.DOCU_ISSU_DD";
 
             cmd.CommandType = CommandType.Text;
@@ -362,6 +360,11 @@ namespace app_for_CD
         {
             List_of_contract lof = new List_of_contract();
             lof.Show();
+        }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
         int query_delete_from_NEW_TBCB()

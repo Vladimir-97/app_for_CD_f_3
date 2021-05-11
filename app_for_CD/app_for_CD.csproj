@@ -157,12 +157,6 @@
     <Compile Include="List_of_services.Designer.cs">
       <DependentUpon>List_of_services.cs</DependentUpon>
     </Compile>
-    <Compile Include="Move_stock.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Move_stock.Designer.cs">
-      <DependentUpon>Move_stock.cs</DependentUpon>
-    </Compile>
     <Compile Include="registration_of_an_invoice.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,11 +182,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reg_depo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reg_depo.Designer.cs">
+      <DependentUpon>Reg_depo.cs</DependentUpon>
+    </Compile>
     <Compile Include="TC_Menu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TC_Menu.Designer.cs">
       <DependentUpon>TC_Menu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UC_Billing.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UC_Billing.Designer.cs">
+      <DependentUpon>UC_Billing.cs</DependentUpon>
     </Compile>
     <Compile Include="UC_Contract.cs">
       <SubType>UserControl</SubType>
@@ -217,6 +223,12 @@
     </Compile>
     <Compile Include="UC_Move_stocks.Designer.cs">
       <DependentUpon>UC_Move_stocks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UC_Open_depo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UC_Open_depo.Designer.cs">
+      <DependentUpon>UC_Open_depo.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Add.resx">
       <DependentUpon>Add.cs</DependentUpon>
@@ -248,9 +260,6 @@
     <EmbeddedResource Include="List_of_services.resx">
       <DependentUpon>List_of_services.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Move_stock.resx">
-      <DependentUpon>Move_stock.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -264,8 +273,14 @@
     <EmbeddedResource Include="registration_of_an_invoice.resx">
       <DependentUpon>registration_of_an_invoice.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reg_depo.resx">
+      <DependentUpon>Reg_depo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TC_Menu.resx">
       <DependentUpon>TC_Menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UC_Billing.resx">
+      <DependentUpon>UC_Billing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UC_Contract.resx">
       <DependentUpon>UC_Contract.cs</DependentUpon>
@@ -279,6 +294,10 @@
     <EmbeddedResource Include="UC_Move_stocks.resx">
       <DependentUpon>UC_Move_stocks.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UC_Open_depo.resx">
+      <DependentUpon>UC_Open_depo.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="files\report.xls" />
     <None Include="NeedDataset.xsc">
       <DependentUpon>NeedDataset.xsd</DependentUpon>
     </None>
