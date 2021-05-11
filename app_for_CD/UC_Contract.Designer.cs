@@ -73,7 +73,7 @@
             this.panel2.Controls.Add(this.dataGridView1);
             this.panel2.Location = new System.Drawing.Point(12, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1305, 592);
+            this.panel2.Size = new System.Drawing.Size(1305, 467);
             this.panel2.TabIndex = 3;
             // 
             // dataGridView1
@@ -106,9 +106,9 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 3);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1279, 589);
+            this.dataGridView1.Size = new System.Drawing.Size(1279, 464);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
@@ -196,7 +196,7 @@
             this.panel4.Controls.Add(this.button5);
             this.panel4.Controls.Add(this.button2);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel4.Location = new System.Drawing.Point(0, 601);
+            this.panel4.Location = new System.Drawing.Point(0, 476);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1291, 124);
             this.panel4.TabIndex = 5;
@@ -209,7 +209,7 @@
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button7.Image = global::app_for_CD.Properties.Resources.excel_pic_32;
-            this.button7.Location = new System.Drawing.Point(1223, 53);
+            this.button7.Location = new System.Drawing.Point(1174, 15);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(39, 33);
             this.button7.TabIndex = 4;
@@ -218,7 +218,7 @@
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(12, 58);
+            this.button9.Location = new System.Drawing.Point(12, 20);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(75, 23);
             this.button9.TabIndex = 7;
@@ -233,7 +233,7 @@
             this.button8.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button8.Location = new System.Drawing.Point(1103, 58);
+            this.button8.Location = new System.Drawing.Point(1054, 20);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(80, 23);
             this.button8.TabIndex = 4;
@@ -247,7 +247,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button1.Location = new System.Drawing.Point(93, 58);
+            this.button1.Location = new System.Drawing.Point(93, 20);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(204, 23);
             this.button1.TabIndex = 8;
@@ -262,7 +262,7 @@
             this.button6.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button6.Location = new System.Drawing.Point(1022, 58);
+            this.button6.Location = new System.Drawing.Point(973, 20);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 3;
@@ -277,7 +277,7 @@
             this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(759, 58);
+            this.button3.Location = new System.Drawing.Point(710, 20);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 0;
@@ -292,7 +292,7 @@
             this.button5.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.Location = new System.Drawing.Point(921, 58);
+            this.button5.Location = new System.Drawing.Point(872, 20);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(95, 23);
             this.button5.TabIndex = 2;
@@ -307,7 +307,7 @@
             this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(840, 58);
+            this.button2.Location = new System.Drawing.Point(791, 20);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 0;
@@ -322,9 +322,9 @@
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel2);
-            this.MinimumSize = new System.Drawing.Size(1291, 725);
+            this.MinimumSize = new System.Drawing.Size(1291, 600);
             this.Name = "UC_Contract";
-            this.Size = new System.Drawing.Size(1291, 725);
+            this.Size = new System.Drawing.Size(1291, 600);
             this.Load += new System.EventHandler(this.Form_agreement_Load);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

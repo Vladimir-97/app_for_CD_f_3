@@ -109,6 +109,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(1905, 562);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // Column1
             // 
@@ -247,8 +248,9 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(117, 33);
             this.button5.TabIndex = 2;
-            this.button5.Text = "Просмотр";
+            this.button5.Text = "12";
             this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // UC_Move_stocks
             // 
