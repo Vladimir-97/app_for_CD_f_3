@@ -811,6 +811,13 @@ namespace app_for_CD
 
             return textBox;
         }
+
+        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
         private TextBox CreateTextBox(string name, int tmp, int s_x, int loc_x )
         {
             string tmp_textbox = name + count_row.ToString();

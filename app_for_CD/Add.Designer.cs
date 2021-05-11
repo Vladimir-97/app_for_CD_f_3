@@ -109,6 +109,7 @@
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(157, 21);
             this.comboBox4.TabIndex = 38;
+            this.comboBox4.SelectedIndexChanged += new System.EventHandler(this.comboBox4_SelectedIndexChanged);
             this.comboBox4.TextChanged += new System.EventHandler(this.comboBox4_TextChanged);
             this.comboBox4.Enter += new System.EventHandler(this.comboBox4_Enter);
             this.comboBox4.Leave += new System.EventHandler(this.comboBox4_Leave);
@@ -199,7 +200,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.59406F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 233F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 392F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 394F));
             this.tableLayoutPanel1.Controls.Add(this.textBox9, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.dateTimePicker7, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.textBox5, 1, 0);
@@ -214,7 +215,7 @@
             // 
             // textBox9
             // 
-            this.textBox9.Location = new System.Drawing.Point(773, 3);
+            this.textBox9.Location = new System.Drawing.Point(771, 3);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(384, 20);
             this.textBox9.TabIndex = 50;
@@ -225,7 +226,7 @@
             // 
             this.dateTimePicker7.CustomFormat = "dd.MM.yyyy";
             this.dateTimePicker7.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker7.Location = new System.Drawing.Point(540, 3);
+            this.dateTimePicker7.Location = new System.Drawing.Point(538, 3);
             this.dateTimePicker7.Name = "dateTimePicker7";
             this.dateTimePicker7.Size = new System.Drawing.Size(128, 20);
             this.dateTimePicker7.TabIndex = 50;
@@ -243,7 +244,7 @@
             // 
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label23.Location = new System.Drawing.Point(400, 0);
+            this.label23.Location = new System.Drawing.Point(398, 0);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(99, 16);
             this.label23.TabIndex = 45;
