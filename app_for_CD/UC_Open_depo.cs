@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Diagnostics;
+using System.IO;
 /// <summary>
 /// ///////////////////open_change_depo
 /// </summary>
@@ -24,7 +26,7 @@ namespace app_for_CD
             SetConnection();
         }
         OracleConnection con = null;
-
+        string date, kzl, kzl_nm, fio, num;
         private void SetConnection()
         {
             string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";
@@ -63,7 +65,7 @@ namespace app_for_CD
         {
             
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "select distinct * from open_change_depo";
+            cmd.CommandText = "select distinct * from open_change_depo order by id";
 
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
@@ -109,16 +111,17 @@ namespace app_for_CD
                 return "";
             return str;
         }
-        string parse_date(string tmp)
+
+        private void panel1_Enter(object sender, EventArgs e)
         {
-            string norm_vid_date = "";
-            if (tmp == "")
-                return "";
-            norm_vid_date = tmp[6].ToString() + tmp[7] + ".";
-            norm_vid_date += tmp[4].ToString() + tmp[5] + ".";
-            norm_vid_date += tmp[0].ToString() + tmp[1] + tmp[2] + tmp[3];
-            return norm_vid_date;
+            updatePanel2();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+           print(kzl,kzl_nm, date, num);
+        }
+
 
         string find_company(string tmp_str)
         {
@@ -135,6 +138,235 @@ namespace app_for_CD
                 return dr[0].ToString();
             }
             return "";
+        }
+       
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            int row = dataGridView1.CurrentRow.Index;
+            if (dataGridView1.SelectedCells.Count > 1)
+            {
+                num = dataGridView1.Rows[row].Cells[0].Value.ToString();
+                date = dataGridView1.Rows[row].Cells[1].Value.ToString();
+                kzl = dataGridView1.Rows[row].Cells[2].Value.ToString();
+                kzl_nm = dataGridView1.Rows[row].Cells[3].Value.ToString();
+                fio = dataGridView1.Rows[row].Cells[4].Value.ToString();
+                button4.Enabled = true;
+            }
+            //else
+            //{
+            //    button4.Enabled = false;
+            //}
+            //MessageBox.Show(kzl_nm);
+        }
+
+        private void print(string kzl, string kzl_nm, string date, string id)
+        {
+            FileInfo fi;
+            string excel_path;
+            string path = ExecuteCommand("echo %cd%");
+            string pathD = path.Substring(0, path.Length - 2);
+            if (is_phys(kzl))
+            {
+                ExecuteCommand("copy report_ph.xls report1.xls");
+                excel_path = pathD + "\\report1.xls";
+                fi = new FileInfo(excel_path);
+            }
+            else
+            {
+                ExecuteCommand("copy report_yur.xls report1.xls");
+                excel_path = pathD + "\\report1.xls";
+                fi = new FileInfo(excel_path);
+            }
+
+
+            Excel.Application oXL;
+            Excel.Workbooks oWBs;
+            Excel.Workbook oWB;
+            Excel.Worksheet oSheet;
+            if (fi.Exists)
+            {
+
+                oXL = new Excel.Application();
+                oXL.Visible = true;
+                //Получаем набор ссылок на объекты Workbook
+                oWBs = oXL.Workbooks;
+                oXL.Workbooks.Open(excel_path, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                oWB = oWBs[1];
+                oSheet = oWB.ActiveSheet;
+                //Выбираем лист 1
+                oSheet.Name = "Распечатка";
+
+                //////////////////////////////////////////////////////////////////////////////////////////    ТЕПЕРЬ ЗАПОЛНЯЕМ  /////////////////////////////////////////////////////
+                string date_str1 = date.ToString();
+                string date_str = date_str1.Substring(0, 2);
+                date_str += "/";
+                date_str += date_str1.Substring(3, 2);
+                date_str += "/";
+                date_str += date_str1.Substring(6, 4);
+                oSheet.Cells[3, 10] = date_str;
+                if (is_phys(kzl))
+                {
+                    OracleCommand cmd = con.CreateCommand();
+                    cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 13).Value = kzl;
+                    cmd.Parameters.Add("ID", id );
+                    //                             0        1         2          3       4          5             6          7   8      9     10             11           
+                    cmd.CommandText = "Select * from open_change_depo_his where crp_cd = :KZL and id = :ID";
+                    cmd.CommandType = CommandType.Text;
+                    OracleDataReader dr = cmd.ExecuteReader();
+                    if (dr.Read())
+                    {
+                        oSheet.Cells[44, 10] = dr[0].ToString() ;
+                        oSheet.Cells[8, 5] = dr[1].ToString() ;
+                        oSheet.Cells[10, 5] = dr[3].ToString() ;
+                        oSheet.Cells[12, 3] = dr[4].ToString() ;
+                        oSheet.Cells[12, 3] = dr[4].ToString() ;
+                        oSheet.Cells[12, 10] = dr[5].ToString() ;
+                        oSheet.Cells[14, 5] = dr[6].ToString();
+                        oSheet.Cells[14, 10] = dr[7].ToString();
+                        oSheet.Cells[16, 5] = dr[8].ToString();
+                        oSheet.Cells[16, 10] = dr[9].ToString();
+                        oSheet.Cells[18, 5] = dr[10].ToString();
+                        oSheet.Cells[20, 5] = dr[11].ToString();
+                        oSheet.Cells[20, 10] = dr[12].ToString();
+                        oSheet.Cells[22, 5] = dr[13].ToString();
+                        oSheet.Cells[24, 5] = dr[14].ToString();
+                        oSheet.Cells[24, 10] = dr[15].ToString(); 
+                        oSheet.Cells[26, 5] = dr[16].ToString();
+                        oSheet.Cells[28, 5] = dr[17].ToString();
+                        oSheet.Cells[30,5] = dr[18].ToString();
+                        oSheet.Cells[32,5] = dr[19].ToString();
+                        oSheet.Cells[34,5] = dr[20].ToString();
+                        oSheet.Cells[36,5] = dr[21].ToString();
+                        oSheet.Cells[38,5] = dr[22].ToString();
+                        oSheet.Cells[38,10] = dr[23].ToString();
+                        oSheet.Cells[40,5] = dr[24].ToString();
+                        oSheet.Cells[40, 10] = dr[25].ToString();
+                        oSheet.Cells[42, 5] = dr[26].ToString();
+                        oSheet.Cells[44, 5] = dr[27].ToString();
+                        oSheet.Cells[44, 10] = id.ToString();
+                        oSheet.Cells[48, 9] = fio;
+                        oSheet.Cells[12, 5] = dr[30].ToString();
+
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Нет данных о клиенте");
+                    }
+                }
+                else
+                {
+                    oSheet.Cells[10, 5] = "123";
+                }
+            }
+            else
+            {
+                MessageBox.Show("Обратитесь к Тимуру");   ////////////возможно они удалили файл
+            }
+
+        }
+        string find_nm_bk(string tmp)
+        {
+            if (tmp == "")
+                return "";
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("MFO", OracleDbType.Varchar2).Value = tmp;
+            //                             0        1         2          3       4          5             6          7   8      9     10             11           
+            cmd.CommandText = "Select bk_nm from tbcb_bk_info where mfo_cd = :MFO ";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                return dr[0].ToString();
+            }
+            else return "";
+        }
+        string change_upd(string str)
+        {
+            if (str == "")
+                return "";
+            string tmp = "";
+            tmp += str.Substring(0, 10);
+
+            return tmp;
+        }
+        private string parse_date(string str)
+        {
+            if (str == "99991231" || str == "")
+                return "-";
+            string tmp = "";
+            tmp += str.Substring(6, 2);
+            tmp += ".";
+            tmp += str.Substring(4, 2);
+            tmp += ".";
+            tmp += str.Substring(0, 4);
+            return tmp;
+        }
+        string change_exp(string str)
+        {
+            string tmp = "";
+            tmp += str.Substring(2, 2);
+            tmp += "/20";
+            tmp += str.Substring(0, 2);
+            return tmp;
+        }
+        bool is_phys(string str)
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add(new OracleParameter("KZL", str));
+            cmd.CommandText = "select crp_type_cd from tbcb_crp_info where crp_cd = :KZL  ";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                if (dr[0].ToString() == "8000")
+                    return true;
+            }
+
+
+            return false;
+        }
+        static string ExecuteCommand(string command)   ///////////////для копирования excel файла
+        {
+            int exitCode;
+            ProcessStartInfo processInfo;
+            Process process;
+
+            processInfo = new ProcessStartInfo("cmd.exe", "/c " + command);
+            processInfo.CreateNoWindow = true;
+            processInfo.UseShellExecute = false;
+            processInfo.RedirectStandardError = true;
+            processInfo.RedirectStandardOutput = true;
+
+            process = Process.Start(processInfo);
+            process.WaitForExit();
+
+            string output = process.StandardOutput.ReadToEnd();
+
+            process.Close();
+            return output;
+        }
+        int find_max_id()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "select max(id) from open_change_depo";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {
+                    if (dr.HasRows)
+                    {
+                        return Int32.Parse(dr[0].ToString());
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            return 0;
         }
     }
 }

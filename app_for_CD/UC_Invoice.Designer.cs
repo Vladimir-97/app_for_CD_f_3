@@ -41,6 +41,7 @@
             this.filter = new System.Windows.Forms.Button();
             this.status = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column12 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -116,6 +117,7 @@
             this.dataGridView_invoice.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_invoice.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
+            this.Column12,
             this.Column2,
             this.Column3,
             this.Column4,
@@ -217,6 +219,13 @@
             this.Column1.HeaderText = "Номер и дата счет- фактуры:";
             this.Column1.Name = "Column1";
             // 
+            // Column12
+            // 
+            this.Column12.HeaderText = "123";
+            this.Column12.Name = "Column12";
+            this.Column12.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column12.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // Column2
             // 
             this.Column2.HeaderText = "Номер, серия и дата договора:";
@@ -299,6 +308,7 @@
         private System.Windows.Forms.Button filter;
         private System.Windows.Forms.Button status;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column12;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
