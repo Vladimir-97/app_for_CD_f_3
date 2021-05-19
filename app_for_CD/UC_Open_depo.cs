@@ -11,7 +11,9 @@ using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
+
 using System.IO;
+using System.Reflection;
 /// <summary>
 /// ///////////////////open_change_depo
 /// </summary>
@@ -199,9 +201,9 @@ namespace app_for_CD
                 //////////////////////////////////////////////////////////////////////////////////////////    ТЕПЕРЬ ЗАПОЛНЯЕМ  /////////////////////////////////////////////////////
                 string date_str1 = date.ToString();
                 string date_str = date_str1.Substring(0, 2);
-                date_str += "/";
+                date_str += ".";
                 date_str += date_str1.Substring(3, 2);
-                date_str += "/";
+                date_str += ".";
                 date_str += date_str1.Substring(6, 4);
                 oSheet.Cells[3, 10] = date_str;
                 if (is_phys(kzl))
@@ -256,7 +258,49 @@ namespace app_for_CD
                 }
                 else
                 {
-                    oSheet.Cells[10, 5] = "123";
+                    OracleCommand cmd = con.CreateCommand();
+                    cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 13).Value = kzl;
+                    cmd.Parameters.Add("ID", id);
+                    //                             0        1         2          3       4          5             6          7   8      9     10             11           
+                    cmd.CommandText = "Select * from open_change_depo_his where crp_cd = :KZL and id = :ID";
+                    cmd.CommandType = CommandType.Text;
+                    OracleDataReader dr = cmd.ExecuteReader();
+                    if (dr.Read())
+                    {
+                        oSheet.Cells[44, 10] = dr[0].ToString();
+                        oSheet.Cells[8, 5] = dr[1].ToString();
+                        oSheet.Cells[10, 5] = dr[3].ToString();
+                        oSheet.Cells[12, 3] = dr[4].ToString();
+                       // oSheet.Cells[12, 10] = dr[5].ToString();
+                        oSheet.Cells[14, 5] = dr[6].ToString();
+                        oSheet.Cells[12, 10] = dr[7].ToString();
+                    //    oSheet.Cells[16, 5] = dr[8].ToString();
+                        oSheet.Cells[16, 10] = dr[9].ToString();
+                        oSheet.Cells[16, 5] = dr[10].ToString();
+                        oSheet.Cells[18, 5] = dr[11].ToString();
+                        oSheet.Cells[18, 10] = dr[12].ToString();
+                        oSheet.Cells[20, 5] = dr[13].ToString();
+                        oSheet.Cells[22, 5] = dr[14].ToString();
+                        oSheet.Cells[22, 10] = dr[15].ToString();
+                        oSheet.Cells[24, 5] = dr[16].ToString();
+                        oSheet.Cells[26, 5] = dr[17].ToString();
+                        oSheet.Cells[28, 5] = dr[18].ToString();
+                        oSheet.Cells[30, 5] = dr[19].ToString();
+                        oSheet.Cells[32, 5] = dr[20].ToString();
+                        oSheet.Cells[34, 5] = dr[21].ToString();
+                        oSheet.Cells[36, 5] = dr[22].ToString();
+                        oSheet.Cells[36, 10] = dr[23].ToString();
+                        //oSheet.Cells[40, 5] = dr[24].ToString();
+                        //oSheet.Cells[40, 10] = dr[25].ToString();
+                        oSheet.Cells[40, 5] = dr[26].ToString();
+                        oSheet.Cells[46, 5] = dr[27].ToString();
+                        oSheet.Cells[46, 10] = id.ToString();
+                        oSheet.Cells[49, 9] = fio;
+                        oSheet.Cells[12, 5] = "\t" +dr[30].ToString();
+                        oSheet.Cells[42, 5] = dr[31].ToString();
+                        oSheet.Cells[44, 5] = dr[32].ToString();
+
+                    }
                 }
             }
             else
@@ -302,6 +346,62 @@ namespace app_for_CD
             tmp += str.Substring(0, 4);
             return tmp;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Excel.Application oXL;
+            Excel._Workbook oWB;
+            Excel._Worksheet oSheet;
+
+            try
+            {
+                //Start Excel and get Application object.
+                oXL = new Excel.Application();
+                oXL.Visible = true;
+
+                //Get a new workbook.
+                oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
+                oSheet = (Excel._Worksheet)oWB.ActiveSheet;
+                oSheet.Name = "Информация по договорам";
+                //Add table headers going cell by cell.
+                oSheet.Cells[1, 1] = "№";
+                oSheet.Cells[1, 2] = "Дата создания";
+                oSheet.Cells[1, 3] = "КЗЛ";
+                oSheet.Cells[1, 4] = "Наименование клиента";
+                oSheet.Cells[1, 5] = "Ф.И.О. исполнителя";
+                oSheet.Cells[1].ColumnWidth = 5;  //номер
+                oSheet.Cells[2].ColumnWidth = 15;   //номер дог
+                oSheet.Cells[3].ColumnWidth = 20;   //сер дог
+                oSheet.Cells[4].ColumnWidth = 100;   //дата договора
+                oSheet.Cells[5].ColumnWidth = 80;   //статус договора
+                int i;
+                // Create an array to multiple values at once.
+                string[,] saNames = new string[101, 15];
+
+                for (i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        saNames[i, j] = "\t" + check_null(dataGridView1.Rows[i].Cells[j].Value.ToString());
+                        oSheet.Cells[i + 2, j + 1] = saNames[i, j];
+                    }
+                }
+
+            }
+
+            catch (Exception theException)
+            {
+                String errorMessage;
+                errorMessage = "Error: ";
+                errorMessage = String.Concat(errorMessage, theException.Message);
+                errorMessage = String.Concat(errorMessage, " Line:  = ");
+                errorMessage = String.Concat(errorMessage, theException.Source);
+
+                MessageBox.Show(errorMessage, "Error");
+            }
+
+        }
+
         string change_exp(string str)
         {
             string tmp = "";

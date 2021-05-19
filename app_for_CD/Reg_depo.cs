@@ -27,7 +27,7 @@ namespace app_for_CD
         }
         int id;
         string crp_cd, crp_type_cd, crp_nm, dist_ip_type_cd, pinfl = "", birth_dd, dist_id_2, docu_issu_dd, docu_exp_dd, remark, regr_cntry, regr_index, regr_addr, rsdt_cntry, rsdt_index;
-        string rsdt_addr, tel_no, fax_no, email, web, bank, tr_bill, mfo, card_no, card_issu, rasp_bill, udp_dt, user_nm, docu_no;
+        string rsdt_addr, tel_no, fax_no, email, web, bank, tr_bill, mfo, card_no, card_issu, rasp_bill, udp_dt, user_nm, docu_no , rasp_second = "", rasp_third = "";
 
         OracleConnection con = null;
 
@@ -99,21 +99,21 @@ namespace app_for_CD
         {
             ////////////////////////////////////////////////////////////////IT PART which will add info into DB  //////////////////////////////////////////////////
             OracleCommand cmd = con.CreateCommand();
-            //id = find_max_id() + 1;
-            //user_nm = Data.get_fio;
-            //crp_cd = comboBox4.Text;
-            //cmd.Parameters.Add(new OracleParameter("ID", id));
-            //cmd.Parameters.Add(new OracleParameter("DAT", dateTimePicker1.Value.ToString("yyyyMMdd")));
-            //cmd.Parameters.Add(new OracleParameter("CRP", comboBox4.Text));
-            //cmd.Parameters.Add(new OracleParameter("FIO", Data.get_fio));
+            id = find_max_id() + 1;
+            user_nm = Data.get_fio;
+            crp_cd = comboBox4.Text;
+            cmd.Parameters.Add(new OracleParameter("ID", id));
+            cmd.Parameters.Add(new OracleParameter("DAT", dateTimePicker1.Value.ToString("yyyyMMdd")));
+            cmd.Parameters.Add(new OracleParameter("CRP", comboBox4.Text));
+            cmd.Parameters.Add(new OracleParameter("FIO", Data.get_fio));
 
 
-            //cmd.CommandText = "insert into open_change_depo (id, crte_dt, crp_cd, fio) values (:ID, :DAT, :CRP, :FIO)  ";
-            //cmd.CommandType = CommandType.Text;
-            //if (cmd.ExecuteNonQuery() == 1)
-            //{
-            //    label4.Visible = true;
-            //}
+            cmd.CommandText = "insert into open_change_depo (id, crte_dt, crp_cd, fio) values (:ID, :DAT, :CRP, :FIO)  ";
+            cmd.CommandType = CommandType.Text;
+            if (cmd.ExecuteNonQuery() == 1)
+            {
+                label4.Visible = true;
+            }
             //////////////////////////////////////////////////////////////////////////// //////////////////////////////////////////////////////////////////////////////
             FileInfo fi;
             string excel_path;
@@ -127,6 +127,7 @@ namespace app_for_CD
             }
             else
             {
+
                 ExecuteCommand("copy report_yur.xls report1.xls");
                 excel_path = pathD + "\\report1.xls";
                 fi = new FileInfo(excel_path);
@@ -329,7 +330,7 @@ namespace app_for_CD
                             oSheet.Cells[26, 5] = addr2;
                             regr_addr = addr1;
                             rsdt_addr = addr2;
-                            //insert_into_depo_his();
+                            insert_into_depo_his();
                         }
                     }
                     else
@@ -355,51 +356,44 @@ namespace app_for_CD
                         docu_no = dr[1].ToString();
                         oSheet.Cells[14, 5] = parse_date(dr[2].ToString());
                         birth_dd = parse_date(dr[2].ToString());
-                        oSheet.Cells[14, 10] = dr[3].ToString();
+                        oSheet.Cells[12, 10] = dr[3].ToString();
                         dist_id_2 = dr[3].ToString();
                         // oSheet.Cells[16, 5] = "1";
-                        oSheet.Cells[20, 10] = dr[4].ToString();
+                        oSheet.Cells[18, 10] = dr[4].ToString();
                         regr_index = dr[4].ToString();
-                        oSheet.Cells[28, 5] = dr[6].ToString();
+                        oSheet.Cells[26, 5] = dr[6].ToString();
                         tel_no = dr[6].ToString();
-                        oSheet.Cells[32, 5] = dr[7].ToString();
+                        oSheet.Cells[30, 5] = dr[7].ToString();
                         email = dr[7].ToString();
-                        oSheet.Cells[30, 5] = dr[8].ToString();
+                        oSheet.Cells[28, 5] = dr[8].ToString();
                         fax_no = dr[8].ToString();
-                        oSheet.Cells[34, 5] = dr[9].ToString();
+                        oSheet.Cells[32, 5] = dr[9].ToString();
                         web = dr[9].ToString();
-                        oSheet.Cells[24, 10] = dr[10].ToString();
+                        oSheet.Cells[22, 10] = dr[10].ToString();
                         rsdt_index = dr[10].ToString();
-                        oSheet.Cells[44, 5] = change_upd(dr[12].ToString());
+                        oSheet.Cells[46, 5] = change_upd(dr[12].ToString());
                         udp_dt = change_upd(dr[12].ToString());
-                        oSheet.Cells[48, 9] = Data.get_fio;
-                        oSheet.Cells[44, 10] = id;
+                        oSheet.Cells[49, 9] = Data.get_fio;
+                        oSheet.Cells[46, 10] = id;
 
                         //                           0          1       2       3          
-                        cmd.CommandText = "Select bk_acnt_no, mfo_cd, card_no, exp_ym from tbcb_crp_bk where crp_cd = :KZL";
+                        cmd.CommandText = "Select bk_acnt_no, mfo_cd from tbcb_crp_bk where crp_cd = :KZL";
                         cmd.CommandType = CommandType.Text;
                         dr = cmd.ExecuteReader();
                         if (dr.Read())
                         {
-                            oSheet.Cells[38, 5] = dr[0].ToString();
+                            oSheet.Cells[36, 5] = dr[0].ToString();
                             tr_bill = dr[0].ToString();
-                            oSheet.Cells[38, 10] = dr[1].ToString();
+                            oSheet.Cells[36, 10] = dr[1].ToString();
                             mfo = dr[1].ToString();
-                            oSheet.Cells[40, 5] = dr[2].ToString();
-                            card_no = dr[2].ToString();
-                            oSheet.Cells[40, 10] = change_exp(dr[3].ToString());
-                            card_issu = change_exp(dr[3].ToString());
-                            oSheet.Cells[36, 5] = find_nm_bk(dr[1].ToString());
+                            oSheet.Cells[34, 5] = find_nm_bk(dr[1].ToString());
                             bank = find_nm_bk(dr[1].ToString());
 
                         }
                         else
                         {
-                            oSheet.Cells[38, 5] = "";
-                            oSheet.Cells[38, 10] = "";
-                            oSheet.Cells[40, 5] = "";
-                            oSheet.Cells[40, 10] = "";
                             oSheet.Cells[36, 5] = "";
+                            oSheet.Cells[36, 10] = "";
 
                         }
                         cmd.CommandText = "select cd_nm from tbcb_cd where cd = (select reg_cntry_cd from tbcb_crp_info where crp_cd = :KZL) and cd_grp_no = '000033' and lang_cd = 'UZ' ";
@@ -407,7 +401,7 @@ namespace app_for_CD
                         dr = cmd.ExecuteReader();
                         if (dr.Read())
                         {
-                            oSheet.Cells[20, 5] = dr[0].ToString();
+                            oSheet.Cells[18, 5] = dr[0].ToString();
                             regr_cntry = dr[0].ToString();
                         }
                         cmd.CommandText = "select cd_nm from tbcb_cd where cd = (select rsdt_cntry_cd from tbcb_crp_info where crp_cd = :KZL) and cd_grp_no = '000033' and lang_cd = 'UZ' ";
@@ -415,29 +409,18 @@ namespace app_for_CD
                         dr = cmd.ExecuteReader();
                         if (dr.Read())
                         {
-                            oSheet.Cells[24, 5] = dr[0].ToString();
+                            oSheet.Cells[22, 5] = dr[0].ToString();
                             rsdt_cntry = dr[0].ToString();
 
                         }
-                        cmd.CommandText = "select cd_nm from tbcb_cd where cd = (select dist_id_type_cd from tbcb_crp_docu_info where seq = (select max(seq) from tbcb_crp_docu_info where crp_cd = :KZL) and crp_cd = :KZL) and cd_grp_no = '000035' and lang_cd = 'UZ' ";
-                        cmd.CommandType = CommandType.Text;
-                        dr = cmd.ExecuteReader();
-                        if (dr.Read())
-                        {
-                            oSheet.Cells[12, 3] = dr[0].ToString();
-                            dist_ip_type_cd = dr[0].ToString();
-                        }
-                        cmd.CommandText = "select docu_issu_dd, docu_exp_dd from tbcb_crp_docu_info where seq = (select max(seq) from tbcb_crp_docu_info where crp_cd = :KZL) and crp_cd = :KZL ";
-                        cmd.CommandType = CommandType.Text;
-                        dr = cmd.ExecuteReader();
-                        if (dr.Read())
-                        {
-                            oSheet.Cells[16, 5] = parse_date(dr[0].ToString());
-                            oSheet.Cells[16, 10] = parse_date(dr[1].ToString());
-                            docu_issu_dd = parse_date(dr[0].ToString());
-                            docu_exp_dd = parse_date(dr[1].ToString());
-
-                        }
+                        //cmd.CommandText = "select cd_nm from tbcb_cd where cd = (select dist_id_type_cd from tbcb_crp_docu_info where seq = (select max(seq) from tbcb_crp_docu_info where crp_cd = :KZL) and crp_cd = :KZL) and cd_grp_no = '000035' and lang_cd = 'UZ' ";
+                        //cmd.CommandType = CommandType.Text;
+                        //dr = cmd.ExecuteReader();
+                        //if (dr.Read())
+                        //{
+                        //    oSheet.Cells[10, 3] = dr[0].ToString();
+                        //    dist_ip_type_cd = dr[0].ToString();
+                        //}
                         cmd.CommandText = "select cd_nm from tbcb_cd where cd = (select regr_cd from tbcb_crp_docu_info where seq = (select max(seq) from tbcb_crp_docu_info where crp_cd = :KZL) and crp_cd = :KZL) and lang_cd = 'UZ' ";
                         cmd.CommandType = CommandType.Text;
                         dr = cmd.ExecuteReader();
@@ -445,7 +428,7 @@ namespace app_for_CD
                         {
                             if (dr[0].ToString() != "ОВД")
                             {
-                                oSheet.Cells[18, 5] = dr[0].ToString();
+                                oSheet.Cells[16, 5] = dr[0].ToString();
                                 remark = dr[0].ToString();
                             }
                             else
@@ -455,19 +438,42 @@ namespace app_for_CD
                                 dr = cmd.ExecuteReader();
                                 if (dr.Read())
                                 {
-                                    oSheet.Cells[18, 5] = dr[0].ToString();
+                                    oSheet.Cells[16, 5] = dr[0].ToString();
                                     remark = dr[0].ToString();
                                 }
                             }
                         }
-                        cmd.CommandText = "select reps_nm from tbcb_crp_reps where crp_cd = :KZL and pow_type = 1";
+                        cmd.CommandText = "select eng_reps_nm from tbcb_crp_reps where crp_cd = :KZL and pow_type = 1";
                         cmd.CommandType = CommandType.Text;
                         dr = cmd.ExecuteReader();
-                        if (dr.Read())
+                        rasp_bill = "";
+                        while (dr.Read())
                         {
-                            oSheet.Cells[42, 5] = dr[0].ToString();
-                            rasp_bill = dr[0].ToString();
+                            rasp_bill += dr[0].ToString();
                         }
+                        oSheet.Cells[40, 5] = rasp_bill;
+                        cmd.CommandText = "select eng_reps_nm from tbcb_crp_reps where crp_cd = :KZL and pow_type = 2";
+                        cmd.CommandType = CommandType.Text;
+                        dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            rasp_second += dr[0].ToString() + ", ";
+                        }
+                        oSheet.Cells[42, 5] = rasp_second;
+                        cmd.CommandText = "select eng_reps_nm from tbcb_crp_reps where crp_cd = :KZL and pow_type = 3";
+                        cmd.CommandType = CommandType.Text;
+                        dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            rasp_third += dr[0].ToString() + ", ";
+                        }
+                        oSheet.Cells[44, 5] = rasp_third;
+
+
+
+
+
+
                         string addr1 = "", addr2 = "";
                         cmd.CommandText = "select cd_nm from tbcb_cd where cd = (select reg_regn_cd from tbcb_crp_info where crp_cd = :KZL) and cd_grp_no = '100042' and lang_cd = 'UZ'";
                         cmd.CommandType = CommandType.Text;
@@ -504,8 +510,8 @@ namespace app_for_CD
                         {
                             addr1 += dr[0].ToString();
                             addr2 += dr[1].ToString();
-                            oSheet.Cells[22, 5] = addr1;
-                            oSheet.Cells[26, 5] = addr2;
+                            oSheet.Cells[20, 5] = addr1;
+                            oSheet.Cells[24, 5] = addr2;
                             regr_addr = addr1;
                             rsdt_addr = addr2;
                             insert_into_depo_his();
@@ -695,7 +701,9 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("UDP_DT", udp_dt));
             cmd.Parameters.Add(new OracleParameter("USER_NM", user_nm));
             cmd.Parameters.Add(new OracleParameter("DOCU_NO", docu_no));
-            cmd.CommandText = "insert into open_change_depo_his (id, crp_cd, CRP_TYPE_CD, CRP_NM, DIST_ID_TYPE_CD, PINFL,  BIRTH_DD, DIST_ID_2, DOCU_ISSU_DD, DOCU_EXP_DD, REMARK, REGR_CNTRY, REGR_INDEX, REGR_ADDR, RSDT_CNTRY, RSDT_INDEX, RSDT_ADDR, TEL_NO, FAX_NO, EMAIL, WEB, BANK, TR_BILL, MFO, CARD_NO, CARD_ISSU, RASP_BILL, UPD_DT, USER_NM, docu_no) VALUES (:ID, :CRP_CD, :CRP_TYPE_CD, :CRP_NM, :DIST_ID_TYPE_CD, :PINFL, :BIRTH_DD, :DIST_ID_2, :DOCU_ISSU_DD, :DOCU_EXP_DD, :REMARK, :REGR_CNTRY, :REGR_INDEX, :REGR_ADDR, :RSDT_CNTRY, :RSDT_INDEX, :RSDT_ADDR, :TEL_NO, :FAX_NO, :EMAIL, :WEB, :BANK, :TR_BILL, :MFO, :CARD_NO, :CARD_ISSU, :RASP_BILL, :RASP_BILL,:USER_NM, :DOCU_NO)   ";
+            cmd.Parameters.Add(new OracleParameter("RASP_SECOND", rasp_second));
+            cmd.Parameters.Add(new OracleParameter("RASP_THIRD", rasp_third));
+            cmd.CommandText = "insert into open_change_depo_his (id, crp_cd, CRP_TYPE_CD, CRP_NM, DIST_ID_TYPE_CD, PINFL,  BIRTH_DD, DIST_ID_2, DOCU_ISSU_DD, DOCU_EXP_DD, REMARK, REGR_CNTRY, REGR_INDEX, REGR_ADDR, RSDT_CNTRY, RSDT_INDEX, RSDT_ADDR, TEL_NO, FAX_NO, EMAIL, WEB, BANK, TR_BILL, MFO, CARD_NO, CARD_ISSU, RASP_BILL, UPD_DT, USER_NM, docu_no, rasp_second, rasp_third) VALUES (:ID, :CRP_CD, :CRP_TYPE_CD, :CRP_NM, :DIST_ID_TYPE_CD, :PINFL, :BIRTH_DD, :DIST_ID_2, :DOCU_ISSU_DD, :DOCU_EXP_DD, :REMARK, :REGR_CNTRY, :REGR_INDEX, :REGR_ADDR, :RSDT_CNTRY, :RSDT_INDEX, :RSDT_ADDR, :TEL_NO, :FAX_NO, :EMAIL, :WEB, :BANK, :TR_BILL, :MFO, :CARD_NO, :CARD_ISSU, :RASP_BILL, :RASP_BILL,:USER_NM, :DOCU_NO, :RASP_SECOND, :RASP_THIRD)   ";
             cmd.CommandType = CommandType.Text;
             cmd.ExecuteNonQuery();
         }
