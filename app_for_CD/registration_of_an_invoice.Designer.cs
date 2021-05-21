@@ -36,6 +36,8 @@
             this.tableAdapterManager1 = new app_for_CD.NeedDatasetTableAdapters.TableAdapterManager();
             this.textBox_number_of_invoice = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.Delete = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.textBox_ser_name = new System.Windows.Forms.TextBox();
             this.dateTimePicker_invoice_data = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
@@ -65,6 +67,8 @@
             this.comment_textBox = new System.Windows.Forms.TextBox();
             this.mainpanel_reg = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.status_label = new System.Windows.Forms.Label();
+            this.status_comboBox = new System.Windows.Forms.ComboBox();
             this.NDS_PINFL_textBox = new System.Windows.Forms.TextBox();
             this.NDS_PINFL = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -126,7 +130,7 @@
             this.label_add.AutoSize = true;
             this.label_add.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_add.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label_add.Location = new System.Drawing.Point(820, 34);
+            this.label_add.Location = new System.Drawing.Point(712, 12);
             this.label_add.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_add.Name = "label_add";
             this.label_add.Size = new System.Drawing.Size(173, 25);
@@ -136,11 +140,11 @@
             // Add
             // 
             this.Add.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.Add.Location = new System.Drawing.Point(1005, 39);
+            this.Add.Location = new System.Drawing.Point(997, 12);
             this.Add.Name = "Add";
             this.Add.Size = new System.Drawing.Size(75, 23);
             this.Add.TabIndex = 47;
-            this.Add.Text = "Add";
+            this.Add.Text = "Добавить";
             this.Add.UseVisualStyleBackColor = true;
             this.Add.Click += new System.EventHandler(this.MyCreateButton_Click);
             // 
@@ -174,6 +178,8 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
+            this.panel2.Controls.Add(this.Delete);
+            this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.textBox_ser_name);
             this.panel2.Controls.Add(this.dateTimePicker_invoice_data);
             this.panel2.Controls.Add(this.label6);
@@ -192,6 +198,30 @@
             this.panel2.Size = new System.Drawing.Size(1116, 433);
             this.panel2.TabIndex = 59;
             // 
+            // Delete
+            // 
+            this.Delete.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.Delete.Location = new System.Drawing.Point(997, 45);
+            this.Delete.Name = "Delete";
+            this.Delete.Size = new System.Drawing.Size(75, 23);
+            this.Delete.TabIndex = 64;
+            this.Delete.Text = "Удалить";
+            this.Delete.UseVisualStyleBackColor = true;
+            this.Delete.Click += new System.EventHandler(this.Delete_Click);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.label1.Location = new System.Drawing.Point(712, 45);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(267, 25);
+            this.label1.TabIndex = 63;
+            this.label1.Text = "Удалить последнюю услугу:";
+            // 
             // textBox_ser_name
             // 
             this.textBox_ser_name.BackColor = System.Drawing.SystemColors.ActiveBorder;
@@ -208,7 +238,7 @@
             this.dateTimePicker_invoice_data.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.dateTimePicker_invoice_data.CustomFormat = "dd.MM.yyyy";
             this.dateTimePicker_invoice_data.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_invoice_data.Location = new System.Drawing.Point(509, 39);
+            this.dateTimePicker_invoice_data.Location = new System.Drawing.Point(473, 39);
             this.dateTimePicker_invoice_data.Name = "dateTimePicker_invoice_data";
             this.dateTimePicker_invoice_data.Size = new System.Drawing.Size(145, 20);
             this.dateTimePicker_invoice_data.TabIndex = 60;
@@ -505,6 +535,8 @@
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
+            this.panel5.Controls.Add(this.status_label);
+            this.panel5.Controls.Add(this.status_comboBox);
             this.panel5.Controls.Add(this.NDS_PINFL_textBox);
             this.panel5.Controls.Add(this.NDS_PINFL);
             this.panel5.Controls.Add(this.tableLayoutPanel1);
@@ -512,6 +544,31 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(1116, 66);
             this.panel5.TabIndex = 64;
+            // 
+            // status_label
+            // 
+            this.status_label.AutoSize = true;
+            this.status_label.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.status_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.status_label.Location = new System.Drawing.Point(404, 38);
+            this.status_label.Name = "status_label";
+            this.status_label.Size = new System.Drawing.Size(87, 25);
+            this.status_label.TabIndex = 67;
+            this.status_label.Text = "Статус";
+            this.status_label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.status_label.Visible = false;
+            // 
+            // status_comboBox
+            // 
+            this.status_comboBox.FormattingEnabled = true;
+            this.status_comboBox.Items.AddRange(new object[] {
+            "Активный",
+            "Неактивный"});
+            this.status_comboBox.Location = new System.Drawing.Point(497, 42);
+            this.status_comboBox.Name = "status_comboBox";
+            this.status_comboBox.Size = new System.Drawing.Size(155, 21);
+            this.status_comboBox.TabIndex = 65;
+            this.status_comboBox.Visible = false;
             // 
             // NDS_PINFL_textBox
             // 
@@ -682,6 +739,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "registration_of_an_invoice";
             this.Text = "Регистрация счет фактуры";
+            this.Shown += new System.EventHandler(this.registration_of_an_invoice_Shown);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tableLayoutPanel_main.ResumeLayout(false);
@@ -763,5 +821,9 @@
         private System.Windows.Forms.Label NDS_PINFL;
         private System.Windows.Forms.ComboBox comboBox_CRP_INN;
         private System.Windows.Forms.TextBox NDS_PINFL_textBox;
+        private System.Windows.Forms.Button Delete;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label status_label;
+        private System.Windows.Forms.ComboBox status_comboBox;
     }
 }

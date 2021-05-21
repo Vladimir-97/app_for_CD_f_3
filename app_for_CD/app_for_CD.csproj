@@ -341,6 +341,15 @@
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Picture\exit_28.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\change.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Picture\change.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.VisualStudio.Threading.DownlevelInstaller.11.0.29\build\Microsoft.VisualStudio.Threading.DownlevelInstaller.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.DownlevelInstaller.11.0.29\build\Microsoft.VisualStudio.Threading.DownlevelInstaller.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
