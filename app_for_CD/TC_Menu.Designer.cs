@@ -200,10 +200,13 @@
             // 
             // uC_Invoice1
             // 
+            this.uC_Invoice1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.uC_Invoice1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.uC_Invoice1.Location = new System.Drawing.Point(6, 0);
             this.uC_Invoice1.Name = "uC_Invoice1";
-            this.uC_Invoice1.Size = new System.Drawing.Size(1252, 667);
+            this.uC_Invoice1.Size = new System.Drawing.Size(1885, 667);
             this.uC_Invoice1.TabIndex = 0;
             // 
             // TC_Menu
