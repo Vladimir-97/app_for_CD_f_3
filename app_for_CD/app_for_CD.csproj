@@ -133,6 +133,12 @@
     <Compile Include="Auth.Designer.cs">
       <DependentUpon>Auth.cs</DependentUpon>
     </Compile>
+    <Compile Include="filter_open_depo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="filter_open_depo.Designer.cs">
+      <DependentUpon>filter_open_depo.cs</DependentUpon>
+    </Compile>
     <Compile Include="filter_stocks.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -242,6 +248,9 @@
     <EmbeddedResource Include="Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="filter_open_depo.resx">
+      <DependentUpon>filter_open_depo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="filter_stocks.resx">
       <DependentUpon>filter_stocks.cs</DependentUpon>
     </EmbeddedResource>
@@ -340,6 +349,15 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Picture\exit_28.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\change.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Picture\change.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.VisualStudio.Threading.DownlevelInstaller.11.0.29\build\Microsoft.VisualStudio.Threading.DownlevelInstaller.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.DownlevelInstaller.11.0.29\build\Microsoft.VisualStudio.Threading.DownlevelInstaller.targets')" />

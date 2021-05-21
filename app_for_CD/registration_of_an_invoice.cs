@@ -20,7 +20,9 @@ namespace app_for_CD
         int count_of_label = 1, count_of_comboBox = 2, count_of_Button = 2, count_of_TextBox = 1;
         int count_of_label_u = 0;
         int row = 2;
+        string cur_INN = "", cur_crp_nm = "";
         bool f = false;
+        string Num_of_id = "";
         private void SetConnection()
         {
             string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";
@@ -41,8 +43,16 @@ namespace app_for_CD
         public registration_of_an_invoice()
         {
             InitializeComponent();
-            // create
-            textBox_number_of_invoice.Text = "Hi, I'm working!";
+        }
+        public registration_of_an_invoice(string id)
+        {
+            InitializeComponent();
+            Num_of_id = id;
+        }
+
+        private void registration_of_an_invoice_Shown(object sender, EventArgs e)
+        {
+            
             tableLayoutPanel_main.AutoScroll = false;
             tableLayoutPanel_main.HorizontalScroll.Enabled = false;
             tableLayoutPanel_main.HorizontalScroll.Visible = false;
@@ -51,6 +61,86 @@ namespace app_for_CD
             tableLayoutPanel_main.RowStyles.Clear();
             tableLayoutPanel_main.AutoScroll = true;
             SetConnection();
+            if(Num_of_id != "")
+                LoadChange(Num_of_id);
+            Num_of_id = "";
+        }
+        private void LoadChange(string id) {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = $"select * from registration_of_invoice where ID = '{id}' order by num_of_ser";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+
+            int enter = 0;
+            status_label.Visible = true;
+            status_comboBox.Visible = true;
+
+            int cur_row = 2;
+            bool flag = false;
+
+            FlowLayoutPanel flp;
+            Panel panel;
+
+            while (dr.Read())
+            {
+                if (enter == 0)
+                {
+
+                    comboBox_CRP_INN.Text = dr[1].ToString();
+                    NDS_PINFL_textBox.Text = dr[8].ToString();
+                    if (dr[15].ToString() == "1")
+                    {
+                        status_comboBox.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        status_comboBox.SelectedIndex = 1;
+                    }
+                    textBox_number_of_invoice.Text = dr[0].ToString();
+                    dateTimePicker_invoice_data.Value = DateTime.ParseExact(dr[9].ToString(), "yyyyMMdd", null);
+
+                    search_nom_ser.PerformClick();
+                    findItems(Docu_num_ser, dr[2].ToString());
+
+                    SearchSer_0.PerformClick();
+                    findItems(ComboBox_0, dr[3].ToString());
+
+                    textBox_Sum.Text = dr[4].ToString();
+
+                    findItems(comboBox6, dr[5].ToString());
+
+                    ground_textBox.Text = dr[6].ToString();
+                    comment_textBox.Text = dr[7].ToString();
+                }
+                else{
+                    Add.PerformClick();
+
+                        flp = ((FlowLayoutPanel)tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
+                        ((Button)flp.Controls[1]).PerformClick();
+                        findItems(((ComboBox)flp.Controls[0]),dr[3].ToString());
+                        flag = true;
+                        cur_row++;
+                        panel = (Panel)(tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
+                        ((TextBox)panel.Controls[0]).Text = dr[4].ToString();
+                        findItems(((ComboBox)panel.Controls[2]), dr[5].ToString());
+                        flag = false;
+                        cur_row++;
+                    
+                }
+                enter++;
+            }
+
+        }
+
+        private void findItems(ComboBox combo, string val)
+        {
+            for (int i = 0; i < combo.Items.Count; i++)
+            {
+                if (combo.Items[i].ToString() == val)
+                {
+                    combo.SelectedIndex = i;
+                }
+            }
         }
 
         private Label CreateLabel(string name, int x, int y)
@@ -117,33 +207,13 @@ namespace app_for_CD
             count_of_Button = count_of_Button + 2;
             return but;
         }
-
-        private void comboBox_CRP_SelectedValueChanged(object sender, EventArgs e)
-        {
-            string crp = comboBox_CRP_INN.SelectedItem.ToString();
-            string INN = "";
-            OracleCommand cmd = con.CreateCommand();
-            cmd.Parameters.Add("KZL", OracleDbType.Varchar2, 13).Value = crp;
-            cmd.CommandText = "SELECT CRP_NM, DIST_ID_2 FROM TBCB_CRP_INFO where CRP_CD = :KZL";
-            cmd.CommandType = CommandType.Text;
-            OracleDataReader dr = cmd.ExecuteReader();
-
-            while (dr.Read())
-            {
-                INN = dr[1].ToString();
-                if (INN == " " || INN == "" || INN == null)
-                    textBox_CRP.Text = dr[0].ToString();
-                else
-                    textBox_CRP.Text = dr[0].ToString() + $" (ИНН:{INN})";
-            }
-        }
         int find_id()
         {
             OracleCommand cmd = con.CreateCommand();
             cmd.CommandText = "SELECT NVL(MAX(ID), 0) FROM REGISTRATION_OF_INVOICE ";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
-            MessageBox.Show(dr.Read().ToString());
+            dr.Read();
             return Int32.Parse(dr[0].ToString());
         }
         bool check()
@@ -215,6 +285,39 @@ namespace app_for_CD
             }
             return flag;
         }
+
+        private string find_data(string crp, string num_ser) {
+            string ser = "", num = "";
+            string data = "";
+            bool flag = false;
+            for (int i = 0; i < num_ser.Count(); i++)
+            {
+                if (num_ser[i] == '/')
+                {
+                    flag = true;
+                }
+                else if (flag == false) { 
+                    num = num + num_ser[i]; ;
+                }
+                else if (flag == true)
+                {
+                    ser = ser + num_ser[i];
+                }
+            }
+
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = $"select DOCU_ISSU_DD from table_for_docu  WHERE CRP_CD = '{crp}' AND DOCU_NO = '{num}' AND DOCU_SRES = '{ser}'";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+
+            while (dr.Read())
+            {
+                data = dr[0].ToString();
+            }
+
+            return data;
+        }
+
         private void Save_Click(object sender, EventArgs e)
         {
             if (check()) {
@@ -226,6 +329,17 @@ namespace app_for_CD
                 string ground = ground_textBox.Text;
                 string comment = comment_textBox.Text;
                 string nds_pinfl = NDS_PINFL_textBox.Text;
+                
+
+                byte IF_fiz;
+                if (NDS_PINFL.Text == "ПИНФЛ")
+                {
+                    IF_fiz = 1;
+                }
+                else {
+                    IF_fiz = 0;
+                }
+
                 int cur_row = 0;
                 bool flag = false;
                 FlowLayoutPanel flp;
@@ -254,13 +368,19 @@ namespace app_for_CD
                 cmd = con.CreateCommand();
                 int id;
                 id = find_id() + 1;
+                int num_of_ser = 1; 
                 for (int i = 0; i < values.Count; i = i + 3) {
 
-                    cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (id , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}') ";
+                    cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (id , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '1', '{num_of_ser}')";
                     cmd.ExecuteNonQuery();
+                    num_of_ser++; 
                 }
+                textBox_number_of_invoice.Text = id.ToString();
+                cur_crp_nm = "";
+                cur_INN = "";
+                Remove(true);
             }
-            //
+            
         }
 
         private void comboBox_CRP_INN_TextChanged(object sender, EventArgs e)
@@ -289,9 +409,16 @@ namespace app_for_CD
                 }
                 INN = dr[1].ToString();
                 if (INN == " " || INN == "" || INN == null)
+                {
                     textBox_CRP.Text = dr[0].ToString();
+                    cur_crp_nm = dr[0].ToString();
+                }
                 else
+                {
                     textBox_CRP.Text = dr[0].ToString() + $"(ИНН:{INN})";
+                    cur_crp_nm = dr[0].ToString();
+                    cur_INN = INN;
+                }
             }
         }
 
@@ -456,27 +583,22 @@ namespace app_for_CD
             }
         }
 
-        private void Remove()
+        private void Remove(bool f)
         {
-            for (int i = tableLayoutPanel_main.Controls.Count - 1; i >= 8; i--)
+            textBox_number_of_invoice.Text = "";
+            int iter = 0;
+            if (f == true)
             {
-                tableLayoutPanel_main.Controls[i].Dispose();
-            }
-        }
-
-
-        private void New_Click(object sender, EventArgs e)
-        {
-            Save s = new Save();
-            s.StartPosition = FormStartPosition.CenterParent;
-            s.ShowDialog();
-            if (Data.yes == true)
-            {
-                Save.PerformClick();
-            }
-            else
-            {
-                Remove();
+                for (int i = tableLayoutPanel_main.Controls.Count - 1; i >= 8; i--)
+                {
+                    tableLayoutPanel_main.Controls[i].Dispose();
+                    iter++;
+                    if (iter % 4 == 0) {
+                        row = row - 2;
+                        count_of_label_u = count_of_label_u - 1;
+                    }
+                    
+                }
                 comboBox_CRP_INN.Text = "";
                 comboBox_CRP_INN.BackColor = System.Drawing.SystemColors.Window;
                 textBox_CRP.Text = "";
@@ -498,9 +620,45 @@ namespace app_for_CD
                 comment_textBox.Text = "";
                 comment_textBox.BackColor = System.Drawing.SystemColors.Window;
             }
+            else if(tableLayoutPanel_main.Controls.Count != 8)
+            {
+                tableLayoutPanel_main.Controls[tableLayoutPanel_main.Controls.Count - 1].Dispose();
+                tableLayoutPanel_main.Controls[tableLayoutPanel_main.Controls.Count - 1].Dispose();
+                tableLayoutPanel_main.Controls[tableLayoutPanel_main.Controls.Count - 1].Dispose();
+                tableLayoutPanel_main.Controls[tableLayoutPanel_main.Controls.Count - 1].Dispose();
+                row = row - 2;
+                count_of_label_u = count_of_label_u - 1;
+            }
+        }
+        
+
+        private void New_Click(object sender, EventArgs e)
+        {
+            Save s = new Save();
+            s.StartPosition = FormStartPosition.CenterParent;
+            s.ShowDialog();
+            if (Data.yes == true)
+            {
+                Save.PerformClick();
+            }
+            else
+            {
+                Remove(true);
+            }
             Data.yes = false;
         }
 
+        private void Change_Click(object sender, EventArgs e)
+        {
+
+        }
+
+       
+
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            Remove(false);
+        }
 
         private void Docu_num_ser_SelectedValueChanged(object sender, EventArgs e)
         {
