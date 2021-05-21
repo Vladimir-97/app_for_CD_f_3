@@ -361,12 +361,6 @@ namespace app_for_CD
             List_of_contract lof = new List_of_contract();
             lof.Show();
         }
-
-        private void panel4_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         int query_delete_from_NEW_TBCB()
         {
             OracleCommand cmd = con.CreateCommand();
