@@ -106,9 +106,10 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("DAT", dateTimePicker1.Value.ToString("yyyyMMdd")));
             cmd.Parameters.Add(new OracleParameter("CRP", comboBox4.Text));
             cmd.Parameters.Add(new OracleParameter("FIO", Data.get_fio));
+            cmd.Parameters.Add(new OracleParameter("CRP_NM", textBox2.Text));
 
 
-            cmd.CommandText = "insert into open_change_depo (id, crte_dt, crp_cd, fio) values (:ID, :DAT, :CRP, :FIO)  ";
+            cmd.CommandText = "insert into open_change_depo (id, crte_dt, crp_cd, fio,crp_nm) values (:ID, :DAT, :CRP, :FIO, :CRP_NM)  ";
             cmd.CommandType = CommandType.Text;
             if (cmd.ExecuteNonQuery() == 1)
             {

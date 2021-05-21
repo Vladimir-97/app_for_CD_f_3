@@ -85,10 +85,10 @@ namespace app_for_CD
         {
 
             data.Add(new string[13]);
-            data[data.Count - 1][0] = data.Count.ToString(); ///////////Номер поряжковый
+            data[data.Count - 1][0] = dr[0].ToString(); ///////////Номер поряжковый
             data[data.Count - 1][1] = parse_date(check_null(dr[1].ToString()  )  );      ///////////Номер договора
             data[data.Count - 1][2] = check_null(dr[2].ToString());   /////////// Серия договора
-            data[data.Count - 1][3] = find_company(dr[2].ToString()  );
+            data[data.Count - 1][3] = dr[4].ToString() ;
             data[data.Count - 1][4] = check_null(dr[3].ToString());   /////////// Серия договора
         }
         void print_data(List<string[]> data)
@@ -398,6 +398,64 @@ namespace app_for_CD
                 errorMessage = String.Concat(errorMessage, theException.Source);
 
                 MessageBox.Show(errorMessage, "Error");
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            filter_open_depo fod = new filter_open_depo();
+            fod.ShowDialog();
+
+            if (Data.f_n == true || Data.f_CRP == true || Data.f_d == true ||  Data.f_fio == true)
+            {
+                string request = "";
+                string name_cl = "";
+
+                OracleCommand cmd = con.CreateCommand();
+                if (Data.f_d == true)
+                {
+                    request += $" AND crte_dt  >= '{Data.st_date_orig}'  AND crte_dt <= '{Data.end_date_orig}' ";
+                    Data.f_d = false;
+                }
+                if (Data.f_CRP == true)
+                {
+                    request += request + $" AND CRP_CD = {Data.number_ser} ";
+                    Data.f_CRP = false;
+
+                }
+                if (Data.f_n == true)
+                {
+                    for (int i = 0; i < Data.name_cl.Length; i++)
+                    {
+                        if (Data.name_cl[i] == '%')
+                        {
+                            name_cl += '_';
+                        }
+                        else
+                        {
+                            name_cl += Data.name_cl[i];
+                        }
+                    }
+                    request += request + $" AND CRP_NM LIKE '%{name_cl}%' ";
+                }
+                if (Data.f_fio == true)
+                {
+                    request += $" AND  fio = '{Data.filter_fio}' ";
+                    Data.f_fio = false;
+
+                }
+                cmd.CommandText = "SELECT * from open_change_depo where rownum <100  " + request + "order by id";
+                cmd.CommandType = CommandType.Text;
+                OracleDataReader dr = cmd.ExecuteReader();
+                List<string[]> data = new List<string[]>();
+
+                while (dr.Read() == true)
+                {
+                    fill_data(data, dr);
+                }
+
+                print_data(data);
             }
 
         }

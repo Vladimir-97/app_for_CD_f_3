@@ -29,6 +29,7 @@ namespace app_for_CD
             public static string emitent_str = "";
             public static string code_stock_str = "";
             public static string name_stock_str = "";
+            public static string filter_fio = "";
         public static int status = 0;
             
         #endregion
@@ -41,7 +42,7 @@ namespace app_for_CD
             public static bool f_inn { get; set; }
             public static bool f_ser { get; set; }
             public static bool f_status { get; set; }
-
+            public static bool f_fio { get; set; }
         #endregion
         public static int login = 0;
         public static int role = 0;
