@@ -20,7 +20,7 @@ namespace app_for_CD
             SetConnection();
             LoadData();
         }
-
+        //1
         private void SetConnection()
         {
             string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";
