@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using Oracle.DataAccess.Client;
 using Oracle.DataAccess.Types;
 using Excel = Microsoft.Office.Interop.Excel;
+using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 
 namespace app_for_CD
@@ -226,7 +228,26 @@ namespace app_for_CD
                 MessageBox.Show(errorMessage, "Error");
             }
         }
+        static string ExecuteCommand(string command)   ///////////////для копирования excel файла
+        {
+            int exitCode;
+            ProcessStartInfo processInfo;
+            Process process;
 
+            processInfo = new ProcessStartInfo("cmd.exe", "/c " + command);
+            processInfo.CreateNoWindow = true;
+            processInfo.UseShellExecute = false;
+            processInfo.RedirectStandardError = true;
+            processInfo.RedirectStandardOutput = true;
+
+            process = Process.Start(processInfo);
+            process.WaitForExit();
+
+            string output = process.StandardOutput.ReadToEnd();
+
+            process.Close();
+            return output;
+        }
         private void button6_Click(object sender, EventArgs e)
         {
             filter_stocks f = new filter_stocks();
@@ -296,10 +317,73 @@ namespace app_for_CD
             }
         }
         string kzl_pol, name_pol, kzl_otch, name_otch, code_cb, count_cb, type_agr;
+        string num_agr, date_agr, sum_agr, sum_one_cb, name_cb;
 
         private void button5_Click(object sender, EventArgs e)
         {
+            FileInfo fi;
+            string excel_path;
+            string path = ExecuteCommand("echo %cd%");
+            string pathD = path.Substring(0, path.Length - 2);
+            //if (is_phys(kzl))                                                             ///////////////////////разделение документов ///////////////////////
+            //{
+            //    ExecuteCommand("copy report_ph.xls report1.xls");
+            //    excel_path = pathD + "\\report1.xls";
+            //    fi = new FileInfo(excel_path);
+            //}
+            //else
+            //{
+                ExecuteCommand("copy move_stocks.xls report1.xls");
+                excel_path = pathD + "\\report1.xls";
+                fi = new FileInfo(excel_path);
+            //    }
 
+
+
+            Excel.Application oXL;
+            Excel.Workbooks oWBs;
+            Excel.Workbook oWB;
+            Excel.Worksheet oSheet;
+            if (fi.Exists)
+            {
+
+                oXL = new Excel.Application();
+                oXL.Visible = true;
+                //Получаем набор ссылок на объекты Workbook
+                oWBs = oXL.Workbooks;
+                oXL.Workbooks.Open(excel_path, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                oWB = oWBs[1];
+                oSheet = oWB.ActiveSheet;
+                //Выбираем лист 1
+                oSheet.Name = "Распечатка";
+                DateTime date = DateTime.Now;
+                string date_str1 = date.ToString();
+                string date_str = date_str1.Substring(0, 2);
+                date_str += "/";
+                date_str += date_str1.Substring(3, 2);
+                date_str += "/";
+                date_str += date_str1.Substring(6, 4);
+               
+                
+                oSheet.Cells[3, 35] = date_str;
+                // oSheet.Cells[44, 10] = dr[0].ToString();
+                oSheet.Cells[14, 15] = count_cb;
+                oSheet.Cells[14, 20] = sum_one_cb;
+                oSheet.Cells[14, 25] = sum_agr;
+                oSheet.Cells[25, 2] = type_agr;
+                oSheet.Cells[25, 17] = num_agr;
+                oSheet.Cells[25, 22] = date_agr;
+                oSheet.Cells[19, 2] = code_cb;
+                oSheet.Cells[19, 7] = name_cb;
+
+                DateTime date_t = DateTime.Now;
+                oSheet.Cells[28, 12] = date_t.ToString("dd.MM.yyyy HH:mm:ss");
+               
+
+
+                oSheet.Cells[36, 2] = " Оператор Депозитария    ______________________ " + Data.get_fio;
+
+            }
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -312,13 +396,14 @@ namespace app_for_CD
                 kzl_pol = dataGridView1.Rows[row].Cells[11].Value.ToString();
                 name_pol = dataGridView1.Rows[row].Cells[12].Value.ToString();
                 code_cb = dataGridView1.Rows[row].Cells[5].Value.ToString();
+                name_cb = dataGridView1.Rows[row].Cells[6].Value.ToString();
+                
+                sum_one_cb = dataGridView1.Rows[row].Cells[8].Value.ToString();
                 count_cb = dataGridView1.Rows[row].Cells[7].Value.ToString();
                 type_agr = dataGridView1.Rows[row].Cells[10].Value.ToString();   /////тип сделки
-                MessageBox.Show("kzl_otch = " + kzl_otch);
-                MessageBox.Show("kzl_pol = " + kzl_pol);
-                MessageBox.Show("code_cd = " + code_cb);
-                MessageBox.Show("count_cb = " + count_cb);
-                MessageBox.Show("type_agr = " + type_agr);
+                num_agr = dataGridView1.Rows[row].Cells[1].Value.ToString();
+                date_agr = dataGridView1.Rows[row].Cells[2].Value.ToString();
+                sum_agr = dataGridView1.Rows[row].Cells[9].Value.ToString();
                 button5.Enabled = true;
                 // crp_cd = dataGridView1.Rows[row].Cells[6].Value.ToString();
                 // dataGridView1.ForeColor = Color.Red;
