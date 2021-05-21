@@ -133,6 +133,12 @@
     <Compile Include="Auth.Designer.cs">
       <DependentUpon>Auth.cs</DependentUpon>
     </Compile>
+    <Compile Include="filter_open_depo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="filter_open_depo.Designer.cs">
+      <DependentUpon>filter_open_depo.cs</DependentUpon>
+    </Compile>
     <Compile Include="filter_stocks.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,6 +247,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="filter_open_depo.resx">
+      <DependentUpon>filter_open_depo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="filter_stocks.resx">
       <DependentUpon>filter_stocks.cs</DependentUpon>

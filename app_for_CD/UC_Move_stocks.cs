@@ -20,6 +20,7 @@ namespace app_for_CD
         {
             InitializeComponent();
             SetConnection();
+            button5.Enabled = false;
         }
         OracleConnection con = null;
         private void UC_Move_stocks_Load(object sender, EventArgs e)

@@ -218,7 +218,6 @@
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1900, 725);
             this.Name = "TC_Menu";
-            this.ShowInTaskbar = false;
             this.Text = "E - Contract";
             this.Resize += new System.EventHandler(this.TC_Menu_Resize);
             this.tabControl1.ResumeLayout(false);
