@@ -63,7 +63,7 @@ namespace app_for_CD
             SetConnection();
             if(Num_of_id != "")
                 LoadChange(Num_of_id);
-            Num_of_id = "";
+            //Num_of_id = "";
         }
         private void LoadChange(string id) {
             OracleCommand cmd = con.CreateCommand();
@@ -368,13 +368,32 @@ namespace app_for_CD
                 cmd = con.CreateCommand();
                 int id;
                 id = find_id() + 1;
-                int num_of_ser = 1; 
-                for (int i = 0; i < values.Count; i = i + 3) {
+                if (Num_of_id != "") { 
+                    id = Int32.Parse(Num_of_id);
+                }
+                int num_of_ser = 1;
+                int usluga = 0;
+                int quan_of_usluga;
 
-                    cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (id , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '1', '{num_of_ser}')";
+                cmd.CommandText = $"SELECT NVL(MAX(NUM_OF_SER), 0) FROM REGISTRATION_OF_INVOICE  where ID = {Num_of_id}";
+                cmd.CommandType = CommandType.Text;
+                OracleDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+                quan_of_usluga = (int)dr[0];
+                
+                for (int i = 0; i < values.Count; i = i + 3) {
+                    usluga++;
+                    cmd.CommandText = $"select NUM_OF_SER FROM registration_of_invoice WHERE id = {Num_of_id} AND NUM_OF_SER = {usluga}";
+                    if (Num_of_id != "" && quan_of_usluga <= usluga)
+                    {
+                        cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET CRP = '{crp}', SER = '{num_series}', SERVICE_T = '{values[i]}', SUM_T = {values[i + 1]}, CURRENCY = '{values[i + 2]}', BASIS = '{ground}', COMMENT_T = '{comment}', NDS_PINFL = '{nds_pinfl}', DATE_T = '{Date}', CRP_NM = '{cur_crp_nm}', INN = '{cur_INN}', IF_FIZ = '{IF_fiz}', DATE_CON = '{find_data(crp, num_series)}', FIO = '{Data.get_fio}', STATUS = '{0}' WHERE  id = {id} AND NUM_OF_SER = {usluga}";
+                    }
+                    else
+                        cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (id , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '1', '{num_of_ser}')";
                     cmd.ExecuteNonQuery();
                     num_of_ser++; 
                 }
+                
                 textBox_number_of_invoice.Text = id.ToString();
                 cur_crp_nm = "";
                 cur_INN = "";
