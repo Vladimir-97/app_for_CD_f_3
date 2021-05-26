@@ -20,7 +20,6 @@ namespace app_for_CD
             SetConnection();
             LoadData();
         }
-        //1
         private void SetConnection()
         {
             string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";
@@ -87,8 +86,8 @@ namespace app_for_CD
                         dataGridView_invoice.Rows[i].Cells[5].Value = "-";
                         dataGridView_invoice.Rows[i].Cells[6].Value = dr[8];
                     }
-                    dataGridView_invoice.Rows[i].Cells[7].Value = dr[3];
-                    dataGridView_invoice.Rows[i].Cells[8].Value = dr[4];
+                    dataGridView_invoice.Rows[i].Cells[7].Value = dr[3].ToString();
+                    dataGridView_invoice.Rows[i].Cells[8].Value = dr[4].ToString();
                     if (dr[15].ToString() == "1")
                     {
                         dataGridView_invoice.Rows[i].Cells[9].Value = "Активный";
@@ -135,22 +134,29 @@ namespace app_for_CD
             string num = "";
             
             var senderGrid = (DataGridView)sender;
-
-            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewImageColumn && e.RowIndex >= 0)
+            try
             {
-                string str = dataGridView_invoice.Rows[e.RowIndex].Cells[0].Value.ToString();
-                for (int i = 0; i < str.Count(); i++) {
-                    if (str[i] != ' ')
+                if (senderGrid.Columns[e.ColumnIndex] is DataGridViewImageColumn && e.RowIndex >= 0)
+                {
+                    string str = dataGridView_invoice.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    for (int i = 0; i < str.Count(); i++)
                     {
-                        num = num + str[i];
+                        if (str[i] != ' ')
+                        {
+                            num = num + str[i];
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
-                    else {
-                        break;
-                    }
+                    registration_of_an_invoice r = new registration_of_an_invoice(num);
+                    r.StartPosition = FormStartPosition.CenterParent;
+                    r.ShowDialog();
                 }
-                registration_of_an_invoice r = new registration_of_an_invoice(num);
-                r.StartPosition = FormStartPosition.CenterParent;
-                r.ShowDialog();
+            }
+            catch { 
+            
             }
         }
     }
