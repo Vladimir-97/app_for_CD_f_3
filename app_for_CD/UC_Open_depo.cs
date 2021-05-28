@@ -26,6 +26,7 @@ namespace app_for_CD
         {
             InitializeComponent();
             SetConnection();
+            dataGridView1.Font = new Font("Times New Roman", 10, FontStyle.Bold);
         }
         OracleConnection con = null;
         string date, kzl, kzl_nm, fio, num;
