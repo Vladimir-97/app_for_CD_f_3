@@ -78,7 +78,8 @@ namespace app_for_CD
             Application.Exit();
             if (Data.exit == true)
                 Application.Run(new TC_Menu());
-
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 

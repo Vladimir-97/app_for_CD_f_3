@@ -336,7 +336,18 @@ namespace app_for_CD
                     }
                     else
                     {
+                        oXL.DisplayAlerts = false;
+                        oWB.Close(false);
+                        oXL.Quit();
+                        oXL.DisplayAlerts = true;
+                        oSheet = null;
+                        oWB = null;
+                        oWBs = null;
+                        oXL = null;
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
                         MessageBox.Show("Нет данных о клиенте");
+                      //  ExecuteCommand("del report1.xls");
                     }
                 }
                 else       ///////////////////////////////////////////////////////////////////yur lico       //////////////////////////////////////////////////////////////////////////////////////////////
@@ -520,6 +531,16 @@ namespace app_for_CD
                     }
                     else
                     {
+                        oXL.DisplayAlerts = false;
+                        oWB.Close(false);
+                        oXL.Quit();
+                        oXL.DisplayAlerts = true;
+                        oSheet = null;
+                        oWB = null;
+                        oWBs = null;
+                        oXL = null;
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
                         MessageBox.Show("Нет данных о клиенте");
                     }
                 }

@@ -74,22 +74,22 @@ namespace app_for_CD
 
         }
 
-        void print_data(List<string[]> data)
-        {
-            int i = 0;
-            dataGridView1.Rows.Clear();
+        //void print_data(List<string[]> data)
+        //{
+        //    int i = 0;
+        //    dataGridView1.Rows.Clear();
 
-            foreach (string[] s in data)
-            {
-                dataGridView1.Rows.Add(s);
-                for (int j = 0; j < 12; j++)
-                    if (i % 2 == 0)
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.DarkGray;
-                    else
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.Gray;
-                i++;
-            }
-        }
+        //    foreach (string[] s in data)
+        //    {
+        //        dataGridView1.Rows.Add(s);
+        //        for (int j = 0; j < 12; j++)
+        //            if (i % 2 == 0)
+        //                dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.DarkGray;
+        //            else
+        //                dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.Gray;
+        //        i++;
+        //    }
+        //}
         string check_null(string str)
         {
             if (str.Length == 0)

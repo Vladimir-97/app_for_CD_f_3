@@ -198,7 +198,7 @@ namespace app_for_CD
                 oSheet = oWB.ActiveSheet;
                 //Выбираем лист 1
                 oSheet.Name = "Распечатка";
-
+                
                 //////////////////////////////////////////////////////////////////////////////////////////    ТЕПЕРЬ ЗАПОЛНЯЕМ  /////////////////////////////////////////////////////
                 string date_str1 = date.ToString();
                 string date_str = date_str1.Substring(0, 2);
@@ -221,7 +221,6 @@ namespace app_for_CD
                         oSheet.Cells[44, 10] = dr[0].ToString() ;
                         oSheet.Cells[8, 5] = dr[1].ToString() ;
                         oSheet.Cells[10, 5] = dr[3].ToString() ;
-                        oSheet.Cells[12, 3] = dr[4].ToString() ;
                         oSheet.Cells[12, 3] = dr[4].ToString() ;
                         oSheet.Cells[12, 10] = dr[5].ToString() ;
                         oSheet.Cells[14, 5] = dr[6].ToString();
@@ -254,7 +253,18 @@ namespace app_for_CD
                     }
                     else
                     {
+                        oXL.DisplayAlerts = false;
+                        oWB.Close(false);
+                        oXL.Quit();
+                        oXL.DisplayAlerts = true;
+                        oSheet = null;
+                        oWB = null;
+                        oWBs = null;
+                        oXL = null;
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
                         MessageBox.Show("Нет данных о клиенте");
+
                     }
                 }
                 else
@@ -271,7 +281,7 @@ namespace app_for_CD
                         oSheet.Cells[44, 10] = dr[0].ToString();
                         oSheet.Cells[8, 5] = dr[1].ToString();
                         oSheet.Cells[10, 5] = dr[3].ToString();
-                        oSheet.Cells[12, 3] = dr[4].ToString();
+                      //  oSheet.Cells[12, 3] = dr[4].ToString();
                        // oSheet.Cells[12, 10] = dr[5].ToString();
                         oSheet.Cells[14, 5] = dr[6].ToString();
                         oSheet.Cells[12, 10] = dr[7].ToString();
@@ -301,6 +311,21 @@ namespace app_for_CD
                         oSheet.Cells[42, 5] = dr[31].ToString();
                         oSheet.Cells[44, 5] = dr[32].ToString();
 
+                    }
+                    else
+                    {
+                        oXL.DisplayAlerts = false;
+                        oWB.Close(false);
+                        oXL.Quit();
+                        oXL.DisplayAlerts = true;
+                        oSheet = null;
+                        oWB = null;
+                        oWBs = null;
+                        oXL = null;
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+                        MessageBox.Show("Нет данных о клиенте");
+                        //ExecuteCommand("del report1.xls");
                     }
                 }
             }
