@@ -22,7 +22,7 @@ namespace app_for_CD
         int row = 2;
         string cur_INN = "", cur_crp_nm = "";
         bool f = false;
-        string Num_of_id = "";
+        string Num_of_id = "-1";
         private void SetConnection()
         {
             string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";
@@ -61,9 +61,9 @@ namespace app_for_CD
             tableLayoutPanel_main.RowStyles.Clear();
             tableLayoutPanel_main.AutoScroll = true;
             SetConnection();
-            if(Num_of_id != "")
+            if(Num_of_id != "-1")
                 LoadChange(Num_of_id);
-            Num_of_id = "";
+            
         }
         private void LoadChange(string id) {
             OracleCommand cmd = con.CreateCommand();
@@ -113,7 +113,7 @@ namespace app_for_CD
                     comment_textBox.Text = dr[7].ToString();
                 }
                 else{
-                    Add.PerformClick();
+                        Add.PerformClick(); 
 
                         flp = ((FlowLayoutPanel)tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
                         ((Button)flp.Controls[1]).PerformClick();
@@ -329,6 +329,7 @@ namespace app_for_CD
                 string ground = ground_textBox.Text;
                 string comment = comment_textBox.Text;
                 string nds_pinfl = NDS_PINFL_textBox.Text;
+                int status;
                 
 
                 byte IF_fiz;
@@ -338,6 +339,15 @@ namespace app_for_CD
                 }
                 else {
                     IF_fiz = 0;
+                }
+
+                if (status_comboBox.Text == "Активный" || status_comboBox.Visible == false)
+                {
+                    status = 1;
+                }
+                else
+                {
+                    status = 0;
                 }
 
                 int cur_row = 0;
@@ -368,19 +378,50 @@ namespace app_for_CD
                 cmd = con.CreateCommand();
                 int id;
                 id = find_id() + 1;
-                int num_of_ser = 1; 
-                for (int i = 0; i < values.Count; i = i + 3) {
+                if (Num_of_id != "-1") { 
+                    id = Int32.Parse(Num_of_id);
+                }
+                int num_of_ser = 1;
+                int quan_of_usluga;
 
-                    cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (id , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '1', '{num_of_ser}')";
+                cmd.CommandText = $"SELECT NVL(MAX(NUM_OF_SER), 0) FROM REGISTRATION_OF_INVOICE  where ID = {Num_of_id}";
+                cmd.CommandType = CommandType.Text;
+                OracleDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+
+                quan_of_usluga = Int32.Parse(dr[0].ToString());
+
+                for (int i = 0; i < values.Count; i = i + 3) {
+                    cmd.CommandText = $"select NUM_OF_SER FROM registration_of_invoice WHERE id = {Num_of_id} AND NUM_OF_SER = {num_of_ser}";
+                    if (Num_of_id != "-1" && num_of_ser <= quan_of_usluga)
+                    {
+                        cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET CRP = '{crp}', SER = '{num_series}', SERVICE_T = '{values[i]}', SUM_T = {values[i + 1]}, CURRENCY = '{values[i + 2]}', BASIS = '{ground}', COMMENT_T = '{comment}', NDS_PINFL = '{nds_pinfl}', DATE_T = '{Date}', CRP_NM = '{cur_crp_nm}', INN = '{cur_INN}', IF_FIZ = '{IF_fiz}', DATE_CON = '{find_data(crp, num_series)}', FIO = '{Data.get_fio}', STATUS = '{status}' WHERE  id = {id} AND NUM_OF_SER = {num_of_ser} AND PROCESS = 0 AND SUM_PAID = 0 ";
+                    }
+                    else
+                    {
+                        cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (id , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER, PROCESS, SUM_PAID) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '{status}', '{num_of_ser}', 0, 0)";
+                    }
                     cmd.ExecuteNonQuery();
                     num_of_ser++; 
                 }
+
+                //удаляю лишнии услуги
+                if ((num_of_ser - 1) < quan_of_usluga) {
+                    for (int i = num_of_ser; i <= quan_of_usluga; i++) {
+                        cmd.CommandText = $"delete from registration_of_invoice where id = {id} AND NUM_OF_SER = '{i}'";
+                        cmd.ExecuteNonQuery();
+                    }
+                }
                 textBox_number_of_invoice.Text = id.ToString();
+                
                 cur_crp_nm = "";
                 cur_INN = "";
+                Num_of_id = "-1";
                 Remove(true);
+                status_label.Visible = false;
+                status_label.Visible = false;
             }
-            
+
         }
 
         private void comboBox_CRP_INN_TextChanged(object sender, EventArgs e)
@@ -648,16 +689,60 @@ namespace app_for_CD
             Data.yes = false;
         }
 
-        private void Change_Click(object sender, EventArgs e)
+        private void comboBox_CRP_INN_SelectedValueChanged(object sender, EventArgs e)
         {
+            bool flag = false;
+            FlowLayoutPanel flp;
+            Panel panel;
+            int cur_row = 0;
 
+            NDS_PINFL_textBox.Text = "";
+
+            for (int i = 0; i < tableLayoutPanel_main.Controls.Count - 4; i++)
+            {
+                if ((i % 2 == 1) && flag == false)
+                {
+                    flp = ((FlowLayoutPanel)tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
+                    ((ComboBox)flp.Controls[0]).SelectedItem = null;
+                    ((ComboBox)flp.Controls[0]).Items.Clear();
+                    flag = true;
+                    cur_row++;
+                }
+                else if ((i % 2 == 1) && flag == true)
+                {
+                    panel = (Panel)(tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
+                    ((TextBox)panel.Controls[0]).Text = "";
+                    ((ComboBox)panel.Controls[2]).SelectedItem = null;
+                    flag = false;
+                    cur_row++;
+                }
+            }
         }
-
-       
 
         private void Delete_Click(object sender, EventArgs e)
         {
-            Remove(false);
+            if (tableLayoutPanel_main.Controls.Count != 8)
+            {
+                Panel pan = ((Panel)tableLayoutPanel_main.Controls[tableLayoutPanel_main.Controls.Count - 1]);
+                FlowLayoutPanel flp = ((FlowLayoutPanel)tableLayoutPanel_main.Controls[tableLayoutPanel_main.Controls.Count - 3]);
+                if (((ComboBox)(pan.Controls[2])).SelectedIndex != -1 || ((TextBox)(pan.Controls[0])).Text != "" || ((ComboBox)(flp.Controls[0])).SelectedIndex != -1)
+                {
+                    SaveForSer s = new SaveForSer();
+                    s.StartPosition = FormStartPosition.CenterParent;
+                    s.ShowDialog();
+
+                    if (Data.yes == true)
+                    {
+                        Remove(false);
+                    }
+                    Data.yes = false;
+
+                }
+                else {
+                    Remove(false);
+                }
+                
+            }
         }
 
         private void Docu_num_ser_SelectedValueChanged(object sender, EventArgs e)

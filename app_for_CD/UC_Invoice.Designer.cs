@@ -36,10 +36,8 @@
             this.dataGridView_invoice = new System.Windows.Forms.DataGridView();
             this.bottom_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.excel = new System.Windows.Forms.Button();
-            this.change = new System.Windows.Forms.Button();
-            this.add = new System.Windows.Forms.Button();
             this.filtr = new System.Windows.Forms.Button();
-            this.status = new System.Windows.Forms.Button();
+            this.add = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,7 +47,9 @@
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Process = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sum_of_pay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Choice = new System.Windows.Forms.DataGridViewImageColumn();
             this.panel1.SuspendLayout();
@@ -97,6 +97,7 @@
             this.print.TabIndex = 1;
             this.print.Text = "Печать";
             this.print.UseVisualStyleBackColor = true;
+            this.print.Click += new System.EventHandler(this.print_Click);
             // 
             // update
             // 
@@ -129,6 +130,8 @@
             this.Column8,
             this.Column9,
             this.Column10,
+            this.Process,
+            this.sum_of_pay,
             this.Column11,
             this.Choice});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -158,10 +161,8 @@
             this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.bottom_tableLayoutPanel.Controls.Add(this.excel, 5, 1);
-            this.bottom_tableLayoutPanel.Controls.Add(this.change, 4, 1);
-            this.bottom_tableLayoutPanel.Controls.Add(this.add, 3, 1);
             this.bottom_tableLayoutPanel.Controls.Add(this.filtr, 0, 1);
-            this.bottom_tableLayoutPanel.Controls.Add(this.status, 1, 1);
+            this.bottom_tableLayoutPanel.Controls.Add(this.add, 4, 1);
             this.bottom_tableLayoutPanel.Location = new System.Drawing.Point(14, 608);
             this.bottom_tableLayoutPanel.Name = "bottom_tableLayoutPanel";
             this.bottom_tableLayoutPanel.RowCount = 3;
@@ -180,25 +181,6 @@
             this.excel.Text = "Excel";
             this.excel.UseVisualStyleBackColor = true;
             // 
-            // change
-            // 
-            this.change.Location = new System.Drawing.Point(1027, 11);
-            this.change.Name = "change";
-            this.change.Size = new System.Drawing.Size(75, 22);
-            this.change.TabIndex = 1;
-            this.change.Text = "Изменить";
-            this.change.UseVisualStyleBackColor = true;
-            // 
-            // add
-            // 
-            this.add.Location = new System.Drawing.Point(927, 11);
-            this.add.Name = "add";
-            this.add.Size = new System.Drawing.Size(75, 22);
-            this.add.TabIndex = 2;
-            this.add.Text = "Добавить";
-            this.add.UseVisualStyleBackColor = true;
-            this.add.Click += new System.EventHandler(this.add_Click);
-            // 
             // filtr
             // 
             this.filtr.Location = new System.Drawing.Point(3, 11);
@@ -208,14 +190,15 @@
             this.filtr.Text = "Фильтр";
             this.filtr.UseVisualStyleBackColor = true;
             // 
-            // status
+            // add
             // 
-            this.status.Location = new System.Drawing.Point(103, 11);
-            this.status.Name = "status";
-            this.status.Size = new System.Drawing.Size(75, 22);
-            this.status.TabIndex = 4;
-            this.status.Text = "Статус";
-            this.status.UseVisualStyleBackColor = true;
+            this.add.Location = new System.Drawing.Point(1027, 11);
+            this.add.Name = "add";
+            this.add.Size = new System.Drawing.Size(75, 22);
+            this.add.TabIndex = 2;
+            this.add.Text = "Добавить";
+            this.add.UseVisualStyleBackColor = true;
+            this.add.Click += new System.EventHandler(this.add_Click);
             // 
             // Column1
             // 
@@ -278,12 +261,18 @@
             // Column10
             // 
             this.Column10.HeaderText = "Статус:";
-            this.Column10.Items.AddRange(new object[] {
-            "Активный",
-            "Неактивный"});
             this.Column10.Name = "Column10";
             this.Column10.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Process
+            // 
+            this.Process.HeaderText = "Процесс";
+            this.Process.Name = "Process";
+            // 
+            // sum_of_pay
+            // 
+            this.sum_of_pay.HeaderText = "Сумма оплаты";
+            this.sum_of_pay.Name = "sum_of_pay";
             // 
             // Column11
             // 
@@ -327,11 +316,9 @@
         private System.Windows.Forms.Button update;
         private System.Windows.Forms.DataGridView dataGridView_invoice;
         private System.Windows.Forms.TableLayoutPanel bottom_tableLayoutPanel;
-        private System.Windows.Forms.Button change;
         private System.Windows.Forms.Button excel;
         private System.Windows.Forms.Button add;
         private System.Windows.Forms.Button filtr;
-        private System.Windows.Forms.Button status;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
@@ -341,7 +328,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
-        private System.Windows.Forms.DataGridViewComboBoxColumn Column10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Process;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sum_of_pay;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewImageColumn Choice;
     }

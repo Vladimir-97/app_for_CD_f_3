@@ -1,4 +1,7 @@
-﻿namespace app_for_CD
+﻿
+
+
+namespace app_for_CD
 {
     partial class UC_Contract
     {
