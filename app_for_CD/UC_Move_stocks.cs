@@ -23,6 +23,7 @@ namespace app_for_CD
             InitializeComponent();
             SetConnection();
             button5.Enabled = false;
+           // dataGridView1.Font = new Font("Times New Roman", 10, FontStyle.Bold);
         }
         OracleConnection con = null;
         private void UC_Move_stocks_Load(object sender, EventArgs e)
@@ -367,17 +368,25 @@ namespace app_for_CD
                 
                 oSheet.Cells[3, 35] = date_str;
                 // oSheet.Cells[44, 10] = dr[0].ToString();
-                oSheet.Cells[14, 15] = count_cb;
-                oSheet.Cells[14, 20] = sum_one_cb;
-                oSheet.Cells[14, 25] = sum_agr;
+                oSheet.Cells[14, 2] = kzl_otch;
+                oSheet.Cells[14, 32] = kzl_pol;
+                oSheet.Cells[14, 11] = count_cb;
+                oSheet.Cells[14, 17] = sum_one_cb;
+                oSheet.Cells[14, 23] = "\t" + sum_agr;
                 oSheet.Cells[25, 2] = type_agr;
                 oSheet.Cells[25, 17] = num_agr;
-                oSheet.Cells[25, 22] = date_agr;
+                oSheet.Cells[25, 23] = date_agr;
                 oSheet.Cells[19, 2] = code_cb;
                 oSheet.Cells[19, 7] = name_cb;
+                oSheet.Cells[15, 2] = name_otch;
+                oSheet.Cells[15, 32] = name_pol;
+              
+                oSheet.Cells[19, 34] = "\t" + pval();    //////////ном стоимость
+                oSheet.Cells[19, 37] = "\t" + total_agst();      //////// % от УФ
+                oSheet.Cells[19, 26] = "\t" + st_cb();    //////////ном стоимость
 
-                DateTime date_t = DateTime.Now;
-                oSheet.Cells[28, 12] = date_t.ToString("dd.MM.yyyy HH:mm:ss");
+
+                oSheet.Cells[28, 12] = date_agr;
                
 
 
@@ -385,7 +394,77 @@ namespace app_for_CD
 
             }
         }
-
+        string pval()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("CODE_CB", code_cb);
+            cmd.Parameters.Add("KZL1", kzl_otch);
+            cmd.Parameters.Add("KZL2", kzl_pol);
+            cmd.Parameters.Add("COUNT_CB", count_cb);
+            cmd.CommandText = "select pval from tbsr_stk_plg_reg where isu_cd = :CODE_CD and pldgr_crp_cd = :KZL1  and pldge_crp_cd = :KZL2 and plg_prov_qty = :COUNT_CB";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                return dr[0].ToString();
+            }
+            return "0,000";
+        }
+        string st_cb()
+        {
+            string val = "";
+            val = find_cb();
+            if (val == "")
+            val = find_ob();
+            if (val == "1")
+                return "Активный";
+            else if (val == "2")
+                return "Блокированный";
+            else
+            return "Аннулированный";
+        }
+        string find_cb()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("CODE_CB", code_cb);
+            cmd.CommandText = "select dl_susp_stat_cd from tbcb_stk where isu_cd = :CODE_CD";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                return dr[0].ToString();
+            }
+            return "";
+        }
+        string find_ob()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("CODE_CB", code_cb);
+            cmd.CommandText = "select dl_susp_stat_cd from tbcb_bnd where isu_cd = :CODE_CD";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                return dr[0].ToString();
+            }
+            return "";
+        }
+        string total_agst()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("CODE_CB", code_cb);
+            cmd.Parameters.Add("KZL1", kzl_otch);
+            cmd.Parameters.Add("KZL2", kzl_pol);
+            cmd.Parameters.Add("COUNT_CB", count_cb);
+            cmd.CommandText = "select tot_agst_prov_rt from tbsr_stk_plg_reg where isu_cd = :CODE_CD and pldgr_crp_cd = :KZL1 and pldge_crp_cd = :KZL2 and plg_prov_qty = :COUNT_CB ";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                return dr[0].ToString();
+            }
+            return "0,0000";
+        }
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             int row = dataGridView1.CurrentRow.Index;
