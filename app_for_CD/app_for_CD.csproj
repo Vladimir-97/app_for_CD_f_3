@@ -145,6 +145,12 @@
     <Compile Include="filter_stocks.Designer.cs">
       <DependentUpon>filter_stocks.cs</DependentUpon>
     </Compile>
+    <Compile Include="SaveForSer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SaveForSer.Designer.cs">
+      <DependentUpon>SaveForSer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Save.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="filter_stocks.resx">
       <DependentUpon>filter_stocks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SaveForSer.resx">
+      <DependentUpon>SaveForSer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Save.resx">
       <DependentUpon>Save.cs</DependentUpon>
