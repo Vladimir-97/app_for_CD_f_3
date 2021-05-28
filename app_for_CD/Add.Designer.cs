@@ -200,7 +200,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 65.59406F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 233F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 394F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 395F));
             this.tableLayoutPanel1.Controls.Add(this.textBox9, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.dateTimePicker7, 3, 0);
             this.tableLayoutPanel1.Controls.Add(this.textBox5, 1, 0);
@@ -215,7 +215,7 @@
             // 
             // textBox9
             // 
-            this.textBox9.Location = new System.Drawing.Point(771, 3);
+            this.textBox9.Location = new System.Drawing.Point(770, 3);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(384, 20);
             this.textBox9.TabIndex = 50;
@@ -226,7 +226,7 @@
             // 
             this.dateTimePicker7.CustomFormat = "dd.MM.yyyy";
             this.dateTimePicker7.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker7.Location = new System.Drawing.Point(538, 3);
+            this.dateTimePicker7.Location = new System.Drawing.Point(537, 3);
             this.dateTimePicker7.Name = "dateTimePicker7";
             this.dateTimePicker7.Size = new System.Drawing.Size(128, 20);
             this.dateTimePicker7.TabIndex = 50;
@@ -234,7 +234,7 @@
             // 
             // textBox5
             // 
-            this.textBox5.Location = new System.Drawing.Point(139, 3);
+            this.textBox5.Location = new System.Drawing.Point(138, 3);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(159, 20);
             this.textBox5.TabIndex = 48;
@@ -244,7 +244,7 @@
             // 
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label23.Location = new System.Drawing.Point(398, 0);
+            this.label23.Location = new System.Drawing.Point(397, 0);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(99, 16);
             this.label23.TabIndex = 45;
@@ -870,7 +870,7 @@
             this.button3.BackColor = System.Drawing.Color.Navy;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(776, 539);
+            this.button3.Location = new System.Drawing.Point(1057, 539);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(104, 32);
             this.button3.TabIndex = 5;
