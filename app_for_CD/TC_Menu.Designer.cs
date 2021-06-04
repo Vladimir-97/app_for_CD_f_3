@@ -34,14 +34,14 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.uC_Billing1 = new app_for_CD.UC_Billing();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.uC_Invoice1 = new app_for_CD.UC_Invoice();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.uC_Move_stocks1 = new app_for_CD.UC_Move_stocks();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.uC_Open_depo1 = new app_for_CD.UC_Open_depo();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.uC_Add_user1 = new app_for_CD.UC_Add_user();
             this.tabPage7 = new System.Windows.Forms.TabPage();
-            this.uC_Invoice1 = new app_for_CD.UC_Invoice();
+            this.uC_Add_user1 = new app_for_CD.UC_Add_user();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -126,6 +126,18 @@
             this.tabPage3.Text = "Счет-фактура";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // uC_Invoice1
+            // 
+            this.uC_Invoice1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uC_Invoice1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.uC_Invoice1.ExcelFilePath = "";
+            this.uC_Invoice1.Location = new System.Drawing.Point(6, 0);
+            this.uC_Invoice1.Name = "uC_Invoice1";
+            this.uC_Invoice1.Size = new System.Drawing.Size(1885, 667);
+            this.uC_Invoice1.TabIndex = 0;
+            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.uC_Move_stocks1);
@@ -178,16 +190,6 @@
             this.tabPage6.Text = "Пользователи";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
-            // uC_Add_user1
-            // 
-            this.uC_Add_user1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uC_Add_user1.Location = new System.Drawing.Point(7, 0);
-            this.uC_Add_user1.Name = "uC_Add_user1";
-            this.uC_Add_user1.Size = new System.Drawing.Size(1923, 902);
-            this.uC_Add_user1.TabIndex = 0;
-            // 
             // tabPage7
             // 
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
@@ -198,16 +200,15 @@
             this.tabPage7.Text = "Аудит";
             this.tabPage7.UseVisualStyleBackColor = true;
             // 
-            // uC_Invoice1
+            // uC_Add_user1
             // 
-            this.uC_Invoice1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.uC_Add_user1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.uC_Invoice1.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.uC_Invoice1.Location = new System.Drawing.Point(6, 0);
-            this.uC_Invoice1.Name = "uC_Invoice1";
-            this.uC_Invoice1.Size = new System.Drawing.Size(1885, 667);
-            this.uC_Invoice1.TabIndex = 0;
+            this.uC_Add_user1.Location = new System.Drawing.Point(6, 0);
+            this.uC_Add_user1.Name = "uC_Add_user1";
+            this.uC_Add_user1.Size = new System.Drawing.Size(1885, 664);
+            this.uC_Add_user1.TabIndex = 0;
             // 
             // TC_Menu
             // 
@@ -215,7 +216,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1884, 686);
             this.Controls.Add(this.tabControl1);
-            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1900, 725);
             this.Name = "TC_Menu";
             this.Text = "E - Contract";
@@ -240,7 +240,6 @@
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.TabPage tabPage7;
-        private UC_Add_user uC_Add_user1;
         private System.Windows.Forms.TabPage tabPage1;
         private UC_Contract uC_Contract2;
         private UC_Move_stocks uC_Move_stocks1;
@@ -248,5 +247,6 @@
         private UC_Billing uC_Billing1;
         private UC_Open_depo uC_Open_depo1;
         private UC_Invoice uC_Invoice1;
+        private UC_Add_user uC_Add_user1;
     }
 }

@@ -34,6 +34,8 @@
             this.tableAdapterManager1 = new app_for_CD.NeedDatasetTableAdapters.TableAdapterManager();
             this.textBox_number_of_invoice = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.Delete = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.textBox_ser_name = new System.Windows.Forms.TextBox();
             this.dateTimePicker_invoice_data = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
@@ -61,6 +63,8 @@
             this.comment = new System.Windows.Forms.Label();
             this.flowLayoutPanel_comment_for_TextBox = new System.Windows.Forms.FlowLayoutPanel();
             this.comment_textBox = new System.Windows.Forms.TextBox();
+            this.Add = new System.Windows.Forms.Button();
+            this.label_add = new System.Windows.Forms.Label();
             this.mainpanel_reg = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.status_label = new System.Windows.Forms.Label();
@@ -78,10 +82,6 @@
             this.New = new System.Windows.Forms.Button();
             this.Save = new System.Windows.Forms.Button();
             this.neW_TBCBTableAdapter1 = new app_for_CD.NeedDatasetTableAdapters.NEW_TBCBTableAdapter();
-            this.Delete = new System.Windows.Forms.Button();
-            this.Add = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label_add = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel_main.SuspendLayout();
             this.flowLayoutPanel5.SuspendLayout();
@@ -172,6 +172,32 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1116, 433);
             this.panel2.TabIndex = 59;
+            // 
+            // Delete
+            // 
+            this.Delete.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.Delete.Location = new System.Drawing.Point(997, 45);
+            this.Delete.Name = "Delete";
+            this.Delete.Size = new System.Drawing.Size(75, 23);
+            this.Delete.TabIndex = 64;
+            this.Delete.Text = "Удалить";
+            this.Delete.UseVisualStyleBackColor = true;
+            this.Delete.Visible = false;
+            this.Delete.Click += new System.EventHandler(this.Delete_Click);
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.label1.Location = new System.Drawing.Point(712, 45);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(267, 25);
+            this.label1.TabIndex = 63;
+            this.label1.Text = "Удалить последнюю услугу:";
+            this.label1.Visible = false;
             // 
             // textBox_ser_name
             // 
@@ -465,6 +491,32 @@
             this.comment_textBox.TabIndex = 63;
             this.comment_textBox.Click += new System.EventHandler(this.textBoxClick);
             // 
+            // Add
+            // 
+            this.Add.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.Add.Location = new System.Drawing.Point(997, 12);
+            this.Add.Name = "Add";
+            this.Add.Size = new System.Drawing.Size(75, 23);
+            this.Add.TabIndex = 47;
+            this.Add.Text = "Добавить";
+            this.Add.UseVisualStyleBackColor = true;
+            this.Add.Visible = false;
+            this.Add.Click += new System.EventHandler(this.MyCreateButton_Click);
+            // 
+            // label_add
+            // 
+            this.label_add.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label_add.AutoSize = true;
+            this.label_add.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label_add.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.label_add.Location = new System.Drawing.Point(712, 12);
+            this.label_add.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label_add.Name = "label_add";
+            this.label_add.Size = new System.Drawing.Size(173, 25);
+            this.label_add.TabIndex = 46;
+            this.label_add.Text = "Добавить услугу:";
+            this.label_add.Visible = false;
+            // 
             // mainpanel_reg
             // 
             this.mainpanel_reg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -628,9 +680,9 @@
             this.label_CRP_INN.Location = new System.Drawing.Point(4, 0);
             this.label_CRP_INN.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label_CRP_INN.Name = "label_CRP_INN";
-            this.label_CRP_INN.Size = new System.Drawing.Size(143, 25);
+            this.label_CRP_INN.Size = new System.Drawing.Size(55, 25);
             this.label_CRP_INN.TabIndex = 2;
-            this.label_CRP_INN.Text = "КЗЛ-ИНН код:";
+            this.label_CRP_INN.Text = "КЗЛ:";
             // 
             // Report
             // 
@@ -669,58 +721,6 @@
             // neW_TBCBTableAdapter1
             // 
             this.neW_TBCBTableAdapter1.ClearBeforeFill = true;
-            // 
-            // Delete
-            // 
-            this.Delete.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.Delete.Location = new System.Drawing.Point(997, 45);
-            this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(75, 23);
-            this.Delete.TabIndex = 64;
-            this.Delete.Text = "Удалить";
-            this.Delete.UseVisualStyleBackColor = true;
-            this.Delete.Visible = false;
-            this.Delete.Click += new System.EventHandler(this.Delete_Click);
-            // 
-            // Add
-            // 
-            this.Add.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.Add.Location = new System.Drawing.Point(997, 12);
-            this.Add.Name = "Add";
-            this.Add.Size = new System.Drawing.Size(75, 23);
-            this.Add.TabIndex = 47;
-            this.Add.Text = "Добавить";
-            this.Add.UseVisualStyleBackColor = true;
-            this.Add.Visible = false;
-            this.Add.Click += new System.EventHandler(this.MyCreateButton_Click);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label1.Location = new System.Drawing.Point(712, 45);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(267, 25);
-            this.label1.TabIndex = 63;
-            this.label1.Text = "Удалить последнюю услугу:";
-            this.label1.Visible = false;
-            // 
-            // label_add
-            // 
-            this.label_add.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label_add.AutoSize = true;
-            this.label_add.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label_add.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label_add.Location = new System.Drawing.Point(712, 12);
-            this.label_add.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label_add.Name = "label_add";
-            this.label_add.Size = new System.Drawing.Size(173, 25);
-            this.label_add.TabIndex = 46;
-            this.label_add.Text = "Добавить услугу:";
-            this.label_add.Visible = false;
             // 
             // registration_of_an_invoice
             // 

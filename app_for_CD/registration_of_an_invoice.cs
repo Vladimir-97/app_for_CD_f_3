@@ -399,8 +399,9 @@ namespace app_for_CD
                     }
                     else
                     {
-                        cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (id , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER, PROCESS, SUM_PAID) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '{status}', '{num_of_ser}', 0, 0)";
+                        cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (ID , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER, PROCESS, SUM_PAID) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '{status}', '{num_of_ser}', 0, 0)";
                     }
+                    //ground_textBox.Text = $"insert into REGISTRATION_OF_INVOICE (10 , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER, PROCESS, SUM_PAID) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '{status}', '{num_of_ser}', 0, 0)";
                     cmd.ExecuteNonQuery();
                     num_of_ser++; 
                 }
@@ -548,9 +549,12 @@ namespace app_for_CD
                 cmd.CommandType = CommandType.Text;
 
                 OracleDataReader dr = cmd.ExecuteReader();
+                //OracleDataReader dr1;
 
                 while (dr.Read())
                 {
+                    //cmd.CommandText = $"";
+                    //cmd.ExecuteReader();
                     near_combo.Items.Add(dr[0].ToString());
                 }
             }

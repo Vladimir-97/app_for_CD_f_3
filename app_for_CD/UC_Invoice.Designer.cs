@@ -28,16 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.top_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.print = new System.Windows.Forms.Button();
             this.update = new System.Windows.Forms.Button();
             this.dataGridView_invoice = new System.Windows.Forms.DataGridView();
-            this.bottom_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.excel = new System.Windows.Forms.Button();
-            this.filtr = new System.Windows.Forms.Button();
-            this.add = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,10 +45,14 @@
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Process = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Process = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.sum_of_pay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Choice = new System.Windows.Forms.DataGridViewImageColumn();
+            this.bottom_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.excel = new System.Windows.Forms.Button();
+            this.filtr = new System.Windows.Forms.Button();
+            this.add = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.top_tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_invoice)).BeginInit();
@@ -91,6 +92,7 @@
             // 
             // print
             // 
+            this.print.Enabled = false;
             this.print.Location = new System.Drawing.Point(1027, 11);
             this.print.Name = "print";
             this.print.Size = new System.Drawing.Size(75, 20);
@@ -134,71 +136,29 @@
             this.sum_of_pay,
             this.Column11,
             this.Choice});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_invoice.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_invoice.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView_invoice.Location = new System.Drawing.Point(14, 66);
             this.dataGridView_invoice.Name = "dataGridView_invoice";
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_invoice.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridView_invoice.Size = new System.Drawing.Size(1224, 536);
             this.dataGridView_invoice.TabIndex = 1;
             this.dataGridView_invoice.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_invoice_CellClick);
-            // 
-            // bottom_tableLayoutPanel
-            // 
-            this.bottom_tableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bottom_tableLayoutPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
-            this.bottom_tableLayoutPanel.ColumnCount = 6;
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.bottom_tableLayoutPanel.Controls.Add(this.excel, 5, 1);
-            this.bottom_tableLayoutPanel.Controls.Add(this.filtr, 0, 1);
-            this.bottom_tableLayoutPanel.Controls.Add(this.add, 4, 1);
-            this.bottom_tableLayoutPanel.Location = new System.Drawing.Point(14, 608);
-            this.bottom_tableLayoutPanel.Name = "bottom_tableLayoutPanel";
-            this.bottom_tableLayoutPanel.RowCount = 3;
-            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
-            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.5F));
-            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
-            this.bottom_tableLayoutPanel.Size = new System.Drawing.Size(1224, 46);
-            this.bottom_tableLayoutPanel.TabIndex = 2;
-            // 
-            // excel
-            // 
-            this.excel.Location = new System.Drawing.Point(1127, 11);
-            this.excel.Name = "excel";
-            this.excel.Size = new System.Drawing.Size(75, 22);
-            this.excel.TabIndex = 0;
-            this.excel.Text = "Excel";
-            this.excel.UseVisualStyleBackColor = true;
-            // 
-            // filtr
-            // 
-            this.filtr.Location = new System.Drawing.Point(3, 11);
-            this.filtr.Name = "filtr";
-            this.filtr.Size = new System.Drawing.Size(75, 22);
-            this.filtr.TabIndex = 3;
-            this.filtr.Text = "Фильтр";
-            this.filtr.UseVisualStyleBackColor = true;
-            // 
-            // add
-            // 
-            this.add.Location = new System.Drawing.Point(1027, 11);
-            this.add.Name = "add";
-            this.add.Size = new System.Drawing.Size(75, 22);
-            this.add.TabIndex = 2;
-            this.add.Text = "Добавить";
-            this.add.UseVisualStyleBackColor = true;
-            this.add.Click += new System.EventHandler(this.add_Click);
+            this.dataGridView_invoice.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView_invoice_EditingControlShowing);
+            this.dataGridView_invoice.SelectionChanged += new System.EventHandler(this.dataGridView_invoice_SelectionChanged);
             // 
             // Column1
             // 
@@ -266,8 +226,15 @@
             // 
             // Process
             // 
+            this.Process.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
             this.Process.HeaderText = "Процесс";
+            this.Process.Items.AddRange(new object[] {
+            "Выставлена",
+            "Часть оплаты",
+            "Оплачена"});
             this.Process.Name = "Process";
+            this.Process.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Process.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // sum_of_pay
             // 
@@ -289,6 +256,58 @@
             this.Choice.Name = "Choice";
             this.Choice.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Choice.Width = 64;
+            // 
+            // bottom_tableLayoutPanel
+            // 
+            this.bottom_tableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bottom_tableLayoutPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
+            this.bottom_tableLayoutPanel.ColumnCount = 6;
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.bottom_tableLayoutPanel.Controls.Add(this.excel, 5, 1);
+            this.bottom_tableLayoutPanel.Controls.Add(this.filtr, 0, 1);
+            this.bottom_tableLayoutPanel.Controls.Add(this.add, 4, 1);
+            this.bottom_tableLayoutPanel.Location = new System.Drawing.Point(14, 608);
+            this.bottom_tableLayoutPanel.Name = "bottom_tableLayoutPanel";
+            this.bottom_tableLayoutPanel.RowCount = 3;
+            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
+            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.5F));
+            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
+            this.bottom_tableLayoutPanel.Size = new System.Drawing.Size(1224, 46);
+            this.bottom_tableLayoutPanel.TabIndex = 2;
+            // 
+            // excel
+            // 
+            this.excel.Location = new System.Drawing.Point(1127, 11);
+            this.excel.Name = "excel";
+            this.excel.Size = new System.Drawing.Size(75, 22);
+            this.excel.TabIndex = 0;
+            this.excel.Text = "Excel";
+            this.excel.UseVisualStyleBackColor = true;
+            // 
+            // filtr
+            // 
+            this.filtr.Location = new System.Drawing.Point(3, 11);
+            this.filtr.Name = "filtr";
+            this.filtr.Size = new System.Drawing.Size(75, 22);
+            this.filtr.TabIndex = 3;
+            this.filtr.Text = "Фильтр";
+            this.filtr.UseVisualStyleBackColor = true;
+            // 
+            // add
+            // 
+            this.add.Location = new System.Drawing.Point(1027, 11);
+            this.add.Name = "add";
+            this.add.Size = new System.Drawing.Size(75, 22);
+            this.add.TabIndex = 2;
+            this.add.Text = "Добавить";
+            this.add.UseVisualStyleBackColor = true;
+            this.add.Click += new System.EventHandler(this.add_Click);
             // 
             // UC_Invoice
             // 
@@ -329,7 +348,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Process;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Process;
         private System.Windows.Forms.DataGridViewTextBoxColumn sum_of_pay;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewImageColumn Choice;
