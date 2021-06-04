@@ -49,16 +49,8 @@ namespace app_for_CD
         {
             InitializeComponent();
             Num_of_id = id;
-            button4.Visible = false;
         }
-        public registration_of_an_invoice(int id)
-        {
-            InitializeComponent();
-            SetConnection();
-            Save.Visible = false;
-            textBox_number_of_invoice.Text = (find_last_number()+1).ToString();
-            New.Visible = false;
-        }
+        
         private void registration_of_an_invoice_Shown(object sender, EventArgs e)
         {
             
@@ -331,6 +323,8 @@ namespace app_for_CD
         {
             if (check()) {
                 #region Получение всей информации
+                OracleCommand cmd;
+                OracleDataReader dr;
                 List<string> values = new List<string>();
                 string crp = comboBox_CRP_INN.Text;
                 string Date = dateTimePicker_invoice_data.Value.ToString("yyyyMMdd");
@@ -338,9 +332,22 @@ namespace app_for_CD
                 string ground = ground_textBox.Text;
                 string comment = comment_textBox.Text;
                 string nds_pinfl = NDS_PINFL_textBox.Text;
+                string process = "0", sum_paid = "0";
                 int status;
-                
+                if (Num_of_id != "-1")
+                {
+                    cmd = con.CreateCommand();
 
+                    cmd.CommandText = $"select PROCESS, SUM_PAID FROM REGISTRATION_OF_INVOICE where ID = {Num_of_id}";
+                    cmd.CommandType = CommandType.Text;
+                    dr = cmd.ExecuteReader();
+                    dr.Read();
+
+                    process = dr[0].ToString();
+                    sum_paid = dr[1].ToString();
+
+                    dr.Close();
+                }
                 if (NDS_PINFL.Text == "ПИНФЛ")
                 {
                     IF_fiz = 1;
@@ -382,7 +389,7 @@ namespace app_for_CD
                     }
                 }
                 #endregion
-                OracleCommand cmd;
+                
                 cmd = con.CreateCommand();
                 int id;
                 id = find_id() + 1;
@@ -394,22 +401,20 @@ namespace app_for_CD
 
                 cmd.CommandText = $"SELECT NVL(MAX(NUM_OF_SER), 0) FROM REGISTRATION_OF_INVOICE  where ID = {Num_of_id}";
                 cmd.CommandType = CommandType.Text;
-                OracleDataReader dr = cmd.ExecuteReader();
+                dr = cmd.ExecuteReader();
                 dr.Read();
 
                 quan_of_usluga = Int32.Parse(dr[0].ToString());
-
                 for (int i = 0; i < values.Count; i = i + 3) {
                     cmd.CommandText = $"select NUM_OF_SER FROM registration_of_invoice WHERE id = {Num_of_id} AND NUM_OF_SER = {num_of_ser}";
                     if (Num_of_id != "-1" && num_of_ser <= quan_of_usluga)
                     {
-                        cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET CRP = '{crp}', SER = '{num_series}', SERVICE_T = '{values[i]}', SUM_T = {values[i + 1]}, CURRENCY = '{values[i + 2]}', BASIS = '{ground}', COMMENT_T = '{comment}', NDS_PINFL = '{nds_pinfl}', DATE_T = '{Date}', CRP_NM = '{cur_crp_nm}', INN = '{cur_INN}', IF_FIZ = '{IF_fiz}', DATE_CON = '{find_data(crp, num_series)}', FIO = '{Data.get_fio}', STATUS = '{status}' WHERE  id = {id} AND NUM_OF_SER = {num_of_ser} AND PROCESS = 0 AND SUM_PAID = 0 ";
+                        cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET CRP = '{crp}', SER = '{num_series}', SERVICE_T = '{values[i]}', SUM_T = {values[i + 1]}, CURRENCY = '{values[i + 2]}', BASIS = '{ground}', COMMENT_T = '{comment}', NDS_PINFL = '{nds_pinfl}', DATE_T = '{Date}', CRP_NM = '{cur_crp_nm}', INN = '{cur_INN}', IF_FIZ = '{IF_fiz}', DATE_CON = '{find_data(crp, num_series)}', FIO = '{Data.get_fio}', STATUS = '{status}' WHERE  id = {id} AND NUM_OF_SER = {num_of_ser} AND PROCESS = '{process}' AND SUM_PAID = '{sum_paid}' ";
                     }
                     else
                     {
                         cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (ID , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER, PROCESS, SUM_PAID) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '{status}', '{num_of_ser}', 0, 0)";
                     }
-                    //ground_textBox.Text = $"insert into REGISTRATION_OF_INVOICE (10 , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER, PROCESS, SUM_PAID) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '{status}', '{num_of_ser}', 0, 0)";
                     cmd.ExecuteNonQuery();
                     num_of_ser++; 
                 }
@@ -825,115 +830,7 @@ namespace app_for_CD
                 CreateElementOnTable(i);
             }
         }
-        /// //////////////////////////////////////////////////////////////////////////
-        private void button4_Click(object sender, EventArgs e)
-        {
-            int status;
-            byte IF_fiz;
-            if (NDS_PINFL.Text == "ПИНФЛ")
-            {
-                IF_fiz = 1;
-            }
-            else
-            {
-                IF_fiz = 0;
-            }
-
-            if (status_comboBox.Text == "Активный" || status_comboBox.Visible == false)
-            {
-                status = 1;
-            }
-            else
-            {
-                status = 0;
-            }
-            OracleCommand cmd = con.CreateCommand();
-            cmd.Parameters.Add("NUM_BILL", textBox_number_of_invoice.Text);//////
-            cmd.Parameters.Add("DATE_BILL", dateTimePicker_invoice_data.Value.ToString("yyyyMMdd")); //
-            cmd.Parameters.Add("NUM_AGGR", num_sres);  ///////
-            cmd.Parameters.Add("SER_AGGR", sres);      //////////
-            cmd.Parameters.Add("DATE_AGGR", "date");
-            cmd.Parameters.Add("KZL", comboBox_CRP_INN.Text);   ////////////
-            cmd.Parameters.Add("KZL_NM", cur_crp_nm);/////
-            cmd.Parameters.Add("INN", cur_INN); ////////////
-            if (IF_fiz == 0)
-            {
-                cmd.Parameters.Add("NDS", NDS_PINFL_textBox.Text); ///////////
-                cmd.Parameters.Add("PINFL", ""); ///////////
-
-            }
-            else
-            {
-                cmd.Parameters.Add("NDS", ""); ///////////
-                cmd.Parameters.Add("PINFL", NDS_PINFL_textBox.Text); ///////////
-            }
-            cmd.Parameters.Add("TYPE_SER", ComboBox_0.Text);   /////////////////
-            cmd.Parameters.Add("COST_DELIV", float.Parse(textBox_Sum.Text) * (100+find_nds(ComboBox_0.Text) ) /100 );            ///////////////////////////////////NDS_PINFL
-            cmd.Parameters.Add("STATUS", status);   /////////////
-            cmd.Parameters.Add("PROCESS", "Выставлен");  //////////////
-            cmd.Parameters.Add("SUMMA", textBox_Sum.Text);
-            cmd.Parameters.Add("FIO", Data.get_fio);
-            cmd.Parameters.Add("BASE", ground_textBox.Text);
-            cmd.Parameters.Add("REMARK", comment_textBox.Text);
-            cmd.Parameters.Add("CUR", comboBox6.Text);
-
-            cmd.CommandText = "insert into table_billing (num_of_bill, date_of_bill, num_aggr, sres_aggr, date_aggr, crp_cd, crp_nm, dist_id_2, nds, pinfl, type_sres, cost_deliv, state, process, payment_amount, fio, base, remark, curr) values (:NUM_BILL, :DATE_BILL, :NUM_AGGR, :SER_AGGR, :DATE_AGGR, :KZL, :KZL_NM, :INN, :NDS, :PINFL, :TYPE_SER, :COST_DELIV, :STATUS, :PROCESS, :SUMMA, :FIO, :BASE, :REMARK, :CUR)";
-            cmd.CommandType = CommandType.Text;
-            if (cmd.ExecuteNonQuery() == 1)
-            {
-                Report.Visible = true;
-            }
-            else
-            {
-                MessageBox.Show("Error. Скажите Тимуру про инвойс");
-            }
-
-        }
-        int find_nds(string ser)
-        {
-            OracleCommand cmd = con.CreateCommand();
-            cmd.Parameters.Add("CD_NM", ser);
-            cmd.CommandText = "select nds from tbcb_cd where cd_nm = :CD_NM ";
-            cmd.CommandType = CommandType.Text;
-            OracleDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                try
-                {
-                    if (dr.HasRows)
-                    {
-                        return Int32.Parse(dr[0].ToString());
-                    }
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
-            return 0;
-        }
-        int find_last_number()
-        {
-            OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "select max(num_of_bill) from table_billing ";
-            cmd.CommandType = CommandType.Text;
-            OracleDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                try
-                {
-                    if (dr.HasRows)
-                    {
-                        return Int32.Parse(dr[0].ToString());
-                    }
-                }
-                catch
-                {
-                    return 0;
-                }
-            }
-            return 0;
-        }
+       
 
     }
 }

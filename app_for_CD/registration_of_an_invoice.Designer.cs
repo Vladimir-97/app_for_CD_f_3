@@ -522,7 +522,6 @@
             this.mainpanel_reg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.mainpanel_reg.Controls.Add(this.button4);
             this.mainpanel_reg.Controls.Add(this.panel5);
             this.mainpanel_reg.Controls.Add(this.Report);
             this.mainpanel_reg.Controls.Add(this.New);
@@ -819,6 +818,5 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button Add;
         private System.Windows.Forms.Label label_add;
-        private System.Windows.Forms.Button button4;
     }
 }

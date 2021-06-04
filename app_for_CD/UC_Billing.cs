@@ -203,11 +203,6 @@ namespace app_for_CD
             new_str += str.Substring(0,4) ;
             return new_str;
         }
-        private void button4_Click(object sender, EventArgs e)
-        {
-            registration_of_an_invoice rb = new registration_of_an_invoice(1);
-            rb.Show();
-        }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
