@@ -356,5 +356,12 @@ namespace app_for_CD
                 print.Enabled = false;
             }
         }
+
+        private void filtr_Click(object sender, EventArgs e)
+        {
+            Form1 r = new Form1();
+            r.StartPosition = FormStartPosition.CenterParent;
+            r.ShowDialog();
+        }
     }
 }
