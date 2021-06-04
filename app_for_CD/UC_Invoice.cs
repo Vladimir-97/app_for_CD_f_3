@@ -17,7 +17,7 @@ namespace app_for_CD
     public partial class UC_Invoice : UserControl
     {
         OracleConnection con = null;
-
+        string ID;
         public UC_Invoice()
         {
             InitializeComponent();
@@ -155,12 +155,13 @@ namespace app_for_CD
                     {
                         dataGridView_invoice.Rows[i].Cells[9].Value = "Активный";
                     }
-                    else {
+                    else
+                    {
                         dataGridView_invoice.Rows[i].Cells[9].Value = "Неактивный";
                     }
-                    dataGridView_invoice.Rows[i].Cells[10].Value = dr[14];
-                    dataGridView_invoice.Rows[i].Cells[11].Value = dr[17];
-                    dataGridView_invoice.Rows[i].Cells[12].Value = dr[18];
+                    dataGridView_invoice.Rows[i].Cells[10].Value = (dataGridView_invoice.Rows[i].Cells[10] as DataGridViewComboBoxCell).Items[Convert.ToInt32(dr[17])];
+                    dataGridView_invoice.Rows[i].Cells[11].Value = dr[18];
+                    dataGridView_invoice.Rows[i].Cells[12].Value = dr[14];
                     i++;
                 }
                 else{
@@ -225,12 +226,76 @@ namespace app_for_CD
             }
         }
 
+        private void dataGridView_invoice_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+
+            if (dataGridView_invoice.CurrentCell.ColumnIndex == 10 && e.Control is ComboBox)
+            {
+                ComboBox comboBox = e.Control as ComboBox;
+                comboBox.SelectedIndexChanged -= LastColumnComboSelectionChanged;
+                comboBox.SelectedIndexChanged += LastColumnComboSelectionChanged;
+            }
+            e.CellStyle.BackColor = dataGridView_invoice.DefaultCellStyle.BackColor;
+        }
+
+        private void LastColumnComboSelectionChanged(object sender, EventArgs e)
+        {
+            
+            var currentcell = dataGridView_invoice.CurrentCellAddress;
+            string num_date_invoice = dataGridView_invoice.Rows[currentcell.Y].Cells[0].Value.ToString();
+            int num;
+            string ID = "";
+            int i = 0;
+            var a = sender;
+            
+            while(num_date_invoice[i] != ' ')
+            {
+                ID += num_date_invoice[i];
+                i++;
+            }
+
+
+            OracleCommand cmd;
+            cmd = con.CreateCommand();
+            if (dataGridView_invoice.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Выставлена")
+                num = 0;
+            else if (dataGridView_invoice.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Часть оплаты")
+                num = 1;
+            else { 
+                num = 2;
+            }
+            cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET PROCESS = {num} where id = {ID}";
+            cmd.ExecuteNonQuery();
+ 
+        }
+
         private void print_Click(object sender, EventArgs e)
         {
+            string nch_date, ch_date; 
             excelFilePath = Path.GetFullPath("invoice_t.xlsx");
             openExcel();
-            string val;
-            MessageBox.Show(myExcelWorkSheet.Cells[6, "B"].Text);
+            /*
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = $"select * from registration_of_invoice where ID = {ID}";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            dr.Read();
+            nch_date = dr[9].ToString();
+            ch_date = nch_date[6].ToString() + nch_date[7].ToString() + '.';
+            ch_date = ch_date + nch_date[4].ToString() + nch_date[5].ToString() + '.';
+            ch_date = ch_date + nch_date[0].ToString() + nch_date[1].ToString() + nch_date[2].ToString() + nch_date[3].ToString();
+            MessageBox.Show(ch_date);
+            myExcelWorkSheet.Cells[3, "B"].Value = $"№ {ID} от {ch_date}";
+            myExcelWorkSheet.Cells[4, "B"].Value = $"к договору {dr[2].ToString()} от **.**.****";
+            */
+            OracleCommand cmd1 = con.CreateCommand();
+            cmd1.CommandText = $"select CRP_NM from tbcb_crp_info where CRP_CD = '000000000026'";
+            cmd1.CommandType = CommandType.Text;
+            OracleDataReader dr1 = cmd1.ExecuteReader();
+            dr1.Read();
+            myExcelWorkSheet.Cells[6, "I"].Value = $"{dr1[0]}";
+            dr1.Close();
+            //dr.Close();
             closeExcel();
             /*
             File.Copy("invoice_template.xlsx", "invoice_template-tmp.xlsx");
@@ -263,5 +328,41 @@ namespace app_for_CD
             }
             */
         }
+
+        private void dataGridView_invoice_SelectionChanged(object sender, EventArgs e)
+        {
+            int row = dataGridView_invoice.CurrentRow.Index;
+            string str, num = "";
+            if (dataGridView_invoice.SelectedCells.Count > 1)
+            {
+                str = dataGridView_invoice.Rows[row].Cells[0].Value.ToString();
+                for (int i = 0; i < str.Count(); i++)
+                {
+                    if (str[i] != ' ')
+                    {
+                        num = num + str[i];
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                ID = num;
+                MessageBox.Show(ID);
+                print.Enabled = true;
+            }
+            else
+            {
+                print.Enabled = false;
+            }
+        }
+
+        private void filtr_Click(object sender, EventArgs e)
+        {
+            Form1 r = new Form1();
+            r.StartPosition = FormStartPosition.CenterParent;
+            r.ShowDialog();
+        }
+
     }
 }

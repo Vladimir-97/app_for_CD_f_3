@@ -205,9 +205,10 @@
             this.uC_Add_user1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.uC_Add_user1.Location = new System.Drawing.Point(7, 0);
+            this.uC_Add_user1.Location = new System.Drawing.Point(6, 0);
             this.uC_Add_user1.Name = "uC_Add_user1";
-            this.uC_Add_user1.Size = new System.Drawing.Size(1883, 661);
+            this.uC_Add_user1.Size = new System.Drawing.Size(1885, 664);
+
             this.uC_Add_user1.TabIndex = 0;
             // 
             // TC_Menu
