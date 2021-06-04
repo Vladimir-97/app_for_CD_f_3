@@ -21,6 +21,7 @@ namespace app_for_CD
         int count_of_label_u = 0;
         int row = 2;
         string cur_INN = "", cur_crp_nm = "";
+        string sres, num_sres;
         bool f = false;
         string Num_of_id = "-1";
         private void SetConnection()
@@ -48,8 +49,16 @@ namespace app_for_CD
         {
             InitializeComponent();
             Num_of_id = id;
+            button4.Visible = false;
         }
-
+        public registration_of_an_invoice(int id)
+        {
+            InitializeComponent();
+            SetConnection();
+            Save.Visible = false;
+            textBox_number_of_invoice.Text = (find_last_number()+1).ToString();
+            New.Visible = false;
+        }
         private void registration_of_an_invoice_Shown(object sender, EventArgs e)
         {
             
@@ -147,7 +156,7 @@ namespace app_for_CD
         {
             Label cur_label = new Label();
             cur_label.AutoSize = true;
-            cur_label.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            cur_label.Font = new System.Drawing.Font("Times New Roman", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             cur_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             cur_label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             cur_label.Name = "Label_" + count_of_label.ToString();
@@ -317,7 +326,7 @@ namespace app_for_CD
 
             return data;
         }
-
+        byte IF_fiz;
         private void Save_Click(object sender, EventArgs e)
         {
             if (check()) {
@@ -332,7 +341,6 @@ namespace app_for_CD
                 int status;
                 
 
-                byte IF_fiz;
                 if (NDS_PINFL.Text == "ПИНФЛ")
                 {
                     IF_fiz = 1;
@@ -476,6 +484,8 @@ namespace app_for_CD
 
             while (dr.Read())
             {
+                num_sres = dr[0].ToString();
+                sres = dr[1].ToString();
                 Docu_num_ser.Items.Add($"{dr[0]}/{dr[1]}");
             }
         }
@@ -723,6 +733,7 @@ namespace app_for_CD
             }
         }
 
+
         private void Delete_Click(object sender, EventArgs e)
         {
             if (tableLayoutPanel_main.Controls.Count != 8)
@@ -814,5 +825,115 @@ namespace app_for_CD
                 CreateElementOnTable(i);
             }
         }
+        /// //////////////////////////////////////////////////////////////////////////
+        private void button4_Click(object sender, EventArgs e)
+        {
+            int status;
+            byte IF_fiz;
+            if (NDS_PINFL.Text == "ПИНФЛ")
+            {
+                IF_fiz = 1;
+            }
+            else
+            {
+                IF_fiz = 0;
+            }
+
+            if (status_comboBox.Text == "Активный" || status_comboBox.Visible == false)
+            {
+                status = 1;
+            }
+            else
+            {
+                status = 0;
+            }
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("NUM_BILL", textBox_number_of_invoice.Text);//////
+            cmd.Parameters.Add("DATE_BILL", dateTimePicker_invoice_data.Value.ToString("yyyyMMdd")); //
+            cmd.Parameters.Add("NUM_AGGR", num_sres);  ///////
+            cmd.Parameters.Add("SER_AGGR", sres);      //////////
+            cmd.Parameters.Add("DATE_AGGR", "date");
+            cmd.Parameters.Add("KZL", comboBox_CRP_INN.Text);   ////////////
+            cmd.Parameters.Add("KZL_NM", cur_crp_nm);/////
+            cmd.Parameters.Add("INN", cur_INN); ////////////
+            if (IF_fiz == 0)
+            {
+                cmd.Parameters.Add("NDS", NDS_PINFL_textBox.Text); ///////////
+                cmd.Parameters.Add("PINFL", ""); ///////////
+
+            }
+            else
+            {
+                cmd.Parameters.Add("NDS", ""); ///////////
+                cmd.Parameters.Add("PINFL", NDS_PINFL_textBox.Text); ///////////
+            }
+            cmd.Parameters.Add("TYPE_SER", ComboBox_0.Text);   /////////////////
+            cmd.Parameters.Add("COST_DELIV", float.Parse(textBox_Sum.Text) * (100+find_nds(ComboBox_0.Text) ) /100 );            ///////////////////////////////////NDS_PINFL
+            cmd.Parameters.Add("STATUS", status);   /////////////
+            cmd.Parameters.Add("PROCESS", "Выставлен");  //////////////
+            cmd.Parameters.Add("SUMMA", textBox_Sum.Text);
+            cmd.Parameters.Add("FIO", Data.get_fio);
+            cmd.Parameters.Add("BASE", ground_textBox.Text);
+            cmd.Parameters.Add("REMARK", comment_textBox.Text);
+            cmd.Parameters.Add("CUR", comboBox6.Text);
+
+            cmd.CommandText = "insert into table_billing (num_of_bill, date_of_bill, num_aggr, sres_aggr, date_aggr, crp_cd, crp_nm, dist_id_2, nds, pinfl, type_sres, cost_deliv, state, process, payment_amount, fio, base, remark, curr) values (:NUM_BILL, :DATE_BILL, :NUM_AGGR, :SER_AGGR, :DATE_AGGR, :KZL, :KZL_NM, :INN, :NDS, :PINFL, :TYPE_SER, :COST_DELIV, :STATUS, :PROCESS, :SUMMA, :FIO, :BASE, :REMARK, :CUR)";
+            cmd.CommandType = CommandType.Text;
+            if (cmd.ExecuteNonQuery() == 1)
+            {
+                Report.Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("Error. Скажите Тимуру про инвойс");
+            }
+
+        }
+        int find_nds(string ser)
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("CD_NM", ser);
+            cmd.CommandText = "select nds from tbcb_cd where cd_nm = :CD_NM ";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {
+                    if (dr.HasRows)
+                    {
+                        return Int32.Parse(dr[0].ToString());
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            return 0;
+        }
+        int find_last_number()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "select max(num_of_bill) from table_billing ";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {
+                    if (dr.HasRows)
+                    {
+                        return Int32.Parse(dr[0].ToString());
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            return 0;
+        }
+
     }
 }

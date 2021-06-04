@@ -208,6 +208,7 @@
             this.uC_Add_user1.Location = new System.Drawing.Point(6, 0);
             this.uC_Add_user1.Name = "uC_Add_user1";
             this.uC_Add_user1.Size = new System.Drawing.Size(1885, 664);
+
             this.uC_Add_user1.TabIndex = 0;
             // 
             // TC_Menu

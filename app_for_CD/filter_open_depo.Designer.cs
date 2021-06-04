@@ -30,6 +30,8 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(filter_open_depo));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dateTimePicker_st = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker_end = new System.Windows.Forms.DateTimePicker();
             this.button4 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,8 +42,6 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.dateTimePicker_st = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker_end = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,6 +63,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(804, 341);
             this.panel1.TabIndex = 0;
+            // 
+            // dateTimePicker_st
+            // 
+            this.dateTimePicker_st.CustomFormat = "dd.MM.yyyy";
+            this.dateTimePicker_st.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker_st.Location = new System.Drawing.Point(286, 75);
+            this.dateTimePicker_st.Name = "dateTimePicker_st";
+            this.dateTimePicker_st.Size = new System.Drawing.Size(164, 20);
+            this.dateTimePicker_st.TabIndex = 12;
+            // 
+            // dateTimePicker_end
+            // 
+            this.dateTimePicker_end.CustomFormat = "dd.MM.yyyy";
+            this.dateTimePicker_end.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dateTimePicker_end.Location = new System.Drawing.Point(587, 75);
+            this.dateTimePicker_end.Name = "dateTimePicker_end";
+            this.dateTimePicker_end.Size = new System.Drawing.Size(153, 20);
+            this.dateTimePicker_end.TabIndex = 13;
             // 
             // button4
             // 
@@ -175,24 +193,6 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // dateTimePicker_st
-            // 
-            this.dateTimePicker_st.CustomFormat = "dd.MM.yyyy";
-            this.dateTimePicker_st.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_st.Location = new System.Drawing.Point(286, 75);
-            this.dateTimePicker_st.Name = "dateTimePicker_st";
-            this.dateTimePicker_st.Size = new System.Drawing.Size(164, 20);
-            this.dateTimePicker_st.TabIndex = 12;
-            // 
-            // dateTimePicker_end
-            // 
-            this.dateTimePicker_end.CustomFormat = "dd.MM.yyyy";
-            this.dateTimePicker_end.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker_end.Location = new System.Drawing.Point(587, 75);
-            this.dateTimePicker_end.Name = "dateTimePicker_end";
-            this.dateTimePicker_end.Size = new System.Drawing.Size(153, 20);
-            this.dateTimePicker_end.TabIndex = 13;
-            // 
             // filter_open_depo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -202,6 +202,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel1);
             this.Name = "filter_open_depo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Filter_open_depo";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

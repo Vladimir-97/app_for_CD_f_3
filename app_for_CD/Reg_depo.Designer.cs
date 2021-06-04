@@ -178,6 +178,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel1);
             this.Name = "Reg_depo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Регистрация свидетельства по клиенту";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

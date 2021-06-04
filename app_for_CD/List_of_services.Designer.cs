@@ -29,16 +29,14 @@ namespace app_for_CD
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -112,35 +110,11 @@ namespace app_for_CD
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel4.Controls.Add(this.textBox2);
-            this.panel4.Controls.Add(this.label1);
             this.panel4.Controls.Add(this.dataGridView1);
             this.panel4.Location = new System.Drawing.Point(15, 110);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(900, 431);
             this.panel4.TabIndex = 2;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox2.Location = new System.Drawing.Point(757, 378);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 34);
-            this.textBox2.TabIndex = 4;
-            this.textBox2.Text = "15.00%";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.label1.Location = new System.Drawing.Point(588, 383);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(149, 24);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "С учетом НДС";
             // 
             // dataGridView1
             // 
@@ -150,32 +124,32 @@ namespace app_for_CD
             this.Column3,
             this.Column2,
             this.Column4});
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Yellow;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.Location = new System.Drawing.Point(16, 3);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(861, 364);
+            this.dataGridView1.Size = new System.Drawing.Size(861, 413);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // Column1
             // 
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.LightYellow;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.LightYellow;
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
             this.Column1.HeaderText = "№ п/п";
             this.Column1.Name = "Column1";
             this.Column1.Width = 50;
             // 
             // Column3
             // 
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle2;
             this.Column3.HeaderText = "Наименование услуги";
             this.Column3.Name = "Column3";
             this.Column3.Width = 600;
@@ -239,12 +213,12 @@ namespace app_for_CD
             this.MaximumSize = new System.Drawing.Size(925, 592);
             this.MinimumSize = new System.Drawing.Size(925, 592);
             this.Name = "List_of_services";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "List_of_services";
             this.Activated += new System.EventHandler(this.List_of_services_Activated);
             this.Load += new System.EventHandler(this.List_of_services_Load);
             this.panel1.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
@@ -263,8 +237,6 @@ namespace app_for_CD
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label2;

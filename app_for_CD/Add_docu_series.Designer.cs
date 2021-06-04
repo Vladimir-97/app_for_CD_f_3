@@ -39,16 +39,16 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(19, 47);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.Location = new System.Drawing.Point(19, 54);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 22);
+            this.label1.Size = new System.Drawing.Size(167, 24);
             this.label1.TabIndex = 8;
             this.label1.Text = "Серия документа";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(467, 143);
+            this.button2.Location = new System.Drawing.Point(467, 223);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(180, 23);
             this.button2.TabIndex = 10;
@@ -59,32 +59,36 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(19, 98);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(19, 135);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(145, 22);
+            this.label2.Size = new System.Drawing.Size(157, 24);
             this.label2.TabIndex = 11;
             this.label2.Text = "Значение серии";
             // 
             // textBox2
             // 
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.textBox2.Location = new System.Drawing.Point(233, 51);
+            this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(198, 20);
+            this.textBox2.Size = new System.Drawing.Size(198, 27);
             this.textBox2.TabIndex = 12;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(233, 100);
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.textBox1.Location = new System.Drawing.Point(233, 130);
+            this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(414, 20);
+            this.textBox1.Size = new System.Drawing.Size(414, 27);
             this.textBox1.TabIndex = 13;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(192, 144);
+            this.label3.Location = new System.Drawing.Point(19, 224);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 22);
             this.label3.TabIndex = 14;
@@ -103,6 +107,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
             this.Name = "Add_docu_series";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Добавление серии документа";
             this.ResumeLayout(false);
             this.PerformLayout();

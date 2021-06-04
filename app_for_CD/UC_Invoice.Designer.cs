@@ -299,6 +299,7 @@
             this.filtr.Text = "Фильтр";
             this.filtr.UseVisualStyleBackColor = true;
             this.filtr.Click += new System.EventHandler(this.filtr_Click);
+
             // 
             // add
             // 
