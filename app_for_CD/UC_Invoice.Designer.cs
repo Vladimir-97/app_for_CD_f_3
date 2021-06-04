@@ -34,10 +34,6 @@
             this.print = new System.Windows.Forms.Button();
             this.update = new System.Windows.Forms.Button();
             this.dataGridView_invoice = new System.Windows.Forms.DataGridView();
-            this.bottom_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.excel = new System.Windows.Forms.Button();
-            this.filtr = new System.Windows.Forms.Button();
-            this.add = new System.Windows.Forms.Button();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,6 +48,10 @@
             this.sum_of_pay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Choice = new System.Windows.Forms.DataGridViewImageColumn();
+            this.bottom_tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.excel = new System.Windows.Forms.Button();
+            this.filtr = new System.Windows.Forms.Button();
+            this.add = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.top_tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_invoice)).BeginInit();
@@ -148,58 +148,6 @@
             this.dataGridView_invoice.TabIndex = 1;
             this.dataGridView_invoice.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_invoice_CellClick);
             // 
-            // bottom_tableLayoutPanel
-            // 
-            this.bottom_tableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bottom_tableLayoutPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
-            this.bottom_tableLayoutPanel.ColumnCount = 6;
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.bottom_tableLayoutPanel.Controls.Add(this.excel, 5, 1);
-            this.bottom_tableLayoutPanel.Controls.Add(this.filtr, 0, 1);
-            this.bottom_tableLayoutPanel.Controls.Add(this.add, 4, 1);
-            this.bottom_tableLayoutPanel.Location = new System.Drawing.Point(14, 608);
-            this.bottom_tableLayoutPanel.Name = "bottom_tableLayoutPanel";
-            this.bottom_tableLayoutPanel.RowCount = 3;
-            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
-            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.5F));
-            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
-            this.bottom_tableLayoutPanel.Size = new System.Drawing.Size(1224, 46);
-            this.bottom_tableLayoutPanel.TabIndex = 2;
-            // 
-            // excel
-            // 
-            this.excel.Location = new System.Drawing.Point(1127, 11);
-            this.excel.Name = "excel";
-            this.excel.Size = new System.Drawing.Size(75, 22);
-            this.excel.TabIndex = 0;
-            this.excel.Text = "Excel";
-            this.excel.UseVisualStyleBackColor = true;
-            // 
-            // filtr
-            // 
-            this.filtr.Location = new System.Drawing.Point(3, 11);
-            this.filtr.Name = "filtr";
-            this.filtr.Size = new System.Drawing.Size(75, 22);
-            this.filtr.TabIndex = 3;
-            this.filtr.Text = "Фильтр";
-            this.filtr.UseVisualStyleBackColor = true;
-            // 
-            // add
-            // 
-            this.add.Location = new System.Drawing.Point(1027, 11);
-            this.add.Name = "add";
-            this.add.Size = new System.Drawing.Size(75, 22);
-            this.add.TabIndex = 2;
-            this.add.Text = "Добавить";
-            this.add.UseVisualStyleBackColor = true;
-            this.add.Click += new System.EventHandler(this.add_Click);
-            // 
             // Column1
             // 
             this.Column1.FillWeight = 200F;
@@ -289,6 +237,58 @@
             this.Choice.Name = "Choice";
             this.Choice.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Choice.Width = 64;
+            // 
+            // bottom_tableLayoutPanel
+            // 
+            this.bottom_tableLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bottom_tableLayoutPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
+            this.bottom_tableLayoutPanel.ColumnCount = 6;
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.bottom_tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.bottom_tableLayoutPanel.Controls.Add(this.excel, 5, 1);
+            this.bottom_tableLayoutPanel.Controls.Add(this.filtr, 0, 1);
+            this.bottom_tableLayoutPanel.Controls.Add(this.add, 4, 1);
+            this.bottom_tableLayoutPanel.Location = new System.Drawing.Point(14, 608);
+            this.bottom_tableLayoutPanel.Name = "bottom_tableLayoutPanel";
+            this.bottom_tableLayoutPanel.RowCount = 3;
+            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
+            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.5F));
+            this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
+            this.bottom_tableLayoutPanel.Size = new System.Drawing.Size(1224, 46);
+            this.bottom_tableLayoutPanel.TabIndex = 2;
+            // 
+            // excel
+            // 
+            this.excel.Location = new System.Drawing.Point(1127, 11);
+            this.excel.Name = "excel";
+            this.excel.Size = new System.Drawing.Size(75, 22);
+            this.excel.TabIndex = 0;
+            this.excel.Text = "Excel";
+            this.excel.UseVisualStyleBackColor = true;
+            // 
+            // filtr
+            // 
+            this.filtr.Location = new System.Drawing.Point(3, 11);
+            this.filtr.Name = "filtr";
+            this.filtr.Size = new System.Drawing.Size(75, 22);
+            this.filtr.TabIndex = 3;
+            this.filtr.Text = "Фильтр";
+            this.filtr.UseVisualStyleBackColor = true;
+            // 
+            // add
+            // 
+            this.add.Location = new System.Drawing.Point(1027, 11);
+            this.add.Name = "add";
+            this.add.Size = new System.Drawing.Size(75, 22);
+            this.add.TabIndex = 2;
+            this.add.Text = "Добавить";
+            this.add.UseVisualStyleBackColor = true;
+            this.add.Click += new System.EventHandler(this.add_Click);
             // 
             // UC_Invoice
             // 

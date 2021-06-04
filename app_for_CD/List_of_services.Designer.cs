@@ -213,6 +213,7 @@ namespace app_for_CD
             this.MaximumSize = new System.Drawing.Size(925, 592);
             this.MinimumSize = new System.Drawing.Size(925, 592);
             this.Name = "List_of_services";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "List_of_services";
             this.Activated += new System.EventHandler(this.List_of_services_Activated);
             this.Load += new System.EventHandler(this.List_of_services_Load);

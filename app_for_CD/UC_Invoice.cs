@@ -263,7 +263,5 @@ namespace app_for_CD
             }
             */
         }
-
-
     }
 }

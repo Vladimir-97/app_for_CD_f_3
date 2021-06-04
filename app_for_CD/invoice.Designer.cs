@@ -444,9 +444,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(796, 1053);
+            this.ClientSize = new System.Drawing.Size(796, 1045);
             this.Controls.Add(this.panel1);
             this.Name = "invoice";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
