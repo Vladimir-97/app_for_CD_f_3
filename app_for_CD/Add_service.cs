@@ -136,5 +136,20 @@ namespace app_for_CD
         {
             con.Close();
         }
+
+        public int DS_Count(string s)
+        {
+            string substr = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0].ToString();
+            int count = (s.Length - s.Replace(substr, "").Length) / substr.Length;
+            return count;
+        }
+        private void textBox_Sum_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var DS = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            if (e.KeyChar == DS && ((TextBox)sender).Text.Length == 0)
+                e.Handled = true;
+            else
+                e.Handled = !(Char.IsDigit(e.KeyChar) || ((e.KeyChar == DS) && (DS_Count(((TextBox)sender).Text) < 1)) || e.KeyChar == 8);
+        }
     }
 }

@@ -102,9 +102,9 @@ namespace app_for_CD
                 dataGridView1.Rows.Add(s);
                 for (int j = 0; j < 5; j++)
                     if (i % 2 == 0)
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.DarkGray;
+                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
                     else
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.Gray;
+                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
                 i++;
             }
         }
@@ -484,6 +484,11 @@ namespace app_for_CD
                 print_data(data);
             }
 
+        }
+
+        private void UC_Open_depo_Enter(object sender, EventArgs e)
+        {
+            updatePanel2();
         }
 
         string change_exp(string str)

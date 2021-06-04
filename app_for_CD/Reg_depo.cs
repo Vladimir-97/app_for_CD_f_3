@@ -605,6 +605,7 @@ namespace app_for_CD
             OracleDataReader dr = cmd.ExecuteReader();
             if (dr.Read())
             {
+                crp_type_cd = dr[0].ToString();
                 if (dr[0].ToString() == "8000")
                     return true;
             }

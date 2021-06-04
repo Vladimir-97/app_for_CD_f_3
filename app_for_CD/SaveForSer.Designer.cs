@@ -113,6 +113,7 @@ namespace app_for_CD
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(453, 117);
             this.Name = "SaveForSer";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Удаление услуги";
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
