@@ -60,6 +60,7 @@
             this.Print = new System.Windows.Forms.Button();
             this.printDocumentl = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialogi = new System.Windows.Forms.PrintPreviewDialog();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -439,6 +440,10 @@
             this.printPreviewDialogi.UseAntiAlias = true;
             this.printPreviewDialogi.Visible = false;
             // 
+            // printDialog1
+            // 
+            this.printDialog1.UseEXDialog = true;
+            // 
             // invoice
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -493,5 +498,6 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.PrintDialog printDialog1;
     }
 }

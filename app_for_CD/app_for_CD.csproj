@@ -158,6 +158,7 @@
     <Compile Include="reg_bill.Designer.cs">
       <DependentUpon>reg_bill.cs</DependentUpon>
     </Compile>
+    <Compile Include="RSDN.cs" />
     <Compile Include="SaveForSer.cs">
       <SubType>Form</SubType>
     </Compile>
