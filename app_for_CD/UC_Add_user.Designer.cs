@@ -76,7 +76,7 @@
             // Clear
             // 
             this.Clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Clear.Location = new System.Drawing.Point(930, 696);
+            this.Clear.Location = new System.Drawing.Point(930, 655);
             this.Clear.Name = "Clear";
             this.Clear.Size = new System.Drawing.Size(75, 23);
             this.Clear.TabIndex = 16;
@@ -88,7 +88,7 @@
             // 
             this.change.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.change.Enabled = false;
-            this.change.Location = new System.Drawing.Point(1011, 696);
+            this.change.Location = new System.Drawing.Point(1011, 655);
             this.change.Name = "change";
             this.change.Size = new System.Drawing.Size(75, 23);
             this.change.TabIndex = 15;
@@ -102,7 +102,7 @@
             this.information.AutoSize = true;
             this.information.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.information.ForeColor = System.Drawing.Color.DarkRed;
-            this.information.Location = new System.Drawing.Point(26, 696);
+            this.information.Location = new System.Drawing.Point(26, 655);
             this.information.Name = "information";
             this.information.Size = new System.Drawing.Size(252, 20);
             this.information.TabIndex = 1;
@@ -118,13 +118,13 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.dataGridView1, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel1, 0, 2);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(20, 20);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(30, 20);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 3;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.5F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 1F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.5F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1252, 667);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1242, 615);
             this.tableLayoutPanel2.TabIndex = 14;
             // 
             // dataGridView1
@@ -139,7 +139,7 @@
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1246, 324);
+            this.dataGridView1.Size = new System.Drawing.Size(1236, 298);
             this.dataGridView1.TabIndex = 13;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
@@ -189,11 +189,11 @@
             this.tableLayoutPanel1.Controls.Add(this.Login_textBox_0, 6, 0);
             this.tableLayoutPanel1.Controls.Add(this.password_textBox_0, 7, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 339);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 313);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1246, 325);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1236, 299);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // FIO_label_0
@@ -204,7 +204,7 @@
             this.FIO_label_0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.FIO_label_0.Location = new System.Drawing.Point(3, 0);
             this.FIO_label_0.Name = "FIO_label_0";
-            this.FIO_label_0.Size = new System.Drawing.Size(155, 325);
+            this.FIO_label_0.Size = new System.Drawing.Size(155, 299);
             this.FIO_label_0.TabIndex = 0;
             this.FIO_label_0.Text = "Ф.И.О сотрудника:";
             // 
@@ -214,7 +214,7 @@
             this.FIO_textBox_0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FIO_textBox_0.Location = new System.Drawing.Point(164, 3);
             this.FIO_textBox_0.Name = "FIO_textBox_0";
-            this.FIO_textBox_0.Size = new System.Drawing.Size(227, 20);
+            this.FIO_textBox_0.Size = new System.Drawing.Size(224, 20);
             this.FIO_textBox_0.TabIndex = 4;
             this.FIO_textBox_0.Click += new System.EventHandler(this.Click_on_tc);
             // 
@@ -224,9 +224,9 @@
             this.Position_label_0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Position_label_0.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Position_label_0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.Position_label_0.Location = new System.Drawing.Point(397, 0);
+            this.Position_label_0.Location = new System.Drawing.Point(394, 0);
             this.Position_label_0.Name = "Position_label_0";
-            this.Position_label_0.Size = new System.Drawing.Size(100, 325);
+            this.Position_label_0.Size = new System.Drawing.Size(100, 299);
             this.Position_label_0.TabIndex = 3;
             this.Position_label_0.Text = "Должность:";
             // 
@@ -235,9 +235,9 @@
             this.Position_comboBox_0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Position_comboBox_0.DropDownWidth = 163;
             this.Position_comboBox_0.FormattingEnabled = true;
-            this.Position_comboBox_0.Location = new System.Drawing.Point(503, 3);
+            this.Position_comboBox_0.Location = new System.Drawing.Point(500, 3);
             this.Position_comboBox_0.Name = "Position_comboBox_0";
-            this.Position_comboBox_0.Size = new System.Drawing.Size(169, 21);
+            this.Position_comboBox_0.Size = new System.Drawing.Size(167, 21);
             this.Position_comboBox_0.TabIndex = 1;
             this.Position_comboBox_0.Click += new System.EventHandler(this.Click_on_tc);
             // 
@@ -247,9 +247,9 @@
             this.status_label_0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.status_label_0.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.status_label_0.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.status_label_0.Location = new System.Drawing.Point(678, 0);
+            this.status_label_0.Location = new System.Drawing.Point(673, 0);
             this.status_label_0.Name = "status_label_0";
-            this.status_label_0.Size = new System.Drawing.Size(69, 325);
+            this.status_label_0.Size = new System.Drawing.Size(69, 299);
             this.status_label_0.TabIndex = 5;
             this.status_label_0.Text = "Статус:";
             // 
@@ -260,18 +260,18 @@
             this.status_comboBox_0.Items.AddRange(new object[] {
             "Активен",
             "Заблокирован"});
-            this.status_comboBox_0.Location = new System.Drawing.Point(753, 3);
+            this.status_comboBox_0.Location = new System.Drawing.Point(748, 3);
             this.status_comboBox_0.Name = "status_comboBox_0";
-            this.status_comboBox_0.Size = new System.Drawing.Size(138, 21);
+            this.status_comboBox_0.Size = new System.Drawing.Size(137, 21);
             this.status_comboBox_0.TabIndex = 12;
             this.status_comboBox_0.Click += new System.EventHandler(this.Click_on_tc);
             // 
             // Login_textBox_0
             // 
             this.Login_textBox_0.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Login_textBox_0.Location = new System.Drawing.Point(897, 3);
+            this.Login_textBox_0.Location = new System.Drawing.Point(891, 3);
             this.Login_textBox_0.Name = "Login_textBox_0";
-            this.Login_textBox_0.Size = new System.Drawing.Size(169, 20);
+            this.Login_textBox_0.Size = new System.Drawing.Size(167, 20);
             this.Login_textBox_0.TabIndex = 14;
             this.Login_textBox_0.Text = "Логин";
             this.Login_textBox_0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -281,9 +281,9 @@
             // password_textBox_0
             // 
             this.password_textBox_0.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.password_textBox_0.Location = new System.Drawing.Point(1072, 3);
+            this.password_textBox_0.Location = new System.Drawing.Point(1064, 3);
             this.password_textBox_0.Name = "password_textBox_0";
-            this.password_textBox_0.Size = new System.Drawing.Size(171, 20);
+            this.password_textBox_0.Size = new System.Drawing.Size(169, 20);
             this.password_textBox_0.TabIndex = 5;
             this.password_textBox_0.Text = "Пароль";
             this.password_textBox_0.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -293,7 +293,7 @@
             // Save
             // 
             this.Save.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Save.Location = new System.Drawing.Point(1092, 696);
+            this.Save.Location = new System.Drawing.Point(1092, 655);
             this.Save.Name = "Save";
             this.Save.Size = new System.Drawing.Size(75, 23);
             this.Save.TabIndex = 2;
@@ -304,7 +304,7 @@
             // Add
             // 
             this.Add.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Add.Location = new System.Drawing.Point(1173, 696);
+            this.Add.Location = new System.Drawing.Point(1173, 655);
             this.Add.Name = "Add";
             this.Add.Size = new System.Drawing.Size(75, 23);
             this.Add.TabIndex = 1;

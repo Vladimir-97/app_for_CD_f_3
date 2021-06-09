@@ -274,7 +274,7 @@ namespace app_for_CD
             string nch_date, ch_date; 
             excelFilePath = Path.GetFullPath("invoice_t.xlsx");
             openExcel();
-            /*
+            
             OracleCommand cmd = con.CreateCommand();
             cmd.CommandText = $"select * from registration_of_invoice where ID = {ID}";
             cmd.CommandType = CommandType.Text;
@@ -285,17 +285,17 @@ namespace app_for_CD
             ch_date = ch_date + nch_date[4].ToString() + nch_date[5].ToString() + '.';
             ch_date = ch_date + nch_date[0].ToString() + nch_date[1].ToString() + nch_date[2].ToString() + nch_date[3].ToString();
             MessageBox.Show(ch_date);
-            myExcelWorkSheet.Cells[3, "B"].Value = $"№ {ID} от {ch_date}";
-            myExcelWorkSheet.Cells[4, "B"].Value = $"к договору {dr[2].ToString()} от **.**.****";
-            */
+            myExcelWorkSheet.Cells[2, "B"].Value = $"№ {ID} от {ch_date}";
+            myExcelWorkSheet.Cells[3, "B"].Value = $"к договору {dr[2].ToString()} от **.**.****";
+            
             OracleCommand cmd1 = con.CreateCommand();
-            cmd1.CommandText = $"select CRP_NM from tbcb_crp_info where CRP_CD = '000000000026'";
+            cmd1.CommandText = $"select CRP_NM from tbcb_crp_info where CRP_CD = '{dr[1]}'";
             cmd1.CommandType = CommandType.Text;
             OracleDataReader dr1 = cmd1.ExecuteReader();
             dr1.Read();
-            myExcelWorkSheet.Cells[6, "I"].Value = $"{dr1[0]}";
+            myExcelWorkSheet.Cells[6, "AX"].Value = $"{dr1[0]}";
             dr1.Close();
-            //dr.Close();
+            dr.Close();
             closeExcel();
             /*
             File.Copy("invoice_template.xlsx", "invoice_template-tmp.xlsx");
@@ -359,10 +359,14 @@ namespace app_for_CD
 
         private void filtr_Click(object sender, EventArgs e)
         {
-            Form1 r = new Form1();
+            reg_bill r = new reg_bill();
             r.StartPosition = FormStartPosition.CenterParent;
             r.ShowDialog();
         }
 
+        private void bottom_tableLayoutPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

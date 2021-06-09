@@ -326,18 +326,10 @@ namespace app_for_CD
             string excel_path;
             string path = ExecuteCommand("echo %cd%");
             string pathD = path.Substring(0, path.Length - 2);
-            //if (is_phys(kzl))                                                             ///////////////////////разделение документов ///////////////////////
-            //{
-            //    ExecuteCommand("copy report_ph.xls report1.xls");
-            //    excel_path = pathD + "\\report1.xls";
-            //    fi = new FileInfo(excel_path);
-            //}
-            //else
-            //{
+
                 ExecuteCommand("copy move_stocks.xls report1.xls");
                 excel_path = pathD + "\\report1.xls";
                 fi = new FileInfo(excel_path);
-            //    }
 
 
 
