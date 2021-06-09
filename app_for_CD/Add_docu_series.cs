@@ -26,15 +26,15 @@ namespace app_for_CD
             SetConnection();
             label3.Visible = false;
             type_of_button = i;
-            if (i == 0)
-            {
-                button2.Text = "Добавить";
-            }
-            else
-            {
-                button2.Text = "Изменить";
-                textBox2.Enabled = false;
-            }
+            //if (i == 0)
+            //{
+            //    button2.Text = "Сохранить";
+            //}
+            //else
+            //{
+            //    button2.Text = "Изменить";
+            //    textBox2.Enabled = false;
+            //}
             textBox2.Text = ser;
             textBox1.Text = val;
         }
@@ -100,5 +100,7 @@ namespace app_for_CD
         {
             con.Close();
         }
+
+
     }
 }

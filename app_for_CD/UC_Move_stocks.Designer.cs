@@ -80,7 +80,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
-            this.dataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -213,7 +212,7 @@
             this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button7.Image = global::app_for_CD.Properties.Resources.excel_pic_32;
-            this.button7.Location = new System.Drawing.Point(1781, 64);
+            this.button7.Location = new System.Drawing.Point(1780, 49);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(39, 33);
             this.button7.TabIndex = 4;
@@ -228,7 +227,7 @@
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button6.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button6.Location = new System.Drawing.Point(1655, 64);
+            this.button6.Location = new System.Drawing.Point(1654, 49);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(106, 33);
             this.button6.TabIndex = 3;
@@ -244,11 +243,11 @@
             this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button5.ForeColor = System.Drawing.Color.Tomato;
-            this.button5.Location = new System.Drawing.Point(1532, 64);
+            this.button5.Location = new System.Drawing.Point(1531, 49);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(117, 33);
             this.button5.TabIndex = 2;
-            this.button5.Text = "Просмотр";
+            this.button5.Text = "Печать";
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 

@@ -11,13 +11,16 @@ using Oracle.DataAccess.Client;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
 using Excel = Microsoft.Office.Interop.Excel;
+using RSDN;
+using System.Drawing.Printing;
+using System.Runtime.InteropServices;
 
 namespace app_for_CD
 {
     public partial class UC_Invoice : UserControl
     {
         OracleConnection con = null;
-
+        string ID;
         public UC_Invoice()
         {
             InitializeComponent();
@@ -30,28 +33,24 @@ namespace app_for_CD
         Excel.Application myExcelApplication;
         Excel.Workbook myExcelWorkbook;
         Excel.Worksheet myExcelWorkSheet;
-        
+        Excel.Workbooks workbooks;
 
         public void openExcel()
         {
             myExcelApplication = null;
-
             myExcelApplication = new Excel.Application(); // create Excell App
             myExcelApplication.DisplayAlerts = false; // turn off alerts
+            workbooks = myExcelApplication.Workbooks;
 
+            myExcelWorkbook = workbooks.Open(excelFilePath, Type.Missing,
+               Type.Missing, Type.Missing, Type.Missing,
+               Type.Missing, Type.Missing, Type.Missing,
+               Type.Missing, Type.Missing, Type.Missing,
+               Type.Missing, Type.Missing); // open the existing excel file
 
-            myExcelWorkbook = (Excel.Workbook)(myExcelApplication.Workbooks._Open(excelFilePath, System.Reflection.Missing.Value,
-               System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-               System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-               System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-               System.Reflection.Missing.Value, System.Reflection.Missing.Value)); // open the existing excel file
-
-            int numberOfWorkbooks = myExcelApplication.Workbooks.Count; // get number of workbooks (optional)
-
-            myExcelWorkSheet = (Excel.Worksheet)myExcelWorkbook.Worksheets[1]; // define in which worksheet, do you want to add data
+            myExcelWorkSheet = myExcelWorkbook.Worksheets[1]; // define in which worksheet, do you want to add data
             myExcelWorkSheet.Name = "WorkSheet 1"; // define a name for the worksheet (optinal)
-
-            int numberOfSheets = myExcelWorkbook.Worksheets.Count; // get number of worksheets (optional)
+            
         }
 
         public string ExcelFilePath
@@ -62,25 +61,23 @@ namespace app_for_CD
 
         public void closeExcel()
         {
-            try
-            {
-                myExcelWorkbook.SaveAs(excelFilePath, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-                                               System.Reflection.Missing.Value, System.Reflection.Missing.Value, Excel.XlSaveAsAccessMode.xlNoChange,
-                                               System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
-                                               System.Reflection.Missing.Value, System.Reflection.Missing.Value); // Save data in excel
+
+            myExcelWorkbook.SaveAs(excelFilePath, Type.Missing, Type.Missing, Type.Missing,
+                                              Type.Missing, Type.Missing, Excel.XlSaveAsAccessMode.xlNoChange,
+                                              Type.Missing, Type.Missing, Type.Missing,
+                                              Type.Missing, Type.Missing); // Save data in excel
+           
+            myExcelWorkbook.Close(true, excelFilePath, Type.Missing); // close the worksheet
+            myExcelApplication.Quit(); // close the excel application
 
 
-                myExcelWorkbook.Close(true, excelFilePath, System.Reflection.Missing.Value); // close the worksheet
-
-
-            }
-            finally
-            {
-                if (myExcelApplication != null)
-                {
-                    myExcelApplication.Quit(); // close the excel application
-                }
-            }
+           
+            myExcelApplication = null;
+            myExcelWorkbook = null;
+            myExcelWorkSheet = null;
+            workbooks = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
 
         }
         #endregion
@@ -155,12 +152,13 @@ namespace app_for_CD
                     {
                         dataGridView_invoice.Rows[i].Cells[9].Value = "Активный";
                     }
-                    else {
+                    else
+                    {
                         dataGridView_invoice.Rows[i].Cells[9].Value = "Неактивный";
                     }
-                    dataGridView_invoice.Rows[i].Cells[10].Value = dr[14];
-                    dataGridView_invoice.Rows[i].Cells[11].Value = dr[17];
-                    dataGridView_invoice.Rows[i].Cells[12].Value = dr[18];
+                    dataGridView_invoice.Rows[i].Cells[10].Value = (dataGridView_invoice.Rows[i].Cells[10] as DataGridViewComboBoxCell).Items[Convert.ToInt32(dr[17])];
+                    dataGridView_invoice.Rows[i].Cells[11].Value = dr[18];
+                    dataGridView_invoice.Rows[i].Cells[12].Value = dr[14];
                     i++;
                 }
                 else{
@@ -225,45 +223,219 @@ namespace app_for_CD
             }
         }
 
-        private void print_Click(object sender, EventArgs e)
+        private void dataGridView_invoice_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            excelFilePath = Path.GetFullPath("invoice_t.xlsx");
-            openExcel();
-            string val;
-            MessageBox.Show(myExcelWorkSheet.Cells[6, "B"].Text);
-            closeExcel();
-            /*
-            File.Copy("invoice_template.xlsx", "invoice_template-tmp.xlsx");
-            Excel.Application oXL;
-            Excel._Workbook oWB;
-            Excel._Worksheet oSheet;
-            try
+
+            if (dataGridView_invoice.CurrentCell.ColumnIndex == 10 && e.Control is ComboBox)
             {
-                //Start Excel and get Application object.
-                oXL = new Excel.Application();
-                oXL.Visible = true;
-
-                //Get a new workbook.
-                oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
-                oSheet = (Excel._Worksheet)oWB.ActiveSheet;
-                oSheet.Name = "Информация по договорам";
-                //Add table headers going cell by cell.
-               
+                ComboBox comboBox = e.Control as ComboBox;
+                comboBox.SelectedIndexChanged -= LastColumnComboSelectionChanged;
+                comboBox.SelectedIndexChanged += LastColumnComboSelectionChanged;
             }
-
-            catch (Exception theException)
-            {
-                String errorMessage;
-                errorMessage = "Error: ";
-                errorMessage = String.Concat(errorMessage, theException.Message);
-                errorMessage = String.Concat(errorMessage, " Line:  = ");
-                errorMessage = String.Concat(errorMessage, theException.Source);
-
-                MessageBox.Show(errorMessage, "Error");
-            }
-            */
+            e.CellStyle.BackColor = dataGridView_invoice.DefaultCellStyle.BackColor;
         }
 
+        private void LastColumnComboSelectionChanged(object sender, EventArgs e)
+        {
+            
+            var currentcell = dataGridView_invoice.CurrentCellAddress;
+            string num_date_invoice = dataGridView_invoice.Rows[currentcell.Y].Cells[0].Value.ToString();
+            int num;
+            string ID = "";
+            int i = 0;
+            var a = sender;
+            
+            while(num_date_invoice[i] != ' ')
+            {
+                ID += num_date_invoice[i];
+                i++;
+            }
+
+
+            OracleCommand cmd;
+            cmd = con.CreateCommand();
+            if (dataGridView_invoice.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Выставлена")
+                num = 0;
+            else if (dataGridView_invoice.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Часть оплаты")
+                num = 1;
+            else { 
+                num = 2;
+            }
+            cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET PROCESS = {num} where id = {ID}";
+            cmd.ExecuteNonQuery();
+ 
+        }
+        private void DoExcelThings()
+        {
+            string old_ser, ser = "";
+            OracleCommand cmd1;
+            OracleDataReader dr1;
+            string nch_date, ch_date;
+            excelFilePath = Path.GetFullPath("invoice_t.xlsx");
+
+            openExcel();
+
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = $"select * from registration_of_invoice where ID = {ID}";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            dr.Read();
+            nch_date = dr[9].ToString();
+            ch_date = nch_date[6].ToString() + nch_date[7].ToString() + '.';
+            ch_date = ch_date + nch_date[4].ToString() + nch_date[5].ToString() + '.';
+            ch_date = ch_date + nch_date[0].ToString() + nch_date[1].ToString() + nch_date[2].ToString() + nch_date[3].ToString();
+
+
+            myExcelWorkSheet.Cells[2, "B"].Value = $"№ {ID} от {ch_date}";
+            myExcelWorkSheet.Cells[3, "B"].Value = $"к договору {dr[2].ToString()} от **.**.****";
+
+            cmd1 = con.CreateCommand();
+            cmd1.CommandText = $"select CRP_NM, REG_ADDR_CONT from tbcb_crp_info where CRP_CD = '{dr[1]}'";
+            cmd1.CommandType = CommandType.Text;
+
+            dr1 = cmd1.ExecuteReader();
+
+            dr1.Read();
+            myExcelWorkSheet.Cells[6, "AX"].Value = dr1[0].ToString();
+            myExcelWorkSheet.Cells[8, "AX"].Value = dr1[1].ToString();
+            dr1.Close();
+
+            myExcelWorkSheet.Cells[10, "AX"].Value = $"{dr[11]}";
+            myExcelWorkSheet.Cells[12, "AX"].Value = "\t" + dr[8].ToString();
+
+            cmd1 = con.CreateCommand();
+            cmd1.CommandText = $"Select bk_acnt_no, mfo_cd from tbcb_crp_bk where crp_cd = '{dr[1]}'";
+            cmd1.CommandType = CommandType.Text;
+
+            dr1 = cmd1.ExecuteReader();
+            dr1.Read();
+
+            myExcelWorkSheet.Cells[14, "AX"].Value = $"{dr1[0]}";
+            myExcelWorkSheet.Cells[16, "AX"].Value = $"{dr1[1]}";
+
+            string num_double = dr[4].ToString();
+            bool flag = false;
+            var DS = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            string val = "", frac = ""; ;
+
+            for (int i = 0; i < num_double.Count(); i++)
+            {
+                if (num_double[i] != DS && flag == false)
+                {
+                    val += num_double[i];
+                }
+                else if (num_double[i] != DS && flag == true)
+                {
+                    frac += num_double[i];
+                }
+                else if (num_double[i] == DS)
+                {
+                    flag = true;
+                }
+            }
+
+            if (flag == false)
+            {
+                frac = "00";
+            }
+
+
+            myExcelWorkSheet.Cells[27, "J"].Value = $"{dr[6]}";// комментарий 
+            myExcelWorkSheet.Cells[29, "J"].Value = $"{dr[7]}";// основание
+
+            myExcelWorkSheet.Cells[37, "AE"].Value = $"{dr[14]}";
+
+            dr1.Close();
+
+            old_ser = dr[2].ToString();
+            flag = false;
+            for (int i = 0; i < old_ser.Count(); i++)
+            {
+                if (old_ser[i] == '/')
+                {
+                    flag = true;
+                }
+                else if (old_ser[i] != '/' && flag == true)
+                {
+                    ser += old_ser[i];
+                }
+            }
+
+            cmd1 = con.CreateCommand();
+            cmd1.CommandText = $"select NDS from tbcb_cd where CD like '{ser}%' AND CD_NM = '{dr[3].ToString()}'";
+            cmd1.CommandType = CommandType.Text;
+            dr1 = cmd1.ExecuteReader();
+            dr1.Read();
+
+            double percent = double.Parse(dr1[0].ToString());
+            dr1.Close();
+            myExcelWorkSheet.Cells[22, "AE"].Value = $"{dr[5]}";
+            myExcelWorkSheet.Cells[22, "D"].Value = $"{dr[3]}";
+            myExcelWorkSheet.Cells[22, "AI"].Value = double.Parse(dr[4].ToString());
+            myExcelWorkSheet.Cells[22, "BF"].Value = double.Parse(dr[4].ToString());
+            double sum_without_NDS;
+            sum_without_NDS = double.Parse(dr[4].ToString()) / (1 + percent / 100);
+            MessageBox.Show(sum_without_NDS.ToString());
+            myExcelWorkSheet.Cells[22, "AO"].Value = sum_without_NDS;
+            if (percent == 0)
+            {
+                myExcelWorkSheet.Cells[22, "AZ"].Value = "БЕЗ НДС";
+                myExcelWorkSheet.Cells[22, "AW"].Value = "БЕЗ НДС";
+                myExcelWorkSheet.Cells[25, "B"].Value = "Всего к оплате:          " + RusNumber.Str(Int32.Parse(val)) + dr[5].ToString() + " " + frac + " тийин";
+            }
+            else
+            {
+                myExcelWorkSheet.Cells[22, "AZ"].Value = double.Parse(dr[4].ToString()) - sum_without_NDS;
+                myExcelWorkSheet.Cells[22, "AW"].Value = $"{percent}%"; // процент
+                myExcelWorkSheet.Cells[25, "B"].Value = "Всего к оплате:          " + RusNumber.Str(Int32.Parse(val)) + dr[5].ToString() + " " + frac + " тийин, в.т.ч. НДС: " + Math.Round(myExcelWorkSheet.Cells[22, "AZ"].Value, 2) + " " + dr[5].ToString();
+
+            }
+
+            dr.Close();
+            myExcelApplication.Visible = true; // true will open Excel
+            myExcelWorkSheet.PrintPreview();
+            myExcelApplication.Visible = false; // hides excel file when user closes preview
+
+        }
+        private void print_Click(object sender, EventArgs e)
+        {
+            DoExcelThings();
+            closeExcel();
+        }
+
+        private void dataGridView_invoice_SelectionChanged(object sender, EventArgs e)
+        {
+            int row = dataGridView_invoice.CurrentRow.Index;
+            string str, num = "";
+            if (dataGridView_invoice.SelectedCells.Count > 1)
+            {
+                str = dataGridView_invoice.Rows[row].Cells[0].Value.ToString();
+                for (int i = 0; i < str.Count(); i++)
+                {
+                    if (str[i] != ' ')
+                    {
+                        num = num + str[i];
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                ID = num;
+                print.Enabled = true;
+            }
+            else
+            {
+                print.Enabled = false;
+            }
+        }
+
+        private void filtr_Click(object sender, EventArgs e)
+        {
+            reg_bill r = new reg_bill();
+            r.StartPosition = FormStartPosition.CenterParent;
+            r.ShowDialog();
+        }
 
     }
 }

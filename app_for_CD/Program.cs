@@ -61,8 +61,6 @@ namespace app_for_CD
         public static bool fil_code_stocks { get; set; }
         public static bool fil_name_stocks { get; set; }
         #endregion
-
-
     }
     static class Program
     {
@@ -78,7 +76,8 @@ namespace app_for_CD
             Application.Exit();
             if (Data.exit == true)
                 Application.Run(new TC_Menu());
-
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 

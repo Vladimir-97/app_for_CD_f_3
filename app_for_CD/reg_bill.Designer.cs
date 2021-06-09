@@ -1,6 +1,6 @@
 ﻿namespace app_for_CD
 {
-    partial class registration_of_an_invoice
+    partial class reg_bill
     {
         /// <summary>
         /// Required designer variable.
@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(registration_of_an_invoice));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(reg_bill));
             this.label2 = new System.Windows.Forms.Label();
             this.label_number_of_doc = new System.Windows.Forms.Label();
             this.tableAdapterManager1 = new app_for_CD.NeedDatasetTableAdapters.TableAdapterManager();
             this.textBox_number_of_invoice = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.Delete = new System.Windows.Forms.Button();
+            this.search_nom_ser = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_ser_name = new System.Windows.Forms.TextBox();
             this.dateTimePicker_invoice_data = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
-            this.search_nom_ser = new System.Windows.Forms.Button();
             this.Docu_num_ser = new System.Windows.Forms.ComboBox();
             this.label_invoice_data = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -66,6 +66,7 @@
             this.Add = new System.Windows.Forms.Button();
             this.label_add = new System.Windows.Forms.Label();
             this.mainpanel_reg = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
             this.status_label = new System.Windows.Forms.Label();
             this.status_comboBox = new System.Windows.Forms.ComboBox();
@@ -121,7 +122,7 @@
             this.label_number_of_doc.Name = "label_number_of_doc";
             this.label_number_of_doc.Size = new System.Drawing.Size(110, 35);
             this.label_number_of_doc.TabIndex = 45;
-            this.label_number_of_doc.Text = "Номер c/ф:";
+            this.label_number_of_doc.Text = "Номер:";
             // 
             // tableAdapterManager1
             // 
@@ -154,11 +155,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(44)))), ((int)(((byte)(47)))));
             this.panel2.Controls.Add(this.Delete);
+            this.panel2.Controls.Add(this.search_nom_ser);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.textBox_ser_name);
             this.panel2.Controls.Add(this.dateTimePicker_invoice_data);
             this.panel2.Controls.Add(this.label6);
-            this.panel2.Controls.Add(this.search_nom_ser);
             this.panel2.Controls.Add(this.Docu_num_ser);
             this.panel2.Controls.Add(this.label_invoice_data);
             this.panel2.Controls.Add(this.panel4);
@@ -184,6 +185,16 @@
             this.Delete.UseVisualStyleBackColor = true;
             this.Delete.Visible = false;
             this.Delete.Click += new System.EventHandler(this.Delete_Click);
+            // 
+            // search_nom_ser
+            // 
+            this.search_nom_ser.Image = ((System.Drawing.Image)(resources.GetObject("search_nom_ser.Image")));
+            this.search_nom_ser.Location = new System.Drawing.Point(348, 74);
+            this.search_nom_ser.Name = "search_nom_ser";
+            this.search_nom_ser.Size = new System.Drawing.Size(24, 21);
+            this.search_nom_ser.TabIndex = 63;
+            this.search_nom_ser.UseVisualStyleBackColor = true;
+            this.search_nom_ser.Click += new System.EventHandler(this.search_nom_ser_Click);
             // 
             // label1
             // 
@@ -230,16 +241,6 @@
             this.label6.Size = new System.Drawing.Size(110, 24);
             this.label6.TabIndex = 48;
             this.label6.Text = "Договор:";
-            // 
-            // search_nom_ser
-            // 
-            this.search_nom_ser.Image = ((System.Drawing.Image)(resources.GetObject("search_nom_ser.Image")));
-            this.search_nom_ser.Location = new System.Drawing.Point(343, 73);
-            this.search_nom_ser.Name = "search_nom_ser";
-            this.search_nom_ser.Size = new System.Drawing.Size(24, 21);
-            this.search_nom_ser.TabIndex = 62;
-            this.search_nom_ser.UseVisualStyleBackColor = true;
-            this.search_nom_ser.Click += new System.EventHandler(this.search_nom_ser_Click);
             // 
             // Docu_num_ser
             // 
@@ -319,7 +320,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(110, 32);
             this.label3.TabIndex = 55;
-            this.label3.Text = "Услуга - 1:";
+            this.label3.Text = "Услуга:";
             // 
             // flowLayoutPanel3
             // 
@@ -348,7 +349,7 @@
             this.SearchSer_0.Location = new System.Drawing.Point(884, 3);
             this.SearchSer_0.Name = "SearchSer_0";
             this.SearchSer_0.Size = new System.Drawing.Size(23, 21);
-            this.SearchSer_0.TabIndex = 55;
+            this.SearchSer_0.TabIndex = 65;
             this.SearchSer_0.UseVisualStyleBackColor = true;
             this.SearchSer_0.Click += new System.EventHandler(this.search_ser_Click);
             // 
@@ -522,6 +523,7 @@
             this.mainpanel_reg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.mainpanel_reg.Controls.Add(this.button1);
             this.mainpanel_reg.Controls.Add(this.panel5);
             this.mainpanel_reg.Controls.Add(this.Report);
             this.mainpanel_reg.Controls.Add(this.New);
@@ -531,6 +533,18 @@
             this.mainpanel_reg.Name = "mainpanel_reg";
             this.mainpanel_reg.Size = new System.Drawing.Size(1118, 547);
             this.mainpanel_reg.TabIndex = 65;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.BackColor = System.Drawing.Color.LightGray;
+            this.button1.Location = new System.Drawing.Point(980, 512);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(100, 30);
+            this.button1.TabIndex = 65;
+            this.button1.Text = "Сохранить";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel5
             // 
@@ -581,6 +595,7 @@
             this.NDS_PINFL_textBox.TabIndex = 66;
             this.NDS_PINFL_textBox.Visible = false;
             this.NDS_PINFL_textBox.Click += new System.EventHandler(this.textBoxClick);
+            this.NDS_PINFL_textBox.TextChanged += new System.EventHandler(this.NDS_PINFL_textBox_TextChanged);
             // 
             // NDS_PINFL
             // 
@@ -644,10 +659,10 @@
             // search_for_CRP_INN
             // 
             this.search_for_CRP_INN.Image = ((System.Drawing.Image)(resources.GetObject("search_for_CRP_INN.Image")));
-            this.search_for_CRP_INN.Location = new System.Drawing.Point(0, 3);
+            this.search_for_CRP_INN.Location = new System.Drawing.Point(3, 3);
             this.search_for_CRP_INN.Name = "search_for_CRP_INN";
             this.search_for_CRP_INN.Size = new System.Drawing.Size(24, 21);
-            this.search_for_CRP_INN.TabIndex = 64;
+            this.search_for_CRP_INN.TabIndex = 65;
             this.search_for_CRP_INN.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.search_for_CRP_INN.UseVisualStyleBackColor = true;
             this.search_for_CRP_INN.Click += new System.EventHandler(this.search_for_CRP_Click);
@@ -722,7 +737,7 @@
             // 
             this.neW_TBCBTableAdapter1.ClearBeforeFill = true;
             // 
-            // registration_of_an_invoice
+            // reg_bill
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -731,9 +746,9 @@
             this.Controls.Add(this.mainpanel_reg);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "registration_of_an_invoice";
+            this.Name = "reg_bill";
             this.Text = "Регистрация счет фактуры";
-            this.Shown += new System.EventHandler(this.registration_of_an_invoice_Shown);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.tableLayoutPanel_main.ResumeLayout(false);
@@ -772,7 +787,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label_invoice_data;
-        private System.Windows.Forms.Button search_nom_ser;
         private System.Windows.Forms.ComboBox Docu_num_ser;
         private System.Windows.Forms.DateTimePicker dateTimePicker_invoice_data;
         private System.Windows.Forms.Label label6;
@@ -781,7 +795,6 @@
         private System.Windows.Forms.Button Save;
         private System.Windows.Forms.Label Report;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Button search_for_CRP_INN;
         private System.Windows.Forms.Label label_CRP_INN;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TextBox textBox_CRP;
@@ -794,7 +807,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.ComboBox ComboBox_0;
-        private System.Windows.Forms.Button SearchSer_0;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel6;
@@ -818,5 +830,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button Add;
         private System.Windows.Forms.Label label_add;
+        private System.Windows.Forms.Button search_for_CRP_INN;
+        private System.Windows.Forms.Button search_nom_ser;
+        private System.Windows.Forms.Button SearchSer_0;
+        private System.Windows.Forms.Button button1;
     }
 }
