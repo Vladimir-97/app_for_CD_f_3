@@ -559,17 +559,14 @@ namespace app_for_CD
                 ser_num = ser_num + num;
                 OracleCommand cmd = con.CreateCommand();
                 cmd.Parameters.Add("cd", OracleDbType.Varchar2, 13).Value = ser;
-                cmd.CommandText = $"SELECT CD_NM FROM tbcb_cd where cd_grp_no = '000037' AND CD like '{ser}%'";
+                cmd.CommandText = $"SELECT CD_NM FROM tbcb_cd where cd_grp_no = '000037' AND CD like '{ser}%' AND ACTIVED = 1";
 
                 cmd.CommandType = CommandType.Text;
 
                 OracleDataReader dr = cmd.ExecuteReader();
-                //OracleDataReader dr1;
-
+               
                 while (dr.Read())
                 {
-                    //cmd.CommandText = $"";
-                    //cmd.ExecuteReader();
                     near_combo.Items.Add(dr[0].ToString());
                 }
             }
