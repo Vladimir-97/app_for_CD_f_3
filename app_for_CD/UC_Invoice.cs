@@ -432,14 +432,10 @@ namespace app_for_CD
 
         private void filtr_Click(object sender, EventArgs e)
         {
-            Form1 r = new Form1();
+            reg_bill r = new reg_bill();
             r.StartPosition = FormStartPosition.CenterParent;
             r.ShowDialog();
         }
 
-        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
-        {
-
-        }
     }
 }
