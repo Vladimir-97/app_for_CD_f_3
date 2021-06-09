@@ -79,13 +79,13 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="oracle.dataaccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
+    <Reference Include="oracle.dataaccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\oracle.dataaccess.dll</HintPath>
+      <HintPath>..\..\..\excell_to_DB\excell_to_DB\oracle.dataaccess.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Release\Oracle.ManagedDataAccess.dll</HintPath>
+      <HintPath>..\..\..\2805_app_for_cd\app_for_CD_f_3\app_for_CD\bin\Release\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -133,6 +133,13 @@
     <Compile Include="Auth.Designer.cs">
       <DependentUpon>Auth.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data_bill.cs" />
+    <Compile Include="filter_bill.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="filter_bill.Designer.cs">
+      <DependentUpon>filter_bill.cs</DependentUpon>
+    </Compile>
     <Compile Include="filter_open_depo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -145,11 +152,11 @@
     <Compile Include="filter_stocks.Designer.cs">
       <DependentUpon>filter_stocks.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="reg_bill.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="reg_bill.Designer.cs">
+      <DependentUpon>reg_bill.cs</DependentUpon>
     </Compile>
     <Compile Include="SaveForSer.cs">
       <SubType>Form</SubType>
@@ -260,11 +267,17 @@
     <EmbeddedResource Include="Auth.resx">
       <DependentUpon>Auth.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="filter_bill.resx">
+      <DependentUpon>filter_bill.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="filter_open_depo.resx">
       <DependentUpon>filter_open_depo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="filter_stocks.resx">
       <DependentUpon>filter_stocks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reg_bill.resx">
+      <DependentUpon>reg_bill.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SaveForSer.resx">
       <DependentUpon>SaveForSer.cs</DependentUpon>
