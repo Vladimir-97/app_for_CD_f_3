@@ -133,6 +133,12 @@
     <Compile Include="Auth.Designer.cs">
       <DependentUpon>Auth.cs</DependentUpon>
     </Compile>
+    <Compile Include="filter_for_invoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="filter_for_invoice.Designer.cs">
+      <DependentUpon>filter_for_invoice.cs</DependentUpon>
+    </Compile>
     <Compile Include="filter_open_depo.cs">
       <SubType>Form</SubType>
     </Compile>
