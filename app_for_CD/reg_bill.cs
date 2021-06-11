@@ -406,7 +406,7 @@ namespace app_for_CD
             cmd.Parameters.Add("TYPE_SER", ComboBox_0.Text);   /////////////////
             cmd.Parameters.Add("COST_DELIV", float.Parse(textBox_Sum.Text));            ///////////////////////////////////NDS_PINFL
             cmd.Parameters.Add("STATUS", status);   /////////////
-            cmd.Parameters.Add("PROCESS", "Выставлен");  //////////////
+            cmd.Parameters.Add("PROCESS", "0");  //////////////
             cmd.Parameters.Add("SUMMA", "");
             cmd.Parameters.Add("FIO", Data.get_fio);
             cmd.Parameters.Add("BASE", ground_textBox.Text);
