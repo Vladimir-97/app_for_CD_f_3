@@ -156,6 +156,8 @@
             this.dataGridView1.Size = new System.Drawing.Size(1872, 807);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // Column1
             // 
@@ -224,6 +226,10 @@
             // Process
             // 
             this.Process.HeaderText = "Процесс";
+            this.Process.Items.AddRange(new object[] {
+            "Выставлена",
+            "Часть оплаты",
+            "Оплачена"});
             this.Process.Name = "Process";
             this.Process.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Process.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;

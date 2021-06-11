@@ -41,6 +41,9 @@ namespace app_for_CD
             }
         }
 
+        private void uC_Contract2_Load(object sender, EventArgs e)
+        {
 
+        }
     }
 }
