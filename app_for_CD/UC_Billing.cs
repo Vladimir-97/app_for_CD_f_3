@@ -16,6 +16,7 @@ using System.Reflection;
 using Microsoft.Win32;
 using System.Text.RegularExpressions;
 using System.Drawing;
+using RSDN;
 using System.Drawing.Printing;
 
 namespace app_for_CD
@@ -28,69 +29,97 @@ namespace app_for_CD
             SetConnection();
         }
         OracleConnection con = null;
+        string ID = "";
 
 
         private void UC_Billing_Load(object sender, EventArgs e)
         {
-            updatePanel2();
+            LoadData();
         }
-        private void updatePanel2()
-        {
-            OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "SELECT * from table_billing order by num_of_bill desc";
 
+        
+        private string check_pro(string str)
+        {
+            if (str == "Выставлена")
+                return "0";
+            else if (str == "Оплачена")
+                return "2";
+            else
+                return "1";
+
+        }
+        private void LoadData()
+        {
+
+            dataGridView1.Rows.Clear();
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "select * from table_billing order by num_of_bill desc";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
+
             List<string[]> data = new List<string[]>();
-
-            while (dr.Read() == true)
-            {
-                fill_data(data, dr);
-            }
-
-            print_data(data);
-
-        }
-        void fill_data(List<string[]> data, OracleDataReader dr)
-        {
-
-            data.Add(new string[13]);
-            data[data.Count - 1][0] = check_null(dr[0].ToString())+ " от " + parse_date(check_null(dr[1].ToString())); /////
-            data[data.Count - 1][1] = check_null(dr[1].ToString());      ////  относительно договора
-            data[data.Count - 1][2] = check_null(dr[5].ToString());  //
-            data[data.Count - 1][3] = check_null(dr[6].ToString());  //
-            data[data.Count - 1][4] = check_null(dr[7].ToString());   //
-            data[data.Count - 1][5] = check_null(dr[8].ToString());   //
-            data[data.Count - 1][6] = check_null(dr[9].ToString());  
-
-            data[data.Count - 1][7] = check_null(dr[10].ToString());  //
-            data[data.Count - 1][8] = check_null(dr[11].ToString());  //
-            //data[data.Count - 1][9] = check_st(check_null(dr[12].ToString())); //
-            //data[data.Count - 1][10] = check_null(dr[13].ToString());   ///////процесс
-            //dataGridView_invoice.Rows[i].Cells[10].Value = (dataGridView_invoice.Rows[i].Cells[10] as DataGridViewComboBoxCell).Items[Convert.ToInt32(dr[17])];
-            ////     data[data.Count - 1][11] = check_null(dr[12].ToString());    ///////сумма оплаты
-            data[data.Count - 1][12] = check_null(dr[15].ToString());  ////
-
-
-
-        }
-
-        void print_data(List<string[]> data)
-        {
             int i = 0;
-            dataGridView1.Rows.Clear();
-
-            foreach (string[] s in data)
+            int priv = -1;
+            while (dr.Read())
             {
-                dataGridView1.Rows.Add(s);
-                for (int j = 0; j < 13; j++)
-                    if (i % 2 == 0)
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.DarkGray;
-                    else
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.Gray;
 
-                i++;
+                if (Convert.ToInt32(dr[0]) != priv)
+                {
+                    dataGridView1.Rows.Add();
+                    dataGridView1.Rows[i].Cells[0].Value = dr[0] + " от " + dr[1];
+                    dataGridView1.Rows[i].Cells[1].Value = dr[2]+ "/" + dr[3] + " от " + dr[4];
+                    dataGridView1.Rows[i].Cells[2].Value = dr[5];
+                    dataGridView1.Rows[i].Cells[3].Value = dr[6];
+                    if (dr[7] == null || dr[7].ToString() == "")
+                    {
+                        dataGridView1.Rows[i].Cells[4].Value = "-";
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells[4].Value = dr[7];
+                    }
+                    //if (dr[12].ToString() == "0")
+                    //{
+                    //    dataGridView1.Rows[i].Cells[5].Value = dr[8];
+                    //    dataGridView1.Rows[i].Cells[6].Value = "-";
+                    //}
+                    //else
+                    //{
+                    //    dataGridView1.Rows[i].Cells[5].Value = "-";
+                    //    dataGridView1.Rows[i].Cells[6].Value = dr[8];
+                    //}
+                    dataGridView1.Rows[i].Cells[7].Value = dr[10].ToString();  //вид товара
+                    dataGridView1.Rows[i].Cells[8].Value = dr[11].ToString();  //стоиимость поставки
+                    if (dr[12].ToString() == "1")
+                    {
+                        dataGridView1.Rows[i].Cells[9].Value = "Активный";
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells[9].Value = "Неактивный";
+                    }
+                    dataGridView1.Rows[i].Cells[10].Value = (dataGridView1.Rows[i].Cells[10] as DataGridViewComboBoxCell).Items[Convert.ToInt32(dr[13])];   // проц
+                   // dataGridView1.Rows[i].Cells[11].Value = dr[18];
+                    dataGridView1.Rows[i].Cells[12].Value = dr[15];
+                    i++;
+                }
+                else
+                {
+
+                    dataGridView1.Rows[i - 1].Cells[7].Value = dataGridView1.Rows[i - 1].Cells[7].Value.ToString() + '\n' + dr[3].ToString();
+                    dataGridView1.Rows[i - 1].Cells[8].Value = (dataGridView1.Rows[i - 1].Cells[8].Value).ToString() + '\n' + (Convert.ToDouble(dr[4])).ToString();
+                }
+
+                priv = Convert.ToInt32(dr[0]);
+
             }
+
+            for (int row = 0; row <= dataGridView1.Rows.Count - 1; row++)
+            {
+                ((DataGridViewImageCell)dataGridView1.Rows[row].Cells[13]).Value = Properties.Resources.change;
+            }
+
+            dr.Close();
         }
         string check_null(string str)
         {
@@ -101,7 +130,7 @@ namespace app_for_CD
         string check_st(string str)
         {
             if (str == "1")
-                return "Активен";
+                return "Активеый";
             return "Неактивный";
         }
         private void SetConnection()
@@ -243,10 +272,51 @@ namespace app_for_CD
             }
           
         }
+        private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
 
+            if (dataGridView1.CurrentCell.ColumnIndex == 10 && e.Control is ComboBox)
+            {
+                ComboBox comboBox = e.Control as ComboBox;
+                comboBox.SelectedIndexChanged -= LastColumnComboSelectionChanged;
+                comboBox.SelectedIndexChanged += LastColumnComboSelectionChanged;
+            }
+            e.CellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
+        }
+
+        private void LastColumnComboSelectionChanged(object sender, EventArgs e)
+        {
+
+            var currentcell = dataGridView1.CurrentCellAddress;
+            string num_date_invoice = dataGridView1.Rows[currentcell.Y].Cells[0].Value.ToString();
+            int num;
+            int i = 0;
+            var a = sender;
+
+            while (num_date_invoice[i] != ' ')
+            {
+                ID += num_date_invoice[i];
+                i++;
+            }
+
+
+            OracleCommand cmd;
+            cmd = con.CreateCommand();
+            if (dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Выставлена")
+                num = 0;
+            else if (dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Часть оплаты")
+                num = 1;
+            else
+            {
+                num = 2;
+            }
+            cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num} where num_of_bill = {ID}";
+            cmd.ExecuteNonQuery();
+
+        }
         private void button2_Click(object sender, EventArgs e)
         {
-            updatePanel2();
+            LoadData();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -327,7 +397,11 @@ namespace app_for_CD
             else
                 return "";
         }
-
+        public string ExcelFilePath
+        {
+            get { return excelFilePath; }
+            set { excelFilePath = value; }
+        }
         internal static void PrintExcelSheet(Excel.Application app, Excel.Worksheet sheet, String activePrinter)
         {
             try
@@ -340,87 +414,198 @@ namespace app_for_CD
                 Console.WriteLine("Print error:\r\n" + e.Message);
             }
         }
-
-
-
-
-
-
-        private void button1_Click(object sender, EventArgs e)
+        private string excelFilePath = string.Empty;
+        Excel.Application myExcelApplication;
+        Excel.Workbook myExcelWorkbook;
+        Excel.Worksheet myExcelWorkSheet;
+        Excel.Workbooks workbooks;
+        public void openExcel()
         {
-            FileInfo fi;
-            string excel_path;
-            string path = ExecuteCommand("echo %cd%");
-            string pathD = path.Substring(0, path.Length - 2);
-            ExecuteCommand("copy report_bill.xls report1.xls");
-            excel_path = pathD + "\\report1.xls";
-            fi = new FileInfo(excel_path);
+            myExcelApplication = null;
+            myExcelApplication = new Excel.Application(); // create Excell App
+            myExcelApplication.DisplayAlerts = false; // turn off alerts
+            workbooks = myExcelApplication.Workbooks;
 
+            myExcelWorkbook = workbooks.Open(excelFilePath, Type.Missing,
+               Type.Missing, Type.Missing, Type.Missing,
+               Type.Missing, Type.Missing, Type.Missing,
+               Type.Missing, Type.Missing, Type.Missing,
+               Type.Missing, Type.Missing); // open the existing excel file
 
+            myExcelWorkSheet = myExcelWorkbook.Worksheets[1]; // define in which worksheet, do you want to add data
+            myExcelWorkSheet.Name = "WorkSheet 1"; // define a name for the worksheet (optinal)
 
-            Excel.Application oXL;
-            Excel.Workbooks oWBs;
-            Excel.Workbook oWB;
-            Excel.Worksheet oSheet;
-            if (fi.Exists)
+        }
+        /// <summary>
+        /// ////////////////////////////////////////////////////////////////////////////////////////////////
+        /// </summary>
+        private void DoExcelThings()
+        {
+            string old_ser, ser = "";
+            OracleCommand cmd1;
+            OracleDataReader dr1;
+            string date_bill, ch_date;
+            excelFilePath = Path.GetFullPath("invoice_t.xlsx");
+
+            openExcel();
+                
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = $"select * from table_billing where num_of_bill = {ID}";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            dr.Read();
+            date_bill = dr[1].ToString();
+            ch_date = date_bill[6].ToString() + date_bill[7].ToString() + '.';
+            ch_date = ch_date + date_bill[4].ToString() + date_bill[5].ToString() + '.';
+            ch_date = ch_date + date_bill[0].ToString() + date_bill[1].ToString() + date_bill[2].ToString() + date_bill[3].ToString();
+
+            myExcelWorkSheet.Cells[1, 2].Value = "СЧЕТ НА ОПЛАТУ";
+            
+            myExcelWorkSheet.Cells[2, "B"].Value = $"№ {ID} от {ch_date}";
+            myExcelWorkSheet.Cells[3, "B"].Value = $"к договору {dr[0].ToString()} от **.**.****";
+
+            cmd1 = con.CreateCommand();
+            cmd1.CommandText = $"select CRP_NM, REG_ADDR_CONT from tbcb_crp_info where CRP_CD = '{dr[5]}'";
+            cmd1.CommandType = CommandType.Text;
+
+            dr1 = cmd1.ExecuteReader();
+
+            dr1.Read();
+            myExcelWorkSheet.Cells[6, "AX"].Value = dr1[0].ToString();
+            myExcelWorkSheet.Cells[8, "AX"].Value = dr1[1].ToString();
+            dr1.Close();
+
+            myExcelWorkSheet.Cells[10, "AX"].Value = $"{dr[8]}";
+            if (dr[8].ToString() == "")
+            myExcelWorkSheet.Cells[12, "AX"].Value = "\t" + dr[9].ToString();
+            else
             {
+                myExcelWorkSheet.Cells[12, "AX"].Value = "\t" + dr[8].ToString();
+            }
+            cmd1 = con.CreateCommand();
+            cmd1.CommandText = $"Select bk_acnt_no, mfo_cd from tbcb_crp_bk where crp_cd = '{dr[5]}'";
+            cmd1.CommandType = CommandType.Text;
 
+            dr1 = cmd1.ExecuteReader();
+            dr1.Read();
 
-                oXL = new Excel.Application();
-             //   oXL.Visible = true;
-                //Получаем набор ссылок на объекты Workbook
-                oWBs = oXL.Workbooks;
-                oXL.Workbooks.Open(excel_path, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
-                oWB = oWBs[1];
-                oSheet = oWB.ActiveSheet;
-                //Выбираем лист 1
-                oSheet.Name = "Распечатка";
+            myExcelWorkSheet.Cells[14, "AX"].Value = $"{dr1[0]}";
+            myExcelWorkSheet.Cells[16, "AX"].Value = $"{dr1[1]}";
 
+            string num_double = dr[11].ToString();
+            bool flag = false;
+            var DS = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            string val = "", frac = ""; ;
 
-                string printerName = GetActivePrinter();
-                if (printerName != "")
+            for (int i = 0; i < num_double.Count(); i++)
+            {
+                if (num_double[i] != DS && flag == false)
                 {
-                    Console.WriteLine("Menu send to printer: " + printerName);
-                    PrintExcelSheet(oXL, oSheet, printerName);
+                    val += num_double[i];
                 }
+                else if (num_double[i] != DS && flag == true)
+                {
+                    frac += num_double[i];
+                }
+                else if (num_double[i] == DS)
+                {
+                    flag = true;
+                }
+            }
+
+            if (flag == false)
+            {
+                frac = "00";
+            }
 
 
-                //        DateTime date = DateTime.Now;
-                //        string date_str1 = date.ToString();
-                //        string date_str = date_str1.Substring(0, 2);
-                //        date_str += "/";
-                //        date_str += date_str1.Substring(3, 2);
-                //        date_str += "/";
-                //        date_str += date_str1.Substring(6, 4);
+            myExcelWorkSheet.Cells[27, "J"].Value = $"{dr[16]}";// комментарий 
+            myExcelWorkSheet.Cells[29, "J"].Value = $"{dr[17]}";// основание
 
+            myExcelWorkSheet.Cells[37, "AE"].Value = $"{dr[15]}";
 
-                //        oSheet.Cells[3, 35] = date_str;
-                //        // oSheet.Cells[44, 10] = dr[0].ToString();
-                //        oSheet.Cells[14, 2] = kzl_otch;
-                //        oSheet.Cells[14, 32] = kzl_pol;
-                //        oSheet.Cells[14, 11] = count_cb;
-                //        oSheet.Cells[14, 17] = sum_one_cb;
-                //        oSheet.Cells[14, 23] = "\t" + sum_agr;
-                //        oSheet.Cells[25, 2] = type_agr;
-                //        oSheet.Cells[25, 17] = num_agr;
-                //        oSheet.Cells[25, 23] = date_agr;
-                //        oSheet.Cells[19, 2] = code_cb;
-                //        oSheet.Cells[19, 7] = name_cb;
-                //        oSheet.Cells[15, 2] = name_otch;
-                //        oSheet.Cells[15, 32] = name_pol;
+            dr1.Close();
+            ser = dr[3].ToString();
+            //old_ser = dr[2].ToString();
+            //flag = false;
+            //for (int i = 0; i < old_ser.Count(); i++)
+            //{
+            //    if (old_ser[i] == '/')
+            //    {
+            //        flag = true;
+            //    }
+            //    else if (old_ser[i] != '/' && flag == true)
+            //    {
+            //        ser += old_ser[i];
+            //    }
+            //}
 
-                //        oSheet.Cells[19, 34] = "\t" + pval();    //////////ном стоимость
-                //        oSheet.Cells[19, 37] = "\t" + total_agst();      //////// % от УФ
-                //        oSheet.Cells[19, 26] = "\t" + st_cb();    //////////ном стоимость
+            cmd1 = con.CreateCommand();
+            cmd1.CommandText = $"select NDS from tbcb_cd where CD like '{ser}%' AND CD_NM = '{dr[10].ToString()}'";
+            cmd1.CommandType = CommandType.Text;
+            dr1 = cmd1.ExecuteReader();
+            dr1.Read();
 
-
-                //        oSheet.Cells[28, 12] = date_agr;
-
-
-
-                //        oSheet.Cells[36, 2] = " Оператор Депозитария    ______________________ " + Data.get_fio;
+            double percent = double.Parse(dr1[0].ToString());
+            dr1.Close();
+            myExcelWorkSheet.Cells[22, "AE"].Value = $"{dr[18]}";   ///валюта
+            myExcelWorkSheet.Cells[22, "D"].Value = $"{dr[10]}";   //услуга
+            myExcelWorkSheet.Cells[22, "AI"].Value = double.Parse(dr[11].ToString());
+            myExcelWorkSheet.Cells[22, "BF"].Value = double.Parse(dr[11].ToString());
+            double sum_without_NDS;
+            sum_without_NDS = double.Parse(dr[11].ToString()) / (1 + percent / 100);
+            MessageBox.Show(sum_without_NDS.ToString());
+            myExcelWorkSheet.Cells[22, "AO"].Value = sum_without_NDS;
+            if (percent == 0)
+            {
+                myExcelWorkSheet.Cells[22, "AZ"].Value = "БЕЗ НДС";
+                myExcelWorkSheet.Cells[22, "AW"].Value = "БЕЗ НДС";
+                myExcelWorkSheet.Cells[25, "B"].Value = "Всего к оплате:          " + RusNumber.Str(Int32.Parse(val)) + dr[18].ToString() + " " + frac + " тийин";
+            }
+            else
+            {
+                myExcelWorkSheet.Cells[22, "AZ"].Value = double.Parse(dr[11].ToString()) - sum_without_NDS;
+                myExcelWorkSheet.Cells[22, "AW"].Value = $"{percent}%"; // процент
+                myExcelWorkSheet.Cells[25, "B"].Value = "Всего к оплате:          " + RusNumber.Str(Int32.Parse(val)) + dr[18].ToString() + " " + frac + " тийин, в.т.ч. НДС: " + Math.Round(myExcelWorkSheet.Cells[22, "AZ"].Value, 2) + " " + dr[18].ToString();
 
             }
+
+            dr.Close();
+            myExcelApplication.Visible = true; // true will open Excel
+            myExcelWorkSheet.PrintPreview();
+            myExcelApplication.Visible = false; // hides excel file when user closes preview
+
+        }
+
+        public void closeExcel()
+        {
+
+            myExcelWorkbook.SaveAs(excelFilePath, Type.Missing, Type.Missing, Type.Missing,
+                                              Type.Missing, Type.Missing, Excel.XlSaveAsAccessMode.xlNoChange,
+                                              Type.Missing, Type.Missing, Type.Missing,
+                                              Type.Missing, Type.Missing); // Save data in excel
+
+            myExcelWorkbook.Close(true, excelFilePath, Type.Missing); // close the worksheet
+            myExcelApplication.Quit(); // close the excel application
+
+
+
+            myExcelApplication = null;
+            myExcelWorkbook = null;
+            myExcelWorkSheet = null;
+            workbooks = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+        }
+
+        /// <summary>
+        /// //////////////////////////////////////////////////////////////////////////////////
+        /// </summary>
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DoExcelThings();
+        //    closeExcel();
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -488,13 +673,7 @@ namespace app_for_CD
                 cmd.CommandType = CommandType.Text;
                 try
                 {
-                    OracleDataReader dr = cmd.ExecuteReader();
-                    List<string[]> data = new List<string[]>();
-                    while (dr.Read())
-                    {
-                        find_val = true;
-                        fill_data(data, dr);
-                    }
+
                     if (find_val)
                     {
                         MessageBox.Show("Найдено!");
@@ -503,12 +682,27 @@ namespace app_for_CD
                     {
                         MessageBox.Show("Не найдено по данному запросу!");
                     }
-                    print_data(data);
-                    Data_bill.clear();
+                    LoadData();
                 }
                 catch
                 {
                     Data_bill.clear();
+                }
+            }
+        }
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            int row = dataGridView1.CurrentRow.Index;   
+            if (dataGridView1.SelectedCells.Count > 1)
+            {
+                string str = dataGridView1.Rows[row].Cells[0].Value.ToString();
+                for (int i =0; i< str.Length; i++)
+                {
+                    if (str[i+1] == 'о')
+                    {
+                        break;
+                    }
+                    ID += str[i];
                 }
             }
         }

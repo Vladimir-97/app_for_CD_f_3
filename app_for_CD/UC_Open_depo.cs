@@ -309,8 +309,8 @@ namespace app_for_CD
                         oSheet.Cells[46, 10] = id.ToString();
                         oSheet.Cells[49, 9] = fio;
                         oSheet.Cells[12, 5] = "\t" +dr[30].ToString();
-                        oSheet.Cells[42, 5] = dr[31].ToString();
-                        oSheet.Cells[44, 5] = dr[32].ToString();
+                        oSheet.Cells[42, 5] = dr[30].ToString();
+                        oSheet.Cells[44, 5] = dr[31].ToString();
 
                     }
                     else
