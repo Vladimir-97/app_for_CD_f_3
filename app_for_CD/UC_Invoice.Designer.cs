@@ -151,6 +151,7 @@
             this.dataGridView_invoice.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView_invoice.Location = new System.Drawing.Point(14, 66);
             this.dataGridView_invoice.Name = "dataGridView_invoice";
+
             dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -160,6 +161,7 @@
             dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView_invoice.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView_invoice.Size = new System.Drawing.Size(1224, 536);
+
             this.dataGridView_invoice.TabIndex = 1;
             this.dataGridView_invoice.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView_invoice_CellClick);
             this.dataGridView_invoice.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView_invoice_EditingControlShowing);
@@ -284,12 +286,12 @@
             this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
             this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 62.5F));
             this.bottom_tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.75F));
-            this.bottom_tableLayoutPanel.Size = new System.Drawing.Size(1224, 46);
+            this.bottom_tableLayoutPanel.Size = new System.Drawing.Size(1224, 96);
             this.bottom_tableLayoutPanel.TabIndex = 2;
             // 
             // excel
             // 
-            this.excel.Location = new System.Drawing.Point(1127, 11);
+            this.excel.Location = new System.Drawing.Point(1127, 21);
             this.excel.Name = "excel";
             this.excel.Size = new System.Drawing.Size(75, 22);
             this.excel.TabIndex = 0;
@@ -299,7 +301,7 @@
             // 
             // filtr
             // 
-            this.filtr.Location = new System.Drawing.Point(3, 11);
+            this.filtr.Location = new System.Drawing.Point(3, 21);
             this.filtr.Name = "filtr";
             this.filtr.Size = new System.Drawing.Size(75, 22);
             this.filtr.TabIndex = 3;
@@ -358,7 +360,7 @@
             this.Controls.Add(this.dataGridView_invoice);
             this.Controls.Add(this.panel1);
             this.Name = "UC_Invoice";
-            this.Size = new System.Drawing.Size(1252, 667);
+            this.Size = new System.Drawing.Size(1252, 664);
             this.panel1.ResumeLayout(false);
             this.top_tableLayoutPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_invoice)).EndInit();

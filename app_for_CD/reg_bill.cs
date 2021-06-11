@@ -13,9 +13,9 @@ using Oracle.DataAccess.Client;
 namespace app_for_CD
 {
 
-    public partial class Form1 : Form
+    public partial class reg_bill : Form
     {
-        ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+        ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(reg_bill));
         OracleConnection con = null;
         int count_of_label = 1, count_of_comboBox = 2, count_of_Button = 2, count_of_TextBox = 1;
         int count_of_label_u = 0;
@@ -23,6 +23,7 @@ namespace app_for_CD
         string cur_INN = "", cur_crp_nm = "";
         bool f = false;
         string Num_of_id = "-1";
+        string sres, num_sres;
         private void SetConnection()
         {
             string ConnectionString = "USER ID=GGUZDR_APP;PASSWORD=gguzdr_app;DATA SOURCE=10.1.50.12:1521/GDBDRCT1";
@@ -40,15 +41,48 @@ namespace app_for_CD
                 MessageBox.Show(errorMessage, "Error");
             }
         }
-        public Form1()
+        public reg_bill()
         {
             InitializeComponent();
+            SetConnection();
+            textBox_number_of_invoice.Text = (find_last_number() + 1).ToString();
+            button1.Visible = false;
         }
-        public Form1(string id)
+        public reg_bill(string num)
         {
             InitializeComponent();
-            Num_of_id = id;
+            SetConnection();
+            textBox_number_of_invoice.Text = num;
+            fill_data();
+            Save.Visible = false;
         }
+        private void fill_data()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("NUM_OF_BILL", textBox_number_of_invoice.Text);
+            cmd.CommandText = "Select * from table_billing where num_of_bill = :NUM_OF_BILL";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            if(dr.Read())
+            {
+                comboBox_CRP_INN.Text = dr[5].ToString();
+                if (dr[8].ToString() == "")
+                    NDS_PINFL_textBox.Text = dr[9].ToString();
+                else
+                    NDS_PINFL_textBox.Text = dr[8].ToString();
+                inverse_parse_date(dr[1].ToString(), dateTimePicker_invoice_data);
+                Docu_num_ser.Items.Add(dr[2].ToString() + "/" + dr[3].ToString()  );
+                Docu_num_ser.SelectedIndex = 0;
+                ComboBox_0.Items.Add(dr[10].ToString()  );
+                ComboBox_0.SelectedIndex = 0;
+                textBox_Sum.Text = dr[11].ToString();
+                comboBox6.Text = dr[18].ToString();
+                ground_textBox.Text = dr[16].ToString();
+                comment_textBox.Text = dr[17].ToString();
+                
+            }
+        }
+
 
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -330,114 +364,67 @@ namespace app_for_CD
 
         private void Save_Click(object sender, EventArgs e)
         {
-            if (check())
+            int status;
+            byte IF_fiz;
+            if (NDS_PINFL.Text == "ПИНФЛ")
             {
-                #region Получение всей информации
-                List<string> values = new List<string>();
-                string crp = comboBox_CRP_INN.Text;
-                string Date = dateTimePicker_invoice_data.Value.ToString("yyyyMMdd");
-                string num_series = Docu_num_ser.Text;
-                string ground = ground_textBox.Text;
-                string comment = comment_textBox.Text;
-                string nds_pinfl = NDS_PINFL_textBox.Text;
-                int status;
-
-
-                byte IF_fiz;
-                if (NDS_PINFL.Text == "ПИНФЛ")
-                {
-                    IF_fiz = 1;
-                }
-                else
-                {
-                    IF_fiz = 0;
-                }
-
-                if (status_comboBox.Text == "Активный" || status_comboBox.Visible == false)
-                {
-                    status = 1;
-                }
-                else
-                {
-                    status = 0;
-                }
-
-                int cur_row = 0;
-                bool flag = false;
-                FlowLayoutPanel flp;
-                Panel panel;
-                for (int i = 0; i < tableLayoutPanel_main.Controls.Count - 4; i++)
-                {
-
-                    if ((i % 2 == 1) && flag == false)
-                    {
-                        flp = ((FlowLayoutPanel)tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
-                        values.Add(((ComboBox)flp.Controls[0]).Text);
-                        flag = true;
-                        cur_row++;
-                    }
-                    else if ((i % 2 == 1) && flag == true)
-                    {
-                        panel = (Panel)(tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
-                        values.Add(((TextBox)panel.Controls[0]).Text);
-                        values.Add(((ComboBox)panel.Controls[2]).Text);
-                        flag = false;
-                        cur_row++;
-                    }
-                }
-                #endregion
-                OracleCommand cmd;
-                cmd = con.CreateCommand();
-                int id;
-                id = find_id() + 1;
-                if (Num_of_id != "-1")
-                {
-                    id = Int32.Parse(Num_of_id);
-                }
-                int num_of_ser = 1;
-                int quan_of_usluga;
-
-                cmd.CommandText = $"SELECT NVL(MAX(NUM_OF_SER), 0) FROM REGISTRATION_OF_INVOICE  where ID = {Num_of_id}";
-                cmd.CommandType = CommandType.Text;
-                OracleDataReader dr = cmd.ExecuteReader();
-                dr.Read();
-
-                quan_of_usluga = Int32.Parse(dr[0].ToString());
-
-                for (int i = 0; i < values.Count; i = i + 3)
-                {
-                    cmd.CommandText = $"select NUM_OF_SER FROM registration_of_invoice WHERE id = {Num_of_id} AND NUM_OF_SER = {num_of_ser}";
-                    if (Num_of_id != "-1" && num_of_ser <= quan_of_usluga)
-                    {
-                        cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET CRP = '{crp}', SER = '{num_series}', SERVICE_T = '{values[i]}', SUM_T = {values[i + 1]}, CURRENCY = '{values[i + 2]}', BASIS = '{ground}', COMMENT_T = '{comment}', NDS_PINFL = '{nds_pinfl}', DATE_T = '{Date}', CRP_NM = '{cur_crp_nm}', INN = '{cur_INN}', IF_FIZ = '{IF_fiz}', DATE_CON = '{find_data(crp, num_series)}', FIO = '{Data.get_fio}', STATUS = '{status}' WHERE  id = {id} AND NUM_OF_SER = {num_of_ser} AND PROCESS = 0 AND SUM_PAID = 0 ";
-                    }
-                    else
-                    {
-                        cmd.CommandText = $"insert into REGISTRATION_OF_INVOICE (ID , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER, PROCESS, SUM_PAID) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '{status}', '{num_of_ser}', 0, 0)";
-                    }
-                    //ground_textBox.Text = $"insert into REGISTRATION_OF_INVOICE (10 , CRP, SER, SERVICE_T, SUM_T, CURRENCY, BASIS, COMMENT_T, NDS_PINFL, DATE_T, CRP_NM, INN, IF_FIZ, DATE_CON, FIO, STATUS, NUM_OF_SER, PROCESS, SUM_PAID) values ({id}, '{crp}', '{num_series}', '{values[i]}', {values[i + 1]}, '{values[i + 2]}', '{ground}', '{comment}', '{nds_pinfl}', '{Date}', '{cur_crp_nm}','{cur_INN}', '{IF_fiz}', '{find_data(crp, num_series)}', '{Data.get_fio}', '{status}', '{num_of_ser}', 0, 0)";
-                    cmd.ExecuteNonQuery();
-                    num_of_ser++;
-                }
-
-                //удаляю лишнии услуги
-                if ((num_of_ser - 1) < quan_of_usluga)
-                {
-                    for (int i = num_of_ser; i <= quan_of_usluga; i++)
-                    {
-                        cmd.CommandText = $"delete from registration_of_invoice where id = {id} AND NUM_OF_SER = '{i}'";
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                textBox_number_of_invoice.Text = id.ToString();
-
-                cur_crp_nm = "";
-                cur_INN = "";
-                Num_of_id = "-1";
-                Remove(true);
-                status_label.Visible = false;
-                status_label.Visible = false;
+                IF_fiz = 1;
             }
+            else
+            {
+                IF_fiz = 0;
+            }
+
+            if (status_comboBox.Text == "Активный" || status_comboBox.Visible == false)
+            {
+                status = 1;
+            }
+            else
+            {
+                status = 0;
+            }
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("NUM_BILL", textBox_number_of_invoice.Text);//////
+            cmd.Parameters.Add("DATE_BILL", dateTimePicker_invoice_data.Value.ToString("yyyyMMdd")); //
+            cmd.Parameters.Add("NUM_AGGR", num_sres);  ///////
+            cmd.Parameters.Add("SER_AGGR", sres);      //////////
+            cmd.Parameters.Add("DATE_AGGR", "date");
+            cmd.Parameters.Add("KZL", comboBox_CRP_INN.Text);   ////////////
+            cmd.Parameters.Add("KZL_NM", cur_crp_nm);/////
+            cmd.Parameters.Add("INN", cur_INN); ////////////
+            if (IF_fiz == 0)
+            {
+                cmd.Parameters.Add("NDS", NDS_PINFL_textBox.Text); ///////////
+                cmd.Parameters.Add("PINFL", ""); ///////////
+
+            }
+            else
+            {
+                cmd.Parameters.Add("NDS", ""); ///////////
+                cmd.Parameters.Add("PINFL", NDS_PINFL_textBox.Text); ///////////
+            }
+            cmd.Parameters.Add("TYPE_SER", ComboBox_0.Text);   /////////////////
+            cmd.Parameters.Add("COST_DELIV", float.Parse(textBox_Sum.Text));            ///////////////////////////////////NDS_PINFL
+            cmd.Parameters.Add("STATUS", status);   /////////////
+            cmd.Parameters.Add("PROCESS", "0");  //////////////
+            cmd.Parameters.Add("SUMMA", "");
+            cmd.Parameters.Add("FIO", Data.get_fio);
+            cmd.Parameters.Add("BASE", ground_textBox.Text);
+            cmd.Parameters.Add("REMARK", comment_textBox.Text);
+            cmd.Parameters.Add("CUR", comboBox6.Text);
+
+            cmd.CommandText = "insert into table_billing (num_of_bill, date_of_bill, num_aggr, sres_aggr, date_aggr, crp_cd, crp_nm, dist_id_2, nds, pinfl, type_sres, cost_deliv, state, process, payment_amount, fio, base, remark, curr) values (:NUM_BILL, :DATE_BILL, :NUM_AGGR, :SER_AGGR, :DATE_AGGR, :KZL, :KZL_NM, :INN, :NDS, :PINFL, :TYPE_SER, :COST_DELIV, :STATUS, :PROCESS, :SUMMA, :FIO, :BASE, :REMARK, :CUR)";
+            cmd.CommandType = CommandType.Text;
+            if (cmd.ExecuteNonQuery() == 1)
+            {
+                Report.Visible = true;
+                textBox_number_of_invoice.Text = (Int32.Parse(textBox_number_of_invoice.Text) + 1).ToString();
+            }
+            else
+            {
+                MessageBox.Show("Error. Скажите Тимуру про инвойс");
+            }
+
 
         }
 
@@ -494,6 +481,8 @@ namespace app_for_CD
 
             while (dr.Read())
             {
+                num_sres = dr[0].ToString();
+                sres = dr[1].ToString();
                 Docu_num_ser.Items.Add($"{dr[0]}/{dr[1]}");
             }
         }
@@ -772,6 +761,75 @@ namespace app_for_CD
             }
         }
 
+        private void NDS_PINFL_textBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int status;
+            byte IF_fiz;
+            if (NDS_PINFL.Text == "ПИНФЛ")
+            {
+                IF_fiz = 1;
+            }
+            else
+            {
+                IF_fiz = 0;
+            }
+
+            if (status_comboBox.Text == "Активный" || status_comboBox.Visible == false)
+            {
+                status = 1;
+            }
+            else
+            {
+                status = 0;
+            }
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("DATE_BILL", dateTimePicker_invoice_data.Value.ToString("yyyyMMdd")); //
+            cmd.Parameters.Add("NUM_AGGR", num_sres);  ///////
+            cmd.Parameters.Add("SER_AGGR", sres);      //////////
+            cmd.Parameters.Add("DATE_AGGR", "date");
+            cmd.Parameters.Add("KZL", comboBox_CRP_INN.Text);   ////////////
+            cmd.Parameters.Add("KZL_NM", cur_crp_nm);/////
+            cmd.Parameters.Add("INN", cur_INN); ////////////
+            if (IF_fiz == 0)
+            {
+                cmd.Parameters.Add("NDS", NDS_PINFL_textBox.Text); ///////////
+                cmd.Parameters.Add("PINFL", ""); ///////////
+
+            }
+            else
+            {
+                cmd.Parameters.Add("NDS", ""); ///////////
+                cmd.Parameters.Add("PINFL", NDS_PINFL_textBox.Text); ///////////
+            }
+            cmd.Parameters.Add("TYPE_SER", ComboBox_0.Text);   /////////////////
+            cmd.Parameters.Add("COST_DELIV", float.Parse(textBox_Sum.Text));            ///////////////////////////////////NDS_PINFL
+            cmd.Parameters.Add("STATUS", status);   /////////////
+            cmd.Parameters.Add("PROCESS", "Выставлен");  //////////////
+            cmd.Parameters.Add("SUMMA", "");
+            cmd.Parameters.Add("FIO", Data.get_fio);
+            cmd.Parameters.Add("BASE", ground_textBox.Text);
+            cmd.Parameters.Add("REMARK", comment_textBox.Text);
+            cmd.Parameters.Add("CUR", comboBox6.Text);
+            cmd.Parameters.Add("NUM_BILL", textBox_number_of_invoice.Text);//////
+
+            cmd.CommandText = "update table_billing set date_of_bill = :DATE_BILL, num_aggr = :NUM_AGGR, sres_aggr = :SER_AGGR, date_aggr = :DATE_AGGR, crp_cd= :KZL, crp_nm = :KZL_NM, dist_id_2 = :INN, nds = :NDS, pinfl = :PINFL, type_sres = :TYPE_SER, cost_deliv = :COST_DELIV, state = :STATUS, process = :PROCESS, payment_amount = :SUMMA, fio = :FIO, base = :BASE, remark = :REMARK, curr = :CUR where num_of_bill = :NUM_BILL  ";
+            cmd.CommandType = CommandType.Text;
+            if (cmd.ExecuteNonQuery() == 1)
+            {
+                Report.Visible = true;
+            }
+            else
+            {
+                MessageBox.Show("Error. Скажите Тимуру про reg_bill");
+            }
+
+        }
+
         private void Docu_num_ser_SelectedValueChanged(object sender, EventArgs e)
         {
             bool flag = false;
@@ -832,13 +890,49 @@ namespace app_for_CD
             }
 
         }
-
+        int find_last_number()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "select max(num_of_bill) from table_billing ";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                try
+                {
+                    if (dr.HasRows)
+                    {
+                        return Int32.Parse(dr[0].ToString());
+                    }
+                }
+                catch
+                {
+                    return 0;
+                }
+            }
+            return 0;
+        }
         private void MyCreateButton_Click(object sender, EventArgs e)
         {
             for (byte i = 1; i <= 4; i++)
             {
                 CreateElementOnTable(i);
             }
+        }
+        void inverse_parse_date(string str, DateTimePicker dateTimePicker_tmp)
+        {
+            string tmp_yy = str[0].ToString() + str[1].ToString() + str[2].ToString() + str[3].ToString();
+            int yy = Int16.Parse(tmp_yy);
+            string tmp_mm = str[4].ToString() + str[5].ToString();
+            int mm = Int16.Parse(tmp_mm);
+            string tmp_dd = str[6].ToString() + str[7].ToString();
+            int dd = Int16.Parse(tmp_dd);
+            int x = Convert.ToInt32(yy);
+            int y = Convert.ToInt32(mm);
+            int z = Convert.ToInt32(dd);
+
+            dateTimePicker_tmp.Value = new DateTime(x, y, z);
+
         }
     }
 }

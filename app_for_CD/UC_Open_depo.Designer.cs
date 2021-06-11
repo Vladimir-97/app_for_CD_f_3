@@ -67,9 +67,9 @@
             this.panel4.Controls.Add(this.button3);
             this.panel4.Controls.Add(this.button2);
             this.panel4.Controls.Add(this.button1);
-            this.panel4.Location = new System.Drawing.Point(16, 948);
+            this.panel4.Location = new System.Drawing.Point(16, 941);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1888, 70);
+            this.panel4.Size = new System.Drawing.Size(1888, 71);
             this.panel4.TabIndex = 2;
             // 
             // button3
@@ -164,7 +164,6 @@
             this.Column5});
             this.dataGridView1.Location = new System.Drawing.Point(447, 4);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ForeColor = System.Drawing.Color.White;
             this.dataGridView1.Size = new System.Drawing.Size(956, 831);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);

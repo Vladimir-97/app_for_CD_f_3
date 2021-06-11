@@ -425,14 +425,6 @@ namespace app_for_CD
                             rsdt_cntry = dr[0].ToString();
 
                         }
-                        //cmd.CommandText = "select cd_nm from tbcb_cd where cd = (select dist_id_type_cd from tbcb_crp_docu_info where seq = (select max(seq) from tbcb_crp_docu_info where crp_cd = :KZL) and crp_cd = :KZL) and cd_grp_no = '000035' and lang_cd = 'UZ' ";
-                        //cmd.CommandType = CommandType.Text;
-                        //dr = cmd.ExecuteReader();
-                        //if (dr.Read())
-                        //{
-                        //    oSheet.Cells[10, 3] = dr[0].ToString();
-                        //    dist_ip_type_cd = dr[0].ToString();
-                        //}
                         cmd.CommandText = "select cd_nm from tbcb_cd where cd = (select regr_cd from tbcb_crp_docu_info where seq = (select max(seq) from tbcb_crp_docu_info where crp_cd = :KZL) and crp_cd = :KZL) and lang_cd = 'UZ' ";
                         cmd.CommandType = CommandType.Text;
                         dr = cmd.ExecuteReader();

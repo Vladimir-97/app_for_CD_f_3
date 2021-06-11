@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.backgroundWorker2 = new System.ComponentModel.BackgroundWorker();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -47,16 +47,16 @@
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Process = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Process = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.sum_of_pay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Choice = new System.Windows.Forms.DataGridViewImageColumn();
             this.panel5 = new System.Windows.Forms.Panel();
             this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -107,6 +107,7 @@
             this.button1.TabIndex = 0;
             this.button1.Text = "Печать";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel4
             // 
@@ -114,7 +115,7 @@
             this.panel4.Controls.Add(this.dataGridView1);
             this.panel4.Location = new System.Drawing.Point(16, 62);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1890, 844);
+            this.panel4.Size = new System.Drawing.Size(1890, 825);
             this.panel4.TabIndex = 4;
             // 
             // dataGridView1
@@ -142,19 +143,21 @@
             this.sum_of_pay,
             this.Column11,
             this.Choice});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.Location = new System.Drawing.Point(0, 3);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1859, 830);
+            this.dataGridView1.Size = new System.Drawing.Size(1872, 807);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            this.dataGridView1.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView1_EditingControlShowing);
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // Column1
             // 
@@ -223,7 +226,13 @@
             // Process
             // 
             this.Process.HeaderText = "Процесс";
+            this.Process.Items.AddRange(new object[] {
+            "Выставлена",
+            "Часть оплаты",
+            "Оплачена"});
             this.Process.Name = "Process";
+            this.Process.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Process.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // sum_of_pay
             // 
@@ -251,12 +260,11 @@
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel5.Controls.Add(this.button6);
-            this.panel5.Controls.Add(this.button5);
             this.panel5.Controls.Add(this.button4);
             this.panel5.Controls.Add(this.button3);
-            this.panel5.Location = new System.Drawing.Point(16, 912);
+            this.panel5.Location = new System.Drawing.Point(16, 893);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1890, 86);
+            this.panel5.Size = new System.Drawing.Size(1890, 109);
             this.panel5.TabIndex = 5;
             // 
             // button6
@@ -267,27 +275,13 @@
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button6.ForeColor = System.Drawing.Color.MintCream;
-            this.button6.Location = new System.Drawing.Point(29, 31);
+            this.button6.Location = new System.Drawing.Point(30, 32);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(137, 32);
+            this.button6.Size = new System.Drawing.Size(137, 33);
             this.button6.TabIndex = 5;
             this.button6.Text = "Фильтр";
             this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.button5.Location = new System.Drawing.Point(1631, 31);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(137, 32);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "Изменить";
-            this.button5.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button4
             // 
@@ -297,12 +291,13 @@
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button4.ForeColor = System.Drawing.Color.Aqua;
-            this.button4.Location = new System.Drawing.Point(1419, 31);
+            this.button4.Location = new System.Drawing.Point(1656, 32);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(137, 32);
+            this.button4.Size = new System.Drawing.Size(137, 33);
             this.button4.TabIndex = 3;
             this.button4.Text = "Добавить";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
@@ -311,7 +306,7 @@
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(1836, 31);
+            this.button3.Location = new System.Drawing.Point(1836, 33);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(36, 32);
             this.button3.TabIndex = 2;
@@ -329,6 +324,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1925, 1017);
             this.panel1.TabIndex = 0;
+            // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewImageColumn1.FillWeight = 20F;
+            this.dataGridViewImageColumn1.HeaderText = "Изменить";
+            this.dataGridViewImageColumn1.Image = global::app_for_CD.Properties.Resources.change;
+            this.dataGridViewImageColumn1.MinimumWidth = 20;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // UC_Billing
             // 
@@ -358,11 +363,11 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
@@ -373,7 +378,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Process;
+        private System.Windows.Forms.DataGridViewComboBoxColumn Process;
         private System.Windows.Forms.DataGridViewTextBoxColumn sum_of_pay;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewImageColumn Choice;
