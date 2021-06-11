@@ -14,6 +14,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using RSDN;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
+using System.Reflection;
 
 namespace app_for_CD
 {
@@ -265,12 +266,21 @@ namespace app_for_CD
             cmd.ExecuteNonQuery();
  
         }
+
+        private string ChangeFormatData(string nch_data) {
+            string ch_data;
+            ch_data = nch_data[6].ToString() + nch_data[7].ToString() + '.';
+            ch_data = ch_data + nch_data[4].ToString() + nch_data[5].ToString() + '.';
+            ch_data = ch_data + nch_data[0].ToString() + nch_data[1].ToString() + nch_data[2].ToString() + nch_data[3].ToString();
+            return ch_data;
+        }
+
         private void DoExcelThings()
         {
             string old_ser, ser = "";
             OracleCommand cmd1;
             OracleDataReader dr1;
-            string nch_date, ch_date;
+            string ch_data;
             excelFilePath = Path.GetFullPath("invoice_t.xlsx");
 
             openExcel();
@@ -280,14 +290,12 @@ namespace app_for_CD
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             dr.Read();
-            nch_date = dr[9].ToString();
-            ch_date = nch_date[6].ToString() + nch_date[7].ToString() + '.';
-            ch_date = ch_date + nch_date[4].ToString() + nch_date[5].ToString() + '.';
-            ch_date = ch_date + nch_date[0].ToString() + nch_date[1].ToString() + nch_date[2].ToString() + nch_date[3].ToString();
 
-
-            myExcelWorkSheet.Cells[2, "B"].Value = $"№ {ID} от {ch_date}";
-            myExcelWorkSheet.Cells[3, "B"].Value = $"к договору {dr[2].ToString()} от **.**.****";
+            ch_data = ChangeFormatData(dr[9].ToString());
+            
+            myExcelWorkSheet.Cells[2, "B"].Value = $"№ {ID} от {ch_data}";
+            ch_data = ChangeFormatData(dr[13].ToString());
+            myExcelWorkSheet.Cells[3, "B"].Value = $"к договору {dr[2].ToString()} от {ch_data}";
 
             cmd1 = con.CreateCommand();
             cmd1.CommandText = $"select CRP_NM, REG_ADDR_CONT from tbcb_crp_info where CRP_CD = '{dr[1]}'";
@@ -375,8 +383,9 @@ namespace app_for_CD
             myExcelWorkSheet.Cells[22, "BF"].Value = double.Parse(dr[4].ToString());
             double sum_without_NDS;
             sum_without_NDS = double.Parse(dr[4].ToString()) / (1 + percent / 100);
-            MessageBox.Show(sum_without_NDS.ToString());
+
             myExcelWorkSheet.Cells[22, "AO"].Value = sum_without_NDS;
+            
             if (percent == 0)
             {
                 myExcelWorkSheet.Cells[22, "AZ"].Value = "БЕЗ НДС";
@@ -388,7 +397,6 @@ namespace app_for_CD
                 myExcelWorkSheet.Cells[22, "AZ"].Value = double.Parse(dr[4].ToString()) - sum_without_NDS;
                 myExcelWorkSheet.Cells[22, "AW"].Value = $"{percent}%"; // процент
                 myExcelWorkSheet.Cells[25, "B"].Value = "Всего к оплате:          " + RusNumber.Str(Int32.Parse(val)) + dr[5].ToString() + " " + frac + " тийин, в.т.ч. НДС: " + Math.Round(myExcelWorkSheet.Cells[22, "AZ"].Value, 2) + " " + dr[5].ToString();
-
             }
 
             dr.Close();
@@ -423,19 +431,200 @@ namespace app_for_CD
                 }
                 ID = num;
                 print.Enabled = true;
+                button2.Enabled = true;
             }
             else
             {
+                button2.Enabled = false;
                 print.Enabled = false;
             }
         }
 
         private void filtr_Click(object sender, EventArgs e)
         {
-            reg_bill r = new reg_bill();
+            filter_for_invoice r = new filter_for_invoice();
             r.StartPosition = FormStartPosition.CenterParent;
             r.ShowDialog();
         }
+        string check_null(string str)
+        {
+            if (str.Length == 0)
+                return "";
+            return str;
+        }
+        private void excel_Click(object sender, EventArgs e)
+        {
+            Excel.Application oXL;
+            Excel._Workbook oWB;
+            Excel._Worksheet oSheet;
 
+            try
+            {
+                //Start Excel and get Application object.
+                oXL = new Excel.Application();
+                oXL.Visible = true;
+
+                //Get a new workbook.
+                oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
+                oSheet = (Excel._Worksheet)oWB.ActiveSheet;
+                oSheet.Name = "Информация по счет-фактурам";
+                //Add table headers going cell by cell.
+                oSheet.Cells[1, 1] = "Номер и дата счет-фактуры";
+                oSheet.Cells[1, 2] = "Номер, серия и дата договора";
+                oSheet.Cells[1, 3] = "КЗЛ";
+                oSheet.Cells[1, 4] = "Наименование клиента";
+                oSheet.Cells[1, 5] = "ИНН";
+                oSheet.Cells[1, 6] = "Код НДС";
+                oSheet.Cells[1, 7] = "ПИНФЛ";
+                oSheet.Cells[1, 8] = "Вид товара(услуг)";
+                oSheet.Cells[1, 9] = "Стоимость поставки";
+                oSheet.Cells[1, 10] = "Статус";
+                oSheet.Cells[1, 11] = "Процесс";
+                oSheet.Cells[1, 12] = "Сумма оплаты";
+                oSheet.Cells[1, 13] = "Ф.И.О. исполнителя";
+
+                oSheet.Cells[1].ColumnWidth = 25;
+                oSheet.Cells[2].ColumnWidth = 28;
+                oSheet.Cells[3].ColumnWidth = 13;
+                oSheet.Cells[4].ColumnWidth = 40;
+                oSheet.Cells[5].ColumnWidth = 10;
+                oSheet.Cells[6].ColumnWidth = 16;
+                oSheet.Cells[7].ColumnWidth = 16;
+                oSheet.Cells[8].ColumnWidth = 40;
+                oSheet.Cells[9].ColumnWidth = 23;
+                oSheet.Cells[10].ColumnWidth = 13;
+                oSheet.Cells[11].ColumnWidth = 13;
+                oSheet.Cells[12].ColumnWidth = 23;
+                oSheet.Cells[13].ColumnWidth = 35;
+                int i;
+                // Create an array to multiple values at once.
+                string[,] saNames = new string[101, 15];
+
+                for (i = 0; i < dataGridView_invoice.Rows.Count; i++)
+                {
+                    for (int j = 0; j < 13; j++)
+                    {
+                        try
+                        {
+                            saNames[i, j] = "\t" + check_null(dataGridView_invoice.Rows[i].Cells[j].Value.ToString());
+                            oSheet.Cells[i + 2, j + 1] = saNames[i, j];
+                        }
+                        catch (Exception ex)
+                        {
+                            saNames[i, j] = "";
+                        }
+                    }
+                }
+            }
+
+            catch (Exception theException)
+            {
+                String errorMessage;
+                errorMessage = "Error: ";
+                errorMessage = String.Concat(errorMessage, theException.Message);
+                errorMessage = String.Concat(errorMessage, " Line:  = ");
+                errorMessage = String.Concat(errorMessage, theException.Source);
+
+                MessageBox.Show(errorMessage, "Error");
+            }
+            finally {
+                oXL = null;
+                oWB = null;
+                oSheet = null;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(ID);
+            Excel.Application oXL;
+            Excel._Workbook oWB;
+            Excel._Worksheet oSheet;
+
+            try
+            {
+                //Start Excel and get Application object.
+                oXL = new Excel.Application();
+                oXL.Visible = true;
+
+                //Get a new workbook.
+                oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
+                oSheet = (Excel._Worksheet)oWB.ActiveSheet;
+                oSheet.Name = "Информация по счет-фактурам";
+                //Add table headers going cell by cell.
+                oSheet.Cells[1, 1] = "INV_NUM";
+                oSheet.Cells[1, 2] = "INV_DATE";
+                oSheet.Cells[1, 3] = "CUR_CODE";
+                oSheet.Cells[1, 4] = "USERNAME";
+                oSheet.Cells[1, 5] = "PL_CODE";
+                oSheet.Cells[1, 6] = "PL_NAME";
+                oSheet.Cells[1, 7] = "PL_INN";
+                oSheet.Cells[1, 8] = "PL_ADDRESS";
+                oSheet.Cells[1, 9] = "PL_REGION";
+                oSheet.Cells[1, 10] = "PL_NUM_ACC";
+                oSheet.Cells[1, 11] = "PL_MFO";
+                oSheet.Cells[1, 12] = "PL_BANK";
+                oSheet.Cells[1, 13] = "SRV_SUM";
+                oSheet.Cells[1, 14] = "SRV_NAME";
+                oSheet.Cells[1, 15] = "DOGOVOR";
+
+                oSheet.Cells[1].ColumnWidth = 8.43;
+                oSheet.Cells[2].ColumnWidth = 9.43;
+                oSheet.Cells[3].ColumnWidth = 12.71;
+                oSheet.Cells[4].ColumnWidth = 10.86;
+                oSheet.Cells[5].ColumnWidth = 8.86;
+                oSheet.Cells[6].ColumnWidth = 21.57;
+                oSheet.Cells[7].ColumnWidth = 9.29;
+                oSheet.Cells[8].ColumnWidth = 43;
+                oSheet.Cells[9].ColumnWidth = 24.29;
+                oSheet.Cells[10].ColumnWidth = 20.71;
+                oSheet.Cells[11].ColumnWidth = 7.71;
+                oSheet.Cells[12].ColumnWidth = 93;
+                oSheet.Cells[13].ColumnWidth = 9.86;
+                oSheet.Cells[14].ColumnWidth = 48.71;
+                oSheet.Cells[15].ColumnWidth = 26;
+                int i;
+                // Create an array to multiple values at once.
+                string[,] saNames = new string[101, 15];
+
+                for (i = 0; i < dataGridView_invoice.Rows.Count; i++)
+                {
+                    for (int j = 0; j < 15; j++)
+                    {
+                        try
+                        {
+                            saNames[i, j] = "\t" + check_null(dataGridView_invoice.Rows[i].Cells[j].Value.ToString());
+                            oSheet.Cells[i + 3, j + 1] = saNames[i, j];
+                        }
+                        catch (Exception ex)
+                        {
+                            saNames[i, j] = "";
+                        }
+                    }
+                }
+            }
+
+            catch (Exception theException)
+            {
+                String errorMessage;
+                errorMessage = "Error: ";
+                errorMessage = String.Concat(errorMessage, theException.Message);
+                errorMessage = String.Concat(errorMessage, " Line:  = ");
+                errorMessage = String.Concat(errorMessage, theException.Source);
+
+                MessageBox.Show(errorMessage, "Error");
+            }
+            finally
+            {
+                oXL = null;
+                oWB = null;
+                oSheet = null;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+
+        }
     }
 }

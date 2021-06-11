@@ -40,8 +40,8 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.uC_Open_depo1 = new app_for_CD.UC_Open_depo();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.tabPage7 = new System.Windows.Forms.TabPage();
             this.uC_Add_user1 = new app_for_CD.UC_Add_user();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -95,6 +95,7 @@
             this.uC_Contract2.Name = "uC_Contract2";
             this.uC_Contract2.Size = new System.Drawing.Size(1923, 725);
             this.uC_Contract2.TabIndex = 0;
+            this.uC_Contract2.Load += new System.EventHandler(this.uC_Contract2_Load);
             // 
             // tabPage2
             // 
@@ -190,6 +191,16 @@
             this.tabPage6.Text = "Пользователи";
             this.tabPage6.UseVisualStyleBackColor = true;
             // 
+            // uC_Add_user1
+            // 
+            this.uC_Add_user1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uC_Add_user1.Location = new System.Drawing.Point(6, 0);
+            this.uC_Add_user1.Name = "uC_Add_user1";
+            this.uC_Add_user1.Size = new System.Drawing.Size(1885, 664);
+            this.uC_Add_user1.TabIndex = 0;
+            // 
             // tabPage7
             // 
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
@@ -199,17 +210,6 @@
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "Аудит";
             this.tabPage7.UseVisualStyleBackColor = true;
-            // 
-            // uC_Add_user1
-            // 
-            this.uC_Add_user1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.uC_Add_user1.Location = new System.Drawing.Point(6, 0);
-            this.uC_Add_user1.Name = "uC_Add_user1";
-            this.uC_Add_user1.Size = new System.Drawing.Size(1885, 664);
-
-            this.uC_Add_user1.TabIndex = 0;
             // 
             // TC_Menu
             // 
