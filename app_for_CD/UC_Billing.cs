@@ -34,7 +34,7 @@ namespace app_for_CD
 
         private void UC_Billing_Load(object sender, EventArgs e)
         {
-            LoadData();
+            LoadData("select * from table_billing order by num_of_bill desc");
         }
 
         
@@ -48,12 +48,13 @@ namespace app_for_CD
                 return "1";
 
         }
-        private void LoadData()
+        private void LoadData(string str)
         {
 
             dataGridView1.Rows.Clear();
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "select * from table_billing order by num_of_bill desc";
+            
+            cmd.CommandText = str;
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
 
@@ -78,16 +79,16 @@ namespace app_for_CD
                     {
                         dataGridView1.Rows[i].Cells[4].Value = dr[7];
                     }
-                    //if (dr[12].ToString() == "0")
-                    //{
-                    //    dataGridView1.Rows[i].Cells[5].Value = dr[8];
-                    //    dataGridView1.Rows[i].Cells[6].Value = "-";
-                    //}
-                    //else
-                    //{
-                    //    dataGridView1.Rows[i].Cells[5].Value = "-";
-                    //    dataGridView1.Rows[i].Cells[6].Value = dr[8];
-                    //}
+                    if (dr[12].ToString() == "0")
+                    {
+                        dataGridView1.Rows[i].Cells[5].Value = dr[8];
+                        dataGridView1.Rows[i].Cells[6].Value = "-";
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells[5].Value = "-";
+                        dataGridView1.Rows[i].Cells[6].Value = dr[9];
+                    }
                     dataGridView1.Rows[i].Cells[7].Value = dr[10].ToString();  //вид товара
                     dataGridView1.Rows[i].Cells[8].Value = dr[11].ToString();  //стоиимость поставки
                     if (dr[12].ToString() == "1")
@@ -316,7 +317,7 @@ namespace app_for_CD
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            LoadData();
+            LoadData("select * from table_billing order by num_of_bill desc");
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -666,33 +667,36 @@ namespace app_for_CD
                 {
                     request = request + $" AND  state = '{Data_bill.s_status}'";
                 }
-
-                cmd.CommandText = "SELECT * from table_billing where 1 = 1 " + request + "order by num_of_bill desc ";
-
-                bool find_val = false;
-                cmd.CommandType = CommandType.Text;
-                try
+                if (Data_bill.its_ok)
                 {
+                    string str = "SELECT * from table_billing where 1 = 1 " + request + "order by num_of_bill desc ";
+                    cmd.CommandText = str;
+                    bool find_val = false;
+                    cmd.CommandType = CommandType.Text;
+                    OracleDataReader dr = cmd.ExecuteReader();
+                    try
+                    {
 
-                    if (find_val)
-                    {
-                        MessageBox.Show("Найдено!");
+                        if (dr.Read())
+                        {
+                            LoadData(str);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Не найдено по данному запросу!");
+                        }
                     }
-                    else
+                    catch
                     {
-                        MessageBox.Show("Не найдено по данному запросу!");
+                        Data_bill.clear();
                     }
-                    LoadData();
-                }
-                catch
-                {
-                    Data_bill.clear();
                 }
             }
         }
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            int row = dataGridView1.CurrentRow.Index;   
+            int row = dataGridView1.CurrentRow.Index;
+            string str_tmp = "";
             if (dataGridView1.SelectedCells.Count > 1)
             {
                 string str = dataGridView1.Rows[row].Cells[0].Value.ToString();
@@ -702,8 +706,9 @@ namespace app_for_CD
                     {
                         break;
                     }
-                    ID += str[i];
+                    str_tmp += str[i];
                 }
+                ID = str_tmp;
             }
         }
     }

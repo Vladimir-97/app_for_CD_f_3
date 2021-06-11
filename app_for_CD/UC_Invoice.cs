@@ -506,8 +506,7 @@ namespace app_for_CD
                     {
                         try
                         {
-                            saNames[i, j] = "\t" + check_null(dataGridView_invoice.Rows[i].Cells[j].Value.ToString());
-                            oSheet.Cells[i + 2, j + 1] = saNames[i, j];
+                            oSheet.Cells[i + 2, j + 1] = "\t" + check_null(dataGridView_invoice.Rows[i].Cells[j].Value.ToString());
                         }
                         catch (Exception ex)
                         {
