@@ -320,6 +320,7 @@ namespace app_for_CD
         string kzl_pol, name_pol, kzl_otch, name_otch, code_cb, count_cb, type_agr;
         string num_agr, date_agr, sum_agr, sum_one_cb, name_cb;
 
+
         private void button5_Click(object sender, EventArgs e)
         {
             FileInfo fi;
