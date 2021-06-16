@@ -222,6 +222,12 @@
     <Compile Include="Reg_depo.Designer.cs">
       <DependentUpon>Reg_depo.cs</DependentUpon>
     </Compile>
+    <Compile Include="sum_for_pay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sum_for_pay.Designer.cs">
+      <DependentUpon>sum_for_pay.cs</DependentUpon>
+    </Compile>
     <Compile Include="TC_Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -279,6 +285,9 @@
     <EmbeddedResource Include="filter_bill.resx">
       <DependentUpon>filter_bill.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="filter_for_invoice.resx">
+      <DependentUpon>filter_for_invoice.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="filter_open_depo.resx">
       <DependentUpon>filter_open_depo.cs</DependentUpon>
     </EmbeddedResource>
@@ -321,6 +330,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reg_depo.resx">
       <DependentUpon>Reg_depo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sum_for_pay.resx">
+      <DependentUpon>sum_for_pay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TC_Menu.resx">
       <DependentUpon>TC_Menu.cs</DependentUpon>

@@ -319,7 +319,6 @@
             // 
             // button2
             // 
-            this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(1027, 21);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 22);
@@ -327,9 +326,7 @@
             this.button2.Text = "E-contract";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // printPreviewDialog1
-            // 
+
             this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
             this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
             this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
