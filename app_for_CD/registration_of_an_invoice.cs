@@ -224,7 +224,18 @@ namespace app_for_CD
                 comboBox_CRP_INN.BackColor = System.Drawing.Color.Red;
                 flag = false;
             }
-            if (NDS_PINFL_textBox.Text == "" || NDS_PINFL_textBox.Text == null) { 
+            if (NDS_PINFL_textBox.Text == "" || NDS_PINFL_textBox.Text == null) {
+                NDS_PINFL_textBox.BackColor = System.Drawing.Color.Red;
+                flag = false;
+            }
+            if (NDS_PINFL.Text == "Код НДС" && NDS_PINFL_textBox.Text.Length < 12)
+            {
+                NDS_PINFL_textBox.BackColor = System.Drawing.Color.Red;
+                flag = false;
+            }
+            else if (NDS_PINFL_textBox.Text.Length < 14)
+            {
+
                 NDS_PINFL_textBox.BackColor = System.Drawing.Color.Red;
                 flag = false;
             }
@@ -703,6 +714,12 @@ namespace app_for_CD
                 Remove(true);
             }
             Data.yes = false;
+        }
+
+        private void NDS_PINFL_textBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            var DS = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
+            e.Handled = !(Char.IsDigit(e.KeyChar) ||  e.KeyChar == 8);
         }
 
         private void comboBox_CRP_INN_SelectedValueChanged(object sender, EventArgs e)

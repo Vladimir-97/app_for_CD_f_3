@@ -15,6 +15,7 @@ using RSDN;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using System.Globalization;
 
 namespace app_for_CD
 {
@@ -26,7 +27,7 @@ namespace app_for_CD
         {
             InitializeComponent();
             SetConnection();
-            LoadData();
+            LoadData("select * from registration_of_invoice order by ID, num_of_ser");
         }
         #region Для подключения excel
 
@@ -110,12 +111,13 @@ namespace app_for_CD
             return Int32.Parse(dr[0].ToString());
         }
 
-        private void LoadData()
+        private void LoadData(string request)
         {
-            
+            NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
+            nfi.NumberDecimalSeparator = ".";
             dataGridView_invoice.Rows.Clear();
             OracleCommand cmd = con.CreateCommand();
-            cmd.CommandText = "select * from registration_of_invoice order by ID, num_of_ser";
+            cmd.CommandText = request;
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
 
@@ -148,7 +150,7 @@ namespace app_for_CD
                         dataGridView_invoice.Rows[i].Cells[6].Value = dr[8];
                     }
                     dataGridView_invoice.Rows[i].Cells[7].Value = dr[3].ToString();
-                    dataGridView_invoice.Rows[i].Cells[8].Value = dr[4].ToString();
+                    dataGridView_invoice.Rows[i].Cells[8].Value = double.Parse(dr[4].ToString()).ToString("N", nfi);
                     if (dr[15].ToString() == "1")
                     {
                         dataGridView_invoice.Rows[i].Cells[9].Value = "Активный";
@@ -157,8 +159,19 @@ namespace app_for_CD
                     {
                         dataGridView_invoice.Rows[i].Cells[9].Value = "Неактивный";
                     }
+                    if (dr[17].ToString() == "0") {
+                        dataGridView_invoice.Rows[i].Cells[11].ReadOnly = true;
+                    }
+                    if (dr[17].ToString() == "1")
+                    {
+                        dataGridView_invoice.Rows[i].Cells[11].ReadOnly = false;
+                    }
+                    if (dr[17].ToString() == "2")
+                    {
+                        dataGridView_invoice.Rows[i].Cells[11].ReadOnly = true;
+                    }
                     dataGridView_invoice.Rows[i].Cells[10].Value = (dataGridView_invoice.Rows[i].Cells[10] as DataGridViewComboBoxCell).Items[Convert.ToInt32(dr[17])];
-                    dataGridView_invoice.Rows[i].Cells[11].Value = dr[18];
+                    dataGridView_invoice.Rows[i].Cells[11].Value = double.Parse(dr[18].ToString()).ToString("N", nfi);
                     dataGridView_invoice.Rows[i].Cells[12].Value = dr[14];
                     i++;
                 }
@@ -189,7 +202,7 @@ namespace app_for_CD
         
         private void update_Click(object sender, EventArgs e)
         {
-            LoadData();
+            LoadData("select * from registration_of_invoice order by ID, num_of_ser");
         }
 
 
@@ -224,47 +237,106 @@ namespace app_for_CD
             }
         }
 
+
         private void dataGridView_invoice_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-
+            
             if (dataGridView_invoice.CurrentCell.ColumnIndex == 10 && e.Control is ComboBox)
             {
                 ComboBox comboBox = e.Control as ComboBox;
                 comboBox.SelectedIndexChanged -= LastColumnComboSelectionChanged;
                 comboBox.SelectedIndexChanged += LastColumnComboSelectionChanged;
             }
+            if (dataGridView_invoice.CurrentCell.ColumnIndex == 11)
+            {
+                var currentcell = dataGridView_invoice.CurrentCellAddress;
+                System.Windows.Forms.TextBox textBox = e.Control as System.Windows.Forms.TextBox;
+                if (dataGridView_invoice.Rows[currentcell.Y].Cells[11].ReadOnly == false) {
+                    string ID1 = "";
+                    string num_date_invoice = dataGridView_invoice.Rows[currentcell.Y].Cells[0].Value.ToString();
+                    int i = 0;
+                    while (num_date_invoice[i] != ' ')
+                    {
+                        ID1 += num_date_invoice[i];
+                        i++;
+                    }
+                    sum_for_pay r = new sum_for_pay(ID1);
+                    r.StartPosition = FormStartPosition.CenterParent;
+                    r.ShowDialog();
+                    LoadData("select * from registration_of_invoice order by ID, num_of_ser");
+                }
+            }
             e.CellStyle.BackColor = dataGridView_invoice.DefaultCellStyle.BackColor;
         }
 
         private void LastColumnComboSelectionChanged(object sender, EventArgs e)
         {
-            
             var currentcell = dataGridView_invoice.CurrentCellAddress;
             string num_date_invoice = dataGridView_invoice.Rows[currentcell.Y].Cells[0].Value.ToString();
+            string previous_value = dataGridView_invoice.Rows[currentcell.Y].Cells[10].Value.ToString();
             int num;
-            string ID = "";
+            string ID1 = "";
             int i = 0;
-            var a = sender;
             
             while(num_date_invoice[i] != ' ')
             {
-                ID += num_date_invoice[i];
+                ID1 += num_date_invoice[i];
                 i++;
             }
 
-
             OracleCommand cmd;
-            cmd = con.CreateCommand();
+
+            string sum = "";
             if (dataGridView_invoice.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Выставлена")
                 num = 0;
             else if (dataGridView_invoice.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Часть оплаты")
                 num = 1;
-            else { 
+            else {
+                //123
+                cmd = con.CreateCommand();
+                cmd.CommandText = $"select SUM_T from registration_of_invoice where ID = {ID1}";
+                cmd.CommandType = CommandType.Text;
+                OracleDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+                sum = dr[0].ToString();
+                dr.Close();
                 num = 2;
             }
-            cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET PROCESS = {num} where id = {ID}";
-            cmd.ExecuteNonQuery();
- 
+            
+            if (num == 0 && previous_value != dataGridView_invoice.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())
+            {
+                cmd = con.CreateCommand();
+                dataGridView_invoice.Rows[currentcell.Y].Cells[11].ReadOnly = true;
+                cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET PROCESS = {num}, SUM_PAID = 0 where id = {ID1}";
+                cmd.ExecuteNonQuery();
+                
+                LoadData("select * from registration_of_invoice order by ID, num_of_ser");
+
+            }
+            else if (num == 1 && previous_value != dataGridView_invoice.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())
+            {
+                sum_for_pay r = new sum_for_pay(ID1);
+                r.StartPosition = FormStartPosition.CenterParent;
+                r.ShowDialog();
+                if(Data.yes == true) {
+                    cmd = con.CreateCommand();
+                    dataGridView_invoice.Rows[currentcell.Y].Cells[11].ReadOnly = false;
+                    cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET PROCESS = {num} where id = {ID1}";
+                    cmd.ExecuteNonQuery();
+                    LoadData("select * from registration_of_invoice order by ID, num_of_ser");
+                }
+                Data.yes = false;
+            }
+            else if (num == 2 && previous_value != dataGridView_invoice.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())
+            {
+                cmd = con.CreateCommand();
+                dataGridView_invoice.Rows[currentcell.Y].Cells[11].ReadOnly = true;
+                cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET PROCESS = {num}, SUM_PAID = {sum} where id = {ID1}";
+                cmd.ExecuteNonQuery();
+                LoadData("select * from registration_of_invoice order by ID, num_of_ser");
+               
+            }
+            
         }
 
         private string ChangeFormatData(string nch_data) {
@@ -431,11 +503,9 @@ namespace app_for_CD
                 }
                 ID = num;
                 print.Enabled = true;
-                button2.Enabled = true;
             }
             else
             {
-                button2.Enabled = false;
                 print.Enabled = false;
             }
         }
@@ -445,6 +515,88 @@ namespace app_for_CD
             filter_for_invoice r = new filter_for_invoice();
             r.StartPosition = FormStartPosition.CenterParent;
             r.ShowDialog();
+            if (Data_bill.date_from != false || Data_bill.ser_num != false || Data_bill.ser_aggr != false || Data_bill.crp != false || Data_bill.inn != false || Data_bill.pinfl != false || Data_bill.code_nds != false || Data_bill.name != false || Data_bill.serv != false || Data_bill.status != false || Data_bill.fio != false)
+            {
+                string request = "";
+                string name_cl = "";
+
+                OracleCommand cmd = con.CreateCommand();
+                if (Data_bill.date_from == true)
+                {
+                    request = $" AND DATE_T  >= '{Data_bill.s_date_from}'  AND DATE_T <= '{Data_bill.s_date_to}' ";
+                }
+                 if (Data_bill.ser_num == true)
+                {
+                    request = request + $" AND ser LIKE '{Data_bill.s_ser_num}/%'";
+                }
+                if (Data_bill.ser_aggr == true)
+                {
+                    request = request + $" AND ser LIKE '%/{Data_bill.s_ser_aggr}'";
+                }
+                if (Data_bill.crp == true)
+                {
+                    request = request + $" AND CRP = {Data_bill.s_crp} ";
+                }
+                if (Data_bill.name == true)
+                {
+                    for (int i = 0; i < Data_bill.s_name.Length; i++)
+                    {
+                        if (Data_bill.s_name[i] == '%')
+                        {
+                            name_cl += '_';
+                        }
+                        else
+                        {
+                            name_cl += Data_bill.s_name[i];
+                        }
+                    }
+                    request = request + $" AND CRP_NM LIKE '%{name_cl}%' ";
+                }
+                if (Data_bill.inn == true)
+                {
+                    request = request + $" AND INN = '{Data_bill.s_inn}'";
+                }
+                if (Data_bill.pinfl == true)
+                {
+                    request = request + $" AND NDS_PINFL = '{Data_bill.s_pinfl}' AND IF_FIZ = 1";
+                }
+                if (Data_bill.code_nds == true)
+                {
+                    request = request + $" AND NDS_PINFL = '{Data_bill.s_code_nds}' AND IF_FIZ = 0";
+                }
+                if (Data_bill.serv == true)
+                {
+                    request = request + $" AND SERVICE_T = '{Data_bill.s_serv}'";
+                }
+                if (Data_bill.fio == true)
+                {
+                    request = request + $" AND FIO = '{Data_bill.s_fio}'";
+                }
+                if (Data_bill.status == true)
+                {
+                    request = request + $" AND  STATUS = '{Data_bill.s_status}'";
+                }
+                if (Data_bill.its_ok)
+                {
+                    string str = "SELECT * from registration_of_invoice where 1 = 1 " + request + " order by ID desc ";
+
+                    MessageBox.Show(str);
+                    cmd.CommandText = str;
+                    cmd.CommandType = CommandType.Text;
+                    OracleDataReader dr = cmd.ExecuteReader();
+                    
+                    if (dr.Read())
+                    {
+                        LoadData(str);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Не найдено по данному запросу!");
+                    }
+                    
+                    Data_bill.clear();
+                }
+            }
         }
         string check_null(string str)
         {
@@ -498,7 +650,6 @@ namespace app_for_CD
                 oSheet.Cells[13].ColumnWidth = 35;
                 int i;
                 // Create an array to multiple values at once.
-                string[,] saNames = new string[101, 15];
 
                 for (i = 0; i < dataGridView_invoice.Rows.Count; i++)
                 {
@@ -510,7 +661,7 @@ namespace app_for_CD
                         }
                         catch (Exception ex)
                         {
-                            saNames[i, j] = "";
+                            //saNames[i, j] = "";
                         }
                     }
                 }
@@ -586,25 +737,58 @@ namespace app_for_CD
                 oSheet.Cells[15].ColumnWidth = 26;
                 int i;
                 // Create an array to multiple values at once.
-                string[,] saNames = new string[101, 15];
+                string num_date_invoice;
+                string IDs = "";
+                string ID1 = "";
+                int j = 0;
+                bool flag = false;
 
                 for (i = 0; i < dataGridView_invoice.Rows.Count; i++)
                 {
-                    for (int j = 0; j < 15; j++)
+                    ID1 = "";
+                    num_date_invoice = dataGridView_invoice.Rows[i].Cells[0].Value.ToString();
+                    while (num_date_invoice[j] != ' ')
                     {
-                        try
-                        {
-                            saNames[i, j] = "\t" + check_null(dataGridView_invoice.Rows[i].Cells[j].Value.ToString());
-                            oSheet.Cells[i + 3, j + 1] = saNames[i, j];
-                        }
-                        catch (Exception ex)
-                        {
-                            saNames[i, j] = "";
-                        }
+                        ID1 += num_date_invoice[j];
+                        j++;
                     }
+                    if (flag == true)
+                    {
+                        IDs = IDs + $"OR A.ID = {ID1} ";
+                    }
+                    else
+                    {
+                        IDs = $"A.ID = {ID1} ";
+                        flag = true;
+                    }
+                    j = 0;
                 }
+                
+                OracleCommand cmd = con.CreateCommand();
+                cmd.CommandText = "select DISTINCT A.ID, A.DATE_T, A.CURRENCY, A.FIO, A.CRP, A.CRP_NM, A.INN, D.REG_ADDR_CONT, E.CD_NM, B.BK_ACNT_NO, B.MFO_CD, C.BK_NM, A.SUM_T, A.SERVICE_T" +
+                                    " from registration_of_invoice A" +
+                                        " INNER JOIN tbcb_crp_bk B"+
+                                            " ON A.CRP = B.CRP_CD"+
+                                        " INNER JOIN tbcb_bk_info C"+
+                                            " ON B.MFO_CD = C.MFO_CD AND B.USED_YN = 'Y' AND B.TRGT_YN = 'Y'"+
+                                        " INNER JOIN tbcb_crp_info D"+
+                                            " ON D.crp_cd = A.CRP"+
+                                        " INNER JOIN tbcb_cd E"+
+                                            " ON E.cd = D.reg_regn_cd AND cd_grp_no = '100042' AND lang_cd = 'UZ'"+
+                                    $" Where {IDs}" +
+                                    "ORDER BY ID";
+                cmd.CommandType = CommandType.Text;
+                OracleDataReader dr = cmd.ExecuteReader();
+                j = 3;
+                while (dr.Read()) {
+                    for(int l = 1; l < 15; l++) {
+                        oSheet.Cells[j, l] = "\t" + dr[l-1].ToString();
+                    }
+                    oSheet.Cells[j, 15] = "\t" + dataGridView_invoice.Rows[j-3].Cells[1].Value.ToString();
+                    j++;
+                }
+                dr.Close();
             }
-
             catch (Exception theException)
             {
                 String errorMessage;
