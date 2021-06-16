@@ -15,6 +15,7 @@ using RSDN;
 using System.Drawing.Printing;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using System.Globalization;
 
 namespace app_for_CD
 {
@@ -112,7 +113,8 @@ namespace app_for_CD
 
         private void LoadData(string request)
         {
-            
+            NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
+            nfi.NumberDecimalSeparator = ".";
             dataGridView_invoice.Rows.Clear();
             OracleCommand cmd = con.CreateCommand();
             cmd.CommandText = request;
@@ -148,7 +150,7 @@ namespace app_for_CD
                         dataGridView_invoice.Rows[i].Cells[6].Value = dr[8];
                     }
                     dataGridView_invoice.Rows[i].Cells[7].Value = dr[3].ToString();
-                    dataGridView_invoice.Rows[i].Cells[8].Value = dr[4].ToString();
+                    dataGridView_invoice.Rows[i].Cells[8].Value = double.Parse(dr[4].ToString()).ToString("N", nfi);
                     if (dr[15].ToString() == "1")
                     {
                         dataGridView_invoice.Rows[i].Cells[9].Value = "Активный";
@@ -169,7 +171,7 @@ namespace app_for_CD
                         dataGridView_invoice.Rows[i].Cells[11].ReadOnly = true;
                     }
                     dataGridView_invoice.Rows[i].Cells[10].Value = (dataGridView_invoice.Rows[i].Cells[10] as DataGridViewComboBoxCell).Items[Convert.ToInt32(dr[17])];
-                    dataGridView_invoice.Rows[i].Cells[11].Value = dr[18];
+                    dataGridView_invoice.Rows[i].Cells[11].Value = double.Parse(dr[18].ToString()).ToString("N", nfi);
                     dataGridView_invoice.Rows[i].Cells[12].Value = dr[14];
                     i++;
                 }
@@ -501,11 +503,9 @@ namespace app_for_CD
                 }
                 ID = num;
                 print.Enabled = true;
-                button2.Enabled = true;
             }
             else
             {
-                button2.Enabled = false;
                 print.Enabled = false;
             }
         }
@@ -737,25 +737,58 @@ namespace app_for_CD
                 oSheet.Cells[15].ColumnWidth = 26;
                 int i;
                 // Create an array to multiple values at once.
-                string[,] saNames = new string[101, 15];
+                string num_date_invoice;
+                string IDs = "";
+                string ID1 = "";
+                int j = 0;
+                bool flag = false;
 
                 for (i = 0; i < dataGridView_invoice.Rows.Count; i++)
                 {
-                    for (int j = 0; j < 15; j++)
+                    ID1 = "";
+                    num_date_invoice = dataGridView_invoice.Rows[i].Cells[0].Value.ToString();
+                    while (num_date_invoice[j] != ' ')
                     {
-                        try
-                        {
-                            saNames[i, j] = "\t" + check_null(dataGridView_invoice.Rows[i].Cells[j].Value.ToString());
-                            oSheet.Cells[i + 3, j + 1] = saNames[i, j];
-                        }
-                        catch (Exception ex)
-                        {
-                            saNames[i, j] = "";
-                        }
+                        ID1 += num_date_invoice[j];
+                        j++;
                     }
+                    if (flag == true)
+                    {
+                        IDs = IDs + $"OR A.ID = {ID1} ";
+                    }
+                    else
+                    {
+                        IDs = $"A.ID = {ID1} ";
+                        flag = true;
+                    }
+                    j = 0;
                 }
+                
+                OracleCommand cmd = con.CreateCommand();
+                cmd.CommandText = "select DISTINCT A.ID, A.DATE_T, A.CURRENCY, A.FIO, A.CRP, A.CRP_NM, A.INN, D.REG_ADDR_CONT, E.CD_NM, B.BK_ACNT_NO, B.MFO_CD, C.BK_NM, A.SUM_T, A.SERVICE_T" +
+                                    " from registration_of_invoice A" +
+                                        " INNER JOIN tbcb_crp_bk B"+
+                                            " ON A.CRP = B.CRP_CD"+
+                                        " INNER JOIN tbcb_bk_info C"+
+                                            " ON B.MFO_CD = C.MFO_CD AND B.USED_YN = 'Y' AND B.TRGT_YN = 'Y'"+
+                                        " INNER JOIN tbcb_crp_info D"+
+                                            " ON D.crp_cd = A.CRP"+
+                                        " INNER JOIN tbcb_cd E"+
+                                            " ON E.cd = D.reg_regn_cd AND cd_grp_no = '100042' AND lang_cd = 'UZ'"+
+                                    $" Where {IDs}" +
+                                    "ORDER BY ID";
+                cmd.CommandType = CommandType.Text;
+                OracleDataReader dr = cmd.ExecuteReader();
+                j = 3;
+                while (dr.Read()) {
+                    for(int l = 1; l < 15; l++) {
+                        oSheet.Cells[j, l] = "\t" + dr[l-1].ToString();
+                    }
+                    oSheet.Cells[j, 15] = "\t" + dataGridView_invoice.Rows[j-3].Cells[1].Value.ToString();
+                    j++;
+                }
+                dr.Close();
             }
-
             catch (Exception theException)
             {
                 String errorMessage;
