@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,16 +15,21 @@ namespace app_for_CD
     public partial class sum_for_pay : Form
     {
         OracleConnection con = null;
-        String cur_id;
+        string cur_id;
+        int type_s;
         double sum = 1;
-        public sum_for_pay(string ID)
+        public sum_for_pay(string ID, int type)
         {
             InitializeComponent();
             SetConnection();
+            type_s = type;
             cur_id = ID;
             OracleCommand cmd;
             cmd = con.CreateCommand();
+            if (type == 1)
             cmd.CommandText = $"select SUM_T from REGISTRATION_OF_INVOICE where id = {cur_id}";
+            else
+                cmd.CommandText = $"select cost_deliv from table_billing where num_of_bill = {cur_id}";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             dr.Read();
@@ -70,6 +76,9 @@ namespace app_for_CD
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            NumberFormatInfo nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ".";
+            double num_input = double.Parse(textBox1.Text);
             if (textBox1.Text == null || textBox1.Text == "")  {
                 MessageBox.Show("Введите сумму!");
             }
@@ -77,11 +86,15 @@ namespace app_for_CD
             {
                 MessageBox.Show("Недопустимое значение!");
             }
-            else if (double.Parse(textBox1.Text) < sum)
+            else if (num_input < sum)
             {
                 OracleCommand cmd;
                 cmd = con.CreateCommand();
-                cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET SUM_PAID = {textBox1.Text} where id = {cur_id}";
+                if (type_s == 1)
+                    cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET SUM_PAID = {num_input.ToString(nfi)} where id = {cur_id}";
+                else
+                    cmd.CommandText = $"UPDATE table_billing SET payment_amount = {num_input.ToString(nfi)} where num_of_bill = {cur_id}";
+
                 cmd.ExecuteNonQuery();
                 Data.yes = true;
                 CloseConnection();

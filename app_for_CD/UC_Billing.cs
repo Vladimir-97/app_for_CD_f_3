@@ -284,6 +284,76 @@ namespace app_for_CD
             }
           
         }
+        private void LastColumnComboSelectionChanged(object sender, EventArgs e)
+        {
+            var currentcell = dataGridView1.CurrentCellAddress;
+            string num_date_invoice = dataGridView1.Rows[currentcell.Y].Cells[0].Value.ToString();
+            string previous_value = dataGridView1.Rows[currentcell.Y].Cells[10].Value.ToString();
+            int num;
+            string ID1 = "";
+            int i = 0;
+
+            while (num_date_invoice[i] != ' ')
+            {
+                ID1 += num_date_invoice[i];
+                i++;
+            }
+
+            OracleCommand cmd;
+
+            string sum = "";
+            if (dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Выставлена")
+                num = 0;
+            else if (dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Часть оплаты")
+                num = 1;
+            else
+            {
+                //123
+                cmd = con.CreateCommand();
+                cmd.CommandText = $"select cost_deliv from table_billing where num_of_bill = {ID1}";
+                cmd.CommandType = CommandType.Text;
+                OracleDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+                sum = dr[0].ToString();
+                dr.Close();
+                num = 2;
+            }
+
+            if (num == 0 && previous_value != dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())
+            {
+                cmd = con.CreateCommand();
+                dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly = true;
+                cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num}, payment_amount = 0 where num_of_bill = {ID1}";
+                cmd.ExecuteNonQuery();
+
+                LoadData("select * from table_billing order by num_of_bill desc");
+
+            }
+            else if (num == 1 && previous_value != dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())
+            {
+                sum_for_pay r = new sum_for_pay(ID1,2);
+                r.StartPosition = FormStartPosition.CenterParent;
+                r.ShowDialog();
+                if (Data.yes == true)
+                {
+                    cmd = con.CreateCommand();
+                    dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly = false;
+                    cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num} where num_of_bill = {ID1}";
+                    cmd.ExecuteNonQuery();
+                    LoadData("select * from table_billing order by num_of_bill desc");
+                }
+                Data.yes = false;
+            }
+            else if (num == 2 && previous_value != dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())    /////x = 10
+            {
+                cmd = con.CreateCommand();
+                dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly = true;
+                cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num}, payment_amount = {sum} where num_of_bill = {ID1}";
+                cmd.ExecuteNonQuery();
+                LoadData("select * from table_billing order by num_of_bill desc");
+            }
+
+        }
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
 
@@ -293,52 +363,27 @@ namespace app_for_CD
                 comboBox.SelectedIndexChanged -= LastColumnComboSelectionChanged;
                 comboBox.SelectedIndexChanged += LastColumnComboSelectionChanged;
             }
+            if (dataGridView1.CurrentCell.ColumnIndex == 11)
+            {
+                var currentcell = dataGridView1.CurrentCellAddress;
+                System.Windows.Forms.TextBox textBox = e.Control as System.Windows.Forms.TextBox;
+                if (dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly == false)
+                {
+                    string ID1 = "";
+                    string num_date_invoice = dataGridView1.Rows[currentcell.Y].Cells[0].Value.ToString();
+                    int i = 0;
+                    while (num_date_invoice[i] != ' ')
+                    {
+                        ID1 += num_date_invoice[i];
+                        i++;
+                    }
+                    sum_for_pay r = new sum_for_pay(ID1, 2);
+                    r.StartPosition = FormStartPosition.CenterParent;
+                    r.ShowDialog();
+                    LoadData("select * from table_billing order by num_of_bill desc");
+                }
+            }
             e.CellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
-        }
-
-        private void LastColumnComboSelectionChanged(object sender, EventArgs e)
-        {
-
-            var currentcell = dataGridView1.CurrentCellAddress;
-            ID = "";
-            string sum_amount = "";
-            string num_date_invoice = dataGridView1.Rows[currentcell.Y].Cells[0].Value.ToString();
-            int num;
-            int i = 0;
-            var a = sender;
-
-            while (num_date_invoice[i] != ' ')
-            {
-                ID += num_date_invoice[i];
-                i++;
-            }
-
-
-            OracleCommand cmd;
-            cmd = con.CreateCommand();
-            if (dataGridView1.Rows[currentcell.Y].Cells[10].EditedFormattedValue.ToString() == "Выставлена")
-            {
-                num = 0;
-                if (dataGridView1.Rows[currentcell.Y].Cells[11].EditedFormattedValue.ToString() != "")
-                    sum_amount = dataGridView1.Rows[currentcell.Y].Cells[11].EditedFormattedValue.ToString();
-            }
-            else if (dataGridView1.Rows[currentcell.Y].Cells[10].EditedFormattedValue.ToString() == "Часть оплаты")
-            {
-                num = 1;
-                if (dataGridView1.Rows[currentcell.Y].Cells[11].EditedFormattedValue.ToString() != "")
-                    sum_amount = dataGridView1.Rows[currentcell.Y].Cells[11].EditedFormattedValue.ToString();
-            }
-            else
-            {
-                num = 2;
-                sum_amount = dataGridView1.Rows[currentcell.Y].Cells[8].Value.ToString();
-                //MessageBox.Show(sum_amount);
-            }
-
-
-            cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num}, payment_amount = {sum_amount}  where num_of_bill = {ID}";
-            cmd.ExecuteNonQuery();
-
         }
         private void button2_Click(object sender, EventArgs e)
         {

@@ -404,7 +404,7 @@ namespace app_for_CD
                 cmd.Parameters.Add("PINFL", NDS_PINFL_textBox.Text); ///////////
             }
             cmd.Parameters.Add("TYPE_SER", ComboBox_0.Text);   /////////////////
-            cmd.Parameters.Add("COST_DELIV", float.Parse(textBox_Sum.Text));            ///////////////////////////////////NDS_PINFL
+            cmd.Parameters.Add("COST_DELIV", textBox_Sum.Text);            ///////////////////////////////////NDS_PINFL
             cmd.Parameters.Add("STATUS", status);   /////////////
             cmd.Parameters.Add("PROCESS", "0");  //////////////
             cmd.Parameters.Add("SUMMA", "0");
@@ -608,9 +608,8 @@ namespace app_for_CD
             if (e.KeyChar == DS && ((TextBox)sender).Text.Length == 0)
                 e.Handled = true;
             else
-                e.Handled = !(Char.IsDigit(e.KeyChar) || ((e.KeyChar == DS) && (DS_Count(((TextBox)sender).Text) < 1)) || e.KeyChar == '.');
+                e.Handled = !(Char.IsDigit(e.KeyChar) || ((e.KeyChar == DS) && (DS_Count(((TextBox)sender).Text) < 1)) || e.KeyChar == 8 || e.KeyChar == '.');
         }
-
         private void ComboBoxClick(object sender, EventArgs e)
         {
             ComboBox combo = sender as ComboBox;
@@ -855,7 +854,7 @@ namespace app_for_CD
                 cmd.Parameters.Add("PINFL", NDS_PINFL_textBox.Text); ///////////
             }
             cmd.Parameters.Add("TYPE_SER", ComboBox_0.Text);   /////////////////
-            cmd.Parameters.Add("COST_DELIV", float.Parse(textBox_Sum.Text));            ///////////////////////////////////NDS_PINFL
+            cmd.Parameters.Add("COST_DELIV", textBox_Sum.Text);            ///////////////////////////////////NDS_PINFL
             cmd.Parameters.Add("STATUS", status);   /////////////
 ///cmd.Parameters.Add("PROCESS", "Выставлен");  //////////////
                                                          // cmd.Parameters.Add("SUMMA", "");
