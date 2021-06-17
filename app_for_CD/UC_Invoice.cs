@@ -270,7 +270,7 @@ namespace app_for_CD
                     LoadData("select * from registration_of_invoice order by ID, num_of_ser");
                 }
             }
-            e.CellStyle.BackColor = dataGridView_invoice.DefaultCellStyle.BackColor;
+            //e.CellStyle.BackColor = dataGridView_invoice.DefaultCellStyle.BackColor.Gre;
         }
 
         private void LastColumnComboSelectionChanged(object sender, EventArgs e)
@@ -371,7 +371,7 @@ namespace app_for_CD
             
             myExcelWorkSheet.Cells[2, "B"].Value = $"№ {ID} от {ch_data}";
             ch_data = ChangeFormatData(dr[13].ToString());
-            myExcelWorkSheet.Cells[3, "B"].Value = $"к договору {dr[2].ToString()} от {ch_data}";
+            myExcelWorkSheet.Cells[3, "B"].Value = $"к договору № {dr[2].ToString()} от {ch_data}";
 
             cmd1 = con.CreateCommand();
             cmd1.CommandText = $"select CRP_NM, REG_ADDR_CONT from tbcb_crp_info where CRP_CD = '{dr[1]}'";
@@ -584,7 +584,6 @@ namespace app_for_CD
                 {
                     string str = "SELECT * from registration_of_invoice where 1 = 1 " + request + " order by ID desc ";
 
-                    MessageBox.Show(str);
                     cmd.CommandText = str;
                     cmd.CommandType = CommandType.Text;
                     OracleDataReader dr = cmd.ExecuteReader();
