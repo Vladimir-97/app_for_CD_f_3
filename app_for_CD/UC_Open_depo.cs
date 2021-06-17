@@ -309,7 +309,7 @@ namespace app_for_CD
                         oSheet.Cells[46, 5] = dr[27].ToString();
                         oSheet.Cells[46, 10] = id.ToString();
                         oSheet.Cells[49, 9] = fio;
-                        oSheet.Cells[12, 5] = "\t" +dr[30].ToString();
+                        oSheet.Cells[12, 5] = "\t" +dr[29].ToString();
                         oSheet.Cells[42, 5] = dr[30].ToString();
                         oSheet.Cells[44, 5] = dr[31].ToString();
 
@@ -492,7 +492,6 @@ namespace app_for_CD
         {
             updatePanel2();
         }
-
         private void button5_Click(object sender, EventArgs e)
         {
             updatePanel2();
