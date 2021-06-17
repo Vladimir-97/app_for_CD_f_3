@@ -380,6 +380,9 @@ namespace app_for_CD
                 bool flag = false;
                 FlowLayoutPanel flp;
                 Panel panel;
+                NumberFormatInfo nfi = new NumberFormatInfo();
+                nfi.NumberDecimalSeparator = ".";
+                double num_input;
                 for (int i = 0; i < tableLayoutPanel_main.Controls.Count - 4; i++)
                 {
 
@@ -393,7 +396,8 @@ namespace app_for_CD
                     else if ((i % 2 == 1) && flag == true)
                     {
                         panel = (Panel)(tableLayoutPanel_main.GetControlFromPosition(1, cur_row));
-                        values.Add(((TextBox)panel.Controls[0]).Text);
+                        num_input = double.Parse(((TextBox)panel.Controls[0]).Text);
+                        values.Add(num_input.ToString());
                         values.Add(((ComboBox)panel.Controls[2]).Text);
                         flag = false;
                         cur_row++;
