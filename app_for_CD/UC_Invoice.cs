@@ -272,7 +272,7 @@ namespace app_for_CD
             }
             //e.CellStyle.BackColor = dataGridView_invoice.DefaultCellStyle.BackColor.Gre;
         }
-
+        //1
         private void LastColumnComboSelectionChanged(object sender, EventArgs e)
         {
             var currentcell = dataGridView_invoice.CurrentCellAddress;
