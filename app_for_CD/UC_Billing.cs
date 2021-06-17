@@ -27,10 +27,11 @@ namespace app_for_CD
         {
             InitializeComponent();
             SetConnection();
+            location_y = Size.Height -  panel5.Location.Y;
         }
         OracleConnection con = null;
         string ID = "";
-
+        int location_y;
 
         private void UC_Billing_Load(object sender, EventArgs e)
         {
@@ -66,6 +67,8 @@ namespace app_for_CD
 
                 if (Convert.ToInt32(dr[0]) != priv)
                 {
+
+
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = dr[0] + " от " + dr[1];
                     dataGridView1.Rows[i].Cells[1].Value = dr[2]+ "/" + dr[3] + " от " + dr[4];
@@ -74,24 +77,25 @@ namespace app_for_CD
                     if (dr[7] == null || dr[7].ToString() == "")
                     {
                         dataGridView1.Rows[i].Cells[4].Value = "-";
+
                     }
                     else
                     {
                         dataGridView1.Rows[i].Cells[4].Value = dr[7];
                     }
-                    if (dr[12].ToString() == "0")
+                    if (dr[8].ToString() == "" || dr[8].ToString() == null)
                     {
-                        dataGridView1.Rows[i].Cells[5].Value = dr[8];
-                        dataGridView1.Rows[i].Cells[6].Value = "-";
+                        dataGridView1.Rows[i].Cells[6].Value = dr[9];
+                        dataGridView1.Rows[i].Cells[5].Value = "-";
                     }
                     else
                     {
-                        dataGridView1.Rows[i].Cells[5].Value = "-";
-                        dataGridView1.Rows[i].Cells[6].Value = dr[9];
+                        dataGridView1.Rows[i].Cells[6].Value = "-";
+                        dataGridView1.Rows[i].Cells[5].Value = dr[8];
                     }
                     dataGridView1.Rows[i].Cells[7].Value = dr[10].ToString();  //вид товара
                     dataGridView1.Rows[i].Cells[8].Value = dr[11].ToString();  //стоиимость поставки
-                    if (dr[12].ToString() == "1")
+                    if (dr[12].ToString() == "1")   
                     {
                         dataGridView1.Rows[i].Cells[9].Value = "Активный";
                     }
@@ -100,9 +104,11 @@ namespace app_for_CD
                         dataGridView1.Rows[i].Cells[9].Value = "Неактивный";
                     }
                     dataGridView1.Rows[i].Cells[10].Value = (dataGridView1.Rows[i].Cells[10] as DataGridViewComboBoxCell).Items[Convert.ToInt32(dr[13])];   // проц
-                   // dataGridView1.Rows[i].Cells[11].Value = dr[18];
+                // dataGridView1.Rows[i].Cells[11].Value = dr[18];
+                    dataGridView1.Rows[i].Cells[11].Value = dr[14];
                     dataGridView1.Rows[i].Cells[12].Value = dr[15];
                     i++;
+
                 }
                 else
                 {
@@ -112,7 +118,11 @@ namespace app_for_CD
                 }
 
                 priv = Convert.ToInt32(dr[0]);
-
+                for (int j = 0; j < 14; j++)
+                    if (i % 2 == 0)
+                    dataGridView1.Rows[i-1].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                    else
+                    dataGridView1.Rows[i-1].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
             }
 
             for (int row = 0; row <= dataGridView1.Rows.Count - 1; row++)
@@ -169,41 +179,42 @@ namespace app_for_CD
                 //Get a new workbook.
                 oWB = (Excel._Workbook)(oXL.Workbooks.Add(Missing.Value));
                 oSheet = (Excel._Worksheet)oWB.ActiveSheet;
-                oSheet.Name = "Информация по договорам";
+                oSheet.Name = "Информация по счету на оплату";
                 //Add table headers going cell by cell.
-                oSheet.Cells[1, 1] = "№";
-                oSheet.Cells[1, 2] = "Номер договора";
-                oSheet.Cells[1, 3] = "Серия договора";
-                oSheet.Cells[1, 4] = "Дата договора";
-                oSheet.Cells[1, 5] = "Статус";
-                oSheet.Cells[1, 6] = "КЗЛ";
-                oSheet.Cells[1, 7] = "ИНН";
-                oSheet.Cells[1, 8] = "Наименование клиента";
-                oSheet.Cells[1, 9] = "Вид услуги";
-                oSheet.Cells[1, 10] = "Цена договора";
-                oSheet.Cells[1, 11] = "Исчисление";
-                oSheet.Cells[1, 12] = "Ф.И.О. исполнителя";
+                oSheet.Cells[1, 1] = "Номер и дата счета на оплату";
+                oSheet.Cells[1, 2] = "Номер, серия и дата договора";
+                oSheet.Cells[1, 3] = "КЗЛ";
+                oSheet.Cells[1, 4] = "Наименование клиента";
+                oSheet.Cells[1, 5] = "ИНН";
+                oSheet.Cells[1, 6] = "Код НДС";
+                oSheet.Cells[1, 7] = "ПИНФЛ";
+                oSheet.Cells[1, 8] = "Вид товара(услуг)";
+                oSheet.Cells[1, 9] = "Стоимость поставки";
+                oSheet.Cells[1, 10] = "Статус";
+                oSheet.Cells[1, 11] = "Процесс";
+                oSheet.Cells[1, 12] = "Сумма оплаты";
+                oSheet.Cells[1, 13] = "Ф.И.О. исполнителя";
 
-                oSheet.Cells[1].ColumnWidth = 5;  //номер
-                oSheet.Cells[2].ColumnWidth = 15;   //номер дог
-                oSheet.Cells[3].ColumnWidth = 15;   //сер дог
-                oSheet.Cells[4].ColumnWidth = 14;   //дата договора
-                oSheet.Cells[5].ColumnWidth = 28;   //статус договора
-                oSheet.Cells[6].ColumnWidth = 14;   //кзл
-                oSheet.Cells[7].ColumnWidth = 10;   //инн
-                oSheet.Cells[8].ColumnWidth = 40;   //наименование клиента
-                oSheet.Cells[9].ColumnWidth = 67;   //наименование договора
-                oSheet.Cells[10].ColumnWidth = 15;  //цена договора
-
-                oSheet.Cells[11].ColumnWidth = 15;  //исчисление
-                oSheet.Cells[12].ColumnWidth = 40;  //фио
+                oSheet.Cells[1].ColumnWidth = 25;
+                oSheet.Cells[2].ColumnWidth = 28;
+                oSheet.Cells[3].ColumnWidth = 13;
+                oSheet.Cells[4].ColumnWidth = 40;
+                oSheet.Cells[5].ColumnWidth = 10;
+                oSheet.Cells[6].ColumnWidth = 16;
+                oSheet.Cells[7].ColumnWidth = 16;
+                oSheet.Cells[8].ColumnWidth = 40;
+                oSheet.Cells[9].ColumnWidth = 23;
+                oSheet.Cells[10].ColumnWidth = 13;
+                oSheet.Cells[11].ColumnWidth = 13;
+                oSheet.Cells[12].ColumnWidth = 23;
+                oSheet.Cells[13].ColumnWidth = 35;
                 int i;
                 // Create an array to multiple values at once.
                 string[,] saNames = new string[101, 15];
 
                 for (i = 0; i < dataGridView1.Rows.Count ; i++)
                 {
-                    for (int j = 0; j < 12; j++)
+                    for (int j = 0; j < 13; j++)
                     {
                         try
                         {
@@ -273,6 +284,76 @@ namespace app_for_CD
             }
           
         }
+        private void LastColumnComboSelectionChanged(object sender, EventArgs e)
+        {
+            var currentcell = dataGridView1.CurrentCellAddress;
+            string num_date_invoice = dataGridView1.Rows[currentcell.Y].Cells[0].Value.ToString();
+            string previous_value = dataGridView1.Rows[currentcell.Y].Cells[10].Value.ToString();
+            int num;
+            string ID1 = "";
+            int i = 0;
+
+            while (num_date_invoice[i] != ' ')
+            {
+                ID1 += num_date_invoice[i];
+                i++;
+            }
+
+            OracleCommand cmd;
+
+            string sum = "";
+            if (dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Выставлена")
+                num = 0;
+            else if (dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Часть оплаты")
+                num = 1;
+            else
+            {
+                //123
+                cmd = con.CreateCommand();
+                cmd.CommandText = $"select cost_deliv from table_billing where num_of_bill = {ID1}";
+                cmd.CommandType = CommandType.Text;
+                OracleDataReader dr = cmd.ExecuteReader();
+                dr.Read();
+                sum = dr[0].ToString();
+                dr.Close();
+                num = 2;
+            }
+
+            if (num == 0 && previous_value != dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())
+            {
+                cmd = con.CreateCommand();
+                dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly = true;
+                cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num}, payment_amount = 0 where num_of_bill = {ID1}";
+                cmd.ExecuteNonQuery();
+
+                LoadData("select * from table_billing order by num_of_bill desc");
+
+            }
+            else if (num == 1 && previous_value != dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())
+            {
+                sum_for_pay r = new sum_for_pay(ID1,2);
+                r.StartPosition = FormStartPosition.CenterParent;
+                r.ShowDialog();
+                if (Data.yes == true)
+                {
+                    cmd = con.CreateCommand();
+                    dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly = false;
+                    cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num} where num_of_bill = {ID1}";
+                    cmd.ExecuteNonQuery();
+                    LoadData("select * from table_billing order by num_of_bill desc");
+                }
+                Data.yes = false;
+            }
+            else if (num == 2 && previous_value != dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())    /////x = 10
+            {
+                cmd = con.CreateCommand();
+                dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly = true;
+                cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num}, payment_amount = {sum} where num_of_bill = {ID1}";
+                cmd.ExecuteNonQuery();
+                LoadData("select * from table_billing order by num_of_bill desc");
+            }
+
+        }
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
 
@@ -282,38 +363,27 @@ namespace app_for_CD
                 comboBox.SelectedIndexChanged -= LastColumnComboSelectionChanged;
                 comboBox.SelectedIndexChanged += LastColumnComboSelectionChanged;
             }
+            if (dataGridView1.CurrentCell.ColumnIndex == 11)
+            {
+                var currentcell = dataGridView1.CurrentCellAddress;
+                System.Windows.Forms.TextBox textBox = e.Control as System.Windows.Forms.TextBox;
+                if (dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly == false)
+                {
+                    string ID1 = "";
+                    string num_date_invoice = dataGridView1.Rows[currentcell.Y].Cells[0].Value.ToString();
+                    int i = 0;
+                    while (num_date_invoice[i] != ' ')
+                    {
+                        ID1 += num_date_invoice[i];
+                        i++;
+                    }
+                    sum_for_pay r = new sum_for_pay(ID1, 2);
+                    r.StartPosition = FormStartPosition.CenterParent;
+                    r.ShowDialog();
+                    LoadData("select * from table_billing order by num_of_bill desc");
+                }
+            }
             e.CellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
-        }
-
-        private void LastColumnComboSelectionChanged(object sender, EventArgs e)
-        {
-
-            var currentcell = dataGridView1.CurrentCellAddress;
-            string num_date_invoice = dataGridView1.Rows[currentcell.Y].Cells[0].Value.ToString();
-            int num;
-            int i = 0;
-            var a = sender;
-
-            while (num_date_invoice[i] != ' ')
-            {
-                ID += num_date_invoice[i];
-                i++;
-            }
-
-
-            OracleCommand cmd;
-            cmd = con.CreateCommand();
-            if (dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Выставлена")
-                num = 0;
-            else if (dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString() == "Часть оплаты")
-                num = 1;
-            else
-            {
-                num = 2;
-            }
-            cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num} where num_of_bill = {ID}";
-            cmd.ExecuteNonQuery();
-
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -460,10 +530,16 @@ namespace app_for_CD
             ch_date = ch_date + date_bill[4].ToString() + date_bill[5].ToString() + '.';
             ch_date = ch_date + date_bill[0].ToString() + date_bill[1].ToString() + date_bill[2].ToString() + date_bill[3].ToString();
 
+
             myExcelWorkSheet.Cells[1, 2].Value = "СЧЕТ НА ОПЛАТУ";
-            
+
             myExcelWorkSheet.Cells[2, "B"].Value = $"№ {ID} от {ch_date}";
-            myExcelWorkSheet.Cells[3, "B"].Value = $"к договору {dr[0].ToString()} от **.**.****";
+
+            date_bill = dr[4].ToString();
+            ch_date = date_bill[6].ToString() + date_bill[7].ToString() + '.';
+            ch_date = ch_date + date_bill[4].ToString() + date_bill[5].ToString() + '.';
+            ch_date = ch_date + date_bill[0].ToString() + date_bill[1].ToString() + date_bill[2].ToString() + date_bill[3].ToString();
+            myExcelWorkSheet.Cells[3, "B"].Value = $"к договору {dr[0].ToString()} от {ch_date}" ;
 
             cmd1 = con.CreateCommand();
             cmd1.CommandText = $"select CRP_NM, REG_ADDR_CONT from tbcb_crp_info where CRP_CD = '{dr[5]}'";
@@ -476,7 +552,7 @@ namespace app_for_CD
             myExcelWorkSheet.Cells[8, "AX"].Value = dr1[1].ToString();
             dr1.Close();
 
-            myExcelWorkSheet.Cells[10, "AX"].Value = $"{dr[8]}";
+            myExcelWorkSheet.Cells[10, "AX"].Value = $"{dr[7]}";
             if (dr[8].ToString() == "")
             myExcelWorkSheet.Cells[12, "AX"].Value = "\t" + dr[9].ToString();
             else
@@ -624,6 +700,14 @@ namespace app_for_CD
                 {
                     request = $" AND date_of_bill  >= '{Data_bill.s_date_from}'  AND date_of_bill <= '{Data_bill.s_date_to}' ";
                 }
+                if (Data_bill.ser_num == true)
+                {
+                    request = request + $" AND num_aggr = {Data_bill.s_ser_num} ";
+                }
+                if (Data_bill.ser_aggr == true)
+                {
+                    request = request + $" AND sres_aggr = '{Data_bill.s_ser_aggr}' ";
+                }
                 if (Data_bill.crp == true)
                 {
                     request = request + $" AND CRP_CD = {Data_bill.s_crp} ";
@@ -688,9 +772,9 @@ namespace app_for_CD
                     }
                     catch
                     {
-                        Data_bill.clear();
                     }
                 }
+                Data_bill.clear();
             }
         }
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
@@ -710,6 +794,11 @@ namespace app_for_CD
                 }
                 ID = str_tmp;
             }
+        }
+
+        private void UC_Billing_SizeChanged(object sender, EventArgs e)
+        {
+            panel5.Location =  new Point(16, Size.Height - location_y);
         }
     }
 }

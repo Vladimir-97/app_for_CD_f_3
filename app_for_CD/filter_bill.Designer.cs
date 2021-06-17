@@ -30,6 +30,7 @@
         {
             this.Ok = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.textBox8 = new System.Windows.Forms.TextBox();
@@ -55,7 +56,6 @@
             this.dateTimePicker_st = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -102,6 +102,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1093, 316);
             this.panel1.TabIndex = 55;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Активный\t",
+            "Отмененный"});
+            this.comboBox1.Location = new System.Drawing.Point(339, 248);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(550, 21);
+            this.comboBox1.TabIndex = 60;
             // 
             // checkBox10
             // 
@@ -180,6 +191,7 @@
             // textBox6
             // 
             this.textBox6.Location = new System.Drawing.Point(339, 119);
+            this.textBox6.MaxLength = 20;
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(550, 20);
             this.textBox6.TabIndex = 52;
@@ -188,6 +200,7 @@
             // 
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(339, 92);
+            this.comboBox2.MaxLength = 12;
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(513, 21);
             this.comboBox2.TabIndex = 51;
@@ -300,6 +313,7 @@
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(339, 171);
+            this.textBox3.MaxLength = 12;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(550, 20);
             this.textBox3.TabIndex = 13;
@@ -307,6 +321,7 @@
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(339, 145);
+            this.textBox2.MaxLength = 14;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(550, 20);
             this.textBox2.TabIndex = 12;
@@ -354,17 +369,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1093, 365);
             this.panel2.TabIndex = 55;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "Активный\t",
-            "Отмененный"});
-            this.comboBox1.Location = new System.Drawing.Point(339, 248);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(550, 21);
-            this.comboBox1.TabIndex = 60;
             // 
             // filter_bill
             // 

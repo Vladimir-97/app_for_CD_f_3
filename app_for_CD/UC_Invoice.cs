@@ -260,7 +260,7 @@ namespace app_for_CD
                         ID1 += num_date_invoice[i];
                         i++;
                     }
-                    sum_for_pay r = new sum_for_pay(ID1);
+                    sum_for_pay r = new sum_for_pay(ID1,1);
                     r.StartPosition = FormStartPosition.CenterParent;
                     r.ShowDialog();
                     LoadData("select * from registration_of_invoice order by ID, num_of_ser");
@@ -315,7 +315,7 @@ namespace app_for_CD
             }
             else if (num == 1 && previous_value != dataGridView_invoice.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())
             {
-                sum_for_pay r = new sum_for_pay(ID1);
+                sum_for_pay r = new sum_for_pay(ID1,1);
                 r.StartPosition = FormStartPosition.CenterParent;
                 r.ShowDialog();
                 if(Data.yes == true) {

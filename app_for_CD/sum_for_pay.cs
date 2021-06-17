@@ -15,16 +15,21 @@ namespace app_for_CD
     public partial class sum_for_pay : Form
     {
         OracleConnection con = null;
-        String cur_id;
+        string cur_id;
+        int type_s;
         double sum = 1;
-        public sum_for_pay(string ID)
+        public sum_for_pay(string ID, int type)
         {
             InitializeComponent();
             SetConnection();
+            type_s = type;
             cur_id = ID;
             OracleCommand cmd;
             cmd = con.CreateCommand();
+            if (type == 1)
             cmd.CommandText = $"select SUM_T from REGISTRATION_OF_INVOICE where id = {cur_id}";
+            else
+                cmd.CommandText = $"select cost_deliv from table_billing where num_of_bill = {cur_id}";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             dr.Read();
@@ -85,7 +90,11 @@ namespace app_for_CD
             {
                 OracleCommand cmd;
                 cmd = con.CreateCommand();
-                cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET SUM_PAID = {num_input.ToString(nfi)} where id = {cur_id}";
+                if (type_s == 1)
+                    cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET SUM_PAID = {num_input.ToString(nfi)} where id = {cur_id}";
+                else
+                    cmd.CommandText = $"UPDATE table_billing SET payment_amount = {num_input.ToString(nfi)} where num_of_bill = {cur_id}";
+
                 cmd.ExecuteNonQuery();
                 Data.yes = true;
                 CloseConnection();
