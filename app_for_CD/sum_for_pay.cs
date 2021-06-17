@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,6 +71,9 @@ namespace app_for_CD
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            NumberFormatInfo nfi = new NumberFormatInfo();
+            nfi.NumberDecimalSeparator = ".";
+            double num_input = double.Parse(textBox1.Text);
             if (textBox1.Text == null || textBox1.Text == "")  {
                 MessageBox.Show("Введите сумму!");
             }
@@ -77,11 +81,11 @@ namespace app_for_CD
             {
                 MessageBox.Show("Недопустимое значение!");
             }
-            else if (double.Parse(textBox1.Text) < sum)
+            else if (num_input < sum)
             {
                 OracleCommand cmd;
                 cmd = con.CreateCommand();
-                cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET SUM_PAID = {textBox1.Text} where id = {cur_id}";
+                cmd.CommandText = $"UPDATE REGISTRATION_OF_INVOICE SET SUM_PAID = {num_input.ToString(nfi)} where id = {cur_id}";
                 cmd.ExecuteNonQuery();
                 Data.yes = true;
                 CloseConnection();
