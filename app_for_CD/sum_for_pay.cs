@@ -102,7 +102,7 @@ namespace app_for_CD
             }
             else
             {
-                MessageBox.Show("Сумма больше чем выставленна!");
+                MessageBox.Show("Сумма больше либо равна чем выставленна!");
             }
         }
 
