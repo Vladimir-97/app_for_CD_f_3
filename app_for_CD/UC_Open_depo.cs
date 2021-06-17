@@ -249,7 +249,7 @@ namespace app_for_CD
                         oSheet.Cells[44, 5] = dr[27].ToString();
                         oSheet.Cells[44, 10] = id.ToString();
                         oSheet.Cells[48, 9] = fio;
-                        oSheet.Cells[12, 5] = dr[30].ToString();
+                        oSheet.Cells[12, 5] = dr[29].ToString();
 
 
                     }
@@ -489,6 +489,11 @@ namespace app_for_CD
         }
 
         private void UC_Open_depo_Enter(object sender, EventArgs e)
+        {
+            updatePanel2();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
         {
             updatePanel2();
         }
