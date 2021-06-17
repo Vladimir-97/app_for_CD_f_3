@@ -33,7 +33,7 @@ namespace app_for_CD
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             dr.Read();
-            sum = double.Parse(dr[0].ToString().Replace(',', '.'));               ///////////////////////////////////подправить
+            sum = double.Parse(dr[0].ToString().Replace('.', ','));               ///////////////////////////////////подправить
 
 
             dr.Close();

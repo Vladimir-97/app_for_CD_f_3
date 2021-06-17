@@ -584,7 +584,7 @@ namespace app_for_CD
                 {
                     string str = "SELECT * from registration_of_invoice where 1 = 1 " + request + " order by ID desc ";
 
-                    MessageBox.Show(str);
+              //      MessageBox.Show(str);
                     cmd.CommandText = str;
                     cmd.CommandType = CommandType.Text;
                     OracleDataReader dr = cmd.ExecuteReader();
@@ -692,7 +692,7 @@ namespace app_for_CD
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(ID);
+      //      MessageBox.Show(ID);
             Excel.Application oXL;
             Excel._Workbook oWB;
             Excel._Worksheet oSheet;
