@@ -57,6 +57,13 @@
             this.sum_of_pay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Choice = new System.Windows.Forms.DataGridViewImageColumn();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.filtr = new System.Windows.Forms.Button();
+            this.add = new System.Windows.Forms.Button();
+            this.excel = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_invoice)).BeginInit();
@@ -104,6 +111,9 @@
             // 
             // panel4
             // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel4.Controls.Add(this.dataGridView_invoice);
             this.panel4.Location = new System.Drawing.Point(16, 67);
@@ -359,6 +369,106 @@
             this.Choice.Name = "Choice";
             this.Choice.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Choice.Width = 64;
+            // 
+            // panel5
+            // 
+            this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel5.Controls.Add(this.button2);
+            this.panel5.Controls.Add(this.filtr);
+            this.panel5.Controls.Add(this.add);
+            this.panel5.Controls.Add(this.excel);
+            this.panel5.Location = new System.Drawing.Point(16, 930);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(1890, 86);
+            this.panel5.TabIndex = 5;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button2.FlatAppearance.BorderSize = 2;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(1645, 25);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(137, 35);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "E-contract";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // filtr
+            // 
+            this.filtr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.filtr.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.filtr.FlatAppearance.BorderSize = 2;
+            this.filtr.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.filtr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.filtr.ForeColor = System.Drawing.Color.MintCream;
+            this.filtr.Location = new System.Drawing.Point(30, 26);
+            this.filtr.Name = "filtr";
+            this.filtr.Size = new System.Drawing.Size(137, 34);
+            this.filtr.TabIndex = 5;
+            this.filtr.Text = "Фильтр";
+            this.filtr.UseVisualStyleBackColor = true;
+            this.filtr.Click += new System.EventHandler(this.filtr_Click);
+            // 
+            // add
+            // 
+            this.add.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.add.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.add.FlatAppearance.BorderSize = 2;
+            this.add.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.add.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.add.ForeColor = System.Drawing.Color.White;
+            this.add.Location = new System.Drawing.Point(1466, 26);
+            this.add.Name = "add";
+            this.add.Size = new System.Drawing.Size(137, 35);
+            this.add.TabIndex = 3;
+            this.add.Text = "Добавить";
+            this.add.UseVisualStyleBackColor = true;
+            this.add.Click += new System.EventHandler(this.add_Click);
+            // 
+            // excel
+            // 
+            this.excel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.excel.BackgroundImage = global::app_for_CD.Properties.Resources.excel_pic_32;
+            this.excel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.excel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.excel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.excel.ForeColor = System.Drawing.Color.White;
+            this.excel.Location = new System.Drawing.Point(1823, 26);
+            this.excel.Name = "excel";
+            this.excel.Size = new System.Drawing.Size(36, 32);
+            this.excel.TabIndex = 2;
+            this.excel.UseVisualStyleBackColor = true;
+            this.excel.Click += new System.EventHandler(this.excel_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panel1.Controls.Add(this.panel5);
+            this.panel1.Controls.Add(this.panel4);
+            this.panel1.Controls.Add(this.panel3);
+            this.panel1.Location = new System.Drawing.Point(0, 1);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1925, 1031);
+            this.panel1.TabIndex = 0;
+            // 
+            // dataGridViewImageColumn1
+            // 
+            this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.dataGridViewImageColumn1.FillWeight = 20F;
+            this.dataGridViewImageColumn1.HeaderText = "Изменить";
+            this.dataGridViewImageColumn1.Image = global::app_for_CD.Properties.Resources.change;
+            this.dataGridViewImageColumn1.MinimumWidth = 20;
+            this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+            this.dataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // UC_Invoice
             // 
