@@ -162,10 +162,10 @@ namespace app_for_CD
                 if (comboBox1.Text != "")
                 {
                     if (comboBox1.SelectedIndex == 0)
-                        Data_bill.s_status = "1";
+                        Data_bill.s_status = "0";
                     else
                     {
-                        Data_bill.s_status = "0";
+                        Data_bill.s_status = "1";
                     }
 
                 }

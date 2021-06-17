@@ -448,7 +448,7 @@ namespace app_for_CD
                 Num_of_id = "-1";
                 Remove(true);
                 status_label.Visible = false;
-                status_label.Visible = false;
+                status_comboBox.Visible = false;
             }
 
         }
