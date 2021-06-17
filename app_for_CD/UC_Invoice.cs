@@ -182,7 +182,11 @@ namespace app_for_CD
                 }
                 
                 priv = Convert.ToInt32(dr[0]);
-
+                for (int j = 0; j < 14; j++)
+                    if (i % 2 == 0)
+                        dataGridView_invoice.Rows[i - 1].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                    else
+                        dataGridView_invoice.Rows[i - 1].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
             }
             
             for (int row = 0; row <= dataGridView_invoice.Rows.Count - 1; row++)
@@ -807,6 +811,11 @@ namespace app_for_CD
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
             }
+
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
 
         }
     }

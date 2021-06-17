@@ -33,7 +33,9 @@ namespace app_for_CD
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
             dr.Read();
-            sum = double.Parse(dr[0].ToString());
+            sum = double.Parse(dr[0].ToString().Replace(',', '.'));               ///////////////////////////////////подправить
+
+
             dr.Close();
         }
         public int DS_Count(string s)
@@ -102,7 +104,7 @@ namespace app_for_CD
             }
             else
             {
-                MessageBox.Show("Сумма больше чем выставленна!");
+                MessageBox.Show("Сумма больше либо равна выставленной!");
             }
         }
 
