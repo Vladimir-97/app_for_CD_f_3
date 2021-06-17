@@ -227,7 +227,8 @@
             this.Controls.Add(this.tabControl1);
             this.MinimumSize = new System.Drawing.Size(1900, 725);
             this.Name = "TC_Menu";
-            this.Text = "E - Contract";
+            this.Text = "- Contract";
+            this.Icon = app_for_CD.Properties.Resources.main_logo;
             this.Resize += new System.EventHandler(this.TC_Menu_Resize);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

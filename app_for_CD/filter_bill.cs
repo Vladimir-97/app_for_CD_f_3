@@ -174,7 +174,7 @@ namespace app_for_CD
                         Data_bill.s_status = "1";
                     else
                     {
-                        Data_bill.s_status = "2";
+                        Data_bill.s_status = "0";
                         comboBox1.BackColor = Color.Red;
                     }
 

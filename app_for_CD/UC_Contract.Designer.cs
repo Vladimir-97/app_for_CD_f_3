@@ -234,6 +234,7 @@ namespace app_for_CD
             this.button8.TabIndex = 4;
             this.button8.Text = "Обновить";
             this.button8.UseVisualStyleBackColor = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button1
             // 

@@ -691,7 +691,7 @@ namespace app_for_CD
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(ID);
+      //      MessageBox.Show(ID);
             Excel.Application oXL;
             Excel._Workbook oWB;
             Excel._Worksheet oSheet;
