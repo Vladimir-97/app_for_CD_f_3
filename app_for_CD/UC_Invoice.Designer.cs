@@ -51,7 +51,7 @@
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Choice = new System.Windows.Forms.DataGridViewImageColumn();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.buttom2 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.filtr = new System.Windows.Forms.Button();
             this.add = new System.Windows.Forms.Button();
             this.excel = new System.Windows.Forms.Button();
@@ -103,6 +103,9 @@
             // 
             // panel4
             // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel4.Controls.Add(this.dataGridView_invoice);
             this.panel4.Location = new System.Drawing.Point(16, 67);
@@ -136,15 +139,17 @@
             this.Column11,
             this.Choice});
             this.dataGridView_invoice.Cursor = System.Windows.Forms.Cursors.Arrow;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView_invoice.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView_invoice.Location = new System.Drawing.Point(0, 0);
+
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView_invoice.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView_invoice.Location = new System.Drawing.Point(0, 3);
+
             this.dataGridView_invoice.Name = "dataGridView_invoice";
             this.dataGridView_invoice.Size = new System.Drawing.Size(1872, 852);
             this.dataGridView_invoice.TabIndex = 2;
@@ -262,6 +267,8 @@
             // 
             // panel5
             // 
+            this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel5.Controls.Add(this.buttom2);
             this.panel5.Controls.Add(this.filtr);
@@ -272,21 +279,21 @@
             this.panel5.Size = new System.Drawing.Size(1890, 86);
             this.panel5.TabIndex = 5;
             // 
-            // buttom2
+            // button2
             // 
-            this.buttom2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttom2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.buttom2.FlatAppearance.BorderSize = 2;
-            this.buttom2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttom2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.buttom2.ForeColor = System.Drawing.Color.White;
-            this.buttom2.Location = new System.Drawing.Point(1645, 25);
-            this.buttom2.Name = "buttom2";
-            this.buttom2.Size = new System.Drawing.Size(137, 35);
-            this.buttom2.TabIndex = 6;
-            this.buttom2.Text = "E-contract";
-            this.buttom2.UseVisualStyleBackColor = true;
-            this.buttom2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.button2.FlatAppearance.BorderSize = 2;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Location = new System.Drawing.Point(1645, 25);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(137, 35);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "E-contract";
+            this.button2.UseVisualStyleBackColor = true;
+
             // 
             // filtr
             // 
