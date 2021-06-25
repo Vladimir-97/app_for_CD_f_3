@@ -128,6 +128,10 @@ namespace app_for_CD
                 
                 if (Convert.ToInt32(dr[0]) != priv)
                 {
+                    if (app_for_CD.Properties.Settings.Default["Theme"].ToString() == "False")
+                    {
+                        dataGridView_invoice.ForeColor = Color.Black;
+                    }
                     dataGridView_invoice.Rows.Add();
                     dataGridView_invoice.Rows[i].Cells[0].Value = dr[0] + " от " + dr[9];
                     dataGridView_invoice.Rows[i].Cells[1].Value = dr[2] + " от " + dr[13]; 
@@ -183,10 +187,11 @@ namespace app_for_CD
                 
                 priv = Convert.ToInt32(dr[0]);
                 for (int j = 0; j < 14; j++)
-                    if (i % 2 == 0)
-                        dataGridView_invoice.Rows[i - 1].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
-                    else
-                        dataGridView_invoice.Rows[i - 1].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
+                    if (app_for_CD.Properties.Settings.Default["Theme"].ToString() != "False")
+                        if (i % 2 == 0)
+                            dataGridView_invoice.Rows[i - 1].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                        else
+                            dataGridView_invoice.Rows[i - 1].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
             }
             
             for (int row = 0; row <= dataGridView_invoice.Rows.Count - 1; row++)

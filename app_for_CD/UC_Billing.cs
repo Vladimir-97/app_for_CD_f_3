@@ -67,8 +67,10 @@ namespace app_for_CD
 
                 if (Convert.ToInt32(dr[0]) != priv)
                 {
-
-
+                    if (app_for_CD.Properties.Settings.Default["Theme"].ToString() == "False")
+                    {
+                        dataGridView1.ForeColor = Color.Black;
+                    }
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = dr[0] + " от " + dr[1];
                     dataGridView1.Rows[i].Cells[1].Value = dr[2]+ "/" + dr[3] + " от " + dr[4];
@@ -118,12 +120,14 @@ namespace app_for_CD
                 }
 
                 priv = Convert.ToInt32(dr[0]);
+
                 for (int j = 0; j < 14; j++)
-                    if (i % 2 == 0)
-                    dataGridView1.Rows[i-1].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
-                    else
-                    dataGridView1.Rows[i-1].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
-            }
+                    if (app_for_CD.Properties.Settings.Default["Theme"].ToString() != "False")
+                        if (i % 2 == 0)
+                            dataGridView1.Rows[i-1].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                        else
+                            dataGridView1.Rows[i-1].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
+            }   
 
             for (int row = 0; row <= dataGridView1.Rows.Count - 1; row++)
             {

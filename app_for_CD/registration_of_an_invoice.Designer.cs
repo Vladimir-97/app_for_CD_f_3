@@ -340,6 +340,7 @@
             this.ComboBox_0.Name = "ComboBox_0";
             this.ComboBox_0.Size = new System.Drawing.Size(873, 21);
             this.ComboBox_0.TabIndex = 40;
+            this.ComboBox_0.SelectedIndexChanged += new System.EventHandler(this.ComboBox_0_SelectedIndexChanged);
             this.ComboBox_0.Click += new System.EventHandler(this.ComboBoxClick);
             // 
             // SearchSer_0

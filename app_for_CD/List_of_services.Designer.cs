@@ -30,22 +30,23 @@ namespace app_for_CD
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+         //   System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+         //   System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -123,47 +124,21 @@ namespace app_for_CD
             this.Column1,
             this.Column3,
             this.Column2,
+            this.Column5,
             this.Column4});
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Yellow;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular , System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            //dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Yellow;
             dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            //dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
+            //this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.Location = new System.Drawing.Point(16, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(861, 413);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
-            // 
-            // Column1
-            // 
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.LightYellow;
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Column1.HeaderText = "№ п/п";
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 50;
-            // 
-            // Column3
-            // 
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Column3.HeaderText = "Наименование услуги";
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 600;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "НДС";
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 68;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Применить";
-            this.Column4.Name = "Column4";
             // 
             // panel3
             // 
@@ -202,6 +177,38 @@ namespace app_for_CD
             this.label2.Size = new System.Drawing.Size(188, 24);
             this.label2.TabIndex = 0;
             this.label2.Text = "Услуги по договору";
+            // 
+            // Column1
+            // 
+            //dataGridViewCellStyle1.ForeColor = System.Drawing.Color.LightYellow;
+            //this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Column1.HeaderText = "№ п/п";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 50;
+            // 
+            // Column3
+            // 
+            //dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
+            //this.Column3.DefaultCellStyle = dataGridViewCellStyle2;
+            this.Column3.HeaderText = "Наименование услуги";
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 500;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "НДС";
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 68;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "БРВ";
+            this.Column5.Name = "Column5";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Применить";
+            this.Column4.Name = "Column4";
             // 
             // List_of_services
             // 
@@ -243,6 +250,7 @@ namespace app_for_CD
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
     }
 }

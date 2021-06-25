@@ -101,13 +101,23 @@ namespace app_for_CD
 
             foreach (string[] s in data)
             {
-                dataGridView1.Rows.Add(s);
-                for (int j = 0; j < 5; j++)
-                    if (i % 2 == 0)
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
-                    else
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
-                i++;
+                if (app_for_CD.Properties.Settings.Default["Theme"].ToString() != "False")
+                {
+
+                    dataGridView1.Rows.Add(s);
+                    for (int j = 0; j < 5; j++)
+                        if (i % 2 == 0)
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                        else
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
+                    i++;
+                }
+                else
+                {
+                    dataGridView1.ForeColor = Color.Black;
+                    dataGridView1.Rows.Add(s);
+
+                }
             }
         }
         string check_null(string str)
