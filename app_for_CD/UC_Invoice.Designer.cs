@@ -140,6 +140,7 @@
             this.Column11,
             this.Choice});
             this.dataGridView_invoice.Cursor = System.Windows.Forms.Cursors.Arrow;
+
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -149,6 +150,7 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridView_invoice.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView_invoice.Location = new System.Drawing.Point(0, 0);
+
             this.dataGridView_invoice.Name = "dataGridView_invoice";
             this.dataGridView_invoice.Size = new System.Drawing.Size(1872, 852);
             this.dataGridView_invoice.TabIndex = 2;
