@@ -73,8 +73,6 @@ namespace app_for_CD
             OracleDataReader dr = cmd.ExecuteReader();
 
             int enter = 0;
-            status_label.Visible = true;
-            status_comboBox.Visible = true;
 
             int cur_row = 2;
             bool flag = false;
@@ -86,15 +84,18 @@ namespace app_for_CD
             {
                 if (enter == 0)
                 {
-
                     comboBox_CRP_INN.Text = dr[1].ToString();
                     NDS_PINFL_textBox.Text = dr[8].ToString();
                     if (dr[15].ToString() == "1")
                     {
+                        status_label.Visible = true;
+                        status_comboBox.Visible = true;
                         status_comboBox.SelectedIndex = 0;
                     }
                     else
                     {
+                        status_label.Visible = false;
+                        status_comboBox.Visible = false;
                         status_comboBox.SelectedIndex = 1;
                     }
                     textBox_number_of_invoice.Text = dr[0].ToString();

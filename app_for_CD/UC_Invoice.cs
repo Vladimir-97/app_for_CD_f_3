@@ -270,11 +270,14 @@ namespace app_for_CD
                     LoadData("select * from registration_of_invoice order by ID, num_of_ser");
                 }
             }
-            //e.CellStyle.BackColor = dataGridView_invoice.DefaultCellStyle.BackColor.Gre;
+            //e.CellStyle.BackColor = dataGridView_invoice.DefaultCellStyle.BackColor;
+            e.CellStyle.ForeColor = Color.White ;
+            e.CellStyle.BackColor =  Color.Gray;
         }
         //1
         private void LastColumnComboSelectionChanged(object sender, EventArgs e)
         {
+            var DS = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
             var currentcell = dataGridView_invoice.CurrentCellAddress;
             string num_date_invoice = dataGridView_invoice.Rows[currentcell.Y].Cells[0].Value.ToString();
             string previous_value = dataGridView_invoice.Rows[currentcell.Y].Cells[10].Value.ToString();
@@ -302,7 +305,7 @@ namespace app_for_CD
                 cmd.CommandType = CommandType.Text;
                 OracleDataReader dr = cmd.ExecuteReader();
                 dr.Read();
-                sum = dr[0].ToString();
+                sum = dr[0].ToString().Replace(DS.ToString(),".");
                 dr.Close();
                 num = 2;
             }
@@ -388,7 +391,7 @@ namespace app_for_CD
             myExcelWorkSheet.Cells[12, "AX"].Value = "\t" + dr[8].ToString();
 
             cmd1 = con.CreateCommand();
-            cmd1.CommandText = $"Select bk_acnt_no, mfo_cd from tbcb_crp_bk where crp_cd = '{dr[1]}'";
+            cmd1.CommandText = $"Select bk_acnt_no, mfo_cd from tbcb_crp_bk where crp_cd = '{dr[1]}' AND tbcb_crp_bk.USED_YN = 'Y' AND TRGT_YN = 'Y'";
             cmd1.CommandType = CommandType.Text;
 
             dr1 = cmd1.ExecuteReader();

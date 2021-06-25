@@ -62,13 +62,12 @@ namespace app_for_CD
             List<string[]> data = new List<string[]>();
             int i = 0;
             int priv = -1;
+
+           
             while (dr.Read())
             {
-
                 if (Convert.ToInt32(dr[0]) != priv)
                 {
-
-
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = dr[0] + " от " + dr[1];
                     dataGridView1.Rows[i].Cells[1].Value = dr[2]+ "/" + dr[3] + " от " + dr[4];
@@ -103,16 +102,28 @@ namespace app_for_CD
                     {
                         dataGridView1.Rows[i].Cells[9].Value = "Неактивный";
                     }
+                    if (dr[13].ToString() == "0")
+                    {
+                        dataGridView1.Rows[i].Cells[11].ReadOnly = true;
+                    }
+                    if (dr[13].ToString() == "1")
+                    {
+                        dataGridView1.Rows[i].Cells[11].ReadOnly = false;
+                    }
+                    if (dr[13].ToString() == "2")
+                    {
+                        dataGridView1.Rows[i].Cells[11].ReadOnly = true;
+                    }
                     dataGridView1.Rows[i].Cells[10].Value = (dataGridView1.Rows[i].Cells[10] as DataGridViewComboBoxCell).Items[Convert.ToInt32(dr[13])];   // проц
                 // dataGridView1.Rows[i].Cells[11].Value = dr[18];
                     dataGridView1.Rows[i].Cells[11].Value = dr[14];
                     dataGridView1.Rows[i].Cells[12].Value = dr[15];
+
                     i++;
 
                 }
                 else
                 {
-
                     dataGridView1.Rows[i - 1].Cells[7].Value = dataGridView1.Rows[i - 1].Cells[7].Value.ToString() + '\n' + dr[3].ToString();
                     dataGridView1.Rows[i - 1].Cells[8].Value = (dataGridView1.Rows[i - 1].Cells[8].Value).ToString() + '\n' + (Convert.ToDouble(dr[4])).ToString();
                 }
@@ -319,6 +330,8 @@ namespace app_for_CD
                 num = 2;
             }
 
+
+
             if (num == 0 && previous_value != dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())
             {
                 cmd = con.CreateCommand();
@@ -348,11 +361,14 @@ namespace app_for_CD
             {
                 cmd = con.CreateCommand();
                 dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly = true;
+                MessageBox.Show(dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly.ToString());
+                MessageBox.Show(currentcell.Y.ToString());
                 cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num}, payment_amount = {sum} where num_of_bill = {ID1}";
                 cmd.ExecuteNonQuery();
                 LoadData("select * from table_billing order by num_of_bill desc");
             }
-
+            MessageBox.Show(dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly.ToString());
+            MessageBox.Show(currentcell.Y.ToString());
         }
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
@@ -383,7 +399,8 @@ namespace app_for_CD
                     LoadData("select * from table_billing order by num_of_bill desc");
                 }
             }
-            e.CellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
+            e.CellStyle.ForeColor = Color.White;
+            e.CellStyle.BackColor = Color.Gray;
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -682,7 +699,7 @@ namespace app_for_CD
         private void button1_Click(object sender, EventArgs e)
         {
             DoExcelThings();
-        //    closeExcel();
+            closeExcel();
         }
 
         private void button6_Click(object sender, EventArgs e)
