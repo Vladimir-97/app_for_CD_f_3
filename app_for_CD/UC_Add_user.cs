@@ -242,11 +242,10 @@ namespace app_for_CD
                     {
                         cmd.Parameters.Clear();
                         cmd.CommandText = "update users_cd set ";
-                        if (Login_textBox_0.Text != "admin")
+                        if(tableLayoutPanel1.Controls[count_of_table_row * i + 6].Text != "admin")
                             cmd.Parameters.Add(new OracleParameter("PASS", GetHash(tableLayoutPanel1.Controls[count_of_table_row * i + 7].Text)));
                         else
                             cmd.Parameters.Add(new OracleParameter("PASS", tableLayoutPanel1.Controls[count_of_table_row * i + 7].Text));
-                        MessageBox.Show(Login_textBox_0.Text);
 
                         cmd.CommandText += " password = :PASS, ";
 
