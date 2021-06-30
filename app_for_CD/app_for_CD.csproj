@@ -86,7 +86,7 @@
     </Reference>
     <Reference Include="oracle.dataaccess, Version=2.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\new_cd\app_for_CD_f2\app_for_CD\oracle.dataaccess.dll</HintPath>
+      <HintPath>Z:\Timur\oracle.dataaccess.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.ManagedDataAccess">
       <HintPath>C:\Users\User\source\repos\app_for_CD_v2\app_for_CD\bin\Debug\Oracle.ManagedDataAccess.dll</HintPath>

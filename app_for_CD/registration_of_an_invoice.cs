@@ -727,6 +727,38 @@ namespace app_for_CD
             e.Handled = !(Char.IsDigit(e.KeyChar) ||  e.KeyChar == 8);
         }
 
+        private void ComboBox_0_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("SERV", ComboBox_0.Text);
+            cmd.CommandText = "select count_brv from tbcb_cd where cd_grp_no = '000037' and cd_nm = :SERV";
+            cmd.CommandType = CommandType.Text;
+            try
+            {
+                OracleDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    textBox_Sum.Text = (Double.Parse(dr[0].ToString()) * find_min_wag()).ToString();
+                    comboBox6.SelectedIndex = 0;
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+        private double find_min_wag()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "select min_wag from tbcb_min_wag_info order by aply_stdd desc";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            if(dr.Read())
+            {
+                return Double.Parse(dr[0].ToString());
+            }
+            return 1;
+        }
         private void comboBox_CRP_INN_SelectedValueChanged(object sender, EventArgs e)
         {
             bool flag = false;

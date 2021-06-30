@@ -18,6 +18,11 @@ namespace app_for_CD
             SetConnection();
             check_table();
             textBox1.Text = Settings.Default["LogName"].ToString();
+            if (Settings.Default["Theme"].ToString() == "False")
+                comboBox1.Text = comboBox1.Items[0].ToString();
+            else
+                comboBox1.Text = comboBox1.Items[1].ToString();
+
         }
         static string GetHash(string plaintext)
         {
@@ -146,7 +151,17 @@ namespace app_for_CD
                         CloseConnection();
                         this.Close();
                     }
-
+                    if (comboBox1.SelectedIndex == 1)
+                    {
+                        Settings.Default.Theme = true;
+                        //MessageBox.Show("Темная");
+                    }
+                    else
+                    {
+                        Settings.Default.Theme = false;
+                        //MessageBox.Show("Светлая");
+                    }
+                    Settings.Default.Save();
                 }
                 else
                 {
@@ -352,7 +367,7 @@ namespace app_for_CD
             }
             catch
             {
-                cmd.CommandText = "alter table users_cd_test add (NDS VARCHAR2(10 BYTE) DEFAULT 0 , ACTIVED VARCHAR2(20 BYTE) DEFAULT 1)";
+                cmd.CommandText = "alter table users_cd_test add (NDS VARCHAR2(10 BYTE) DEFAULT 0 , ACTIVED VARCHAR2(20 BYTE) DEFAULT 1, COUNT_BRV VARCHAR2(5 BYTE) DEFAULT 0)";
                 cmd.CommandType = CommandType.Text;
                 cmd.ExecuteNonQuery();
 

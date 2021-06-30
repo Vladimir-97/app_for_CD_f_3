@@ -17,6 +17,8 @@ namespace app_for_CD
         public filter_stocks()
         {
             InitializeComponent();
+            comboBox1.MaxLength = 12;
+            comboBox2.MaxLength = 12;
         }
         OracleConnection con = null;
         private void CRP_search_Click(object sender, EventArgs e)

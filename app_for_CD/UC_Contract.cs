@@ -25,9 +25,10 @@ namespace app_for_CD
             if (Data.role == 0)
             {
                 button3.Visible = false;
+                button1.Visible = false;
             }
             dataGridView1.Font = new Font("Times New Roman", 10, FontStyle.Bold);
-
+           // MessageBox.Show(app_for_CD.Properties.Settings.Default["Theme"].ToString());
 
         }
         void button_enabled()
@@ -176,13 +177,23 @@ namespace app_for_CD
 
             foreach (string[] s in data)
             {
-                dataGridView1.Rows.Add(s);
-                for (int j = 0; j < 12; j++)
-                    if (i % 2 == 0)
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(89,89,89);
-                    else
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(128,128,128);
-                i++;
+                if (app_for_CD.Properties.Settings.Default["Theme"].ToString() != "False")
+                {
+                    
+                    dataGridView1.Rows.Add(s);
+                    for (int j = 0; j < 12; j++)
+                        if (i % 2 == 0)
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                        else
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
+                    i++;
+                }
+                else
+                {
+                    dataGridView1.ForeColor = Color.Black;
+                    dataGridView1.Rows.Add(s);
+
+                }
             }
         }
 

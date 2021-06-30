@@ -436,7 +436,10 @@ namespace app_for_CD
                     if (dr[9].ToString() != "")
                         inverse_parse_date(dr[9].ToString(), dateTimePicker3);
                     inverse_parse_date(dr[10].ToString(), dateTimePicker5);
-
+                    if (dr[6].ToString() == "2")
+                    {
+                        textBox3.Enabled = false;
+                    }
                 }
             }
 

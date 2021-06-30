@@ -866,7 +866,7 @@ namespace app_for_CD
             cmd.Parameters.Add("NUM_BILL", textBox_number_of_invoice.Text);//////
 
             cmd.CommandText = "update table_billing set date_of_bill = :DATE_BILL, num_aggr = :NUM_AGGR, sres_aggr = :SER_AGGR, date_aggr = :DATE_AGGR, crp_cd= :KZL, crp_nm = :KZL_NM, dist_id_2 = :INN, nds = :NDS, pinfl = :PINFL, type_sres = :TYPE_SER, cost_deliv = :COST_DELIV, state = :STATUS, fio = :FIO, base = :BASE, remark = :REMARK, curr = :CUR where num_of_bill = :NUM_BILL  ";
-            cmd.CommandType = CommandType.Text;
+            cmd.CommandType = CommandType.Text; 
             if (cmd.ExecuteNonQuery() == 1)
             {
                 Report.Visible = true;
@@ -878,6 +878,38 @@ namespace app_for_CD
 
         }
 
+        private void ComboBox_0_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("SERV", ComboBox_0.Text);
+            cmd.CommandText = "select count_brv from tbcb_cd where cd_grp_no = '000037' and cd_nm = :SERV";
+            cmd.CommandType = CommandType.Text;
+            try
+            {
+                OracleDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    textBox_Sum.Text = (Double.Parse(dr[0].ToString()) * find_min_wag()).ToString();
+                    comboBox6.SelectedIndex = 0;
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+        private double find_min_wag()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "select min_wag from tbcb_min_wag_info order by aply_stdd desc";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                return Double.Parse(dr[0].ToString());
+            }
+            return 1;
+        }
         private void Docu_num_ser_SelectedValueChanged(object sender, EventArgs e)
         {
             bool flag = false;

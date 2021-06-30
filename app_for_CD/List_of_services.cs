@@ -31,7 +31,7 @@ namespace app_for_CD
             button2.Enabled = false;
         }
         OracleConnection con = null;
-        string series = "", services = "",nds  ="";
+        string series = "", services = "",nds  ="", brv = "";
 
         private void List_of_services_Load(object sender, EventArgs e)
         {
@@ -42,7 +42,7 @@ namespace app_for_CD
             string tmp_ser = series + "%";
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add("SER", tmp_ser);
-            cmd.CommandText = "select cd_nm, nds,actived from tbcb_cd where cd like :SER";
+            cmd.CommandText = "select cd_nm, nds,actived, count_brv from tbcb_cd where cd like :SER";
 
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
@@ -64,11 +64,12 @@ namespace app_for_CD
         void fill_data(List<string[]> data, OracleDataReader dr)
         {
 
-            data.Add(new string[5]);
+            data.Add(new string[6]);
             data[data.Count - 1][0] = data.Count.ToString(); ///////////Номер поряжковый
             data[data.Count - 1][1] = dr[0].ToString();      /////////// Наименование услуги
             data[data.Count - 1][2] = dr[1].ToString() + "%";   /////////// НДС
-            data[data.Count - 1][3] = parse_activ(dr[2].ToString());   /////////// Активно
+            data[data.Count - 1][3] = dr[3].ToString();   /////////// БРВ
+            data[data.Count - 1][4] = parse_activ(dr[2].ToString());   /////////// Активно
         }
         void print_data(List<string[]> data)
         {
@@ -76,18 +77,27 @@ namespace app_for_CD
             int i = 0;
             foreach (string[] s in data)
             {
-                dataGridView1.Rows.Add(s);
-                if (i % 2 == 0)
-                    for (int j = 0; j < 4; j++)
-                    {
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.DarkGray;
-                    }
+                if (app_for_CD.Properties.Settings.Default["Theme"].ToString() != "False")
+                {
+                    dataGridView1.ForeColor = Color.White;
+                    dataGridView1.Rows.Add(s);
+                    if (i % 2 == 0)
+                        for (int j = 0; j < 5; j++)
+                        {
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                        }
+                    else
+                        for (int j = 0; j < 5; j++)
+                        {
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
+                        }
+                    i++;
+                }
                 else
-                    for (int j = 0; j < 4; j++)
-                    {
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.Gray;
-                    }
-                i++;
+                {
+                    dataGridView1.ForeColor = Color.Black;
+                    dataGridView1.Rows.Add(s);
+                }
             }
         }
 
@@ -124,6 +134,7 @@ namespace app_for_CD
                 services = dataGridView1.Rows[row].Cells[1].Value.ToString();
                 nds = dataGridView1.Rows[row].Cells[2].Value.ToString();
                 nds = nds.Remove(nds.Length - 1);
+                brv = dataGridView1.Rows[row].Cells[3].Value.ToString();
                 button2.Enabled = true;
                 //series = dataGridView1.Rows[row].Cells[0].Value.ToString();
             }
@@ -137,7 +148,7 @@ namespace app_for_CD
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Add_service add_svc = new Add_service(nds,services,series);
+            Add_service add_svc = new Add_service(nds,services,series, brv);
             add_svc.Show();
 
         }

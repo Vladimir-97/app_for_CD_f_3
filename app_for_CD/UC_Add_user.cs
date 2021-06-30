@@ -246,6 +246,7 @@ namespace app_for_CD
                             cmd.Parameters.Add(new OracleParameter("PASS", GetHash(tableLayoutPanel1.Controls[count_of_table_row * i + 7].Text)));
                         else
                             cmd.Parameters.Add(new OracleParameter("PASS", tableLayoutPanel1.Controls[count_of_table_row * i + 7].Text));
+
                         cmd.CommandText += " password = :PASS, ";
 
                         if (tableLayoutPanel1.Controls[count_of_table_row * i + 5].Text == "Активен")
