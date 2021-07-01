@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using RSDN;
 using System.Drawing.Printing;
+using System.Globalization;
 
 namespace app_for_CD
 {
@@ -62,13 +63,16 @@ namespace app_for_CD
             List<string[]> data = new List<string[]>();
             int i = 0;
             int priv = -1;
+
+           
             while (dr.Read())
             {
-
                 if (Convert.ToInt32(dr[0]) != priv)
                 {
-
-
+                    if (app_for_CD.Properties.Settings.Default["Theme"].ToString() == "False")
+                    {
+                        dataGridView1.ForeColor = Color.Black;
+                    }
                     dataGridView1.Rows.Add();
                     dataGridView1.Rows[i].Cells[0].Value = dr[0] + " от " + dr[1];
                     dataGridView1.Rows[i].Cells[1].Value = dr[2]+ "/" + dr[3] + " от " + dr[4];
@@ -103,27 +107,41 @@ namespace app_for_CD
                     {
                         dataGridView1.Rows[i].Cells[9].Value = "Неактивный";
                     }
+                    if (dr[13].ToString() == "0")
+                    {
+                        dataGridView1.Rows[i].Cells[11].ReadOnly = true;
+                    }
+                    if (dr[13].ToString() == "1")
+                    {
+                        dataGridView1.Rows[i].Cells[11].ReadOnly = false;
+                    }
+                    if (dr[13].ToString() == "2")
+                    {
+                        dataGridView1.Rows[i].Cells[11].ReadOnly = true;
+                    }
                     dataGridView1.Rows[i].Cells[10].Value = (dataGridView1.Rows[i].Cells[10] as DataGridViewComboBoxCell).Items[Convert.ToInt32(dr[13])];   // проц
                 // dataGridView1.Rows[i].Cells[11].Value = dr[18];
                     dataGridView1.Rows[i].Cells[11].Value = dr[14];
                     dataGridView1.Rows[i].Cells[12].Value = dr[15];
+
                     i++;
 
                 }
                 else
                 {
-
                     dataGridView1.Rows[i - 1].Cells[7].Value = dataGridView1.Rows[i - 1].Cells[7].Value.ToString() + '\n' + dr[3].ToString();
                     dataGridView1.Rows[i - 1].Cells[8].Value = (dataGridView1.Rows[i - 1].Cells[8].Value).ToString() + '\n' + (Convert.ToDouble(dr[4])).ToString();
                 }
 
                 priv = Convert.ToInt32(dr[0]);
+
                 for (int j = 0; j < 14; j++)
-                    if (i % 2 == 0)
-                    dataGridView1.Rows[i-1].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
-                    else
-                    dataGridView1.Rows[i-1].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
-            }
+                    if (app_for_CD.Properties.Settings.Default["Theme"].ToString() != "False")
+                        if (i % 2 == 0)
+                            dataGridView1.Rows[i-1].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                        else
+                            dataGridView1.Rows[i-1].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
+            }   
 
             for (int row = 0; row <= dataGridView1.Rows.Count - 1; row++)
             {
@@ -272,7 +290,6 @@ namespace app_for_CD
                             break;
                         }
                     }
-                 //   MessageBox.Show(num);
                     reg_bill rb = new reg_bill(num);
                     rb.ShowDialog();
                 }
@@ -280,7 +297,6 @@ namespace app_for_CD
 
             catch
             {
-                //MessageBox.Show("Ошибка");
             }
           
         }
@@ -319,6 +335,8 @@ namespace app_for_CD
                 num = 2;
             }
 
+
+
             if (num == 0 && previous_value != dataGridView1.Rows[currentcell.Y].Cells[currentcell.X].EditedFormattedValue.ToString())
             {
                 cmd = con.CreateCommand();
@@ -352,7 +370,6 @@ namespace app_for_CD
                 cmd.ExecuteNonQuery();
                 LoadData("select * from table_billing order by num_of_bill desc");
             }
-
         }
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
@@ -383,7 +400,8 @@ namespace app_for_CD
                     LoadData("select * from table_billing order by num_of_bill desc");
                 }
             }
-            e.CellStyle.BackColor = dataGridView1.DefaultCellStyle.BackColor;
+            e.CellStyle.ForeColor = Color.White;
+            e.CellStyle.BackColor = Color.Gray;
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -512,6 +530,7 @@ namespace app_for_CD
         /// </summary>
         private void DoExcelThings()
         {
+            
             string old_ser, ser = "";
             OracleCommand cmd1;
             OracleDataReader dr1;
@@ -627,12 +646,13 @@ namespace app_for_CD
             dr1.Close();
             myExcelWorkSheet.Cells[22, "AE"].Value = $"{dr[18]}";   ///валюта
             myExcelWorkSheet.Cells[22, "D"].Value = $"{dr[10]}";   //услуга
-            myExcelWorkSheet.Cells[22, "AI"].Value = double.Parse(dr[11].ToString());
-            myExcelWorkSheet.Cells[22, "BF"].Value = double.Parse(dr[11].ToString());
+            myExcelWorkSheet.Cells[22, "AI"].Value = double.Parse(dr[11].ToString().Replace('.', DS));
+            myExcelWorkSheet.Cells[22, "BF"].Value = double.Parse(dr[11].ToString().Replace('.', DS));
             double sum_without_NDS;
-            sum_without_NDS = double.Parse(dr[11].ToString()) / (1 + percent / 100);
-            MessageBox.Show(sum_without_NDS.ToString());
+            sum_without_NDS = double.Parse(dr[11].ToString().Replace('.', DS)) / (1 + percent / 100);
             myExcelWorkSheet.Cells[22, "AO"].Value = sum_without_NDS;
+            MessageBox.Show(RusNumber.Str(Int32.Parse(val)));
+
             if (percent == 0)
             {
                 myExcelWorkSheet.Cells[22, "AZ"].Value = "БЕЗ НДС";
@@ -641,7 +661,7 @@ namespace app_for_CD
             }
             else
             {
-                myExcelWorkSheet.Cells[22, "AZ"].Value = double.Parse(dr[11].ToString()) - sum_without_NDS;
+                myExcelWorkSheet.Cells[22, "AZ"].Value = double.Parse(dr[11].ToString().Replace('.', DS)) - sum_without_NDS;
                 myExcelWorkSheet.Cells[22, "AW"].Value = $"{percent}%"; // процент
                 myExcelWorkSheet.Cells[25, "B"].Value = "Всего к оплате:          " + RusNumber.Str(Int32.Parse(val)) + dr[18].ToString() + " " + frac + " тийин, в.т.ч. НДС: " + Math.Round(myExcelWorkSheet.Cells[22, "AZ"].Value, 2) + " " + dr[18].ToString();
 
@@ -682,7 +702,7 @@ namespace app_for_CD
         private void button1_Click(object sender, EventArgs e)
         {
             DoExcelThings();
-        //    closeExcel();
+            closeExcel();
         }
 
         private void button6_Click(object sender, EventArgs e)

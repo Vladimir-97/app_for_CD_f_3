@@ -115,6 +115,7 @@ namespace app_for_CD
         {
             NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
             nfi.NumberDecimalSeparator = ".";
+            nfi.NumberGroupSeparator = "";
             dataGridView_invoice.Rows.Clear();
             OracleCommand cmd = con.CreateCommand();
             cmd.CommandText = request;
@@ -128,6 +129,10 @@ namespace app_for_CD
                 
                 if (Convert.ToInt32(dr[0]) != priv)
                 {
+                    if (app_for_CD.Properties.Settings.Default["Theme"].ToString() == "False")
+                    {
+                        dataGridView_invoice.ForeColor = Color.Black;
+                    }
                     dataGridView_invoice.Rows.Add();
                     dataGridView_invoice.Rows[i].Cells[0].Value = dr[0] + " от " + dr[9];
                     dataGridView_invoice.Rows[i].Cells[1].Value = dr[2] + " от " + dr[13]; 
@@ -183,10 +188,11 @@ namespace app_for_CD
                 
                 priv = Convert.ToInt32(dr[0]);
                 for (int j = 0; j < 14; j++)
-                    if (i % 2 == 0)
-                        dataGridView_invoice.Rows[i - 1].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
-                    else
-                        dataGridView_invoice.Rows[i - 1].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
+                    if (app_for_CD.Properties.Settings.Default["Theme"].ToString() != "False")
+                        if (i % 2 == 0)
+                            dataGridView_invoice.Rows[i - 1].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                        else
+                            dataGridView_invoice.Rows[i - 1].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
             }
             
             for (int row = 0; row <= dataGridView_invoice.Rows.Count - 1; row++)
@@ -270,11 +276,14 @@ namespace app_for_CD
                     LoadData("select * from registration_of_invoice order by ID, num_of_ser");
                 }
             }
-            //e.CellStyle.BackColor = dataGridView_invoice.DefaultCellStyle.BackColor.Gre;
+            //e.CellStyle.BackColor = dataGridView_invoice.DefaultCellStyle.BackColor;
+            e.CellStyle.ForeColor = Color.White ;
+            e.CellStyle.BackColor =  Color.Gray;
         }
         //1
         private void LastColumnComboSelectionChanged(object sender, EventArgs e)
         {
+            var DS = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator[0];
             var currentcell = dataGridView_invoice.CurrentCellAddress;
             string num_date_invoice = dataGridView_invoice.Rows[currentcell.Y].Cells[0].Value.ToString();
             string previous_value = dataGridView_invoice.Rows[currentcell.Y].Cells[10].Value.ToString();
@@ -302,7 +311,7 @@ namespace app_for_CD
                 cmd.CommandType = CommandType.Text;
                 OracleDataReader dr = cmd.ExecuteReader();
                 dr.Read();
-                sum = dr[0].ToString();
+                sum = dr[0].ToString().Replace(DS.ToString(),".");
                 dr.Close();
                 num = 2;
             }
@@ -388,7 +397,7 @@ namespace app_for_CD
             myExcelWorkSheet.Cells[12, "AX"].Value = "\t" + dr[8].ToString();
 
             cmd1 = con.CreateCommand();
-            cmd1.CommandText = $"Select bk_acnt_no, mfo_cd from tbcb_crp_bk where crp_cd = '{dr[1]}'";
+            cmd1.CommandText = $"Select bk_acnt_no, mfo_cd from tbcb_crp_bk where crp_cd = '{dr[1]}' AND tbcb_crp_bk.USED_YN = 'Y' AND TRGT_YN = 'Y'";
             cmd1.CommandType = CommandType.Text;
 
             dr1 = cmd1.ExecuteReader();
@@ -651,6 +660,7 @@ namespace app_for_CD
                 oSheet.Cells[11].ColumnWidth = 13;
                 oSheet.Cells[12].ColumnWidth = 23;
                 oSheet.Cells[13].ColumnWidth = 35;
+
                 int i;
                 // Create an array to multiple values at once.
 
@@ -722,6 +732,7 @@ namespace app_for_CD
                 oSheet.Cells[1, 13] = "SRV_SUM";
                 oSheet.Cells[1, 14] = "SRV_NAME";
                 oSheet.Cells[1, 15] = "DOGOVOR";
+                oSheet.Cells[1, 16] = "Oplata";
 
                 oSheet.Cells[1].ColumnWidth = 8.43;
                 oSheet.Cells[2].ColumnWidth = 9.43;
@@ -738,6 +749,7 @@ namespace app_for_CD
                 oSheet.Cells[13].ColumnWidth = 9.86;
                 oSheet.Cells[14].ColumnWidth = 48.71;
                 oSheet.Cells[15].ColumnWidth = 26;
+                oSheet.Cells[16].ColumnWidth = 26;
                 int i;
                 // Create an array to multiple values at once.
                 string num_date_invoice;
@@ -768,7 +780,7 @@ namespace app_for_CD
                 }
                 
                 OracleCommand cmd = con.CreateCommand();
-                cmd.CommandText = "select DISTINCT A.ID, A.DATE_T, A.CURRENCY, A.FIO, A.CRP, A.CRP_NM, A.INN, D.REG_ADDR_CONT, E.CD_NM, B.BK_ACNT_NO, B.MFO_CD, C.BK_NM, A.SUM_T, A.SERVICE_T" +
+                cmd.CommandText = "select DISTINCT A.ID, A.DATE_T, A.CURRENCY, A.FIO, A.CRP, A.CRP_NM, A.INN, D.REG_ADDR_CONT, E.CD_NM, B.BK_ACNT_NO, B.MFO_CD, C.BK_NM, A.SUM_T, A.SERVICE_T, A.PROCESS" +
                                     " from registration_of_invoice A" +
                                         " INNER JOIN tbcb_crp_bk B"+
                                             " ON A.CRP = B.CRP_CD"+
@@ -788,6 +800,12 @@ namespace app_for_CD
                         oSheet.Cells[j, l] = "\t" + dr[l-1].ToString();
                     }
                     oSheet.Cells[j, 15] = "\t" + dataGridView_invoice.Rows[j-3].Cells[1].Value.ToString();
+                    if(dr[14].ToString() == "0")
+                        oSheet.Cells[j, 16] = "\t" + "Выставлена";
+                    else if (dr[14].ToString() == "1")
+                        oSheet.Cells[j, 16] = "\t" + "Часть оплаты";
+                    else if (dr[14].ToString() == "2")
+                        oSheet.Cells[j, 16] = "\t" + "Оплаченно";
                     j++;
                 }
                 dr.Close();

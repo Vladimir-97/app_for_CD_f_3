@@ -101,13 +101,23 @@ namespace app_for_CD
 
             foreach (string[] s in data)
             {
-                dataGridView1.Rows.Add(s);
-                for (int j = 0; j < 5; j++)
-                    if (i % 2 == 0)
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
-                    else
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
-                i++;
+                if (app_for_CD.Properties.Settings.Default["Theme"].ToString() != "False")
+                {
+
+                    dataGridView1.Rows.Add(s);
+                    for (int j = 0; j < 5; j++)
+                        if (i % 2 == 0)
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                        else
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
+                    i++;
+                }
+                else
+                {
+                    dataGridView1.ForeColor = Color.Black;
+                    dataGridView1.Rows.Add(s);
+
+                }
             }
         }
         string check_null(string str)
@@ -432,60 +442,66 @@ namespace app_for_CD
 
         private void button1_Click(object sender, EventArgs e)
         {
-            filter_open_depo fod = new filter_open_depo();
-            fod.ShowDialog();
-
-            if (Data.f_n == true || Data.f_CRP == true || Data.f_d == true ||  Data.f_fio == true)
+            try
             {
-                string request = "";
-                string name_cl = "";
+                filter_open_depo fod = new filter_open_depo();
+                fod.ShowDialog();
 
-                OracleCommand cmd = con.CreateCommand();
-                if (Data.f_d == true)
+                if (Data.f_n == true || Data.f_CRP == true || Data.f_d == true || Data.f_fio == true)
                 {
-                    request += $" AND crte_dt  >= '{Data.st_date_orig}'  AND crte_dt <= '{Data.end_date_orig}' ";
-                    Data.f_d = false;
-                }
-                if (Data.f_CRP == true)
-                {
-                    request += request + $" AND CRP_CD = {Data.number_ser} ";
-                    Data.f_CRP = false;
+                    string request = "";
+                    string name_cl = "";
 
-                }
-                if (Data.f_n == true)
-                {
-                    for (int i = 0; i < Data.name_cl.Length; i++)
+                    OracleCommand cmd = con.CreateCommand();
+                    if (Data.f_d == true)
                     {
-                        if (Data.name_cl[i] == '%')
-                        {
-                            name_cl += '_';
-                        }
-                        else
-                        {
-                            name_cl += Data.name_cl[i];
-                        }
+                        request += $" AND crte_dt  >= '{Data.st_date_orig}'  AND crte_dt <= '{Data.end_date_orig}' ";
+                        Data.f_d = false;
                     }
-                    request += request + $" AND CRP_NM LIKE '%{name_cl}%' ";
-                }
-                if (Data.f_fio == true)
-                {
-                    request += $" AND  fio = '{Data.filter_fio}' ";
-                    Data.f_fio = false;
+                    if (Data.f_CRP == true)
+                    {
+                        request += request + $" AND CRP_CD = {Data.number_ser} ";
+                        Data.f_CRP = false;
 
-                }
-                cmd.CommandText = "SELECT * from open_change_depo where rownum <100  " + request + "order by id";
-                cmd.CommandType = CommandType.Text;
-                OracleDataReader dr = cmd.ExecuteReader();
-                List<string[]> data = new List<string[]>();
+                    }
+                    if (Data.f_n == true)
+                    {
+                        for (int i = 0; i < Data.name_cl.Length; i++)
+                        {
+                            if (Data.name_cl[i] == '%')
+                            {
+                                name_cl += '_';
+                            }
+                            else
+                            {
+                                name_cl += Data.name_cl[i];
+                            }
+                        }
+                        request += request + $" AND CRP_NM LIKE '%{name_cl}%' ";
+                    }
+                    if (Data.f_fio == true)
+                    {
+                        request += $" AND  fio = '{Data.filter_fio}' ";
+                        Data.f_fio = false;
 
-                while (dr.Read() == true)
-                {
-                    fill_data(data, dr);
-                }
+                    }
+                    cmd.CommandText = "SELECT * from open_change_depo where rownum <100  " + request + "order by id";
+                    cmd.CommandType = CommandType.Text;
+                    OracleDataReader dr = cmd.ExecuteReader();
+                    List<string[]> data = new List<string[]>();
 
-                print_data(data);
+                    while (dr.Read() == true)
+                    {
+                        fill_data(data, dr);
+                    }
+
+                    print_data(data);
+                }
             }
+            catch
+            {
 
+            }
         }
 
         private void UC_Open_depo_Enter(object sender, EventArgs e)

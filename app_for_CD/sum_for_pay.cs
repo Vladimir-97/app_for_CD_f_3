@@ -80,6 +80,7 @@ namespace app_for_CD
         {
             NumberFormatInfo nfi = new NumberFormatInfo();
             nfi.NumberDecimalSeparator = ".";
+            nfi.NumberGroupSeparator = "";
             double num_input = double.Parse(textBox1.Text);
             if (textBox1.Text == null || textBox1.Text == "")  {
                 MessageBox.Show("Введите сумму!");
