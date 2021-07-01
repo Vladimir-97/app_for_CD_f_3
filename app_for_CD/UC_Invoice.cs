@@ -115,6 +115,7 @@ namespace app_for_CD
         {
             NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
             nfi.NumberDecimalSeparator = ".";
+            nfi.NumberGroupSeparator = "";
             dataGridView_invoice.Rows.Clear();
             OracleCommand cmd = con.CreateCommand();
             cmd.CommandText = request;
@@ -659,6 +660,7 @@ namespace app_for_CD
                 oSheet.Cells[11].ColumnWidth = 13;
                 oSheet.Cells[12].ColumnWidth = 23;
                 oSheet.Cells[13].ColumnWidth = 35;
+
                 int i;
                 // Create an array to multiple values at once.
 
@@ -730,6 +732,7 @@ namespace app_for_CD
                 oSheet.Cells[1, 13] = "SRV_SUM";
                 oSheet.Cells[1, 14] = "SRV_NAME";
                 oSheet.Cells[1, 15] = "DOGOVOR";
+                oSheet.Cells[1, 16] = "Oplata";
 
                 oSheet.Cells[1].ColumnWidth = 8.43;
                 oSheet.Cells[2].ColumnWidth = 9.43;
@@ -746,6 +749,7 @@ namespace app_for_CD
                 oSheet.Cells[13].ColumnWidth = 9.86;
                 oSheet.Cells[14].ColumnWidth = 48.71;
                 oSheet.Cells[15].ColumnWidth = 26;
+                oSheet.Cells[16].ColumnWidth = 26;
                 int i;
                 // Create an array to multiple values at once.
                 string num_date_invoice;
@@ -776,7 +780,7 @@ namespace app_for_CD
                 }
                 
                 OracleCommand cmd = con.CreateCommand();
-                cmd.CommandText = "select DISTINCT A.ID, A.DATE_T, A.CURRENCY, A.FIO, A.CRP, A.CRP_NM, A.INN, D.REG_ADDR_CONT, E.CD_NM, B.BK_ACNT_NO, B.MFO_CD, C.BK_NM, A.SUM_T, A.SERVICE_T" +
+                cmd.CommandText = "select DISTINCT A.ID, A.DATE_T, A.CURRENCY, A.FIO, A.CRP, A.CRP_NM, A.INN, D.REG_ADDR_CONT, E.CD_NM, B.BK_ACNT_NO, B.MFO_CD, C.BK_NM, A.SUM_T, A.SERVICE_T, A.PROCESS" +
                                     " from registration_of_invoice A" +
                                         " INNER JOIN tbcb_crp_bk B"+
                                             " ON A.CRP = B.CRP_CD"+
@@ -796,6 +800,12 @@ namespace app_for_CD
                         oSheet.Cells[j, l] = "\t" + dr[l-1].ToString();
                     }
                     oSheet.Cells[j, 15] = "\t" + dataGridView_invoice.Rows[j-3].Cells[1].Value.ToString();
+                    if(dr[14].ToString() == "0")
+                        oSheet.Cells[j, 16] = "\t" + "Выставлена";
+                    else if (dr[14].ToString() == "1")
+                        oSheet.Cells[j, 16] = "\t" + "Часть оплаты";
+                    else if (dr[14].ToString() == "2")
+                        oSheet.Cells[j, 16] = "\t" + "Оплаченно";
                     j++;
                 }
                 dr.Close();

@@ -18,6 +18,7 @@ using System.Text.RegularExpressions;
 using System.Drawing;
 using RSDN;
 using System.Drawing.Printing;
+using System.Globalization;
 
 namespace app_for_CD
 {
@@ -289,7 +290,6 @@ namespace app_for_CD
                             break;
                         }
                     }
-                 //   MessageBox.Show(num);
                     reg_bill rb = new reg_bill(num);
                     rb.ShowDialog();
                 }
@@ -297,7 +297,6 @@ namespace app_for_CD
 
             catch
             {
-                //MessageBox.Show("Ошибка");
             }
           
         }
@@ -367,14 +366,10 @@ namespace app_for_CD
             {
                 cmd = con.CreateCommand();
                 dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly = true;
-                MessageBox.Show(dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly.ToString());
-                MessageBox.Show(currentcell.Y.ToString());
                 cmd.CommandText = $"UPDATE table_billing SET PROCESS = {num}, payment_amount = {sum} where num_of_bill = {ID1}";
                 cmd.ExecuteNonQuery();
                 LoadData("select * from table_billing order by num_of_bill desc");
             }
-            MessageBox.Show(dataGridView1.Rows[currentcell.Y].Cells[11].ReadOnly.ToString());
-            MessageBox.Show(currentcell.Y.ToString());
         }
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
@@ -535,6 +530,7 @@ namespace app_for_CD
         /// </summary>
         private void DoExcelThings()
         {
+            
             string old_ser, ser = "";
             OracleCommand cmd1;
             OracleDataReader dr1;
@@ -650,12 +646,13 @@ namespace app_for_CD
             dr1.Close();
             myExcelWorkSheet.Cells[22, "AE"].Value = $"{dr[18]}";   ///валюта
             myExcelWorkSheet.Cells[22, "D"].Value = $"{dr[10]}";   //услуга
-            myExcelWorkSheet.Cells[22, "AI"].Value = double.Parse(dr[11].ToString());
-            myExcelWorkSheet.Cells[22, "BF"].Value = double.Parse(dr[11].ToString());
+            myExcelWorkSheet.Cells[22, "AI"].Value = double.Parse(dr[11].ToString().Replace('.', DS));
+            myExcelWorkSheet.Cells[22, "BF"].Value = double.Parse(dr[11].ToString().Replace('.', DS));
             double sum_without_NDS;
-            sum_without_NDS = double.Parse(dr[11].ToString()) / (1 + percent / 100);
-            MessageBox.Show(sum_without_NDS.ToString());
+            sum_without_NDS = double.Parse(dr[11].ToString().Replace('.', DS)) / (1 + percent / 100);
             myExcelWorkSheet.Cells[22, "AO"].Value = sum_without_NDS;
+            MessageBox.Show(RusNumber.Str(Int32.Parse(val)));
+
             if (percent == 0)
             {
                 myExcelWorkSheet.Cells[22, "AZ"].Value = "БЕЗ НДС";
@@ -664,7 +661,7 @@ namespace app_for_CD
             }
             else
             {
-                myExcelWorkSheet.Cells[22, "AZ"].Value = double.Parse(dr[11].ToString()) - sum_without_NDS;
+                myExcelWorkSheet.Cells[22, "AZ"].Value = double.Parse(dr[11].ToString().Replace('.', DS)) - sum_without_NDS;
                 myExcelWorkSheet.Cells[22, "AW"].Value = $"{percent}%"; // процент
                 myExcelWorkSheet.Cells[25, "B"].Value = "Всего к оплате:          " + RusNumber.Str(Int32.Parse(val)) + dr[18].ToString() + " " + frac + " тийин, в.т.ч. НДС: " + Math.Round(myExcelWorkSheet.Cells[22, "AZ"].Value, 2) + " " + dr[18].ToString();
 

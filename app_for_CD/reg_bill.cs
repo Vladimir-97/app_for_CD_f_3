@@ -48,9 +48,8 @@ namespace app_for_CD
             InitializeComponent();
             SetConnection();
             textBox_number_of_invoice.Text = num;
-            status_comboBox.Visible = true;
             status_label.Visible = true;
-            status_comboBox.SelectedIndex = 0;
+            Num_of_id = num;
             fill_data();
             Save.Visible = false;
         }
@@ -77,7 +76,21 @@ namespace app_for_CD
                 comboBox6.Text = dr[18].ToString();
                 ground_textBox.Text = dr[16].ToString();
                 comment_textBox.Text = dr[17].ToString();
-
+                if (Num_of_id != "-1")
+                {
+                    if (dr[12].ToString() == "1")
+                    {
+                        status_label.Visible = true;
+                        status_comboBox.Visible = true;
+                        status_comboBox.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        status_label.Visible = false;
+                        status_comboBox.Visible = false;
+                        status_comboBox.SelectedIndex = 1;
+                    }
+                }
             }
         }
 
@@ -93,8 +106,9 @@ namespace app_for_CD
             tableLayoutPanel_main.RowStyles.Clear();
             tableLayoutPanel_main.AutoScroll = true;
             SetConnection();
-            if (Num_of_id != "-1")
-                LoadChange(Num_of_id);
+            //if (Num_of_id != "-1") { 
+            //    LoadChange(Num_of_id);
+            //}
 
         }
         private void LoadChange(string id)
@@ -121,12 +135,16 @@ namespace app_for_CD
 
                     comboBox_CRP_INN.Text = dr[1].ToString();
                     NDS_PINFL_textBox.Text = dr[8].ToString();
-                    if (dr[15].ToString() == "1")
+                    if (dr[13].ToString() == "1")
                     {
+                        status_label.Visible = true;
+                        status_comboBox.Visible = true;
                         status_comboBox.SelectedIndex = 0;
                     }
                     else
                     {
+                        status_label.Visible = false;
+                        status_comboBox.Visible = false;
                         status_comboBox.SelectedIndex = 1;
                     }
                     textBox_number_of_invoice.Text = dr[0].ToString();
