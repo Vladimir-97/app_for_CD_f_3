@@ -17,6 +17,7 @@ namespace app_for_CD
         {
             InitializeComponent();
             this.SetConnection();
+            comboBox1.MaxLength = 12;
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -52,10 +53,10 @@ namespace app_for_CD
                 MessageBox.Show(errorMessage, "Error");
             }
         }
-        private void CloseConnection()
-        {
-            con.Close();
-        }
+        //private void CloseConnection()
+        //{
+        //    con.Close();
+        //}
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {

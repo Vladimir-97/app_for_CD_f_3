@@ -340,6 +340,7 @@
             this.ComboBox_0.Name = "ComboBox_0";
             this.ComboBox_0.Size = new System.Drawing.Size(873, 21);
             this.ComboBox_0.TabIndex = 40;
+            this.ComboBox_0.SelectedIndexChanged += new System.EventHandler(this.ComboBox_0_SelectedIndexChanged);
             this.ComboBox_0.Click += new System.EventHandler(this.ComboBoxClick);
             // 
             // SearchSer_0
@@ -581,6 +582,7 @@
             this.NDS_PINFL_textBox.TabIndex = 66;
             this.NDS_PINFL_textBox.Visible = false;
             this.NDS_PINFL_textBox.Click += new System.EventHandler(this.textBoxClick);
+            this.NDS_PINFL_textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.NDS_PINFL_textBox_KeyPress);
             // 
             // NDS_PINFL
             // 

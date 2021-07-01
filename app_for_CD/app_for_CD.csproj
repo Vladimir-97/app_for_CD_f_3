@@ -14,6 +14,8 @@
     <Deterministic>true</Deterministic>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,8 +30,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -75,17 +75,21 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>main_logo_1.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="oracle.dataaccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+    <Reference Include="oracle.dataaccess, Version=2.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\excell_to_DB\excell_to_DB\oracle.dataaccess.dll</HintPath>
+      <HintPath>Z:\Timur\oracle.dataaccess.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\2805_app_for_cd\app_for_CD_f_3\app_for_CD\bin\Release\Oracle.ManagedDataAccess.dll</HintPath>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>C:\Users\User\source\repos\app_for_CD_v2\app_for_CD\bin\Debug\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
@@ -222,6 +226,12 @@
     <Compile Include="Reg_depo.Designer.cs">
       <DependentUpon>Reg_depo.cs</DependentUpon>
     </Compile>
+    <Compile Include="sum_for_pay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sum_for_pay.Designer.cs">
+      <DependentUpon>sum_for_pay.cs</DependentUpon>
+    </Compile>
     <Compile Include="TC_Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -279,6 +289,9 @@
     <EmbeddedResource Include="filter_bill.resx">
       <DependentUpon>filter_bill.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="filter_for_invoice.resx">
+      <DependentUpon>filter_for_invoice.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="filter_open_depo.resx">
       <DependentUpon>filter_open_depo.cs</DependentUpon>
     </EmbeddedResource>
@@ -321,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reg_depo.resx">
       <DependentUpon>Reg_depo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sum_for_pay.resx">
+      <DependentUpon>sum_for_pay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TC_Menu.resx">
       <DependentUpon>TC_Menu.cs</DependentUpon>
@@ -395,6 +411,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Picture\change.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="main_logo.ico" />
+    <Content Include="main_logo_1.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.VisualStudio.Threading.DownlevelInstaller.11.0.29\build\Microsoft.VisualStudio.Threading.DownlevelInstaller.targets" Condition="Exists('..\packages\Microsoft.VisualStudio.Threading.DownlevelInstaller.11.0.29\build\Microsoft.VisualStudio.Threading.DownlevelInstaller.targets')" />

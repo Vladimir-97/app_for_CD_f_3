@@ -25,9 +25,13 @@ namespace app_for_CD
             button2.Visible = false;
             textBox2.Text = series;
             textBox2.Enabled = false;
+            if (textBox2.Text == "Адм")
+            {
+                label4.Text = "БРВ";
+            }    
 
         }
-        public Add_service(string nds, string service,string series)
+        public Add_service(string nds, string service,string series, string brv)
         {
             InitializeComponent();
             this.SetConnection();
@@ -35,9 +39,18 @@ namespace app_for_CD
             textBox1.Enabled = false;
             textBox2.Text = series;
             textBox1.Enabled = false;
-            textBox3.Text = nds;
+
             label3.Visible = false;
             button3.Visible = false;
+            if (textBox2.Text == "Адм")
+            {
+                label4.Text = "БРВ";
+                textBox3.Text = brv;
+            }
+            else
+            {
+                textBox3.Text = nds;
+            }
         }
        // string series, service = "";
         OracleConnection con = null;
@@ -46,13 +59,29 @@ namespace app_for_CD
             OracleCommand cmd = con.CreateCommand();
             if (textBox3.Text.Length > 0 )
             {
-                cmd.Parameters.Add(new OracleParameter("NDS", textBox3.Text));
+                if (textBox2.Text == "Адм")
+                {
+                  cmd.Parameters.Add(new OracleParameter("COUNT_BRV", textBox3.Text));
+                }
+                else
+                {
+                    cmd.Parameters.Add(new OracleParameter("NDS", textBox3.Text));
+                }
                 cmd.Parameters.Add(new OracleParameter("USED", parse_svc(comboBox1.Text)));
               
                 
                 cmd.Parameters.Add(new OracleParameter("SERV", textBox1.Text));
 
-                cmd.CommandText = "update tbcb_cd set nds = :NDS, Actived = :USED where cd_NM = :SERV";
+                cmd.CommandText = "update tbcb_cd set ";
+                if (textBox2.Text == "Адм")
+                {
+                    cmd.CommandText += " COUNT_BRV = :COUNT_BRV, Actived = :USED where cd_NM = :SERV";
+
+                }
+                else
+                {
+                    cmd.CommandText += " nds = :NDS, Actived = :USED where cd_NM = :SERV";;
+                }
                 cmd.CommandType = CommandType.Text;   ///issu_dd yyyymmdd        reg_docu dd.mm.yyyy
                 if (cmd.ExecuteNonQuery() == 1)
                 {
@@ -79,12 +108,28 @@ namespace app_for_CD
             cmd.Parameters.Add(new OracleParameter("SERV1", textBox1.Text));
             cmd.Parameters.Add(new OracleParameter("SERV2", textBox1.Text));
 
-            cmd.Parameters.Add(new OracleParameter("NDS", textBox3.Text));
+            if (textBox2.Text == "Адм")
+            {
+                cmd.Parameters.Add(new OracleParameter("COUNT_BRV", textBox3.Text));
+            }
+            else
+            {
+                cmd.Parameters.Add(new OracleParameter("NDS", textBox3.Text));
+            }
             cmd.Parameters.Add(new OracleParameter("USED", parse_svc(comboBox1.Text)));
 
 
 
-            cmd.CommandText = "insert into tbcb_cd (cd_grp_no, cd, lang_cd, cd_nm, cd_shrt_nm, nds, actived) values('000037', :SERS, 'UZ', :SERV1, :SERV2, :NDS, :USED ) ";
+            cmd.CommandText = "insert into tbcb_cd (cd_grp_no, cd, lang_cd, cd_nm, cd_shrt_nm,";
+            if (textBox2.Text == "Адм")
+            {
+                cmd.CommandText += " count_brv, actived) values('000037', :SERS, 'UZ', :SERV1, :SERV2, :COUNT_BRV, :USED ) ";
+
+            }
+            else
+            {
+                cmd.CommandText += " nds, actived) values('000037', :SERS, 'UZ', :SERV1, :SERV2, :NDS, :USED ) ";
+            }
             cmd.CommandType = CommandType.Text;   ///issu_dd yyyymmdd        reg_docu dd.mm.yyyy
             if (cmd.ExecuteNonQuery() == 1)
             {

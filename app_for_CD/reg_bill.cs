@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Oracle.DataAccess.Client;
+using System;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
 
 namespace app_for_CD
 {
@@ -53,6 +48,8 @@ namespace app_for_CD
             InitializeComponent();
             SetConnection();
             textBox_number_of_invoice.Text = num;
+            status_label.Visible = true;
+            Num_of_id = num;
             fill_data();
             Save.Visible = false;
         }
@@ -63,7 +60,7 @@ namespace app_for_CD
             cmd.CommandText = "Select * from table_billing where num_of_bill = :NUM_OF_BILL";
             cmd.CommandType = CommandType.Text;
             OracleDataReader dr = cmd.ExecuteReader();
-            if(dr.Read())
+            if (dr.Read())
             {
                 comboBox_CRP_INN.Text = dr[5].ToString();
                 if (dr[8].ToString() == "")
@@ -71,15 +68,29 @@ namespace app_for_CD
                 else
                     NDS_PINFL_textBox.Text = dr[8].ToString();
                 inverse_parse_date(dr[1].ToString(), dateTimePicker_invoice_data);
-                Docu_num_ser.Items.Add(dr[2].ToString() + "/" + dr[3].ToString()  );
+                Docu_num_ser.Items.Add(dr[2].ToString() + "/" + dr[3].ToString());
                 Docu_num_ser.SelectedIndex = 0;
-                ComboBox_0.Items.Add(dr[10].ToString()  );
+                ComboBox_0.Items.Add(dr[10].ToString());
                 ComboBox_0.SelectedIndex = 0;
                 textBox_Sum.Text = dr[11].ToString();
                 comboBox6.Text = dr[18].ToString();
                 ground_textBox.Text = dr[16].ToString();
                 comment_textBox.Text = dr[17].ToString();
-                
+                if (Num_of_id != "-1")
+                {
+                    if (dr[12].ToString() == "1")
+                    {
+                        status_label.Visible = true;
+                        status_comboBox.Visible = true;
+                        status_comboBox.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        status_label.Visible = false;
+                        status_comboBox.Visible = false;
+                        status_comboBox.SelectedIndex = 1;
+                    }
+                }
             }
         }
 
@@ -95,8 +106,9 @@ namespace app_for_CD
             tableLayoutPanel_main.RowStyles.Clear();
             tableLayoutPanel_main.AutoScroll = true;
             SetConnection();
-            if (Num_of_id != "-1")
-                LoadChange(Num_of_id);
+            //if (Num_of_id != "-1") { 
+            //    LoadChange(Num_of_id);
+            //}
 
         }
         private void LoadChange(string id)
@@ -123,12 +135,16 @@ namespace app_for_CD
 
                     comboBox_CRP_INN.Text = dr[1].ToString();
                     NDS_PINFL_textBox.Text = dr[8].ToString();
-                    if (dr[15].ToString() == "1")
+                    if (dr[13].ToString() == "1")
                     {
+                        status_label.Visible = true;
+                        status_comboBox.Visible = true;
                         status_comboBox.SelectedIndex = 0;
                     }
                     else
                     {
+                        status_label.Visible = false;
+                        status_comboBox.Visible = false;
                         status_comboBox.SelectedIndex = 1;
                     }
                     textBox_number_of_invoice.Text = dr[0].ToString();
@@ -369,9 +385,11 @@ namespace app_for_CD
             if (NDS_PINFL.Text == "ПИНФЛ")
             {
                 IF_fiz = 1;
+                NDS_PINFL_textBox.MaxLength = 14;
             }
             else
             {
+                NDS_PINFL_textBox.MaxLength = 12;
                 IF_fiz = 0;
             }
 
@@ -388,7 +406,7 @@ namespace app_for_CD
             cmd.Parameters.Add("DATE_BILL", dateTimePicker_invoice_data.Value.ToString("yyyyMMdd")); //
             cmd.Parameters.Add("NUM_AGGR", num_sres);  ///////
             cmd.Parameters.Add("SER_AGGR", sres);      //////////
-            cmd.Parameters.Add("DATE_AGGR", "date");
+            cmd.Parameters.Add("DATE_AGGR", find_data(comboBox_CRP_INN.Text, Docu_num_ser.Text));
             cmd.Parameters.Add("KZL", comboBox_CRP_INN.Text);   ////////////
             cmd.Parameters.Add("KZL_NM", cur_crp_nm);/////
             cmd.Parameters.Add("INN", cur_INN); ////////////
@@ -404,10 +422,10 @@ namespace app_for_CD
                 cmd.Parameters.Add("PINFL", NDS_PINFL_textBox.Text); ///////////
             }
             cmd.Parameters.Add("TYPE_SER", ComboBox_0.Text);   /////////////////
-            cmd.Parameters.Add("COST_DELIV", float.Parse(textBox_Sum.Text));            ///////////////////////////////////NDS_PINFL
+            cmd.Parameters.Add("COST_DELIV", textBox_Sum.Text);            ///////////////////////////////////NDS_PINFL
             cmd.Parameters.Add("STATUS", status);   /////////////
             cmd.Parameters.Add("PROCESS", "0");  //////////////
-            cmd.Parameters.Add("SUMMA", "");
+            cmd.Parameters.Add("SUMMA", "0");
             cmd.Parameters.Add("FIO", Data.get_fio);
             cmd.Parameters.Add("BASE", ground_textBox.Text);
             cmd.Parameters.Add("REMARK", comment_textBox.Text);
@@ -552,7 +570,7 @@ namespace app_for_CD
                 ser_num = ser_num + num;
                 OracleCommand cmd = con.CreateCommand();
                 cmd.Parameters.Add("cd", OracleDbType.Varchar2, 13).Value = ser;
-                cmd.CommandText = $"SELECT CD_NM FROM tbcb_cd where cd_grp_no = '000037' AND CD like '{ser}%'";
+                cmd.CommandText = $"SELECT CD_NM FROM tbcb_cd where cd_grp_no = '000037' AND CD like '{ser}%' AND ACTIVED = 1";
 
                 cmd.CommandType = CommandType.Text;
 
@@ -608,9 +626,8 @@ namespace app_for_CD
             if (e.KeyChar == DS && ((TextBox)sender).Text.Length == 0)
                 e.Handled = true;
             else
-                e.Handled = !(Char.IsDigit(e.KeyChar) || ((e.KeyChar == DS) && (DS_Count(((TextBox)sender).Text) < 1)) || e.KeyChar == 8);
+                e.Handled = !(Char.IsDigit(e.KeyChar) || ((e.KeyChar == DS) && (DS_Count(((TextBox)sender).Text) < 1)) || e.KeyChar == 8 || e.KeyChar == '.');
         }
-
         private void ComboBoxClick(object sender, EventArgs e)
         {
             ComboBox combo = sender as ComboBox;
@@ -765,7 +782,55 @@ namespace app_for_CD
         {
 
         }
+        string find_date(string num_sres, string sres)
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("NUM_SRES", num_sres);
+            cmd.Parameters.Add("SRES", sres);
+            cmd.CommandText = "select docu_issu_dd from table_for_docu where docu_no = :NUM_SRES and docu_sres = :SRES";
+            cmd.CommandType = CommandType.Text;
+            try
+            {
+                OracleDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    string tmp_str = dr[0].ToString();
+                    string str = tmp_str.Substring(0, 4);
+                    str += tmp_str.Substring(4, 2);
+                    str += tmp_str.Substring(6, 2);
+                    return str;
+                }
+            }
+            catch
+            {
+                return "";
+            }
+            return "";
 
+        }
+        private string parse_aggr(int tmp)
+        {
+            string num_ser = Docu_num_ser.Text.ToString();
+            string ser = "", num = "";
+            bool flag = false;
+            for (int i = 0; i < num_ser.Count(); i++)
+            {
+                if (num_ser[i] == '/')
+                {
+                    flag = true;
+                }
+                else if (flag == true)
+                {
+                    ser = ser + num_ser[i];
+                }
+                else if (!flag)
+                    num += num_ser[i];
+
+            }
+            if (tmp == 1)
+                return num;
+            return ser;
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             int status;
@@ -789,9 +854,9 @@ namespace app_for_CD
             }
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add("DATE_BILL", dateTimePicker_invoice_data.Value.ToString("yyyyMMdd")); //
-            cmd.Parameters.Add("NUM_AGGR", num_sres);  ///////
-            cmd.Parameters.Add("SER_AGGR", sres);      //////////
-            cmd.Parameters.Add("DATE_AGGR", "date");
+            cmd.Parameters.Add("NUM_AGGR", parse_aggr(1));  ///////
+            cmd.Parameters.Add("SER_AGGR", parse_aggr(2));      //////////
+            cmd.Parameters.Add("DATE_AGGR", find_data(comboBox_CRP_INN.Text, Docu_num_ser.Text));
             cmd.Parameters.Add("KZL", comboBox_CRP_INN.Text);   ////////////
             cmd.Parameters.Add("KZL_NM", cur_crp_nm);/////
             cmd.Parameters.Add("INN", cur_INN); ////////////
@@ -807,18 +872,19 @@ namespace app_for_CD
                 cmd.Parameters.Add("PINFL", NDS_PINFL_textBox.Text); ///////////
             }
             cmd.Parameters.Add("TYPE_SER", ComboBox_0.Text);   /////////////////
-            cmd.Parameters.Add("COST_DELIV", float.Parse(textBox_Sum.Text));            ///////////////////////////////////NDS_PINFL
+            cmd.Parameters.Add("COST_DELIV", textBox_Sum.Text);            ///////////////////////////////////NDS_PINFL
             cmd.Parameters.Add("STATUS", status);   /////////////
-            cmd.Parameters.Add("PROCESS", "Выставлен");  //////////////
-            cmd.Parameters.Add("SUMMA", "");
+///cmd.Parameters.Add("PROCESS", "Выставлен");  //////////////
+                                                         // cmd.Parameters.Add("SUMMA", "");
             cmd.Parameters.Add("FIO", Data.get_fio);
             cmd.Parameters.Add("BASE", ground_textBox.Text);
             cmd.Parameters.Add("REMARK", comment_textBox.Text);
             cmd.Parameters.Add("CUR", comboBox6.Text);
+
             cmd.Parameters.Add("NUM_BILL", textBox_number_of_invoice.Text);//////
 
-            cmd.CommandText = "update table_billing set date_of_bill = :DATE_BILL, num_aggr = :NUM_AGGR, sres_aggr = :SER_AGGR, date_aggr = :DATE_AGGR, crp_cd= :KZL, crp_nm = :KZL_NM, dist_id_2 = :INN, nds = :NDS, pinfl = :PINFL, type_sres = :TYPE_SER, cost_deliv = :COST_DELIV, state = :STATUS, process = :PROCESS, payment_amount = :SUMMA, fio = :FIO, base = :BASE, remark = :REMARK, curr = :CUR where num_of_bill = :NUM_BILL  ";
-            cmd.CommandType = CommandType.Text;
+            cmd.CommandText = "update table_billing set date_of_bill = :DATE_BILL, num_aggr = :NUM_AGGR, sres_aggr = :SER_AGGR, date_aggr = :DATE_AGGR, crp_cd= :KZL, crp_nm = :KZL_NM, dist_id_2 = :INN, nds = :NDS, pinfl = :PINFL, type_sres = :TYPE_SER, cost_deliv = :COST_DELIV, state = :STATUS, fio = :FIO, base = :BASE, remark = :REMARK, curr = :CUR where num_of_bill = :NUM_BILL  ";
+            cmd.CommandType = CommandType.Text; 
             if (cmd.ExecuteNonQuery() == 1)
             {
                 Report.Visible = true;
@@ -830,6 +896,38 @@ namespace app_for_CD
 
         }
 
+        private void ComboBox_0_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.Parameters.Add("SERV", ComboBox_0.Text);
+            cmd.CommandText = "select count_brv from tbcb_cd where cd_grp_no = '000037' and cd_nm = :SERV";
+            cmd.CommandType = CommandType.Text;
+            try
+            {
+                OracleDataReader dr = cmd.ExecuteReader();
+                if (dr.Read())
+                {
+                    textBox_Sum.Text = (Double.Parse(dr[0].ToString()) * find_min_wag()).ToString();
+                    comboBox6.SelectedIndex = 0;
+                }
+            }
+            catch
+            {
+                return;
+            }
+        }
+        private double find_min_wag()
+        {
+            OracleCommand cmd = con.CreateCommand();
+            cmd.CommandText = "select min_wag from tbcb_min_wag_info order by aply_stdd desc";
+            cmd.CommandType = CommandType.Text;
+            OracleDataReader dr = cmd.ExecuteReader();
+            if (dr.Read())
+            {
+                return Double.Parse(dr[0].ToString());
+            }
+            return 1;
+        }
         private void Docu_num_ser_SelectedValueChanged(object sender, EventArgs e)
         {
             bool flag = false;

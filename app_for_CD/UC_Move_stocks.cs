@@ -8,11 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
+using System.Collections.Generic;
 using Oracle.DataAccess.Types;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using Microsoft.Office.Interop.Excel;
 
 namespace app_for_CD
 {
@@ -22,16 +24,17 @@ namespace app_for_CD
         {
             InitializeComponent();
             SetConnection();
-            button5.Enabled = false;
+          //  button5.Enabled = false;
            // dataGridView1.Font = new Font("Times New Roman", 10, FontStyle.Bold);
         }
         OracleConnection con = null;
         private void UC_Move_stocks_Load(object sender, EventArgs e)
         {
             update_panel();
-            button5.Enabled = false;
+           // button5.Enabled = false;
 
         }
+
         void fill_data(List<string[]> data, OracleDataReader dr)
         {
             data.Add(new string[15]);
@@ -59,6 +62,7 @@ namespace app_for_CD
                                                                       //data[data.Count - 1][14] = check_null(dr[13].ToString()); ////ФИО исполнителя
 
         }
+        
         void print_data(List<string[]> data)
         {
             int i = 0;
@@ -66,13 +70,23 @@ namespace app_for_CD
 
             foreach (string[] s in data)
             {
-                dataGridView1.Rows.Add(s);
-                for (int j = 0; j < 14; j++)
-                    if (i % 2 == 0)
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
-                    else
-                        dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
-                i++;
+                if (app_for_CD.Properties.Settings.Default["Theme"].ToString() != "False")
+                {
+
+                    dataGridView1.Rows.Add(s);
+                    for (int j = 0; j < 14; j++)
+                        if (i % 2 == 0)
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(89, 89, 89);
+                        else
+                            dataGridView1.Rows[i].Cells[j].Style.BackColor = Color.FromArgb(128, 128, 128);
+                    i++;
+                }
+                else
+                {
+                    dataGridView1.ForeColor = Color.Black;
+                    dataGridView1.Rows.Add(s);
+
+                }
             }
         }
         string check_null(string str)
@@ -317,8 +331,7 @@ namespace app_for_CD
                 Data.fil_code_stocks = false;
             }
         }
-        string kzl_pol, name_pol, kzl_otch, name_otch, code_cb, count_cb, type_agr;
-        string num_agr, date_agr, sum_agr, sum_one_cb, name_cb;
+
 
         private void button5_Click(object sender, EventArgs e)
         {
@@ -327,9 +340,9 @@ namespace app_for_CD
             string path = ExecuteCommand("echo %cd%");
             string pathD = path.Substring(0, path.Length - 2);
 
-                ExecuteCommand("copy move_stocks.xls report1.xls");
-                excel_path = pathD + "\\report1.xls";
-                fi = new FileInfo(excel_path);
+            ExecuteCommand("copy move_stocks.xls report1.xls");
+            excel_path = pathD + "\\report1.xls";
+            fi = new FileInfo(excel_path);
 
 
 
@@ -341,7 +354,7 @@ namespace app_for_CD
             {
 
                 oXL = new Excel.Application();
-                oXL.Visible = true;
+                MessageBox.Show("Ведется подготовка документа");
                 //Получаем набор ссылок на объекты Workbook
                 oWBs = oXL.Workbooks;
                 oXL.Workbooks.Open(excel_path, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
@@ -356,37 +369,142 @@ namespace app_for_CD
                 date_str += date_str1.Substring(3, 2);
                 date_str += "/";
                 date_str += date_str1.Substring(6, 4);
-               
-                
-                oSheet.Cells[3, 35] = date_str;
-                // oSheet.Cells[44, 10] = dr[0].ToString();
-                oSheet.Cells[14, 2] = kzl_otch;
-                oSheet.Cells[14, 32] = kzl_pol;
-                oSheet.Cells[14, 11] = count_cb;
-                oSheet.Cells[14, 17] = sum_one_cb;
-                oSheet.Cells[14, 23] = "\t" + sum_agr;
-                oSheet.Cells[25, 2] = type_agr;
-                oSheet.Cells[25, 17] = num_agr;
-                oSheet.Cells[25, 23] = date_agr;
-                oSheet.Cells[19, 2] = code_cb;
-                oSheet.Cells[19, 7] = name_cb;
-                oSheet.Cells[15, 2] = name_otch;
-                oSheet.Cells[15, 32] = name_pol;
-              
-                oSheet.Cells[19, 34] = "\t" + pval();    //////////ном стоимость
-                oSheet.Cells[19, 37] = "\t" + total_agst();      //////// % от УФ
-                oSheet.Cells[19, 26] = "\t" + st_cb();    //////////ном стоимость
 
 
-                oSheet.Cells[28, 12] = date_agr;
-               
+                oSheet.Cells[3, "BE"] = date_str;
+                //// oSheet.Cells[44, 10] = dr[0].ToString();
+                //oSheet.Cells[14, 2] = kzl_otch;
+                //oSheet.Cells[14, 32] = kzl_pol;
+                //oSheet.Cells[14, 11] = count_cb;
+                //oSheet.Cells[14, 17] = sum_one_cb;
+                //oSheet.Cells[14, 23] = "\t" + sum_agr;
+                //oSheet.Cells[25, 2] = type_agr;
+                //oSheet.Cells[25, 17] = num_agr;
+                //oSheet.Cells[25, 23] = date_agr;
+                //oSheet.Cells[19, 2] = code_cb;
+                //oSheet.Cells[19, 7] = name_cb;
+                //oSheet.Cells[15, 2] = name_otch;
+                //oSheet.Cells[15, 32] = name_pol;
+
+                //oSheet.Cells[19, 34] = "\t" + pval();    //////////ном стоимость
+                //oSheet.Cells[19, 37] = "\t" + total_agst();      //////// % от УФ
+                //oSheet.Cells[19, 26] = "\t" + st_cb();    //////////ном стоимость
 
 
-                oSheet.Cells[36, 2] = " Оператор Депозитария    ______________________ " + Data.get_fio;
+                //oSheet.Cells[28, 12] = date_agr;
 
+
+
+                oSheet.Cells[10, 2] = " Исполнено депозитарием:  " +  date_str;
+                oSheet.Cells[11, 2] = " Исполнитель Депозитария                    ______________________ " + Data.get_fio;
+                oSheet.Cells[12, 2] = " Вид операции:     ";
+
+                int i = 0;
+
+                List<DataGridViewRow> rows_with_checked_column = new List<DataGridViewRow>();
+                foreach (DataGridViewRow row in dataGridView1.Rows)
+                {
+                    rows_with_checked_column.Add(row);
+                    if (Convert.ToBoolean(row.Cells["Распечатать"].Value) == true)
+                    {
+                        if (row.Index == 0)
+                        {
+                            oSheet.Cells[18, "B"] = dataGridView1.Rows[row.Index].Cells[3].Value.ToString() + " - " + dataGridView1.Rows[row.Index].Cells[4].Value.ToString();
+                            //oSheet.Cells[18, 2] = dataGridView1.Rows[row.Index].Cells[5].Value.ToString();
+                            oSheet.Cells[18, "N"] = dataGridView1.Rows[row.Index].Cells[6].Value.ToString();
+                            oSheet.Cells[18, "AC"] = "\t" + pval(dataGridView1.Rows[row.Index].Cells[5].Value.ToString(), dataGridView1.Rows[row.Index].Cells[3].Value.ToString(), dataGridView1.Rows[row.Index].Cells[11].Value.ToString(), dataGridView1.Rows[row.Index].Cells[7].Value.ToString());    ////Номинал
+                            oSheet.Cells[18, "AF"] = dataGridView1.Rows[row.Index].Cells[7].Value.ToString();
+                            oSheet.Cells[18,"AK"] = dataGridView1.Rows[row.Index].Cells[8].Value.ToString();   //цена сделка
+                            oSheet.Cells[18, "AQ"] = dataGridView1.Rows[row.Index].Cells[9].Value.ToString();     ////сумма сделки
+                            oSheet.Cells[18, "AY"] = "\t" + total_agst(dataGridView1.Rows[row.Index].Cells[5].Value.ToString(), dataGridView1.Rows[row.Index].Cells[3].Value.ToString(), dataGridView1.Rows[row.Index].Cells[11].Value.ToString(), dataGridView1.Rows[row.Index].Cells[7].Value.ToString()  );  ////% от УФ
+                            oSheet.Cells[18, "BC"] = dataGridView1.Rows[row.Index].Cells[11].Value.ToString() + " - " + dataGridView1.Rows[row.Index].Cells[12].Value.ToString();
+                            oSheet.Cells[21, "I"] = dataGridView1.Rows[row.Index].Cells[10].Value.ToString();
+                            oSheet.Cells[21, "AJ"] = dataGridView1.Rows[row.Index].Cells[1].Value.ToString();
+                            oSheet.Cells[21, "AQ"] = dataGridView1.Rows[row.Index].Cells[2].Value.ToString();
+                            oSheet.Cells[21, "AU"] = "\t" + st_cb(dataGridView1.Rows[row.Index].Cells[5].Value.ToString());    //////////state of stock
+                            i++;
+                        }
+                        else
+                        {///////////////////////////объединение ячеек
+
+                            change_height(oSheet, i, 2, 8, 17,"КЗЛ и наименование отчуждателя");     /////    i откуда, докуда, что писать
+                            change_height(oSheet, i, 9, 13,17, "Код ЦБ");     /////  
+                            change_height(oSheet, i, 14, 28,17, "Наименование ценной бумаги и Эмитента");     /////  
+                            change_height(oSheet, i, 29, 31,17, "Номинал");     /////  
+                            change_height(oSheet, i, 32, 36,17, "Количество ЦБ");     /////  
+                            change_height(oSheet, i, 37, 42,17, "Цена сделки");     /////  
+                            change_height(oSheet, i, 43, 50,17, "Сумма сделки");     /////  
+                            change_height(oSheet, i, 51, 54,17, "% т УФ");     /////  
+                            change_height(oSheet, i, 55, 61,17, "КЗЛ и наименование получателя");     /////  
+
+
+                            change_height_date(oSheet, i, 2, 8,18, dataGridView1.Rows[row.Index].Cells[3].Value.ToString() + " - " + dataGridView1.Rows[row.Index].Cells[4].Value.ToString() );     /////  
+                            change_height(oSheet, i, 9, 13, 18, dataGridView1.Rows[row.Index].Cells[5].Value.ToString(), true );     /////  
+                            change_height(oSheet, i, 14, 28, 18, dataGridView1.Rows[row.Index].Cells[6].Value.ToString(), true);     /////  
+                            change_height(oSheet, i, 29, 31, 18, "\t" + pval(dataGridView1.Rows[row.Index].Cells[5].Value.ToString(), dataGridView1.Rows[row.Index].Cells[3].Value.ToString(), dataGridView1.Rows[row.Index].Cells[11].Value.ToString(), dataGridView1.Rows[row.Index].Cells[7].Value.ToString()) , true);     /////  
+                            change_height(oSheet, i, 32, 36, 18, dataGridView1.Rows[row.Index].Cells[7].Value.ToString(), true);     /////  
+                            change_height(oSheet, i, 37, 42, 18, dataGridView1.Rows[row.Index].Cells[8].Value.ToString(), true);   //цена сделка 
+                            change_height(oSheet, i, 43, 50, 18, "\t" + dataGridView1.Rows[row.Index].Cells[9].Value.ToString(), true);     ////сумма сделки
+                            change_height(oSheet, i, 51, 54, 18, "\t" + total_agst(dataGridView1.Rows[row.Index].Cells[5].Value.ToString(), dataGridView1.Rows[row.Index].Cells[3].Value.ToString(), dataGridView1.Rows[row.Index].Cells[11].Value.ToString(), dataGridView1.Rows[row.Index].Cells[7].Value.ToString()), true);  ////% от УФ);     /////  
+                            change_height_date(oSheet, i, 55, 61, 18, dataGridView1.Rows[row.Index].Cells[11].Value.ToString() + " - " + dataGridView1.Rows[row.Index].Cells[12].Value.ToString());     /////  
+
+                            change_height(oSheet, i, 9, 35, 20, "Основание для совершения операции: Вид документа ");     /////    i откуда, докуда, что писать
+                            change_height(oSheet, i, 36, 42, 20, "№ документа");     /////    i откуда, докуда, что писать
+                            change_height(oSheet, i, 43, 46, 20, "Дата сделки");     /////    i откуда, докуда, что писать
+                            change_height(oSheet, i, 47, 54, 20, "Статус ЦБ");     /////    i откуда, докуда, что писать
+
+                            change_height(oSheet, i, 9, 35, 21, dataGridView1.Rows[row.Index].Cells[10].Value.ToString(), true);     ///
+                            change_height(oSheet, i, 36, 42, 21, dataGridView1.Rows[row.Index].Cells[1].Value.ToString(), true);     ///
+                            change_height(oSheet, i, 43, 46, 21, dataGridView1.Rows[row.Index].Cells[2].Value.ToString(), true);     ///
+                            change_height(oSheet, i, 47, 54, 21, "\t" + st_cb(dataGridView1.Rows[row.Index].Cells[5].Value.ToString()), true);     ///
+
+                            i++;
+                        }   
+                    }   
+                }
+                oSheet.Cells[18 + i * 6 -1, 11].Font.Bold = true;
+                oSheet.Cells[19 + i * 6 -1, 8].Font.Bold = true;
+                oSheet.Cells[18 + i * 6 -1, 11] = "Оператор Депозитария ______________________ " + Data.get_fio;
+                oSheet.Cells[19 + i * 6 -1, 16] = "                                                                 ( П о д п и с ь )       М. П.";
+                oXL.Visible = true;
             }
         }
-        string pval()
+        private void change_height(Excel.Worksheet oSheet, int i, int j, int k, int m, string str, bool is_bold = false)
+        {
+            oSheet.Range[oSheet.Cells[m + 6 * i, j], oSheet.Cells[m + 6 * i, k]].Merge();
+            var SomeCell = (Excel.Range)oSheet.Cells[m + 6 * i, j];
+            SomeCell.Value2 = str;
+            oSheet.Range[oSheet.Cells[m + 6 * i, j], oSheet.Cells[m + 6 * i, k]].Borders.LineStyle = XlLineStyle.xlContinuous; ;
+
+            if (j ==2)
+                SomeCell.RowHeight = 30;
+            if (m == 18)
+                SomeCell.RowHeight = 60;
+
+            if (is_bold == true)
+            {
+                oSheet.Cells[m + i * 6, j].Font.Bold = true;
+            }
+            else
+            {
+                oSheet.Cells[m + i * 6, j].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.FromArgb(242, 242, 242));
+            }
+            oSheet.Cells[m + i * 6, j].Font.Size = 10;
+
+
+        }
+        private void change_height_date(Excel.Worksheet oSheet, int i, int j, int k, int m, string str)
+        {
+            oSheet.Range[oSheet.Cells[m + 6 * i, j], oSheet.Cells[m + 6 * i+3, k]].Merge();
+            var SomeCell = (Excel.Range)oSheet.Cells[m + 6 * i, j];
+            SomeCell.Value2 = str;
+            SomeCell.RowHeight = 70;
+            oSheet.Cells[m + i * 6, j].Font.Bold = true;
+            oSheet.Cells[m + i * 6, j].Font.Size = 10;
+            oSheet.Range[oSheet.Cells[m + 6 * i, j], oSheet.Cells[m + 6 * i + 3, k]].Borders.LineStyle = XlLineStyle.xlContinuous ;
+
+        }
+        string pval(string code_cb, string kzl_otch, string kzl_pol, string count_cb)
         {
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add("CODE_CB", code_cb);
@@ -402,12 +520,12 @@ namespace app_for_CD
             }
             return "0,000";
         }
-        string st_cb()
+        string st_cb(string code_cb)
         {
             string val = "";
-            val = find_cb();
+            val = find_cb(code_cb);
             if (val == "")
-            val = find_ob();
+            val = find_ob(code_cb);
             if (val == "1")
                 return "Активный";
             else if (val == "2")
@@ -415,7 +533,7 @@ namespace app_for_CD
             else
             return "Аннулированный";
         }
-        string find_cb()
+        string find_cb(string code_cb)
         {
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add("CODE_CB", code_cb);
@@ -428,7 +546,7 @@ namespace app_for_CD
             }
             return "";
         }
-        string find_ob()
+        string find_ob(string code_cb)
         {
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add("CODE_CB", code_cb);
@@ -441,7 +559,7 @@ namespace app_for_CD
             }
             return "";
         }
-        string total_agst()
+        string total_agst(string code_cb, string kzl_otch, string kzl_pol, string count_cb)
         {
             OracleCommand cmd = con.CreateCommand();
             cmd.Parameters.Add("CODE_CB", code_cb);
@@ -457,32 +575,32 @@ namespace app_for_CD
             }
             return "0,0000";
         }
-        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
-        {
-            int row = dataGridView1.CurrentRow.Index;
-            if (dataGridView1.SelectedCells.Count > 1)
-            {
-                kzl_otch = dataGridView1.Rows[row].Cells[3].Value.ToString();
-                name_otch = dataGridView1.Rows[row].Cells[4].Value.ToString();
-                kzl_pol = dataGridView1.Rows[row].Cells[11].Value.ToString();
-                name_pol = dataGridView1.Rows[row].Cells[12].Value.ToString();
-                code_cb = dataGridView1.Rows[row].Cells[5].Value.ToString();
-                name_cb = dataGridView1.Rows[row].Cells[6].Value.ToString();
+        //private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        //{
+        //    int row = dataGridView1.CurrentRow.Index;
+        //    if (dataGridView1.SelectedCells.Count > 1)
+        //    {
+        //        kzl_otch = dataGridView1.Rows[row].Cells[3].Value.ToString();
+        //        name_otch = dataGridView1.Rows[row].Cells[4].Value.ToString();
+        //        kzl_pol = dataGridView1.Rows[row].Cells[11].Value.ToString();
+        //        name_pol = dataGridView1.Rows[row].Cells[12].Value.ToString();
+        //        code_cb = dataGridView1.Rows[row].Cells[5].Value.ToString();
+        //        name_cb = dataGridView1.Rows[row].Cells[6].Value.ToString();
                 
-                sum_one_cb = dataGridView1.Rows[row].Cells[8].Value.ToString();
-                count_cb = dataGridView1.Rows[row].Cells[7].Value.ToString();
-                type_agr = dataGridView1.Rows[row].Cells[10].Value.ToString();   /////тип сделки
-                num_agr = dataGridView1.Rows[row].Cells[1].Value.ToString();
-                date_agr = dataGridView1.Rows[row].Cells[2].Value.ToString();
-                sum_agr = dataGridView1.Rows[row].Cells[9].Value.ToString();
-                button5.Enabled = true;
-                // crp_cd = dataGridView1.Rows[row].Cells[6].Value.ToString();
-                // dataGridView1.ForeColor = Color.Red;
-                // dataGridView1.GridColor = Color.Green;
-            }
-            else
-            {
-            }
-        }
+        //        sum_one_cb = dataGridView1.Rows[row].Cells[8].Value.ToString();
+        //        count_cb = dataGridView1.Rows[row].Cells[7].Value.ToString();
+        //        type_agr = dataGridView1.Rows[row].Cells[10].Value.ToString();   /////тип сделки
+        //        num_agr = dataGridView1.Rows[row].Cells[1].Value.ToString();
+        //        date_agr = dataGridView1.Rows[row].Cells[2].Value.ToString();
+        //        sum_agr = dataGridView1.Rows[row].Cells[9].Value.ToString();
+        //       // button5.Enabled = true;
+        //        // crp_cd = dataGridView1.Rows[row].Cells[6].Value.ToString();
+        //        // dataGridView1.ForeColor = Color.Red;
+        //        // dataGridView1.GridColor = Color.Green;
+        //    }
+        //    else
+        //    {
+        //    }
+        //}
     }
 }

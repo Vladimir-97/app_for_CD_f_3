@@ -110,10 +110,14 @@
             // 
             // uC_Billing1
             // 
+            this.uC_Billing1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.uC_Billing1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.uC_Billing1.Location = new System.Drawing.Point(0, 0);
+            this.uC_Billing1.ExcelFilePath = "";
+            this.uC_Billing1.Location = new System.Drawing.Point(6, 0);
             this.uC_Billing1.Name = "uC_Billing1";
-            this.uC_Billing1.Size = new System.Drawing.Size(2300, 1500);
+            this.uC_Billing1.Size = new System.Drawing.Size(1885, 666);
             this.uC_Billing1.TabIndex = 0;
             // 
             // tabPage3
@@ -152,12 +156,13 @@
             // 
             // uC_Move_stocks1
             // 
-            this.uC_Move_stocks1.AutoSize = true;
-            this.uC_Move_stocks1.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.uC_Move_stocks1.Location = new System.Drawing.Point(3, 0);
-            this.uC_Move_stocks1.MinimumSize = new System.Drawing.Size(1291, 725);
+            this.uC_Move_stocks1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.uC_Move_stocks1.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.uC_Move_stocks1.Location = new System.Drawing.Point(0, 0);
             this.uC_Move_stocks1.Name = "uC_Move_stocks1";
-            this.uC_Move_stocks1.Size = new System.Drawing.Size(1900, 1030);
+            this.uC_Move_stocks1.Size = new System.Drawing.Size(1893, 663);
             this.uC_Move_stocks1.TabIndex = 0;
             // 
             // tabPage5
@@ -174,10 +179,13 @@
             // 
             // uC_Open_depo1
             // 
+            this.uC_Open_depo1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.uC_Open_depo1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.uC_Open_depo1.Location = new System.Drawing.Point(7, 0);
+            this.uC_Open_depo1.Location = new System.Drawing.Point(6, 0);
             this.uC_Open_depo1.Name = "uC_Open_depo1";
-            this.uC_Open_depo1.Size = new System.Drawing.Size(1950, 1080);
+            this.uC_Open_depo1.Size = new System.Drawing.Size(1906, 698);
             this.uC_Open_depo1.TabIndex = 0;
             // 
             // tabPage6
@@ -219,14 +227,14 @@
             this.Controls.Add(this.tabControl1);
             this.MinimumSize = new System.Drawing.Size(1900, 725);
             this.Name = "TC_Menu";
-            this.Text = "E - Contract";
+            this.Text = "- Contract";
+            this.Icon = app_for_CD.Properties.Resources.main_logo;
             this.Resize += new System.EventHandler(this.TC_Menu_Resize);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -243,11 +251,11 @@
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TabPage tabPage1;
         private UC_Contract uC_Contract2;
-        private UC_Move_stocks uC_Move_stocks1;
         private System.Windows.Forms.TabPage tabPage2;
-        private UC_Billing uC_Billing1;
-        private UC_Open_depo uC_Open_depo1;
         private UC_Invoice uC_Invoice1;
         private UC_Add_user uC_Add_user1;
+        private UC_Billing uC_Billing1;
+        private UC_Open_depo uC_Open_depo1;
+        private UC_Move_stocks uC_Move_stocks1;
     }
 }

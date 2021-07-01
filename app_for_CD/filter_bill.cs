@@ -83,6 +83,7 @@ namespace app_for_CD
                 else
                 {
                     Data_bill.its_ok = false;
+                    textBox8.BackColor = Color.Red;
                 }
             }
             if (Data_bill.ser_aggr)
@@ -92,6 +93,7 @@ namespace app_for_CD
                 else
                 {
                     Data_bill.its_ok = false;
+                    textBox1.BackColor = Color.Red;
                 }
             }
             if (Data_bill.crp)
@@ -101,6 +103,7 @@ namespace app_for_CD
                 else
                 {
                     Data_bill.its_ok = false;
+                    comboBox2.BackColor = Color.Red;
                 }
             }
             if (Data_bill.inn)
@@ -110,6 +113,7 @@ namespace app_for_CD
                 else
                 {
                     Data_bill.its_ok = false;
+                    textBox6.BackColor = Color.Red;
                 }
             }
             if (Data_bill.pinfl)
@@ -119,6 +123,7 @@ namespace app_for_CD
                 else
                 {
                     Data_bill.its_ok = false;
+                    textBox2.BackColor = Color.Red;
                 }
             }
             if (Data_bill.code_nds)
@@ -128,6 +133,7 @@ namespace app_for_CD
                 else
                 {
                     Data_bill.its_ok = false;
+                    textBox3.BackColor = Color.Red;
                 }
             }
             if (Data_bill.name)
@@ -137,6 +143,7 @@ namespace app_for_CD
                 else
                 {
                     Data_bill.its_ok = false;
+                    textBox4.BackColor = Color.Red;
                 }
             }
             if (Data_bill.serv)
@@ -146,6 +153,7 @@ namespace app_for_CD
                 else
                 {
                     Data_bill.its_ok = false;
+                    textBox5.BackColor = Color.Red;
                 }
             }
             if (Data_bill.fio)
@@ -155,6 +163,7 @@ namespace app_for_CD
                 else
                 {
                     Data_bill.its_ok = false;
+                    textBox7.BackColor = Color.Red;
                 }
             }
             if (Data_bill.status)
@@ -165,7 +174,8 @@ namespace app_for_CD
                         Data_bill.s_status = "1";
                     else
                     {
-                        Data_bill.s_status = "2";
+                        Data_bill.s_status = "0";
+                        comboBox1.BackColor = Color.Red;
                     }
 
                 }
@@ -180,5 +190,6 @@ namespace app_for_CD
             MessageBox.Show("Неправильно заполнено");
 
         }
+
     }
 }
